@@ -10,6 +10,14 @@
 > - 只追加、不删改历史记录（保留完整轨迹，方便回溯"谁在什么时候做了什么"）。
 > - **归档不算删改**（2026-10-24 OTTO 同意）：历史条目可**原文整段**搬入 `docs/archive/`，主文件须留一行指针——**这不算删改**。禁止改写原文；禁止删除而不留指针。
 > - 每条进展写清楚：**日期 / 谁做的 / 做了什么 / 影响了什么 / 下一步**。
+> - **精简准则（2026-10-24 OTTO 定，控制本板体积）**：
+>   1. 单条进展 **≤ 6 行、≤ 800 字**；超出的细节（日志、哈希、逐条数字、源码行号表）**写进对应 `docs/` 文件，本板只放一行链接**。
+>   2. 不贴：完整日志、长 diff、sha256 全文（短前缀可）、重复的上下文复述、"已读过 X"之类过程叙述。
+>   3. 同一件事只写一条；后续进展引用原条目日期，不重抄。
+>   4. 结论先行：第一句写"改了什么／结果如何"，证据与过程放文档。
+>   5. 状态变化（投放、缺陷、决议）用一句话更新"当前状态"或 `defect-register.md`／`otto-decisions`，不在多处复述。
+>   6. 本板只记**进展与交接**；需长期保留的设计、验收数据一律进 `docs/`。
+>   7. 超过 **约 100 KB 或 500 行** 时，由当事 AI 将 14 天以上的进展原文搬入 `docs/archive/`（按规则 11 留指针）。
 > - 冲突时以"最新进展"为准；如与他人改动冲突，先读对方记录再动，不要覆盖。
 
 ---
@@ -71,9 +79,11 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 ## 最新进展（按时间倒序追加，旧记录不删）
 
+2026-10-24 16:2x / WorkBuddy / **Claude 清单第 3、5、6 项已执行（第 4 项仍挂起）。** **第 3 项（memory 降级）**：`.workbuddy/memory/` 下 7 个文件（6 个日志 + `MEMORY.md`）顶部各加一行同一句指针——「本文件是 WorkBuddy 的个人笔记，**不是事实来源**；现行进度看 `WORK_LOG.md` 顶部『当前状态』，缺陷看 `docs/defect-register.md`，决议看 `docs/otto-decisions-20261024.md`」。`git diff --numstat` 实测每个文件均为 **+2／−0**（一行指针 + 一个空行），**未删改任何原有内容**。过程中我自己的幂等判据误判了一次：`2026-10-21.md` 正文第 31 行本来就有"仓库文件不是事实来源"这句话，被脚本当成"已有指针"跳过——已手工补上。**判据要用唯一串（如页面横幅的完整句式），不能用会出现在正文里的短语。** **第 5 项（`docs/handoff-deepseek.md` 横幅）**：加的是**"部分过期"**而非"整篇作废"——§1–§5（角色、三份权威文件、口吻铁律、三档模式、两个坑）与 §9–§11（口吻校准、故事开场、身份设定）讲的是"怎么写"，仍然有效；只有 §6「当前状态（截至 2026-10-20）」过期，且它之后发生的（D1–D12 决议、C-17 已关闭、放行闸改自愈七项、C-01…C-17 状态、DS-07、git 基线）一件都没记。**写成"历史快照"会把 DeepSeek 唯一的行为依据一起废掉，那是另一种失真。** **第 6 项（临时文件）**：9 个 txt（`_audit_b50`／`_audit_b50b`／`_audit_before`／`_audit_compact`／`_audit_seg`／`_r249`／`_resid_all`／`_b97`／`_ak_ctx`，共 202,631 字节）已移入 `data/backups/tmp-pruned-20261024/`，同目录 `MANIFEST.md` 记了逐文件字节数与 sha256 前 16 位、恢复命令。**用"移"不用"删"的理由**：`rm` 不可逆，其中 `_ak_ctx.txt` 含 **211 条真实对话摘录**（已扫描无 `sk-`／`api_key`／`jwt_secret`／`Bearer`，但那是第三方正文，删了没有第二份）。**按指令保留**：`data/inject_audit.txt`（DS-02 人工勾选记录，`docs/knowledge-regression.md` 引用）。**我另外保留了** `data/_hits_cache.json`——Claude 清单没点它，但 `docs/knowledge-residual-audit.md` 把它列为命中来源之一。**未动**：`_audit_floor08.json`／`_audit_seg.json`／`_base_hits.json`／`_fp_sample.json`／`_h249.json`／`_live_songs.json`／`_residual_hits.json`／`_tmp_broken1.json`／`_u208.json` 这 9 个 `_*.json` **不在清单内、也没逐个核内容**，不擅自扩大范围；`data/knowledge_mine.md`、`data/regression_cases.json` 已入库，属可复跑资产。**未做第 4 项**（`prompts/system.txt` L15 的 b50 数值）——需 OTTO 认可 + DeepSeek 核对 `prompts/b50_block.txt` 与 `knowledge/src/b50.json` 两处一致，现在两来源并存，单改一处会让成绩对不上。**未改**任何代码、配置、探针、知识源、收件人，未发 QQ。
+
 2026-10-24 16:1x / WorkBuddy / **执行 Claude 交办的 WORK_LOG 瘦身（第 1–2 项），原文逐字未改，并用哈希自证。** **做了什么**：① C-01…C-17 原文整段 → `docs/defect-register.md`，本文件只留 17 行索引表 + 指针；② 2026-10-22 及以前的进展原文 → `docs/archive/WORK_LOG-archive-2026-10.md` §一；③「当前状态」由滚动摘要（原 146 行）压到 5 行，被替换的原文 → 归档 §二；④ 规则区新增「**归档不算删改**」一条（与「只追加不删改历史」不冲突的例外，需 OTTO 同意那条已在此落实）。**规模**：原件 1,863 行 / 349,289 字节 → 主文件现约 530 行 / 99 KB（**精确数用 `wc` 现取，别信本条抄的**）。**完整性证据**（`data/probe_worklog_split.py --verify` 可复跑）：三块 sha256 逐字节一致——缺陷块 `5c55040d…`、进展块 `00057a63…`、状态块 `a67c4154…`；原文**非空行多重集 LOST = 0**（1,317 条一条没少），EXTRA = 76 条全部是本次新增（状态 5 行／索引表／指针／规则／核对表）。原件留档 `data/backups/WORK_LOG-20261024-before-split.md`（该目录不入库）。**顺手修的引用**：`docs/assignments-20261021.md` 待办表第 3/4 行、`docs/pilot-go-no-go.md` 开头原写「`WORK_LOG.md` 的缺陷清单／搜 `### C-09`」——迁出后**在主文件里已经搜不到**，全部改指 `docs/defect-register.md`；索引表「详情」列也由「搜 `### C-xx`」改为「§C-xx」（**我自己一开始就写错了这一列，等于刚拆完就造了 17 个断指针**）。另修 `docs/prompt-for-claude.md` 第 3/4 条指向同一份文件导致的重复（Claude 改 handoff 降级时带出来的）。**未做（Claude 清单第 3–6 项，不属本次交办范围）**：`.workbuddy/memory/` 降级加指针、`docs/handoff-deepseek.md` 加同款横幅、`data/_audit_*.txt` 等临时文件清理（其中 `data/inject_audit.txt` 明确**不删**）、`prompts/system.txt` L15 把 b50 数值挪出提示词（**需 OTTO 认可 + DeepSeek 核对两处一致后才改**）。**未改**任何代码、配置、探针、知识源、收件人，未发 QQ；**未删任何原文**（只搬移，且在归档页首写明"不是现行口径"）。**下一步**：Codex／DeepSeek 下次开工读的是 99 KB 版；要查 10-22 以前的事去归档，别当成没发生。
 
-2026-10-24 16:0x / Claude（只读顾问，经 OTTO 授权）/ **WORK_LOG 瘦身与降级的执行记录；执行项已标明，其余交 WB 执行。** **已做**：① `docs/handoff.md` 降级为历史快照（顶部横幅，指向现行口径：本区「当前状态」、`otto-decisions-20261024.md`、`collaboration-roles.md`）；② `collaboration-roles.md` 与 `prompt-for-claude.md` 里把 handoff 当"权威"的两处改指向上述现行口径。**未做（冲突，待 OTTO 定）**：我曾把 `docs/` 里的真实号码改成占位符 `<来世QQ>`，但本区 15:5x 记录 OTTO 已定"清号等 push 闸门"，故**已全部还原**，未留改动。请定：A 维持挂起（推荐，与既定决定一致）／B 现在改 docs 占位符，代码断言仍挂起。**未做（工具限制）**：批量移动归档、删临时文件、git 状态核对——当时 shell 未能启动，**未验证**，留待 shell 可用时执行。**给 WB 的执行清单（WB 修改，Claude 不代写）**：
+2026-10-24 16:0x / Claude（只读顾问，经 OTTO 授权）/ **WORK_LOG 瘦身与降级的执行记录；执行项已标明，其余交 WB 执行。** **已做**：① `docs/handoff.md` 降级为历史快照（顶部横幅，指向现行口径：本区「当前状态」、`otto-decisions-20261024.md`、`collaboration-roles.md`）；② `collaboration-roles.md` 与 `prompt-for-claude.md` 里把 handoff 当"权威"的两处改指向上述现行口径。**未做（冲突，待 OTTO 定）**：我曾把 `docs/` 里的真实号码改成占位符 `<来世QQ>`，但本区 15:5x 记录 OTTO 已定"清号等 push 闸门"，故**已全部还原**，未留改动。请定：A 维持挂起（推荐，与既定决定一致）／B 现在改 docs 占位符，代码断言仍挂起。**未做（工具限制）**：批量移动归档、删临时文件、git 状态核对——当时 shell 未能启动。**【2026-10-24 后续更正】** 此项已过时：shell 恢复后，归档与索引已由 WorkBuddy 执行（见 16:1x 条目）；临时文件与 .workbuddy 降级仍按本条清单第 3、5、6 项执行。**给 WB 的执行清单（WB 修改，Claude 不代写）**：
 1. WORK_LOG 重构：「当前状态」压到 ≤5 行；C-01…C-17 整段搬到 `docs/defect-register.md`（表格：ID／优先级／状态／一句话），本文件留一张索引；2026-10-22 及以前的进展原文搬到 `docs/archive/WORK_LOG-archive-2026-10.md`，本文件留指针。搬移不改写措辞。
 2. 规则区新增一条（OTTO 同意「归档不算删改」，理由见下）：「历史条目可原文整段搬入 `docs/archive/`，主文件须留一行指针；这不算删改。禁止改写原文，禁止删除而不留指针。」**利于 harness 的理由**：开工只需读主文件，体积从约 338KB 降到十几 KB；需要追溯时按指针查档，内容不丢。代价：查历史要多开一个文件。
 3. `.workbuddy/memory/` 每日记录与 `MEMORY.md` 降为 WB 个人笔记；进度以 WORK_LOG 为准，每个文件顶部加一行指针。

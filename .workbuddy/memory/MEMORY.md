@@ -1,5 +1,7 @@
 # 项目长期约定（Miruku 项目）
 
+> 本文件是 WorkBuddy 的个人笔记，**不是事实来源**。现行进度看 `WORK_LOG.md` 顶部「当前状态」；缺陷状态看 `docs/defect-register.md`；已拍板的决定看 `docs/otto-decisions-20261024.md`。本文件里的结论可能已被后来的实测推翻。
+
 ## 协作规则（与 Codex、DeepSeek 三方同步）
 
 - 项目根目录有 `WORK_LOG.md` 留言板，是 WorkBuddy 助手、Codex、DeepSeek 三方唯一的同步点。
