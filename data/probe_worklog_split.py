@@ -149,6 +149,13 @@ def do_split(force: bool = False) -> int:
         raise SystemExit("归档已存在，拒绝重复拆分：%s（确需重跑加 --force）" % ARCHIVE)
 
     raw = rd(SRC)
+    # 防呆：源必须还是「未拆分」的原件。否则 --force 会把拆过的文件再拆一次，
+    # 切出来的块是索引表而不是缺陷原文——破坏不可逆，所以宁可直接停。
+    if "### C-01 P0" not in raw:
+        raise SystemExit(
+            "源文件看起来已经拆分过（找不到 `### C-01 P0` 原文），拒绝执行。\n"
+            "要重做：先 `git restore WORK_LOG.md`（或从 %s 拷回），再跑 --split。" % BAK
+        )
     lines = raw.splitlines(keepends=True)
     if "".join(lines) != raw:
         raise SystemExit("切片往返不一致，停止（行尾风格异常）")
