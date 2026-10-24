@@ -1,7 +1,7 @@
 # 投放前决策单（Pilot Go / No-Go）
 
 > **给谁看**：OTTO 一个人。**用途**：把 `docs/prelaunch-checklist.md`、`docs/first-week-experience-watch.md`、`docs/crisis-alert.md`、
-> `docs/outbound-guard-verdict.md` 与 `WORK_LOG.md` 的缺陷清单压成一页，回答一个问题——
+> `docs/outbound-guard-verdict.md` 与 `docs/defect-register.md`（C-01…C-17 原文，2026-10-24 从 `WORK_LOG.md` 迁出）压成一页，回答一个问题——
 > **现在能不能把 Miruku 交给来世？**
 > **谁写的**：WorkBuddy 智能设计助手，2026-10-23，WB-10 交付。写之前对实例做了只读核对（配置、插件目录、源码行号、今日日志、观察库计数），
 > 证据全部是**当前可复跑**的，没有一个数字来自旧文档转抄。
