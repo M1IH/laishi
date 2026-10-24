@@ -1,0 +1,944 @@
+{
+ "topic": "anime",
+ "title": "番剧动画",
+ "description": "番剧动画：常见作品、角色、圈内梗和入门常识，够接住二次元话题。",
+ "entries": [
+  {
+   "slug": "zhou-shu-hui-zhan",
+   "title": "咒术回战",
+   "aliases": [
+    "咒回",
+    "咒术",
+    "JJK",
+    "呪術廻戦"
+   ],
+   "summary": "芥见下下的少年漫改，咒术师打咒灵，五条悟和宿傩是圈内顶流。",
+   "detail": "《周刊少年Jump》连载、MAPPA 做的动画，2020 年第一季，2023 年第二季是「怀玉·玉折」加「涩谷事变」。设定是人的负面情绪会变成咒灵，咒术师用术式祓除，打斗分镜和角色塑造是主要看点。五条悟摘眼罩、宿傩附身虎杖这些场面传播极广，圈里聊它基本绕不开战力对比和「谁能打赢宿傩」。还有人拿角色做「抽卡模拟器」整活，抽到五条算欧。",
+   "tags": [
+    "番剧",
+    "热血",
+    "JUMP"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shao-nv-yue-dui",
+   "title": "少女乐队",
+   "aliases": [
+    "少女乐队",
+    "乐队番",
+    "女乐",
+    "ガールズバンド",
+    "乐队动画"
+   ],
+   "summary": "几个女生组乐队的一类动画，MyGO、GBC、孤独摇滚、轻音都算。",
+   "detail": "「少女乐队」不是某一部作品，是一类动画的统称：几个女高中生（或辍学的同龄人）凑在一起组乐队，练团、吵架、上台，主线通常是「人和人的关系」而不是「打赢谁」。代表作有《轻音少女》（2009，日常向的起点）、《BanG Dream!》系列（含《It's MyGO!!!!!》）、《孤独摇滚！》（2022，社恐视角的喜剧）、《Girls Band Cry》（2024，3D 制作、情绪最冲）。共同点是歌好听、Live 段落舍得下功夫，所以这类番的曲子常被音游收。圈里聊起来一般直接说片名简称：MyGO、GBC、波奇。",
+   "tags": [
+    "动画",
+    "音乐",
+    "类型"
+   ],
+   "source": "https://zh.moegirl.org.cn/少女乐队",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "mygo",
+   "title": "MyGO!!!!!",
+   "aliases": [
+    "MyGO",
+    "卖沟",
+    "卖狗",
+    "迷子",
+    "BanG Dream It's MyGO"
+   ],
+   "summary": "《BanG Dream!》衍生乐队动画，五个人组乐队，情绪浓度拉满。",
+   "detail": "2023 年播的《BanG Dream! It's MyGO!!!!!》，三次元（Sanzigen）做的 3D 动画，讲一群高中女生组乐队、散伙、再重组。看点全在人际关系的拉扯，台词密度高、情绪浓度高，OP《壱雫空》和插入曲《春日影》都传得很开。名场面是「春日影」那场 live 和之后的争吵，圈里管它叫「卖沟」（MyGO 谐音）。",
+   "tags": [
+    "番剧",
+    "音乐",
+    "乐队"
+   ],
+   "source": "https://anime.bang-dream.com/mygo/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "girls-band-cry",
+   "title": "Girls Band Cry",
+   "aliases": [
+    "GBC",
+    "少女乐队的呐喊",
+    "ガルクラ",
+    "刺刺",
+    "Girls Band Cry"
+   ],
+   "summary": "东映的 3D 乐队番，仁菜从乡下跑到东京，一开口就是不服。",
+   "detail": "2024 年东映动画做的原创 3D 动画，简称 GBC，中文译名「少女乐队的呐喊」。主角井芹仁菜退学跑到东京，跟桃香几个人组了乐队「刺刺」（Togenashi Togeari）。看点是手绘感的 3D live 和仁菜那股「我没错」的倔劲，歌也很能打。圈里常把它和 MyGO 并着聊。",
+   "tags": [
+    "番剧",
+    "音乐",
+    "乐队"
+   ],
+   "source": "https://girls-band-cry.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bocchi-the-rock",
+   "title": "孤独摇滚！",
+   "aliases": [
+    "孤独摇滚",
+    "波奇",
+    "ぼっち・ざ・ろっく",
+    "Bocchi the Rock"
+   ],
+   "summary": "社恐吉他手后藤一里组乐队，笑点密，演出段落做得极好。",
+   "detail": "2022 年 CloverWorks 做的四格漫改，主角后藤一里（波奇）是重度社恐，抱着吉他躲进衣柜那种，后来被拉进「结束乐队」。看点是波奇的脑内小剧场、实拍质感的演出段落，还有《青春コンプレックス》这些歌。圈里叫「波奇酱」，社恐梗的富矿。",
+   "tags": [
+    "番剧",
+    "音乐",
+    "日常"
+   ],
+   "source": "https://bocchi.rocks/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sousou-no-frieren",
+   "title": "葬送的芙莉莲",
+   "aliases": [
+    "芙莉莲",
+    "葬送",
+    "Frieren",
+    "葬送のフリーレン"
+   ],
+   "summary": "勇者一行打完魔王之后的故事，精灵芙莉莲慢慢学会理解人类。",
+   "detail": "2023 年 Madhouse 做的漫改，原作拿过「漫画大赏 2021」大赏。设定是勇者一行讨伐魔王之后，活了一千多年的精灵魔法使芙莉莲重走当年的旅途，去理解已经老去的同伴。节奏慢、情绪克制，看点是时间尺度的落差和辛美尔留下的那些话。圈里常提「芙莉莲老师」「千年精灵」，还有她收的徒弟菲伦。",
+   "tags": [
+    "番剧",
+    "奇幻",
+    "治愈"
+   ],
+   "source": "https://frieren-anime.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chainsaw-man",
+   "title": "电锯人",
+   "aliases": [
+    "电锯",
+    "Chainsaw Man",
+    "チェンソーマン",
+    "蕾塞篇"
+   ],
+   "summary": "藤本树的暗黑少年漫，电锯恶魔、玛奇玛、血浆和荒诞幽默齐飞。",
+   "detail": "藤本树原作，MAPPA 2022 年做的动画，后来又出了剧场版「蕾塞篇」。主角电次跟电锯恶魔合体，给公安当恶魔猎人，穷得只剩活下去的念头。看点是又脏又浪漫的暴力美学、分镜和不讲道理的荒诞感。圈里名场面很多，玛奇玛那句「汪」、帕瓦的混乱都常被翻出来。",
+   "tags": [
+    "番剧",
+    "战斗",
+    "暗黑"
+   ],
+   "source": "https://chainsawman.dog/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "spy-family",
+   "title": "间谍过家家",
+   "aliases": [
+    "间谍",
+    "SPY×FAMILY",
+    "SPY FAMILY",
+    "过家家"
+   ],
+   "summary": "间谍、杀手、超能力少女凑成一个假家庭，日常喜剧加一点暖。",
+   "detail": "远藤达哉原作，WIT STUDIO 和 CloverWorks 联合做的动画，2022 年开播。设定是间谍黄昏为了任务组了个假家庭，老婆其实是杀手，女儿阿尼亚会读心。看点是阿尼亚的表情包和一家三口的错位喜剧，圈里「阿尼亚」「哇库哇库」刷得最多。",
+   "tags": [
+    "番剧",
+    "喜剧",
+    "日常"
+   ],
+   "source": "https://spy-family.net/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "attack-on-titan",
+   "title": "进击的巨人",
+   "aliases": [
+    "巨人",
+    "进巨",
+    "Attack on Titan",
+    "進撃の巨人"
+   ],
+   "summary": "人类躲在高墙里对抗巨人，中后期一路反转成政治与战争寓言。",
+   "detail": "谏山创原作，WIT 做前三季、MAPPA 接最终季，2013 年开播。开局是人类被巨人吃、躲进三道墙，后面揭开巨人的真相，格局一路拉到民族与战争。看点是伏笔回收和「海的那边是敌人」这种转折，圈里常说「献出心脏」，结局争议也一直没停。",
+   "tags": [
+    "番剧",
+    "热血",
+    "战斗"
+   ],
+   "source": "https://shingeki.tv/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "demon-slayer",
+   "title": "鬼灭之刃",
+   "aliases": [
+    "鬼灭",
+    "Kimetsu no Yaiba",
+    "鬼滅の刃"
+   ],
+   "summary": "炭治郎为救变成鬼的妹妹加入鬼杀队，打斗作画是招牌。",
+   "detail": "吾峠呼世晴原作，ufotable 制作，2019 年开播。大正时代，卖炭少年炭治郎全家被鬼杀、妹妹祢豆子变成鬼，他加入鬼杀队找解药。看点是浮世绘风格的呼吸法作画和无限城篇的剧场版，圈里「全集中呼吸」「水之呼吸」张口就来，炼狱杏寿郎那句「好吃」也常被拿来玩。",
+   "tags": [
+    "番剧",
+    "热血",
+    "战斗"
+   ],
+   "source": "https://kimetsu.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bleach",
+   "title": "死神",
+   "aliases": [
+    "BLEACH",
+    "境·界",
+    "一护",
+    "千年血战篇"
+   ],
+   "summary": "黑崎一护当死神代理，斩魄刀、卍解，三大民工漫之一。",
+   "detail": "久保带人原作，Studio Pierrot 做的长篇动画，2004 年开播，2022 年又续了「千年血战篇」。主角黑崎一护能看见幽灵，后来接过死神之力，拿斩魄刀砍虚。看点是帅到不行的角色设计和喊出「卍解」那一下，圈里常用「卍解」形容开大招。",
+   "tags": [
+    "番剧",
+    "热血",
+    "民工漫"
+   ],
+   "source": "https://bleach-anime.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "naruto",
+   "title": "火影忍者",
+   "aliases": [
+    "火影",
+    "NARUTO",
+    "疾风传",
+    "鸣人"
+   ],
+   "summary": "鸣人从吊车尾当上火影，忍者、查克拉、羁绊，民工漫代表。",
+   "detail": "岸本齐史原作，2002 年动画化，分《火影忍者》和《疾风传》两段。设定是忍者村、查克拉、五影，主角漩涡鸣人身上封印着九尾，一路想当火影。看点是忍术对战和「羁绊」这条主线，圈里「影分身」「螺旋丸」「我要成为火影」都是通用梗。",
+   "tags": [
+    "番剧",
+    "热血",
+    "民工漫"
+   ],
+   "source": "https://www.naruto.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "one-piece",
+   "title": "海贼王",
+   "aliases": [
+    "航海王",
+    "ONE PIECE",
+    "路飞",
+    "草帽"
+   ],
+   "summary": "路飞找大秘宝当海贼王，连载二十多年，世界观越铺越大。",
+   "detail": "尾田荣一郎原作，1999 年动画化，长篇里的长篇。主角路飞吃了橡胶果实，带草帽一伙出海找大秘宝 One Piece。看点是伙伴故事和越来越大的世界格局，圈里「我要成为海贼王」「橡胶橡胶」随口就来，2023 年还出了真人版。",
+   "tags": [
+    "番剧",
+    "热血",
+    "民工漫"
+   ],
+   "source": "https://one-piece.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jojo",
+   "title": "JOJO的奇妙冒险",
+   "aliases": [
+    "JOJO",
+    "jojo",
+    "奇妙冒险",
+    "JOJO立"
+   ],
+   "summary": "荒木飞吕彦的替身战斗漫，姿势、台词、音乐梗的宝库。",
+   "detail": "荒木飞吕彦原作，动画从 2012 年 david production 开始做，从第一部一路到石之海。核心是「替身」能力战，讲究规则和脑力，越往后越离谱。看点是浮夸的姿势（JOJO 立）、密集的拟声词和台词，「欧拉欧拉」「木大木大」「我不做人了」全是圈内通用语。",
+   "tags": [
+    "番剧",
+    "战斗",
+    "经典"
+   ],
+   "source": "https://jojo-portal.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "oshi-no-ko",
+   "title": "我推的孩子",
+   "aliases": [
+    "推しの子",
+    "【我推的孩子】",
+    "我推",
+    "Oshi no Ko"
+   ],
+   "summary": "赤坂明原作、动画工房做的偶像圈暗黑番，第一集就掀桌。",
+   "detail": "赤坂明原作、横枪萌果作画，动画工房 2023 年做，第一集直接给了 90 分钟的量，把偶像这行的光鲜和脏东西一起摊开。主题曲 YOASOBI 的《アイドル》当年刷屏，星野爱那句「谎言是最棒的爱」和第一集结尾是最大的名场面。圈里「推し」「我推」就是从这来的，聊追星、聊偶像塌房都能接上。",
+   "tags": [
+    "番剧",
+    "偶像",
+    "暗黑"
+   ],
+   "source": "https://ichigoproduction.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "evangelion",
+   "title": "新世纪福音战士",
+   "aliases": [
+    "EVA",
+    "福音战士",
+    "Evangelion",
+    "新世纪天鹰战士"
+   ],
+   "summary": "95 年的机器人动画，把少年心理和意识流拍成了经典。",
+   "detail": "庵野秀明执导，GAINAX 制作，1995 年 TV 版加 1997 年剧场版《真心为你》，后来又有新剧场版四部。表面是少年碇真嗣驾驶 EVA 打使徒，实际在拍人际疏离和自我认同。看点是意识流演出和宗教符号，圈里「人类补完计划」「不能逃避」「AT 力场」到现在还在用。",
+   "tags": [
+    "番剧",
+    "科幻",
+    "经典"
+   ],
+   "source": "https://www.evangelion.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "fullmetal-alchemist",
+   "title": "钢之炼金术师",
+   "aliases": [
+    "钢炼",
+    "钢之炼金术师FA",
+    "Fullmetal Alchemist",
+    "FA"
+   ],
+   "summary": "等价交换、人体炼成，兄弟俩找回身体，被公认完成度极高。",
+   "detail": "荒川弘原作，2003 年版和 2009 年《FA》两版动画，Bones 制作。设定是炼金术讲等价交换，爱德华和阿尔冯斯兄弟为了找回身体踏上旅途。看点是伏笔收得干净、反派塑造扎实，圈里常拿它当「没有烂尾的神作」举例，「等价交换」也成了通用说法。",
+   "tags": [
+    "番剧",
+    "热血",
+    "经典"
+   ],
+   "source": "https://www.hagaren.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hunter-x-hunter",
+   "title": "全职猎人",
+   "aliases": [
+    "猎人",
+    "HUNTER×HUNTER",
+    "HxH",
+    "念能力"
+   ],
+   "summary": "富坚义博的念能力漫，猎人考试、蚂蚁篇，停更本身也是梗。",
+   "detail": "富坚义博原作，1999 年和 2011 年两版动画，Madhouse 做的 2011 版最常被推。设定是「念」能力分六大系统，战斗讲究规则和算计。看点是蚂蚁篇的黑暗和战力体系，圈里「念能力」「富坚又休刊了」都是日常。",
+   "tags": [
+    "番剧",
+    "热血",
+    "经典"
+   ],
+   "source": "https://www.ntv.co.jp/hunterhunter/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kusuriya",
+   "title": "药屋少女的呢喃",
+   "aliases": [
+    "药屋少女",
+    "药师少女的独语",
+    "猫猫",
+    "薬屋のひとりごと"
+   ],
+   "summary": "后宫里的药师猫猫靠推理和药理破案，古风推理番的黑马。",
+   "detail": "日向夏原作，TOHO animation 和 OLM 2023 年做的动画。舞台是仿古代中国的后宫，主角猫猫是药师，被卖进宫里做杂役，靠药理知识和观察力一路破案，跟宦官壬氏来回拉扯。看点是宫廷里的算计和猫猫那种「别烦我」的冷淡劲儿，圈里直接叫「猫猫」「药屋」。",
+   "tags": [
+    "番剧",
+    "推理",
+    "古风"
+   ],
+   "source": "https://kusuriya-anime.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "slam-dunk",
+   "title": "灌篮高手",
+   "aliases": [
+    "灌篮",
+    "SLAM DUNK",
+    "樱木花道",
+    "湘北"
+   ],
+   "summary": "樱木花道打篮球，90 年代运动番天花板，2022 年还有剧场版。",
+   "detail": "井上雄彦原作，1993 年东映动画化，2022 年剧场版《THE FIRST SLAM DUNK》换宫城良田视角重讲山王战。主角樱木花道为追女生加入篮球部，从门外汉打成主力。看点是比赛节奏和「教练，我想打篮球」这句台词，圈里提篮球番基本绕不开它。",
+   "tags": [
+    "番剧",
+    "运动",
+    "经典"
+   ],
+   "source": "https://slamdunk-movie.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "haikyuu",
+   "title": "排球少年！！",
+   "aliases": [
+    "排球",
+    "小排球",
+    "Haikyuu",
+    "乌野"
+   ],
+   "summary": "乌野高中排球队，一群矮子和怪才往全国打，热血到犯规。",
+   "detail": "古馆春一原作，Production I.G 制作，2014 年开播，后面还有剧场版《垃圾场决战》。主角日向翔阳个子矮但弹跳惊人，跟天才二传影山飞雄组「怪人快攻」。看点是比赛分镜和每个对手都写得很足，圈里「小排球」「及川」都是熟词。",
+   "tags": [
+    "番剧",
+    "运动",
+    "热血"
+   ],
+   "source": "https://haikyu.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kiminonawa",
+   "title": "你的名字。 / 新海诚",
+   "aliases": [
+    "你的名字",
+    "君の名は",
+    "新海诚",
+    "Your Name",
+    "天气之子",
+    "铃芽之旅"
+   ],
+   "summary": "新海诚的灾难系青春动画，画面美到能当壁纸，2016 年爆火。",
+   "detail": "新海诚执导，2016 年上映，讲乡下女孩三叶和东京少年泷互换身体，最后牵出一场彗星灾难。看点是每一帧都能截图的画面、RADWIMPS 的歌，还有「你是谁」那条线。新海诚后来还有《天气之子》《铃芽之旅》，风格一路延续，圈里提「新海诚」基本等于提「美到窒息的青春片」。",
+   "tags": [
+    "剧场版",
+    "青春",
+    "经典"
+   ],
+   "source": "https://www.kiminona.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sen-to-chihiro",
+   "title": "千与千寻 / 宫崎骏",
+   "aliases": [
+    "千与千寻",
+    "神隐少女",
+    "宫崎骏",
+    "吉卜力",
+    "Spirited Away"
+   ],
+   "summary": "宫崎骏和吉卜力的代表作，少女闯神隐世界，拿过奥斯卡。",
+   "detail": "宫崎骏执导、吉卜力 2001 年出品，拿下奥斯卡最佳动画长片。小女孩千寻误入神灵的世界，父母变成猪，她在汤屋打工换回名字。看点是想象力密度和「不要忘记自己的名字」这条线，无脸男、汤婆婆都是熟脸。圈里提「吉卜力」「宫崎骏」一般就是提它和《龙猫》《哈尔的移动城堡》。",
+   "tags": [
+    "剧场版",
+    "经典",
+    "吉卜力"
+   ],
+   "source": "https://www.ghibli.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "gojo-satoru",
+   "title": "五条悟",
+   "aliases": [
+    "五条",
+    "五条老师",
+    "最强咒术师",
+    "Gojo"
+   ],
+   "summary": "《咒术回战》最强咒术师，白发眼罩，摘眼罩就是开打。",
+   "detail": "咒术高专的老师，术式是「无下限」，能玩「苍」「赫」和虚式「茈」，领域是「无量空处」。性格吊儿郎当，学生面前没个正形，打起来又是压倒性强。圈里「五条老师」「摘眼罩」是固定说法，涩谷被封印那段讨论度极高。",
+   "tags": [
+    "角色",
+    "咒术回战"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ryomen-sukuna",
+   "title": "两面宿傩",
+   "aliases": [
+    "宿傩",
+    "宿傩大爷",
+    "诅咒之王",
+    "Sukuna"
+   ],
+   "summary": "《咒术回战》的诅咒之王，附在虎杖身上，四手四眼。",
+   "detail": "千年前的咒术师，被称作「诅咒之王」，手指被做成特级咒物，附身到虎杖悠仁身上。术式是「解」和「捌」，领域「伏魔御厨子」。性格纯粹享受战斗和破坏，圈里「宿傩大爷」叫得最多，后期战力讨论基本都绕着他转。",
+   "tags": [
+    "角色",
+    "咒术回战"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "itadori-yuji",
+   "title": "虎杖悠仁",
+   "aliases": [
+    "虎杖",
+    "悠仁",
+    "宿傩容器",
+    "Itadori"
+   ],
+   "summary": "《咒术回战》主角，吞了宿傩手指，身体素质离谱。",
+   "detail": "高中生，为了救同学吞下宿傩的手指，成了宿傩的容器，之后进咒术高专。体术强、抗击打，招数是「径庭拳」「黑闪」。性格直、共情重，圈里常说他「明明是主角却总在挨打」，跟伏黑惠、钉崎野蔷薇是三人组。",
+   "tags": [
+    "角色",
+    "咒术回战"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "fushiguro-megumi",
+   "title": "伏黑惠",
+   "aliases": [
+    "伏黑",
+    "惠",
+    "影法术",
+    "Megumi"
+   ],
+   "summary": "《咒术回战》的影法术使用者，能召式神，拼命时召魔虚罗。",
+   "detail": "咒术高专一年级，禅院家血统，术式「十种影法术」用影子召式神，最强的是八握剑异戒神将魔虚罗。召唤时要念「布瑠部由良由良」，这句咒语在圈里被玩成梗。性格闷、责任感重，跟虎杖是搭档。",
+   "tags": [
+    "角色",
+    "咒术回战"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "anya",
+   "title": "阿尼亚",
+   "aliases": [
+    "阿尼亚·福杰",
+    "Anya",
+    "读心少女",
+    "哇库哇库"
+   ],
+   "summary": "《间谍过家家》里会读心的女儿，表情包顶流。",
+   "detail": "实验体，能读别人心声，被黄昏收养进这个假家庭。最爱看间谍动画、爱吃花生，口头禅是「哇库哇库」。她的颜艺表情包在国内传得极广，圈里提「阿尼亚」基本等于提表情包。",
+   "tags": [
+    "角色",
+    "间谍过家家"
+   ],
+   "source": "https://spy-family.net/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "takamatsu-tomori",
+   "title": "高松灯",
+   "aliases": [
+    "灯",
+    "灯皇",
+    "Tomori",
+    "高松燈"
+   ],
+   "summary": "《MyGO!!!!!》的主唱，声音薄，一开口就扎人。",
+   "detail": "MyGO!!!!! 的 vocal，性格内向、说话小声，写出来的词很直。名场面是她在 live 上突然唱起「春日影」，把整团关系唱崩。圈里「灯」「灯皇」都指她，声优羊宫妃那也因此出圈。",
+   "tags": [
+    "角色",
+    "MyGO"
+   ],
+   "source": "https://anime.bang-dream.com/mygo/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chihaya-anon",
+   "title": "千早爱音",
+   "aliases": [
+    "爱音",
+    "Anon",
+    "千早愛音"
+   ],
+   "summary": "《MyGO!!!!!》的吉他手，社交达人，负责把团拉起来。",
+   "detail": "转学生，会来事、会张罗，是最早张罗组乐队的人，弹吉他。表面阳光其实也在硬撑，剧情里承担了不少推动。圈里直接叫「爱音」，她跟素世的对手戏是名场面。",
+   "tags": [
+    "角色",
+    "MyGO"
+   ],
+   "source": "https://anime.bang-dream.com/mygo/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nagasaki-soyo",
+   "title": "长崎素世",
+   "aliases": [
+    "素世",
+    "Soyo",
+    "长崎爽世",
+    "長崎そよ"
+   ],
+   "summary": "《MyGO!!!!!》的贝斯手，表面温柔，执念深到吓人。",
+   "detail": "贝斯手，家里条件好，说话软，但对旧团 CRYCHIC 的执念极重，是「春日影」那场戏的核心。圈里叫她「素世」，她那种笑着施压的段落被剪成大量二创，也是全剧争议最大的角色之一。",
+   "tags": [
+    "角色",
+    "MyGO"
+   ],
+   "source": "https://anime.bang-dream.com/mygo/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "inoue-nina",
+   "title": "井芹仁菜",
+   "aliases": [
+    "仁菜",
+    "Nina",
+    "井芹仁菜"
+   ],
+   "summary": "《GBC》的主唱，退学上东京，脾气冲，唱起来不要命。",
+   "detail": "《少女乐队的呐喊》主角，熊本出身，因为不服学校的处理退学跑到东京，碰上桃香后组了刺刺。性格倔、认死理，唱歌时整个人是炸的。圈里「仁菜」指的就是她，那股「我没错」的劲儿是这部的招牌。",
+   "tags": [
+    "角色",
+    "GBC"
+   ],
+   "source": "https://girls-band-cry.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "gotoh-hitori",
+   "title": "后藤一里（波奇）",
+   "aliases": [
+    "波奇",
+    "波奇酱",
+    "一里",
+    "吉他英雄",
+    "Bocchi"
+   ],
+   "summary": "《孤独摇滚》的社恐吉他手，粉发，脑内小剧场特别多。",
+   "detail": "结束乐队的吉他手，网上叫「吉他英雄」，现实里社恐到不敢跟人说话，一紧张就化成各种抽象形态。看点是她的脑补和颜艺，圈里直接叫「波奇酱」，「社恐」两个字基本跟她绑定。",
+   "tags": [
+    "角色",
+    "孤独摇滚"
+   ],
+   "source": "https://bocchi.rocks/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "frieren",
+   "title": "芙莉莲",
+   "aliases": [
+    "芙莉莲老师",
+    "千年精灵",
+    "Frieren",
+    "フリーレン"
+   ],
+   "summary": "《葬送的芙莉莲》的精灵魔法使，活了一千多年，情感很迟钝。",
+   "detail": "勇者一行的魔法使，精灵，寿命长到对时间没概念。打完魔王后重走一遍旅途，才慢慢理解辛美尔当年那些话。战斗时冷静到冷酷，平时又有点天然，爱好是收集魔导书。圈里叫她「芙莉莲老师」「千年精灵」。",
+   "tags": [
+    "角色",
+    "葬送的芙莉莲"
+   ],
+   "source": "https://frieren-anime.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "makima",
+   "title": "玛奇玛",
+   "aliases": [
+    "玛奇玛",
+    "Makima",
+    "支配恶魔",
+    "马骑马"
+   ],
+   "summary": "《电锯人》里电次的公安上司，支配恶魔，笑得越温柔越吓人。",
+   "detail": "电次在公安的顶头上司，真实身份是支配恶魔，能力是支配比自己低等的存在。说话永远客气、表情永远温和，做的事一件比一件狠，是整部作品压迫感的来源。圈里名场面是那句「汪」，还有她跟电次之间说不清的关系，常被拿来当「温柔反派」的样本。",
+   "tags": [
+    "角色",
+    "电锯人"
+   ],
+   "source": "https://chainsawman.dog/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "levi-ackerman",
+   "title": "利威尔·阿克曼",
+   "aliases": [
+    "利威尔",
+    "兵长",
+    "Levi",
+    "利威尔兵长",
+    "一米六"
+   ],
+   "summary": "《进击的巨人》调查兵团的兵长，被叫人类最强，洁癖加毒舌。",
+   "detail": "调查兵团的兵长，被称为「人类最强士兵」，立体机动装置玩得跟飞一样，旋转斩击是招牌。性格冷、话少、有洁癖，对部下其实很护。圈里直接叫「兵长」，身高梗（一米六）常年被玩，那句「选一条不会让自己后悔的路」也常被引用。",
+   "tags": [
+    "角色",
+    "进击的巨人"
+   ],
+   "source": "https://shingeki.tv/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ci-41-miao",
+   "title": "茈 / 41 秒",
+   "aliases": [
+    "茈",
+    "虚式茈",
+    "41秒",
+    "茈发动前的41秒",
+    "五条吟唱"
+   ],
+   "summary": "五条悟的大招「茈」，前摇被网友掐表数秒，「41 秒」成了梗。",
+   "detail": "虚式「茈」是五条悟把「苍」和「赫」合起来的招，威力大、动静也大，念招式名那一段自带仪式感。动画播到这段时，圈里开始拿它玩「前摇掐表」的梗，「茈发动前的 41 秒」就这么传开了，具体秒数是网友自己数的，不同版本对不上，但说法本身在中文圈很通行。现在用来形容大招前摇太长，或者「等一个大的」。",
+   "tags": [
+    "梗",
+    "咒术回战",
+    "台词"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "ling-yu-zhan-kai",
+   "title": "领域展开 / 无量空处",
+   "aliases": [
+    "领域展开",
+    "领域",
+    "无量空处",
+    "伏魔御厨子"
+   ],
+   "summary": "咒术里的终极招式，喊一句「领域展开」，把对手关进自己的规则。",
+   "detail": "《咒术回战》的设定，术师用咒力构建出带「必中」效果的封闭空间，喊招式名那一刻最帅。五条悟的是「无量空处」，宿傩是「伏魔御厨子」。圈里拿它当万能句式，遇到离谱场面就来一句「领域展开」。",
+   "tags": [
+    "梗",
+    "咒术回战",
+    "黑话"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hui-ying-de",
+   "title": "会赢的 / 我打宿傩？",
+   "aliases": [
+    "会赢的",
+    "我打宿傩",
+    "你是最强的",
+    "真的假的"
+   ],
+   "summary": "五条悟对宿傩那句「会赢的」，后来成了 flag 代名词。",
+   "detail": "五条悟解封后对上宿傩，放话「会赢的」，结果后续走向让这句成了经典 flag。圈里现在说「会赢的」多半是反讽，常配「我打宿傩？真的假的」一起用，形容被安排了必输的局。夸人时也会来一句「你是最强的」，半真半玩。",
+   "tags": [
+    "梗",
+    "咒术回战",
+    "台词"
+   ],
+   "source": "https://www.jujutsukaisen.jp/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chun-ri-ying",
+   "title": "春日影 / 为什么要演奏春日影",
+   "aliases": [
+    "春日影",
+    "为什么要演奏春日影",
+    "春日影事件"
+   ],
+   "summary": "《MyGO!!!!!》里那首把团唱散的歌，前奏一响就是名场面。",
+   "detail": "《春日影》是 CRYCHIC 时期的歌，MyGO 的 live 上灯突然唱起来，直接引爆了素世的情绪，成了全剧最出名的场面。圈里「为什么要演奏春日影」是固定句式，听到前奏就开始刷，也用来形容「明知会炸还偏要提」。",
+   "tags": [
+    "梗",
+    "MyGO",
+    "名场面"
+   ],
+   "source": "https://anime.bang-dream.com/mygo/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bo-qi-she-kong",
+   "title": "波奇 / 社恐梗",
+   "aliases": [
+    "波奇",
+    "波奇酱",
+    "社恐",
+    "波奇化了"
+   ],
+   "summary": "《孤独摇滚》后藤一里的社恐梗，一紧张就化成抽象形态。",
+   "detail": "波奇在陌生人面前会僵住、脑内疯狂加戏，动画用各种画风突变表现她的社恐，这些片段被剪成大量表情包。圈里说「我社恐」时经常配波奇，或者说「波奇化了」，形容当场想找地缝钻进去。",
+   "tags": [
+    "梗",
+    "孤独摇滚",
+    "表情包"
+   ],
+   "source": "https://bocchi.rocks/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ora-ora",
+   "title": "欧拉欧拉 / 木大木大",
+   "aliases": [
+    "欧拉欧拉",
+    "木大木大",
+    "欧拉",
+    "木大",
+    "无駄"
+   ],
+   "summary": "JOJO 的连打喊声：承太郎「欧拉欧拉」，DIO「木大木大」。",
+   "detail": "《JOJO》里替身连打时会吼出拟声词，空条承太郎是「欧拉欧拉欧拉」，DIO 是「木大木大」（無駄，没用的意思）。两边对吼是第三部最出名的场面，圈里拿它当打架、争论、加速的通用音效。",
+   "tags": [
+    "梗",
+    "JOJO",
+    "台词"
+   ],
+   "source": "https://jojo-portal.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hu-xi-fa",
+   "title": "呼吸法",
+   "aliases": [
+    "呼吸法",
+    "全集中呼吸",
+    "水之呼吸",
+    "日之呼吸",
+    "呼吸"
+   ],
+   "summary": "《鬼灭之刃》的战斗体系，练呼吸强化身体，招式带属性。",
+   "detail": "鬼杀队用「呼吸法」强化体能和斩击，分水、炎、雷、风、岩、霞、日之呼吸等流派，出招时喊「◯之呼吸・◯之型」。动画把呼吸法画成浮世绘风格的水火特效，是它最出圈的视觉。圈里「全集中呼吸」也被拿来形容集中注意力。",
+   "tags": [
+    "梗",
+    "鬼灭之刃",
+    "黑话"
+   ],
+   "source": "https://kimetsu.com/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "er-ci-yuan",
+   "title": "二刺猿 / 番剧党",
+   "aliases": [
+    "二刺猿",
+    "二次元",
+    "番剧党",
+    "老二次元"
+   ],
+   "summary": "「二次元」的自嘲叫法，指深度看番、混圈的人。",
+   "detail": "「二刺猿」是「二次元」的谐音自嘲，带点玩梗意味，圈内人自己用没问题，外人拿来骂就容易吵起来。「番剧党」指主要看日本 TV 动画的人，跟「游戏党」「漫画党」相对，聊起来常自嘲「老二次元了」。",
+   "tags": [
+    "梗",
+    "圈内话",
+    "黑话"
+   ],
+   "source": "https://www.bilibili.com/v/anime/serial/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ru-men-fan",
+   "title": "新手入门看什么",
+   "aliases": [
+    "入门番",
+    "新手番",
+    "第一部番",
+    "推荐番"
+   ],
+   "summary": "给不怎么看番的人推荐：先挑节奏快、门槛低的。",
+   "detail": "想入门一般从制作好、剧情直给的开始：《间谍过家家》《孤独摇滚》轻松，《鬼灭之刃》《咒术回战》打斗爽，《葬送的芙莉莲》慢热但后劲大。老牌的《钢之炼金术师 FA》《进击的巨人》完成度高，适合一次看完。别一上来就推 EVA 这种要背景知识的。",
+   "tags": [
+    "入门",
+    "常识"
+   ],
+   "source": "https://bangumi.tv/",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "ji-du-fan",
+   "title": "季度番 / 追番补番",
+   "aliases": [
+    "季度番",
+    "一月番",
+    "四月番",
+    "七月番",
+    "十月番",
+    "追番",
+    "补番",
+    "新番"
+   ],
+   "summary": "日本动画按季度播，一季三个月；跟着播叫追番，攒完再看叫补番。",
+   "detail": "TV 动画一般 12 到 13 集一季，按一月、四月、七月、十月开播，所以有「一月番」「四月番」的说法。跟着更新看叫「追番」，等完结一次性看完叫「补番」，同一季度的作品会被人横向比，于是有「本季最佳」「霸权番」。圈里还有两个高频词：「剧透」是提前说剧情，「党争」是站不同 CP 互相争。",
+   "tags": [
+    "入门",
+    "常识",
+    "圈内话"
+   ],
+   "source": "https://bangumi.tv/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zai-na-kan",
+   "title": "番剧在哪看 / 剧场版 vs TV",
+   "aliases": [
+    "在哪看番",
+    "B站番剧",
+    "港澳台",
+    "剧场版",
+    "TV版"
+   ],
+   "summary": "国内主要看 B 站买版权的番；剧场版是单独上映的电影。",
+   "detail": "国内正版基本在 B 站（哔哩哔哩）番剧区，没引进的会提到「港澳台」版本或者海外平台，所以常听到「等港澳台」。剧场版是单独上映的电影，篇幅短、制作规格高，常见两种：原创剧情（比如《你的名字。》）和 TV 总集篇加新内容。圈里说「等剧场版」就是等这个。",
+   "tags": [
+    "入门",
+    "常识"
+   ],
+   "source": "https://www.bilibili.com/v/anime/serial/",
+   "confidence": "medium",
+   "sensitive": false
+  }
+ ]
+}

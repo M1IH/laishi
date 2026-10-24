@@ -1,0 +1,12 @@
+{
+  "platform_id": {
+    "description": "AstrBot QQ 平台 ID",
+    "type": "string",
+    "default": "miruku"
+  },
+  "target_qq": {
+    "description": "仅记录此 QQ 私聊；留空则不记录",
+    "type": "string",
+    "default": ""
+  }
+}

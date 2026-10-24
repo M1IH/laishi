@@ -1,0 +1,390 @@
+{
+  "topic": "sanguosha",
+  "title": "三国杀",
+  "description": "三国杀的常见模式、基础牌、经典武将与玩家黑话，够 Miruku 接住来世随口一提，不装懂。",
+  "entries": [
+    {
+      "slug": "san-guo-sha",
+      "title": "三国杀",
+      "aliases": [
+        "三国杀",
+        "杀",
+        "桌游",
+        "游卡"
+      ],
+      "summary": "国产桌游卡牌，扮演主公忠臣反贼内奸，用杀闪桃和锦囊把别人打没血。",
+      "detail": "三国杀是游卡桌游 2008 年出的国产卡牌游戏，最初是实体桌游。最经典的是身份场：主公、忠臣、反贼、内奸四个身份互相猜、互相打，出杀、闪、桃、锦囊和装备牌，把对方体力打到 0 就出局。后来线上有移动版、OL、十周年等版本，还衍生出国战、斗地主、1v1 等模式。聊天里说「打三国杀」「三国杀吗」就是约这个。",
+      "tags": [
+        "基础",
+        "桌游"
+      ],
+      "source": "https://baike.baidu.com/item/三国杀",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "shen-fen-chang",
+      "title": "身份场",
+      "aliases": [
+        "身份局",
+        "身份模式",
+        "军八"
+      ],
+      "summary": "身份局就是4种身份互咬：主公忠臣一伙，反贼杀主公，内奸要活到最后。",
+      "detail": "8人局最常见，主公1、忠臣2、反贼4、内奸1，只有主公身份公开。反贼只要主公死就算赢；忠臣要护主公把反贼和内奸清完；内奸得先帮主公清场，最后单独杀主公。最容易搞错的是内奸不能提前弄死主公，也不能让反贼把主公杀了。",
+      "tags": [
+        "模式"
+      ],
+      "source": "https://www.sanguosha.cn/pc/mode-info-1.html",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "shen-fen-jiang-cheng",
+      "title": "身份奖惩",
+      "aliases": [
+        "奖惩",
+        "击杀奖励",
+        "主公杀忠臣"
+      ],
+      "summary": "杀反贼摸三张，主公杀忠臣要弃光手牌——身份局最容易吃亏的规矩。",
+      "detail": "任何人杀死反贼立刻摸3张牌；主公误杀忠臣则弃置所有手牌和装备，等于自废一回合。反贼和内奸互相杀没有奖励。所以“主公杀忠臣”基本等于当场投降，也常被队友骂。",
+      "tags": [
+        "模式",
+        "规则"
+      ],
+      "source": "https://www.9game.cn/sgs/1050036.html",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "guo-zhan",
+      "title": "国战",
+      "aliases": [
+        "国战模式",
+        "双将",
+        "珠联璧合"
+      ],
+      "summary": "国战是暗将双将局，魏蜀吴群自己认亲，野心家谁都不算队友。",
+      "detail": "8人，每人两张同势力武将叠着用，势力和身份都不公开，出牌才慢慢暴露。同一势力全灭才算被灭，最后活着的势力赢。野心家单独算一方，得把其他势力全清掉。还有珠联璧合：特定双将组合能额外摸牌，是国战的一大乐趣。",
+      "tags": [
+        "模式"
+      ],
+      "source": "https://www.sanguosha.cn/pc/mode-info-4.html",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "pai-wei-sai",
+      "title": "排位赛（2v2）",
+      "aliases": [
+        "2v2",
+        "排位",
+        "欢乐成双"
+      ],
+      "summary": "排位赛是2v2，四个人轮着动，比身份局快很多。",
+      "detail": "四人分成两边，自己这边两人要配合选将，一般一个输出一个辅助或控制。移动版排位赛有段位、节奏快，朋友开黑最常打这个。别把2v2当单挑，队友的牌和血量都要一起算。",
+      "tags": [
+        "模式"
+      ],
+      "source": "https://www.sanguosha.cn/pc/mode-info-2.html",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "dou-di-zhu",
+      "title": "斗地主",
+      "aliases": [
+        "欢乐斗地主",
+        "3人局"
+      ],
+      "summary": "斗地主是1打2：地主多一点加成，两个农民合力弄死他。",
+      "detail": "3人局，地主有额外技能和加成，两个农民是一队，死一个另一个还能接着打。一局5分钟左右，是移动版最火的手游化模式。界徐盛在斗地主里常年T0，靠破军加酒杀一套带走。",
+      "tags": [
+        "模式"
+      ],
+      "source": "https://www.sanguosha.cn/pc/mode-info-5.html",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "dan-tiao",
+      "title": "1v1（单挑）",
+      "aliases": [
+        "1v1",
+        "单挑",
+        "单骑"
+      ],
+      "summary": "1v1就是两个人单挑，没有队友救，拼手牌和技能。",
+      "detail": "各上一个将，常见于朋友互喷和练将。没有队友意味着卖血、留闪、卡距离的判断比身份局更狠，先手优势也明显。移动版里的“单骑”就是官方1v1玩法。",
+      "tags": [
+        "模式"
+      ],
+      "source": "https://wiki.biligame.com/sgs/单骑",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "sha-shan-tao",
+      "title": "杀、闪、桃",
+      "aliases": [
+        "杀",
+        "闪",
+        "桃",
+        "基本牌"
+      ],
+      "summary": "杀打人、闪躲杀、桃回血救人，这三张是整局的地基。",
+      "detail": "出牌阶段默认只能出一张杀（技能或连弩除外），被杀的人要打出闪才免伤。桃能给自己回1血，也能在别人濒死时救人。160张牌堆里杀44、闪24、桃12，杀比闪多得多，硬顶迟早顶不住。",
+      "tags": [
+        "基本牌",
+        "规则"
+      ],
+      "source": "https://wiki.biligame.com/sgs/杀",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jiu",
+      "title": "酒",
+      "aliases": [
+        "酒杀",
+        "喝酒",
+        "军争酒"
+      ],
+      "summary": "酒是军争篇的牌：喝一口让下一张杀伤害+1，自己濒死时还能当桃用。",
+      "detail": "整副牌只有5张（♦9、♣9、♠9、♠3、♣3）。出牌阶段限一次，令本回合下一张杀的伤害+1；濒死时使用则回复1点体力，这个用法不限次数。所以“酒杀”是2点伤害，配上加伤技能很容易一发带走。注意这是卡牌，不是真喝酒。",
+      "tags": [
+        "基本牌",
+        "军争"
+      ],
+      "source": "https://wiki.biligame.com/sgs/酒",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "wu-xie-ke-ji",
+      "title": "无懈可击",
+      "aliases": [
+        "无懈",
+        "反无懈"
+      ],
+      "summary": "无懈可击是万能打断：谁用锦囊你都能甩一张把它顶掉。",
+      "detail": "对任意锦囊生效，抵消它的效果；无懈本身也能被无懈，可以连锁打。手里留无懈主要防乐不思蜀、顺手牵羊、南蛮入侵、万箭齐发和桃园结义。",
+      "tags": [
+        "锦囊"
+      ],
+      "source": "https://wiki.biligame.com/sgs/无懈可击",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "zhuang-bei-pai",
+      "title": "装备牌",
+      "aliases": [
+        "武器",
+        "防具",
+        "坐骑",
+        "距离"
+      ],
+      "summary": "装备分武器、防具、坐骑；武器管攻击距离和特效，坐骑管距离。",
+      "detail": "武器决定你能杀到多远，有的还带特效，比如古锭刀、麒麟弓、诸葛连弩（可以无限出杀）。防具如八卦阵（判定红色当闪）、仁王盾。坐骑最容易混：+1马是别人离你更远（防守），-1马是你离别人更近（进攻）。",
+      "tags": [
+        "装备",
+        "规则"
+      ],
+      "source": "https://wiki.biligame.com/sgs/装备",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "pan-ding-yan-shi",
+      "title": "判定与延时锦囊",
+      "aliases": [
+        "判定",
+        "判定区",
+        "乐不思蜀",
+        "闪电",
+        "兵粮寸断"
+      ],
+      "summary": "判定就是翻牌堆顶一张看花色点数，乐不思蜀、闪电这些全靠它。",
+      "detail": "延时锦囊先放进目标的判定区，等他的回合开始才判定。乐不思蜀：判定不是红桃就跳过出牌阶段，等于废一回合。兵粮寸断：判定不是梅花就跳过摸牌阶段。闪电：判定♠2~9则受3点雷电伤害并弃置，否则传给下家，越拖越危险。",
+      "tags": [
+        "锦囊",
+        "规则"
+      ],
+      "source": "https://wiki.biligame.com/sgs/闪电",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jun-zheng-pian",
+      "title": "军争篇与扩展包",
+      "aliases": [
+        "军争",
+        "标准包",
+        "扩展包",
+        "风火林山"
+      ],
+      "summary": "标准包是底子，军争篇加了酒和属性杀，牌堆从108张变160张。",
+      "detail": "标准包108张牌加标准武将；军争篇再补52张，包括酒、火杀雷杀、火攻、铁索连环、兵粮寸断、古锭刀、白银狮子等，凑成160张。后面还有风火林山、一将成名等扩展。线上基本都用军争牌堆，别拿纯标准包的印象去套。",
+      "tags": [
+        "版本",
+        "规则"
+      ],
+      "source": "https://wiki.biligame.com/sgs/酒",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "biao-bao-zhu-gong",
+      "title": "标包主公：曹操、刘备、孙权",
+      "aliases": [
+        "曹操",
+        "刘备",
+        "孙权",
+        "奸雄",
+        "仁德",
+        "制衡"
+      ],
+      "summary": "曹操奸雄、刘备仁德、孙权制衡，是标包三个主公，技能都好懂。",
+      "detail": "曹操【奸雄】：受到伤害后拿走造成伤害的牌。刘备【仁德】：把牌给队友，给出第二张时回1血。孙权【制衡】：弃任意张牌再摸等量，是最经典的过牌技。三个都是主公，配主公技时更肉。",
+      "tags": [
+        "武将"
+      ],
+      "source": "https://wiki.biligame.com/sgs/曹操",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jing-dian-qiang-jiang",
+      "title": "经典强将：诸葛亮、貂蝉、吕布",
+      "aliases": [
+        "诸葛亮",
+        "貂蝉",
+        "吕布",
+        "观星",
+        "空城",
+        "离间",
+        "无双"
+      ],
+      "summary": "诸葛亮观星空城、貂蝉离间闭月、吕布无双，都是出圈的老牌强将。",
+      "detail": "诸葛亮【观星】回合开始看牌堆顶几张重新排序，【空城】没手牌时不能被指定杀或决斗。貂蝉【离间】弃一张牌让两个男性角色决斗，【闭月】结束阶段摸一张。吕布【无双】是锁定技：他的杀要两张闪，他的决斗要两张杀。",
+      "tags": [
+        "武将"
+      ],
+      "source": "https://wiki.biligame.com/sgs/诸葛亮",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jie-xu-sheng",
+      "title": "界徐盛",
+      "aliases": [
+        "破军",
+        "盛必击而破之"
+      ],
+      "summary": "界徐盛是移动版公认的超模菜刀，破军一开对面基本没法闪。",
+      "detail": "2020年在移动版上架。界徐盛的【破军】能按目标体力值把对方的牌扣到武将牌上，等于强行扒牌加打穿防御，配合酒杀、古锭刀一发就能带走。操作门槛极低、强度极高，是“阴间武将”讨论的起点，属于玩家又骂又用的典型。",
+      "tags": [
+        "武将",
+        "黑话"
+      ],
+      "source": "https://wiki.biligame.com/sgs/界徐盛",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "da-bao",
+      "title": "大宝",
+      "aliases": [
+        "界徐盛外号",
+        "小宝",
+        "稀世珍宝"
+      ],
+      "summary": "“大宝”就是界徐盛：官方给他挂过“稀世珍宝”，玩家嫌绕口就叫大宝。",
+      "detail": "界徐盛是移动版藏珍阁里第一个被标成“稀世珍宝”大奖的武将，简称成了大宝；原版徐盛顺带被叫“小宝”。台词“犯大吴疆土者，盛必击而破之”也成了梗。别人说大宝，基本就是在聊界徐盛。",
+      "tags": [
+        "黑话"
+      ],
+      "source": "https://www.9game.cn/sgs/11103080.html",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jie-xian-tu-po",
+      "title": "界（界限突破）",
+      "aliases": [
+        "界",
+        "界限突破",
+        "突破",
+        "界曹操",
+        "界吕布"
+      ],
+      "summary": "“界”是界限突破，官方给老武将做的加强版，名字前面加个界。",
+      "detail": "官方原本是为了救那些被新武将打崩的老牌名将，推出所谓“武将升级计划”，同一个武将可以选标版或界版，通常界版更强。后来加强幅度越来越大，界徐盛这种就被骂背离初衷。看到“界曹操”“界吕布”就是这套。",
+      "tags": [
+        "黑话",
+        "版本"
+      ],
+      "source": "https://game.xiaomi.com/viewpoint/1127866428_1600664134231_16",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "shen-jiang",
+      "title": "神将",
+      "aliases": [
+        "神",
+        "神曹操",
+        "神关羽",
+        "神赵云"
+      ],
+      "summary": "神将是带“神”字的特殊武将，强度爆炸，一般靠开箱或活动拿。",
+      "detail": "神关羽、神曹操是最早一批，之后神赵云、神甘宁等陆续出。获取方式通常是宝箱、开盒子、活动兑换，不在普通将池里。因为强度和门槛，神将常被当成氪金和数值膨胀的象征。",
+      "tags": [
+        "武将",
+        "黑话"
+      ],
+      "source": "https://www.sanguosha.cn/pc/hero-list.html",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "yin-jian-wu-jiang",
+      "title": "阴间武将",
+      "aliases": [
+        "阴间",
+        "阴间将",
+        "太阴间了"
+      ],
+      "summary": "“阴间武将”是骂超模将的说法：强得不讲道理，像另一个世界来的。",
+      "detail": "最早集中骂的就是界徐盛——不需要操作、只靠出杀就能赢，被说成践踏规则。后来凡是强度离谱、技能难懂、要氪金才有的武将，玩家都叫阴间或阴间将。说某个将“太阴间了”是抱怨平衡崩了，不是夸。",
+      "tags": [
+        "黑话"
+      ],
+      "source": "https://wiki.biligame.com/sgs/阴间武将",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "ban-ben-qu-bie",
+      "title": "移动版、OL、十周年的区别",
+      "aliases": [
+        "移动版",
+        "OL",
+        "十周年",
+        "手游",
+        "端游"
+      ],
+      "summary": "移动版是手游、OL是网页端、十周年是另一个端游，武将池和牌堆都不同。",
+      "detail": "移动版最火，主打斗地主、排位赛、藏珍阁开箱，界徐盛就是这里的。OL 是更老的网页版，节奏偏传统、武将体系不一样。十周年是独立的端游版本，有自己一套武将和活动体系，同一个武将在三个版本的技能数值可能都不同。所以聊强弱前先问一句“你说哪个版本”。",
+      "tags": [
+        "版本",
+        "黑话"
+      ],
+      "source": "https://wiki.biligame.com/sgsol/",
+      "confidence": "medium",
+      "sensitive": false
+    }
+  ]
+}

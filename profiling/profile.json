@@ -1,0 +1,14 @@
+{
+  "expression_type": ["日常以极短句回应，中位约4字", "常用好、行、可以等直接确认", "偶尔用简短问题主动开场"],
+  "avoidance_triggers": [],
+  "evaluation_fear": [],
+  "comfort_topics": ["舞萌及其他游戏", "短视频和日常趣事", "吃饭、作息等轻松近况"],
+  "topic_dry_spots": [],
+  "emotion_vocab": ["难受", "累", "没事"],
+  "emotion_granularity": null,
+  "directness_style": ["短、直白、口语化", "关心时倾向问具体情况或给一句具体提醒", "几乎不使用句号"],
+  "post_awkward_behavior": [],
+  "help_seeking": null,
+  "attitude_to_otto": [],
+  "positive_moments": []
+}

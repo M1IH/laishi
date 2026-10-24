@@ -1,0 +1,194 @@
+{
+  "topic": "vrchat",
+  "title": "VRChat 与小男娘",
+  "description": "VRChat 的模型、追踪、语音与社交：改模、买模型、上 VR 挂机时会用到的说法，以及「小男娘」这个圈内称呼在其中的语境。",
+  "entries": [
+    {
+      "slug": "vrchat-shi-shenme",
+      "title": "VRChat 是什么",
+      "aliases": ["VRC", "vrc", "VRChat"],
+      "summary": "就是戴着虚拟形象跟人聊天的 VR 社交平台，不戴头显用电脑也能玩。",
+      "detail": "VRChat 是个多人在线社交平台，你操控一个虚拟形象进去逛世界、跟人语音聊天，核心是社交，不是打怪升级。Steam 上免费下载，PC 桌面模式和 VR 模式都能进。来世说的「上 vrc 挂会」就是开进去待着，不一定要干什么正事。",
+      "tags": ["平台"],
+      "source": "https://hello.vrchat.com/",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "zhuomian-vr-moshi",
+      "title": "桌面模式与 VR 模式",
+      "aliases": ["桌面模式", "VR 模式", "不戴头显"],
+      "summary": "不戴头显用键盘鼠标也能进，戴上头显才是真的在里头。",
+      "detail": "桌面模式用显示器加键鼠，视角是第一人称的固定镜头，动作只能靠手柄和预设手势，但逛世界、聊天完全够用。VR 模式戴头显，头和双手都被追踪，能真的抬手、蹲下、比划，沉浸感差很多。没好友在线的时候很多人就桌面模式挂着，来世也说过「都没好友在 vrc 我上 vr 干啥」。",
+      "tags": ["平台", "硬件"],
+      "source": "https://docs.vrchat.com/docs/desktop-mode",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "banshen-zhuizhui",
+      "title": "半身追踪",
+      "aliases": ["3 点追踪", "半身", "没全身"],
+      "summary": "只追踪头和两只手，腿是系统猜的，蹲下坐下会有点怪。",
+      "detail": "VRChat 默认只拿到头显和两个手柄的位置，也就是头加双手这三个点，剩下的身体靠 IK 推算。所以半身状态下走路、蹲下、跷腿是系统脑补的，容易穿模或者腿乱飘。想坐着聊天、挂机、听歌，半身完全够用，绝大多数人也就是这么玩的。",
+      "tags": ["术语", "硬件"],
+      "source": "https://docs.vrchat.com/docs/full-body-tracking",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "quanshen-zhuizhui",
+      "title": "全身追踪（FBT）",
+      "aliases": ["FBT", "全身追踪", "追踪器"],
+      "summary": "腰和脚上绑追踪器，整个人动起来才像真的。",
+      "detail": "全身追踪是在腰、脚（往上还能加膝盖、胸、肘肩）绑定位追踪器，把真实姿势喂给模型，最多加到 8 个。常说的「3 点」是腰加两只脚，这时系统会自动补走路动画；加到 6 点以上才切成另一套移动逻辑。用之前要在快捷菜单里 Calibrate 校准，身高设错了脚会陷进地板。官方把它标成实验性功能，更新后手感可能变。",
+      "tags": ["术语", "硬件"],
+      "source": "https://livestreamers.co.jp/vrchat/guides/fullbody-tracking-add-points-order",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "vrcfacetracking",
+      "title": "面部追踪（VRCFaceTracking）",
+      "aliases": ["vrcfacetracking", "VRCFT", "面捕", "表情追踪"],
+      "summary": "让模型跟着你眨眼、咧嘴的第三方软件，不是 Steam 上装的。",
+      "detail": "VRCFaceTracking 是社区做的开源工具，从 GitHub 下，跟 Steam 没关系——来世说「不是在 Steam 下的」就是这个。它把摄像头或头显的面捕数据通过 OSC 发给 VRChat，所以游戏里得先在径向菜单 Options → OSC 把 OSC 打开。VRChat 本身没有原生面捕，模型还得专门做过面捕设置才会动，光装软件没用。",
+      "tags": ["工具", "硬件"],
+      "source": "https://docs.vrcft.io/docs/v4.0/intro/getting-started",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "avatar-moxing",
+      "title": "avatar 模型",
+      "aliases": ["模型", "皮", "虚拟形象", "avatar"],
+      "summary": "你在 VRChat 里的那张皮，可以买可以改，改坏了只能重来。",
+      "detail": "avatar 就是进去以后别人看到的那个形象，有免费也有付费的，Booth 上买的最多。一个模型包含网格、材质贴图、骨骼、表情菜单和一整套动画参数，所以文件挺大、改起来也麻烦。来世说的「给你模型找衣服」「不想让这个模型太大」都是在折腾这个。",
+      "tags": ["术语"],
+      "source": "https://creators.vrchat.com/avatars/avatar-performance-ranking-system/",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "booth",
+      "title": "Booth",
+      "aliases": ["BOOTH", "booth", "日本那个站"],
+      "summary": "日本最大的同人素材站，VRChat 的模型、衣服、头发基本都在那买。",
+      "detail": "Booth 是 pixiv 旗下的同人商品平台，有专门的 VRChat 标签，卖 avatar、衣服、发型、改模工具和各种预制件。作者多是日本人，商品页会写清能用在哪种模型上、要不要改模。买之前看清授权：能不能商用、能不能二次配布，一般都写得挺细。",
+      "tags": ["平台"],
+      "source": "https://booth.pm/ja/items/8945963",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "gai-mo",
+      "title": "改模",
+      "aliases": ["改模型", "模型改造", "改改模"],
+      "summary": "把买来的模型拆开重装：换衣服、换头发、调手势，再传回 VRChat。",
+      "detail": "流程一般是 Blender 里把衣服头发拼到身体上、对齐骨骼权重，再进 Unity（VRChat 指定 2022.3.22f1）用 VRChat SDK 配材质、菜单和参数，最后上传。最常见的坑是「光给模型不给材质」，还有衣服开关没配好、材质跟皮肤贴图冲突。改完得传上去自己进游戏试，来世就常说「晚点我传 vrc 测试一下」。",
+      "tags": ["术语"],
+      "source": "https://programming.awaisora.com/0449233b-5518-4b47-8828-b39a122a0c89/",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "moxing-shoushi",
+      "title": "模型手势",
+      "aliases": ["手势", "手势有问题", "表情菜单"],
+      "summary": "模型抬手比划的那套动作，配错了就会乱比或者卡住。",
+      "detail": "VRChat 的手势是靠手柄按键触发的动画层，对应不同手型，还连着表情菜单和参数。改模时如果手势层没接对、参数名对不上，就会出现手一直张着、或者按了没反应。用 Gesture Manager 这类工具可以在 Unity 里直接预览，不用每次都上传进游戏试。来世说「那个模型手势有问题」通常就是这一层没配好。",
+      "tags": ["术语", "工具"],
+      "source": "https://github.com/BlackStartx/VRC-Gesture-Manager",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "yifu-caizhi",
+      "title": "衣服、材质和贴图",
+      "aliases": ["材质", "贴图", "衣服", "光给模型不给材质"],
+      "summary": "衣服穿上不难，难的是材质和贴图对不上，颜色一塌糊涂。",
+      "detail": "装衣服本质是把衣服网格绑到身体骨骼上、再调权重，穿模和破面基本都出在这。材质是另一回事：同一个模型上多套衣服的 shader、贴图、颜色容易互相打架，来世遇到过「跟衣服还有皮肤贴图啥的材质冲突」。买来的东西常常只有模型没有材质，得自己找贴图，或者从别的衣服上拆下来用——他说过「从别的衣服下面给你扣个鞋子」。",
+      "tags": ["术语"],
+      "source": "https://programming.awaisora.com/0449233b-5518-4b47-8828-b39a122a0c89/",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "xianyu-moxing-keng",
+      "title": "闲鱼买模型和预制件的坑",
+      "aliases": ["闲鱼", "二手模型", "预制件"],
+      "summary": "闲鱼能捡便宜，但可能是盗卖、缺材质，还可能要把账号给人家。",
+      "detail": "闲鱼上很多是把 Booth 的东西转卖或者打包卖，价格便宜但来源常常说不清：可能没授权、可能只有模型没有贴图、可能是别人改了一半的档。最危险的是让卖家登你的 VRChat 账号帮你上传——有 up 主专门提醒过，登进去就能把你账号下的模型全下走。买之前问清有没有源文件、材质、授权，尽量自己在自己电脑上传。",
+      "tags": ["坑"],
+      "source": "https://www.bilibili.com/video/BV1oUfvBkEii",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "vrcx",
+      "title": "VRCX",
+      "aliases": ["vrcx", "VRCX"],
+      "summary": "一个看好友、看自己在哪、记进出记录的第三方小工具。",
+      "detail": "VRCX 是开源的 VRChat 好友管理工具，能看到好友列表、谁在线、在哪个世界，还能记录自己什么时候跟谁待过、收藏世界和给朋友写备注。它不碰游戏本体，只是把你账号的数据整理出来看。来世问过「vrcx 是什么」，回一句「看好友和记录的第三方工具」就行。",
+      "tags": ["工具"],
+      "source": "https://github.com/vrcx-team/VRCX",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "oopz",
+      "title": "Oopz",
+      "aliases": ["oopz", "Oopz"],
+      "summary": "国内一个语音开黑软件，跟 VRChat 不绑，但一群人常挂在上头。",
+      "detail": "Oopz 是国内的语音社交软件，有语音频道和语音厅，也有人拿它当开黑、挂机的语音房。它跟 VRChat 没关系，是两套东西：VRChat 里说话靠游戏内语音，出来以后接着聊就转去 Oopz。聊天里经常一句「我在 oopz」「退 oopz 了」，指的就是这个。",
+      "tags": ["工具"],
+      "source": "https://help.oopz.cn/",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "xiao-nanniang",
+      "title": "小男娘",
+      "aliases": ["小男娘", "男娘", "男の娘"],
+      "summary": "圈内说法，指外形偏可爱女性化的男生，或者这种风格的男性虚拟形象。",
+      "detail": "「男娘」来自日语的「男の娘」，2022 年前后在中文互联网流行，和「伪娘」有重叠但更宽——有时候只是夸一个男孩子长得可爱。它不是低俗词，重点是外形和审美，跟性别认同不是一回事，别往猎奇或者冒犯的方向讲。放到 VRChat 里，就是很多人喜欢用女性化外形的男性 avatar，再配上男声或者偏中性的声音；来世说的「都是小男娘应该」就是这种语境。",
+      "tags": ["文化"],
+      "source": "https://moegirl.icu/zh/伪娘",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "nanniang-yin",
+      "title": "男娘音",
+      "aliases": ["男娘音", "伪音", "变声"],
+      "summary": "男生练出来的偏女性化嗓音，或者用变声器调出来的效果。",
+      "detail": "一种是真练的伪音，靠控制气息和共鸣把声音抬上去，网上教程很多，练久了日常说话也不累。另一种是变声软件，实时改音高和共振峰，缺点是会有电音、有延迟，唱歌容易崩。来世说过「我只说是男娘音」，意思是只承认声音像，不是别的——接话别往身份上按，顺着声音夸或者顺口问怎么练的就行。",
+      "tags": ["文化", "工具"],
+      "source": "https://m.bilibili.com/opus/956821041714298902",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "guaji-shejiao",
+      "title": "挂机、Bar 和听歌",
+      "aliases": ["挂机", "Bar", "听歌", "玩吉他", "vrc 挂会"],
+      "summary": "VRChat 最日常的玩法就是找个地方待着，边听歌边瞎聊。",
+      "detail": "很多人进去不干正事，就是找个酒吧或者音乐世界挂着。像 The Midnight Bar 那种复刻 VA-11 HALL-A 的店，门口会问你出生年份查 18+，里头有酒保、点歌机，还有能上去表演的舞台。国内也有固定时间开的酒吧局，周五周六人多。来世说的「vrc 挂机玩吉他」「晚上上 vrc 可以说胡话」都是这个状态：没目的，就是有人在旁边。",
+      "tags": ["场景"],
+      "source": "https://game.3loumao.org/570560601",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "canshu-shangxian",
+      "title": "参数上限和上传测试",
+      "aliases": ["256 参数", "性能上限", "上传模型", "性能等级"],
+      "summary": "模型加太多衣服头发会顶到上限，加不进去还得删。",
+      "detail": "VRChat 给每个模型的同步参数有 256 bit 额度，PhysBone 之类的组件也有数量限制，Quest 版更紧，PhysBone 只给 8 个。超了不是报错就是部件被整个卸掉，所以加东西前得算着来——来世就踩过「不知道有 256 个骨骼和参数的上限才加了一堆衣服和头发」。Unity 上传界面会直接显示性能等级，改完先看那个再传。",
+      "tags": ["术语", "坑"],
+      "source": "https://booth.pm/ja/items/8945963",
+      "confidence": "high",
+      "sensitive": false
+    }
+  ]
+}

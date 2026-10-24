@@ -1,0 +1,4609 @@
+{
+ "topic": "maimai",
+ "title": "舞萌DX",
+ "description": "舞萌DX（maimai）的玩法术语、判定与成绩、高难曲与热门曲、圈内叫法与机厅文化。面向「对方是舞萌高手」的对话场景。",
+ "entries": [
+  {
+   "slug": "ji-tai-wan-fa",
+   "title": "机台与基础玩法",
+   "aliases": [
+    "洗衣机",
+    "舞萌机台",
+    "打舞萌"
+   ],
+   "summary": "舞萌就是那台长得像洗衣机的街机，八个键加一块屏。",
+   "detail": "机器两台一组，单人一局三首，两个人拼机四首。判定从高到低是 CRITICAL PERFECT、PERFECT、GREAT、GOOD、MISS，谱面难度分绿黄红紫白（BASIC 到 Re:MASTER）。来世说「在投影屏上打舞萌DX」说的就是这个东西。Miruku 也上机打，水平大概 w4 那档。",
+   "tags": [
+    "基础",
+    "机台"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chu-qin-pc",
+   "title": "出勤 / pc / 拼机",
+   "aliases": [
+    "出勤",
+    "pc",
+    "拼机",
+    "打机"
+   ],
+   "summary": "去机厅打舞萌叫出勤，投一次币算一个 pc。",
+   "detail": "pc 就是 play count，一局单人三首，双人四首。两个人一起打叫拼机，能蹭对方解禁的曲子。机厅里排队等机、带朋友入坑都是日常，聊到「舍友觉得打舞萌很牛逼」就是这种语境。",
+   "tags": [
+    "机厅",
+    "术语"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/introduction.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ding-shu",
+   "title": "定数",
+   "aliases": [
+    "谱面定数",
+    "定数表"
+   ],
+   "summary": "定数就是谱面的真实难度小数点，比等级更细。",
+   "detail": "等级只到十五级，定数精确到小数点后一位，同是十四级，十四点九就比十四点二难。算 R 值用的就是定数，目前最高是十五点零（PANDORA PARADOXXX 和系ぎて的 Re:MASTER）。来世问「定数多少」，通常就是问这歌有多难。",
+   "tags": [
+    "术语",
+    "谱面"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "niao",
+   "title": "鸟",
+   "aliases": [
+    "鸟了",
+    "SSS"
+   ],
+   "summary": "鸟就是 SSS，达成率打到一百以上。",
+   "detail": "这说法来自日文「トリプル」的「トリ」，念着念着就成了鸟。达成率一百点零到一百点四九九九都算鸟，来世说「鸟了」「二见鸟了」就是这一把拿了 SSS。比鸟再狠一档是鸟加。",
+   "tags": [
+    "术语",
+    "成绩"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/introduction.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "niao-jia",
+   "title": "鸟加",
+   "aliases": [
+    "鸟加",
+    "SSS+",
+    "寸"
+   ],
+   "summary": "鸟加是 SSS+，达成率要一百点五以上，比鸟更狠。",
+   "detail": "一百点五到一百零一之间才是鸟加，绝赞全打成 CRITICAL PERFECT 才容易摸到。来世说「寸了就是鸟加了」，就是差一点点没到线；「你能帮我鸟加墓守吗」「我自己都没鸟加」都是这个梗。",
+   "tags": [
+    "术语",
+    "成绩"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/introduction.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ap-fc",
+   "title": "AP / FC",
+   "aliases": [
+    "AP",
+    "FC",
+    "理论值",
+    "All Perfect"
+   ],
+   "summary": "AP 是一个 PERFECT 都不掉，FC 是一个 MISS 都不掉。",
+   "detail": "FC 是全连，FC+ 还不能有 GOOD；AP 是全部 PERFECT 以上；AP+ 又叫理论值，要一百零一，绝赞全 CRITICAL PERFECT。来世整活说「对 AP 的崇拜」，说的就是这个。",
+   "tags": [
+    "术语",
+    "成绩"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jue-zan",
+   "title": "绝赞",
+   "aliases": [
+    "BREAK",
+    "绝赞粉"
+   ],
+   "summary": "绝赞就是 BREAK，橙红那种，一个顶好几分。",
+   "detail": "BREAK 的分数占比是普通 note 的五倍，判定还更严，全 CRITICAL PERFECT 才拿得满额外达成率。所以「绝赞掉一个，鸟加就飞了」。来世问「落绝赞会脖子前倾吗」，就是打到关键处人会往前凑。",
+   "tags": [
+    "术语",
+    "判定"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "duan-wei-ren-ding",
+   "title": "段位认定",
+   "aliases": [
+    "段位",
+    "真段位",
+    "里皆传"
+   ],
+   "summary": "舞萌的段位认定是连打四首的考试，过了挂段位牌。",
+   "detail": "普通段位从初段到十段，再往上是真段位，最高真皆传、再往后是里皆传。打的时候有血量，GREAT 以下会扣血，真段位血空了当场结束。每个大版本更新段位会重置回初学者，所以来世问「你什么段位」问的其实是最近有没有在练。",
+   "tags": [
+    "模式",
+    "段位"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/5.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pai-zi",
+   "title": "牌子",
+   "aliases": [
+    "段位牌",
+    "称号"
+   ],
+   "summary": "舞萌的牌子就是段位认定挂上那块段位牌，也泛指称号。",
+   "detail": "段位认定通关后 ID 旁边会挂一个段位指示牌，圈里就叫牌子；有时也拿来说称号、姓名框这些装饰。别人说「发牌子」多半是在晒段位。来世聊起别人有牌子，接一句「什么段」就行。",
+   "tags": [
+    "术语",
+    "段位"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/5.html",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "r-zhi",
+   "title": "R 值（DX Rating）",
+   "aliases": [
+    "R值",
+    "DX Rating",
+    "底分",
+    "B50"
+   ],
+   "summary": "R 值是总实力分，旧曲前三十五加新曲前十五。",
+   "detail": "单曲 R 等于定数乘达成率乘评级系数，再向下取整；一个账号取旧版本最高的三十五首加当前版本最高的十五首。所以叫 B50。来世甩 lxns 链接，多半就是让人看这个数。",
+   "tags": [
+    "术语",
+    "成绩"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hong",
+   "title": "虹",
+   "aliases": [
+    "彩虹",
+    "虹R"
+   ],
+   "summary": "虹就是 R 值一万五以上的彩虹底色，很能打。",
+   "detail": "R 值底色一万四是金，一万四千五是白金，一万五开始变彩虹，所以「虹」是夸人强。来世说「相信彩虹」，就是相信自己能上虹。",
+   "tags": [
+    "术语",
+    "R值"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "quan-liang",
+   "title": "全良",
+   "aliases": [
+    "全良",
+    "全PERFECT"
+   ],
+   "summary": "全良一般指一个都没打歪，舞萌里更常说 AP。",
+   "detail": "「良」是别的音游（比如太鼓）对最高判定的叫法，舞萌这边最高判定叫 CRITICAL PERFECT，全打满就是 AP 或理论值。圈里其实不太说全良，来世真这么说时，意思就是一个都没掉。",
+   "tags": [
+    "术语",
+    "成绩"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "yan",
+   "title": "宴 / 宴会场",
+   "aliases": [
+    "宴谱",
+    "宴会场",
+    "UTAGE"
+   ],
+   "summary": "宴就是宴会场，谱面乱来，等级还带问号。",
+   "detail": "R 值合计到一万才会开放，谱面是非常规的，等级标成十二问号这种，也不参加 R 值计算。店里招募不能选宴谱。来世问「能不能打宴谱」，是在试探水平。",
+   "tags": [
+    "模式",
+    "谱面"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dx-pu",
+   "title": "DX 谱 / 标准谱",
+   "aliases": [
+    "DX谱",
+    "标准谱",
+    "ST谱"
+   ],
+   "summary": "DX 谱有触摸和绝赞长条，标准谱是老谱面。",
+   "detail": "标准谱没有 TOUCH，绝赞只有单点；DX 谱有 TOUCH、EX 判定，还有绝赞 HOLD 和绝赞 SLIDE。一首歌可能两种谱都有，选曲时同时按二号键和七号键切换。来世说「DX 谱」就是指新版那种。",
+   "tags": [
+    "谱面",
+    "术语"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "guo-biao",
+   "title": "国标",
+   "aliases": [
+    "舞萌国标",
+    "国服标准"
+   ],
+   "summary": "国标这词圈里没定论，多半是拿国家标准打趣。",
+   "detail": "来世问「你有舞萌国标吗」，像是在逗 Miruku 有没有官方认证，也可能指国服的成绩或段位。没有统一说法，Miruku 别硬答，反问「你是想考我段位还是想听我吹」更稳。",
+   "tags": [
+    "梗",
+    "社群"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/5.html",
+   "confidence": "low",
+   "sensitive": false
+  },
+  {
+   "slug": "oshama-scramble",
+   "title": "Oshama Scramble!",
+   "aliases": [
+    "Oshama",
+    "おしゃま",
+    "猫猫曲"
+   ],
+   "summary": "Oshama Scramble! 是 t+pazolite 的招牌曲，猫猫出道曲。",
+   "detail": "二零一五年收录在 maimai ORANGE PLUS，BPM 一百九。BGA 里黑猫叫 Shama、白猫叫 Milk，就是这俩角色的起点，还有专门的宴谱。来世直接打「oshama」，说的就是它。",
+   "tags": [
+    "曲目",
+    "梗"
+   ],
+   "source": "https://silentblue.remywiki.com/Oshama_Scramble!",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "qzkago-requiem",
+   "title": "QZKago Requiem",
+   "aliases": [
+    "QZKago",
+    "垃圾桶",
+    "くずかご"
+   ],
+   "summary": "QZKago Requiem 是 Oshama 之后的续作，BPM 257 疯。",
+   "detail": "同样是 t+pazolite 作，二零一八年收录在 maimai FiNALE，属于 PANDORA BOXXX 第一弹，Re:MASTER 是后来补的。曲名读「くずかご」，意思是垃圾桶，BGA 里 Milk 和 Shama 都有出场。来世说「越到后面越乱」，确实是。",
+   "tags": [
+    "曲目",
+    "梗"
+   ],
+   "source": "https://silentblue.remywiki.com/QZKago_Requiem",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "lxns",
+   "title": "lxns 查分器",
+   "aliases": [
+    "lxns",
+    "落雪",
+    "查分器",
+    "国服查分"
+   ],
+   "summary": "lxns 是落雪咖啡屋的查分器，国服成绩都在这查。",
+   "detail": "网址是 maimai.lxns.net，能看和管理成绩、算 R 值，也有公开 API 给 bot 用。不是官方，是玩家做的。有人甩 profile 链接过来，多半就是让你看他的分。",
+   "tags": [
+    "工具",
+    "查分"
+   ],
+   "source": "https://maimai.lxns.net/docs/about",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ji-ting-wen-hua",
+   "title": "机厅与社群文化",
+   "aliases": [
+    "机厅",
+    "出勤",
+    "舞萌大王",
+    "九江maimai交流群"
+   ],
+   "summary": "机厅日常就是出勤、拼机、排队、群里约机，还有舞萌大王。",
+   "detail": "打舞萌要戴手套，护手也护机台；二十四小时音游窝和商业机厅气氛不一样，窝里人开倍票猛刷，机台压力大。圈里有人会被叫「舞萌大王」。Miruku 也出勤、也打实体机，这些梗接得住；但别把某天去了哪家机厅说成具体经历。",
+   "tags": [
+    "社群",
+    "机厅"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter1/2.html",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "fu-wu-qi-shi-jian",
+   "title": "服务器被攻击 / 机台停摆",
+   "aliases": [
+    "世嘉服务器",
+    "炸机",
+    "停机",
+    "8103"
+   ],
+   "summary": "二零二六年初国服被攻击，机台停摆，运营方发过致歉信。",
+   "detail": "来世转过一封运营方致歉信，说舞萌世嘉服务器遭大规模非法攻击，导致机台无法正常运营，还提「每一分钟的停机都意味着实际损失」。同期还有 BL 服务器账单机制出问题，机台先报八一零六警告，再报八一零三锁机。玩家能做的基本只有等修、少开倍票。",
+   "tags": [
+    "事件",
+    "国服"
+   ],
+   "source": "https://bbs.wmc.pub/threads/dx-bl.96/",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "sao-hao-wai-gua",
+   "title": "科技扫号 / 外挂",
+   "aliases": [
+    "扫号",
+    "科技哥",
+    "倍率票",
+    "封禁"
+   ],
+   "summary": "国服外挂扫号是常事，二零二五年九月还全服发过倍率票。",
+   "detail": "挂哥用 User ID 登别人号、把人关小黑屋、往全服塞倍率票，甚至塞敏感日期的票。官方封禁分 bs1 警告和 bs2 封禁，bs1 还能进游戏但功能受限。别把登录二维码给来路不明的 bot。",
+   "tags": [
+    "事件",
+    "外挂"
+   ],
+   "source": "https://xice.cx/posts/maiLog20250906/",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "miruku",
+   "title": "みるく（Miruku）",
+   "aliases": [
+    "みるく",
+    "咪璐库",
+    "Milk",
+    "牛奶猫"
+   ],
+   "summary": "Miruku 就是 みるく，舞萌的白猫角色，おしゃま牛乳的一员。",
+   "detail": "二零一五年在 maimai ORANGE PLUS 登场，有两种形态：一百厘米的小猫娘和一百五十七厘米的少女。生日六月二十五日，配音伊藤明日香，所属おしゃま牛乳，崇拜夏玛，信多喝牛奶能长大。名曲 BGA 里都是她。Miruku 用这个形象，但不等于真人玩家。",
+   "tags": [
+    "角色",
+    "设定"
+   ],
+   "source": "https://moegirl.icu/zh-sg/%E5%92%AA%E7%92%90%E5%BA%93",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shama",
+   "title": "しゃま（夏玛）",
+   "aliases": [
+    "しゃま",
+    "夏玛",
+    "Shama",
+    "黑猫"
+   ],
+   "summary": "しゃま是夏玛，黑猫，Miruku 的偶像兼搭档。",
+   "detail": "和みるく一样在 ORANGE PLUS 登场，一百五十七厘米、十八岁，生日三月十九日，配音种崎敦美，也在おしゃま牛乳。Oshama Scramble! 里是 Milk 憧憬的偶像，后来一起当旅行伙伴。来世说「黑猫等于 Shama」，说的就是她。",
+   "tags": [
+    "角色",
+    "设定"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%A4%8F%E7%8E%9B",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xi-gite",
+   "title": "系ぎて",
+   "aliases": [
+    "系",
+    "系ぎて",
+    "6a级景区",
+    "携手向前",
+    "两舞神直播越级",
+    "玉玉症好了",
+    "手牵手",
+    "系接头",
+    "新手叫疼",
+    "两舞神越级",
+    "俩舞神越级",
+    "我没玉玉症"
+   ],
+   "summary": "Lv15 的 Re:MASTER，BPM 只有 88，靠密度和配置吃人，被叫「系」。",
+   "detail": "rintaro soma 的作品，DX 谱，MASTER 14.7、Re:MASTER 15.0，是少数几首摸到 15 的曲子。BPM 只有 88，看着慢，实际上配置密、判定要求高，属于「慢歌吃基本功」的典型。圈内一般直接叫「系」，也因为它长得像景区宣传片被叫「6a级景区」。",
+   "tags": [
+    "歌曲",
+    "15级",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xaleid-scopix",
+   "title": "Xaleid◆scopiX",
+   "aliases": [
+    "xx",
+    "100日元",
+    "百元之恋",
+    "起床战争",
+    "别笑你也过不了第二关",
+    "万花筒",
+    "0010",
+    "100円",
+    "五万日元",
+    "射雕英雄传",
+    "0010*2",
+    "0010x2"
+   ],
+   "summary": "xi 写的 Lv15，BPM 180，圈内叫「xx」或「100 日元」。",
+   "detail": "xi 的作品，DX 谱，MASTER 14.9、Re:MASTER 15.0，和「系ぎて」「PANDORA PARADOXXX」并列 15 级三首。BPM 180，音符密度极高，属于纯粹的体力+精度曲。圈内常叫「xx」，也被戏称「100 日元」。",
+   "tags": [
+    "歌曲",
+    "15级",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pandora-paradoxxx",
+   "title": "PANDORA PARADOXXX",
+   "aliases": [
+    "潘",
+    "潘多拉",
+    "新手教程",
+    "潘多拉悖论",
+    "天苍苍野茫茫",
+    "盘",
+    "噔噔",
+    "天苍苍",
+    "我有抑郁症",
+    "我有玉玉症",
+    "最简单15",
+    "潘多拉魔盒"
+   ],
+   "summary": "削除的 Lv15，标准谱，被老玩家反讽成「新手教程」。",
+   "detail": "削除的作品，标准谱（不是 DX），MASTER 14.9、Re:MASTER 15.0。BPM 150，配置复杂、读谱难度大，是 15 级三首里唯一的标准谱。圈内叫「潘」，因为太难被反着叫「新手教程」「天苍苍野茫茫」。",
+   "tags": [
+    "歌曲",
+    "15级",
+    "高难",
+    "标准谱"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "raputa",
+   "title": "raputa",
+   "aliases": [
+    "热葡萄",
+    "西直门桥",
+    "拉普塔",
+    "啊",
+    "中国结",
+    "拉普大",
+    "拉谱大",
+    "立交桥",
+    "香格里拉",
+    "打个中国结",
+    "𐎼𐎠𐎱𐎹𐎢𐎫𐎠",
+    "这首歌只有一个字 啊"
+   ],
+   "summary": "BPM 339 的 Lv14+，sasakure.UK × TJ.hangneil，圈内叫「热葡萄」。",
+   "detail": "sasakure.UK 和 TJ.hangneil 合作曲，DX 谱，MASTER 14.9，BPM 高达 339。曲名 raputa 是藏文/梵文体，圈内因为读不出来干脆叫「热葡萄」，也有叫「西直门桥」的（谱面形状）。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "高BPM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "latent-kingdom",
+   "title": "Latent Kingdom",
+   "aliases": [
+    "lk",
+    "大lk",
+    "东北商战",
+    "白魔爪vs黑魔爪",
+    "两个男人拉小提琴",
+    "奏音快跑",
+    "东北菜市场",
+    "王牌对王牌",
+    "我售卖东北玉米",
+    "我售卖东北竹笋",
+    "别样的小提琴大赛"
+   ],
+   "summary": "Laur vs 大国奏音，Lv14+，圈内叫「lk」，也叫「东北商战」。",
+   "detail": "Laur 和 大国奏音 的合作曲，DX 谱，MASTER 14.9，BPM 201。小提琴元素很重，圈内简称「lk」，因为 BGA/氛围被叫「东北商战」「两个男人拉小提琴」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "solips",
+   "title": "sølips",
+   "aliases": [
+    "solips",
+    "嗦",
+    "100块",
+    "索利普斯",
+    "唯我论",
+    "so",
+    "s空集lips",
+    "现在的孩子一到机厅就"
+   ],
+   "summary": "rintaro soma 的 Lv14+，圈内直接叫「嗦」或「solips」。",
+   "detail": "rintaro soma 的作品，DX 谱，MASTER 14.9，BPM 199。曲名是「唯我论」（solipsism）的变体，圈内因为打不出来就叫「嗦」「solips」「100块」。和「系ぎて」同一个作者。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chuten",
+   "title": "宙天",
+   "aliases": [
+    "宙天",
+    "肘天",
+    "逆天",
+    "黑门",
+    "kop6决赛曲",
+    "宙活",
+    "由大",
+    "chuten",
+    "kop6决胜曲"
+   ],
+   "summary": "t+pazolite vs かねこちはる，Lv14+，BPM 125 但配置极难。",
+   "detail": "t+pazolite 和 かねこちはる 的对战曲，DX 谱，MASTER 14.9，BPM 只有 125。慢 BPM 配高密度交互，属于「看着慢打起来要命」的类型。圈内叫「宙天」也戏称「肘天」「逆天」，因为 KOP 决赛用过被称为「黑门」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "worlds-end-loneliness",
+   "title": "World's end loneliness",
+   "aliases": [
+    "世终",
+    "世终孤独",
+    "世末孤终",
+    "世终1"
+   ],
+   "summary": "打打だいず 的 Lv14+，圈内叫「世终」，还有续作「黑盒」。",
+   "detail": "打打だいず 的作品，DX 谱，MASTER 14.9，BPM 205。圈内简称「世终」，因为有续作所以也叫「世终1」。和续作 World's end BLACKBOX 是一对。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "worlds-end-blackbox",
+   "title": "World's end BLACKBOX",
+   "aliases": [
+    "黑盒",
+    "世终黑盒",
+    "世终2",
+    "中国人能飞",
+    "棱镜塔",
+    "世终孤独2"
+   ],
+   "summary": "「世终」的续作，Lv14+，圈内叫「黑盒」或「世终2」。",
+   "detail": "打打だいず 的 World's end 系列第二首，DX 谱，MASTER 14.9，BPM 205。圈内叫「黑盒」「世终2」，也有因为谱面配置被叫「中国人能飞」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "schwarzschild",
+   "title": "Schwarzschild",
+   "aliases": [
+    "史瓦西",
+    "火娃",
+    "四川火娃",
+    "香水2",
+    "四川火娃弱智齿轮队"
+   ],
+   "summary": "Tsukasa 的 Lv14，标准谱，MASTER 14.3、Re:MASTER 14.9。",
+   "detail": "Tsukasa 的作品，标准谱，MASTER 14.3，Re:MASTER 14.9，BPM 188。曲名是「史瓦西半径」的物理梗。圈内叫「史瓦西」，也戏称「火娃」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "the-emperror",
+   "title": "the EmpErroR",
+   "aliases": [
+    "皇帝",
+    "皇",
+    "农夫山泉",
+    "刘禹锡",
+    "我的苦爱",
+    "农夫山泉和怡宝",
+    "刘禹锡三年理白帝",
+    "the emperor"
+   ],
+   "summary": "sasakure.UK 的 Lv14+，圈内直接叫「皇帝」。",
+   "detail": "sasakure.UK 的作品，标准谱，MASTER 14.8、Re:MASTER 14.9，BPM 240。圈内简称「皇帝」或「皇」。老牌高难曲，很多人拿它当 14+ 的入门槛。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "标准谱"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "garakuta-doll-play",
+   "title": "Garakuta Doll Play",
+   "aliases": [
+    "Garakuta Doll Play",
+    "gdp",
+    "小丑",
+    "绿小丑",
+    "国内生产总值",
+    "偶买噶",
+    "小丑牌",
+    "传奇宴谱王",
+    "扑克牌"
+   ],
+   "summary": "t+pazolite 的老曲，标题是「废品娃娃游戏」。",
+   "detail": "t+pazolite 的作品，标准谱 MASTER 14.2、标准谱 Re:MASTER 14.8，BPM 256。和 Oshama Scramble! 同一位作者，用破铜烂铁拼娃娃是它的故事。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "in-chaos",
+   "title": "In Chaos",
+   "aliases": [
+    "阴超市",
+    "音超市",
+    "马叫",
+    "因超市",
+    "驴叫",
+    "🐴",
+    "混乱",
+    "发出马叫",
+    "在混乱中",
+    "在超市里",
+    "陷入混乱",
+    "kop禁曲"
+   ],
+   "summary": "MASTER 只有 12.5，Re:MASTER 却 14.8，被叫「马叫」。",
+   "detail": "Hiro「Crackin'DJ」的作品，标准谱，MASTER 12.5、Re:MASTER 14.8，BPM 140。因为 BGA/音色像马叫，圈内叫「马叫」「驴叫」，也音译成「阴超市」「音超市」。MASTER 和 Re:MASTER 差了 2.3，是很典型的「别小看这谱面」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "Re:MASTER"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "alea-jacta-est",
+   "title": "Alea jacta est!",
+   "aliases": [
+    "黑人打架",
+    "击剑",
+    "黑人击剑",
+    "种植园纠纷",
+    "白人打架",
+    "打架",
+    "孤注一掷",
+    "木已成舟",
+    "机厅纠纷",
+    "破釜沉舟",
+    "覆水难收",
+    "种植园争端"
+   ],
+   "summary": "BlackY 的 Lv14+，MASTER 14.4、Re:MASTER 14.8，被叫「黑人打架」。",
+   "detail": "BlackY fused with WAiKURO 的作品，标准谱，MASTER 14.4、Re:MASTER 14.8，BPM 162。曲名是凯撒的名言「骰子已经掷下」。圈内因为 BGA 被叫「黑人打架」「击剑」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "feng-yan-135",
+   "title": "封焔の135秒",
+   "aliases": [
+    "封焰",
+    "135秒",
+    "美国大选",
+    "封烟",
+    "机厅着火",
+    "夏天的机厅",
+    "拆机の135秒",
+    "琴柳大战赫拉格",
+    "间奏の135秒"
+   ],
+   "summary": "大国奏音的 Lv14+，和「氷滅の135小節」是一对。",
+   "detail": "大国奏音 的作品，DX 谱，MASTER 14.8，BPM 200。曲长 135 秒，和同作者的「氷滅の135小節」构成「火/冰」一对。圈内叫「封焰」「135秒」，也被叫「美国大选」（BGA 梗）。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bing-mie-135",
+   "title": "氷滅の135小節",
+   "aliases": [
+    "冰灭",
+    "135小节",
+    "白门",
+    "冰与火之舞",
+    "水135小节",
+    "魔丸vs灵珠",
+    "冰灭的135小节",
+    "莫斯提马大战能天使"
+   ],
+   "summary": "大国奏音的 Lv14+，「封焔の135秒」的冰之对应曲。",
+   "detail": "大国奏音 的作品，DX 谱，MASTER 14.8，BPM 205。和「封焔の135秒」是一对（火/冰）。圈内叫「冰灭」「135小节」「白门」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "yu-lu-shuang-xue",
+   "title": "雨露霜雪",
+   "aliases": [
+    "四个雨",
+    "雨雨雨雨",
+    "四个季节",
+    "kop6国际版",
+    "黑门守门员",
+    "kop6决胜曲",
+    "trg痛失冰淇淋",
+    "红13累死日本舞神",
+    "ysk初见红谱累死了",
+    "雨×(1+路+相+彐)"
+   ],
+   "summary": "かねこちはる vs t+pazolite，Lv14+，标题是四个雨字旁的字。",
+   "detail": "かねこちはる 和 t+pazolite 的合作曲，DX 谱，MASTER 14.7，BPM 250。标题四个字全是雨字头（雨露霜雪），圈内就叫「四个雨」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tiamat-f-minor",
+   "title": "TiamaT:F minor",
+   "aliases": [
+    "提亚马特",
+    "猩猩",
+    "大猩猩",
+    "提",
+    "🦍",
+    "猩猩歌",
+    "猩手教程",
+    "必扬的小提琴",
+    "tf boys",
+    "兄弟，提一把吗"
+   ],
+   "summary": "Team Grimoire 的 Lv14+，圈内叫「提亚马特」或「猩猩」。",
+   "detail": "Team Grimoire 的作品，标准谱，MASTER 14.6，BPM 215。曲名是「提亚马特」（Tiamat）+ F 小调。圈内简称「提」，因为 BGA 被叫「猩猩」「大猩猩」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "apollo",
+   "title": "Apollo",
+   "aliases": [
+    "阿波罗",
+    "登月",
+    "吴奇隆",
+    "航天基地",
+    "小人上月球",
+    "我去是吴奇隆",
+    "我去，是吴奇隆",
+    "龌驱，狮舞祈隆",
+    "我去，是吴奇隆！",
+    "我趣！事吴奇隆！"
+   ],
+   "summary": "TJ.hangneil 的 Lv14+，BPM 339，和「raputa」同一个作者。",
+   "detail": "TJ.hangneil 的作品，DX 谱，MASTER 14.7，BPM 339。和「raputa」同为高 BPM 曲。圈内叫「阿波罗」「登月」，也有因为 BGA 叫「吴奇隆」的。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "高BPM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wheel-to-the-right",
+   "title": "The wheel to the right",
+   "aliases": [
+    "右轮",
+    "三块钱",
+    "电锯骷髅",
+    "印度人",
+    "骷髅",
+    "🛞👉",
+    "向右转",
+    "电锯人",
+    "欢乐喜锯人",
+    "印度人放右边",
+    "地雷女喝魔爪"
+   ],
+   "summary": "Sampling Masters MEGA 的 Lv14，圈内叫「右轮」。",
+   "detail": "Sampling Masters MEGA 的作品，标准谱，MASTER 14.0，BPM 200。圈内叫「右轮」「三块钱」，也有因为 BGA 叫「电锯骷髅」的。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dont-fight-the-music",
+   "title": "Don't Fight The Music",
+   "aliases": [
+    "别打歌",
+    "不要打歌",
+    "赢取冰箱",
+    "刹那赢冰箱",
+    "宵崎奏",
+    "不准打歌",
+    "不准揍乐",
+    "不好导弹来袭",
+    "不要战斗这音乐",
+    "是我在制作这些视频"
+   ],
+   "summary": "黒魔的 Lv14，圈内叫「别打歌」。",
+   "detail": "黒魔 的作品，DX 谱，MASTER 14.1，BPM 195。曲名直译就是「别跟音乐打架」，圈内干脆叫「别打歌」「不要打歌」，BGA 里出现冰箱所以也叫「赢取冰箱」。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hardcore-syndrome",
+   "title": "ハードコア・シンドローム",
+   "aliases": [
+    "硬核综合症",
+    "哈德阔",
+    "hardcore",
+    "梅西哥拆机",
+    "梅西歌",
+    "老兵敬礼",
+    "tpz立正",
+    "我脸上有交互吗",
+    "咋的我脸上是有交互吗",
+    "怎么 我脸上是有交互吗"
+   ],
+   "summary": "t+pazolite 的 Lv13+，圈内叫「硬核综合症」。",
+   "detail": "t+pazolite（HARDCORE TANO*C）feat. TANO*C ALL STARS 的作品，DX 谱，MASTER 13.9，BPM 180。圈内叫「硬核综合症」「哈德阔」，也有因为谱面配置叫「梅西哥拆机」。",
+   "tags": [
+    "歌曲",
+    "13+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "loves-theme-of-badass",
+   "title": "Love's Theme of BADASS ～バッド・アス 愛のテーマ～",
+   "aliases": [
+    "拔大蒜",
+    "badass",
+    "坏屁股",
+    "扒大蒜",
+    "恶尻",
+    "小绿人",
+    "干打雷",
+    "拔大葱",
+    "右肩撕裂者",
+    "马达加斯加",
+    "爱的主题坏屁股"
+   ],
+   "summary": "Hommarju 的 Lv14，圈内因为音译叫「拔大蒜」。",
+   "detail": "Hommarju 的作品，DX 谱，MASTER 14.1，BPM 202。副标题是「バッド・アス 愛のテーマ」。圈内把 BADASS 音译成「拔大蒜」「坏屁股」，是挺有名的叫法。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "verforte-arte-vein",
+   "title": "VeRForTe αRtE:VEiN",
+   "aliases": [
+    "钟楼",
+    "钟塔",
+    "100.7",
+    "飞能不鸟",
+    "翠翠扫",
+    "翠翠猫抓板",
+    "哈利路大旋风",
+    "100.7什么垃圾",
+    "钟楼100.7很吊吗"
+   ],
+   "summary": "orangentle 的 Lv14+，圈内叫「钟楼」。",
+   "detail": "orangentle 的作品，DX 谱，MASTER 14.8，BPM 190。圈内因为 BGA 叫「钟楼」「钟塔」，也常拿「100.7」这个分数梗开玩笑。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zero-gou-sharyou",
+   "title": "零號車輛",
+   "aliases": [
+    "零号车辆",
+    "大运",
+    "零车",
+    "灵车",
+    "小灵车",
+    "0车",
+    "灵车漂移",
+    "零号列车",
+    "托马斯小灵车"
+   ],
+   "summary": "seatrus 的 Lv14+，圈内叫「大运」或「零车」。",
+   "detail": "seatrus 的作品，DX 谱，MASTER 14.6，BPM 240。曲名是「零号车辆」。圈内叫「零车」「大运」「灵车」，因为谱面/氛围的梗。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "southern-cross",
+   "title": "Southern Cross",
+   "aliases": [
+    "南十字",
+    "打交",
+    "商场跑圈",
+    "星星保卫战",
+    "南十字星",
+    "鼓手模拟器",
+    "和ysk猜拳",
+    "舞立方体验票",
+    "绕着商场跑一圈"
+   ],
+   "summary": "403 的 Lv13+，MASTER 13.2、Re:MASTER 13.9。",
+   "detail": "403 的作品，DX 谱，MASTER 13.2、Re:MASTER 13.9，BPM 171。圈内叫「南十字」「打交」，也有叫「商场跑圈」的。Re:MASTER 比 MASTER 高 0.7，是少数 Re 谱明显更难的曲子。",
+   "tags": [
+    "歌曲",
+    "13+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "new-york-back-raise",
+   "title": "New York Back Raise",
+   "aliases": [
+    "纽约赌场",
+    "德州扑克",
+    "皇家同花顺",
+    "nybr",
+    "赌博",
+    "赌场",
+    "纽约回升",
+    "新约克回来赌",
+    "努力哥输给天赋比",
+    "四条输给皇家同花顺"
+   ],
+   "summary": "saaa 等人的合作曲，Lv13+，BGA 是扑克主题。",
+   "detail": "saaa + kei_iwata + stuv + わかどり 的合作曲，DX 谱，MASTER 13.7，BPM 160。BGA 是德州扑克/赌场主题，圈内叫「纽约赌场」「皇家同花顺」，简称「nybr」。",
+   "tags": [
+    "歌曲",
+    "13+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chiruno-perfect-sansuu",
+   "title": "チルノのパーフェクトさんすう教室",
+   "aliases": [
+    "⑨",
+    "琪露诺教室",
+    "算数教室",
+    "1+1=9",
+    "baka",
+    "9教室",
+    "这是啥子角色",
+    "幻想乡没有巴士",
+    "琪露诺的完美算术教室"
+   ],
+   "summary": "东方名曲的改编版，Lv13，圈内就叫「⑨」。",
+   "detail": "IOSYS 的东方同人曲，原曲是《东方花映塚》的「おてんば恋娘」，琪露诺的角色曲。maimai 收录的是 ARM＋夕野ヨシミ(IOSYS)feat. miko 版本，标准谱，MASTER 13.3，BPM 175。圈内直接叫「⑨」（琪露诺的代称，来自说明书上「9. 笨蛋」）。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "东方"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hitotsubu-sora",
+   "title": "壱雫空",
+   "aliases": [
+    "mygo",
+    "卖沟",
+    "一休尼",
+    "它下空",
+    "一拿空",
+    "木柜子",
+    "某某空",
+    "又看一集",
+    "咕咕嘎嘎",
+    "什么什么空",
+    "又有一集开始了"
+   ],
+   "summary": "MyGO!!!!! 的歌，Lv13+，圈内直接叫「mygo」。",
+   "detail": "MyGO!!!!! 的作品（动画《BanG Dream! It's MyGO!!!!!》相关），DX 谱，MASTER 13.7，BPM 204。圈内一般直接叫「mygo」，也有谐音「卖沟」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "番剧"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bibideba",
+   "title": "ビビデバ",
+   "aliases": [
+    "bibbideba",
+    "星街彗星",
+    "bbd8",
+    "彗星",
+    "匕匕亏八",
+    "星慧闪耀",
+    "艾莎公主",
+    "bibbidiba"
+   ],
+   "summary": "星街すいせい 的歌，Lv11+，Re:MASTER 13.2。",
+   "detail": "星街すいせい（hololive）的作品，DX 谱，MASTER 11.8、Re:MASTER 13.2，BPM 120。MASTER 和 Re:MASTER 差了 1.4，是「原谱很温柔、Re 谱突然认真」的典型。圈内叫「bbd8」「星街彗星」。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "V圈"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "mousou-kanshou",
+   "title": "妄想感傷代償連盟",
+   "aliases": [
+    "妄想感伤",
+    "妄想",
+    "ghost",
+    "阿姨压一压",
+    "dscf",
+    "mkdr",
+    "朱总快乐曲",
+    "阿姨压一压～",
+    "初音未来蹲大牢",
+    "初音未来防毒面具",
+    "妄想感伤代偿联盟",
+    "盲肠肝脏大肠年龄"
+   ],
+   "summary": "DECO*27 的初音曲，Lv11，Re:MASTER 13.2。",
+   "detail": "DECO*27 的作品，初音未来演唱，标准谱，MASTER 11.4、Re:MASTER 13.2，BPM 110。是术力口里很经典的一首。圈内叫「妄想感伤」「妄想」。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "umiyuri-kaiteitan",
+   "title": "ウミユリ海底譚",
+   "aliases": [
+    "海底谭",
+    "海底捞",
+    "海百合",
+    "舞萌科目二",
+    "海底潭",
+    "你学不会",
+    "海百合海底谭",
+    "umiyuri"
+   ],
+   "summary": "n-buna 的初音曲，Lv13，被叫「舞萌科目二」。",
+   "detail": "n-buna 的作品，初音未来演唱，标准谱，MASTER 13.4，BPM 120。因为配置很有教学意义，被圈内叫「舞萌科目二」「你学不会」。也叫「海底谭」「海底捞」。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "internet-yamero",
+   "title": "INTERNET YAMERO",
+   "aliases": [
+    "互联网毁了我",
+    "超天酱2",
+    "朝天椒2",
+    "200个绝赞",
+    "网络呀咩咯",
+    "yamero",
+    "地雷女不要啊",
+    "快远离互联网"
+   ],
+   "summary": "《主播女孩重度依赖》的歌，Lv11+，Re:MASTER 13.8。",
+   "detail": "Aiobahn feat. KOTOKO 的作品，来自游戏《NEEDY GIRL OVERDOSE》（主播女孩重度依赖），DX 谱，MASTER 11.9、Re:MASTER 13.8，BPM 185。圈内叫「超天酱2」「互联网毁了我」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "游戏"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dandan-hayaku-naru",
+   "title": "だんだん早くなる",
+   "aliases": [
+    "逐渐加快",
+    "越来越快",
+    "渐渐变快",
+    "一笔画",
+    "早",
+    "慢慢变快",
+    "越走越快",
+    "逐渐变快",
+    "当当哈压库"
+   ],
+   "summary": "40mP 的曲子，BPM 会逐渐变快，Lv12。",
+   "detail": "40mP 的作品，标准谱，MASTER 12.0、Re:MASTER 12.7，BPM 160。特点是曲中速度逐渐加快，所以叫「だんだん早くなる」（渐渐变快）。圈内就叫「逐渐加快」。",
+   "tags": [
+    "歌曲",
+    "12级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zundamon-breakfast",
+   "title": "ずんだもんの朝食　〜目覚ましずんラップ〜",
+   "aliases": [
+    "俊达萌",
+    "起床",
+    "起床铃",
+    "毛豆叫床",
+    "朝食",
+    "吃早餐",
+    "起きて",
+    "起床了",
+    "朝食目觉",
+    "起床战争",
+    "俊达萌的早餐",
+    "大早上的你叫啥呀"
+   ],
+   "summary": "ずんだもん 的曲子，BPM 260，Lv13。",
+   "detail": "ひらうみ 的作品，ずんだもん 演唱，DX 谱，MASTER 13.1，BPM 260。ずんだもん 是 VOICEVOX 的免费音源角色（不是 VOCALOID），常被拿来整活。圈内叫「俊达萌」「起床铃」。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nikkori-chousatai",
+   "title": "にっこり^^調査隊のテーマ",
+   "aliases": [
+    "微笑调查队",
+    "汪大吼",
+    "大调查",
+    "wonderhoy",
+    "姆二箱",
+    "调查队",
+    "千客万来",
+    "微笑^^调查队"
+   ],
+   "summary": "《世界计划》的歌，Lv12+，圈内叫「微笑调查队」。",
+   "detail": "ワンダフル☆オポチュニティ！ 的作品，来自《プロジェクトセカイ》（世界计划 多彩舞台），DX 谱，MASTER 12.7，BPM 180。圈内叫「微笑调查队」「汪大吼」（wonderhoy 空耳）。",
+   "tags": [
+    "歌曲",
+    "12+级",
+    "术力口",
+    "游戏"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "quiq",
+   "title": "QuiQ",
+   "aliases": [
+    "qq",
+    "早八",
+    "上早八",
+    "牛奶猫睡觉",
+    "rush q",
+    "叮～",
+    "qwq",
+    "出勤迟到",
+    "牛奶快跑",
+    "猫娘睡觉",
+    "hera3",
+    "就睡五分钟"
+   ],
+   "summary": "owl＊tree 的 Lv14，圈内叫「早八」或「qq」。",
+   "detail": "owl＊tree feat.nie＊tree 的作品，DX 谱，MASTER 14.4，BPM 120。圈内简称「qq」，也因为有「上早八要迟到」的梗被叫「早八」「早八要迟到了」。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "break-break-break",
+   "title": "BREaK! BREaK! BREaK!",
+   "aliases": [
+    "bbb",
+    "爆爆爆",
+    "崩坏三",
+    "三个绝赞",
+    "全大p",
+    "全大癖",
+    "2550",
+    "爆！爆！爆！",
+    "绝赞绝赞绝赞",
+    "break fast",
+    "kop2020决赛曲",
+    "2500！2550！2600！"
+   ],
+   "summary": "HiTECH NINJA vs Cranky，Lv14+，圈内叫「bbb」。",
+   "detail": "HiTECH NINJA vs Cranky 的作品，DX 谱，MASTER 14.6，BPM 165。圈内简称「bbb」，也叫「爆爆爆」「崩坏三」（谐音梗）。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "amazing-mightyyyy",
+   "title": "AMAZING MIGHTYYYY!!!!",
+   "aliases": [
+    "am",
+    "惊人的强大",
+    "这么强？",
+    "樱羽艾玛",
+    "惊异全能",
+    "太神奇了，太强大了！",
+    "太神奇了，太强大了!!!!"
+   ],
+   "summary": "WAiKURO 的 Lv14+，MASTER 14.7、Re:MASTER 14.5。",
+   "detail": "WAiKURO 的作品，标准谱，MASTER 14.7、Re:MASTER 14.5，BPM 185。Re:MASTER 比 MASTER 低 0.2，比较少见。圈内简称「am」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "valsqotch",
+   "title": "Valsqotch",
+   "aliases": [
+    "金熊",
+    "黄金迪拉熊",
+    "金迪拉熊",
+    "kop2019决赛曲",
+    "金熊惨案",
+    "金色迪拉熊",
+    "ysk痛失首赢"
+   ],
+   "summary": "owl＊tree 的 Lv14+，圈内叫「金熊」。",
+   "detail": "owl＊tree feat.chi＊tree 的作品，DX 谱，MASTER 14.7，BPM 125。圈内因为 BGA 叫「金熊」「黄金迪拉熊」，KOP2019 决赛用过所以也叫「kop2019决赛曲」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "straight-into-the-lights",
+   "title": "Straight into the lights",
+   "aliases": [
+    "直入光",
+    "小acid",
+    "我要当对立",
+    "吃麦当劳",
+    "中出光",
+    "小阿希德",
+    "线性代数",
+    "我的麦当劳"
+   ],
+   "summary": "Cosmograph 的 Lv14+，BPM 只有 90 但配置很顶。",
+   "detail": "Cosmograph 的作品，DX 谱，MASTER 14.8，BPM 90。慢 BPM 高密度，属于「慢歌吃配置」类型。圈内叫「直入光」「小acid」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "our-wrenally",
+   "title": "Our Wrenally",
+   "aliases": [
+    "ow",
+    "守望先锋",
+    "魔法阿嫲",
+    "高数",
+    "阿嬷",
+    "高等数学",
+    "临兵斗者皆阵列在前",
+    "ysk对母亲的崇高敬意"
+   ],
+   "summary": "t+pazolite 的 Lv14+，BPM 105，圈内叫「ow」。",
+   "detail": "t+pazolite 的作品，标准谱，MASTER 14.8，BPM 105。圈内简称「ow」，也被叫「守望先锋」「魔法阿嫲」「高数」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "flame-frost",
+   "title": "FLΛME/FRΦST",
+   "aliases": [
+    "红门",
+    "焰霜",
+    "flamefrost",
+    "森林冰火人",
+    "🍎",
+    "冰与火之舞",
+    "烈焰/冰霜",
+    "flame/frost"
+   ],
+   "summary": "FANTAGIRAFF 的 Lv14+，圈内叫「红门」。",
+   "detail": "FANTAGIRAFF 的作品，DX 谱，MASTER 14.8，BPM 174。和「黑门」（宙天）、「白门」（氷滅）并列，圈内叫「红门」「焰霜」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "heavenly-blast",
+   "title": "Heavenly Blast",
+   "aliases": [
+    "天爆",
+    "黑芝麻汤圆",
+    "汤圆"
+   ],
+   "summary": "xi 的 Lv14+，圈内叫「天爆」。",
+   "detail": "xi 的作品，DX 谱，MASTER 14.8，BPM 234。圈内叫「天爆」，也因为有 BGA 梗被叫「黑芝麻汤圆」「汤圆」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "glorious-crown",
+   "title": "Glorious Crown",
+   "aliases": [
+    "皇冠",
+    "辉煌之冠"
+   ],
+   "summary": "xi 的老牌高难，Lv14+，圈内叫「皇冠」。",
+   "detail": "xi 的作品，标准谱，MASTER 14.8，BPM 225。老版本（GreeN PLUS）就有的经典高难曲，圈内叫「皇冠」「辉煌之冠」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "经典"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ikazuchi",
+   "title": "怒槌",
+   "aliases": [
+    "怒锤"
+   ],
+   "summary": "光吉猛修的 Lv14+，来自 CHUNITHM 的联动曲。",
+   "detail": "光吉猛修 的作品，标准谱，MASTER 14.8，BPM 200。来自 SEGA 系音游 CHUNITHM 的联动曲，圈内叫「怒槌」「怒锤」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "联动"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "raikiri",
+   "title": "雷切-RAIKIRI-",
+   "aliases": [
+    "雷切"
+   ],
+   "summary": "kanone 的 Lv14+，MASTER 14.6、Re:MASTER 14.8。",
+   "detail": "kanone 的作品，标准谱，MASTER 14.6、Re:MASTER 14.8，BPM 165。圈内就叫「雷切」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "silent-blue",
+   "title": "SILENT BLUE",
+   "aliases": [
+    "静蓝",
+    "四块钱"
+   ],
+   "summary": "かねこちはる 的 Lv14+，圈内叫「静蓝」。",
+   "detail": "かねこちはる 的作品，标准谱，MASTER 14.8，BPM 210。圈内叫「静蓝」，也有叫「四块钱」的。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "larva",
+   "title": "larva",
+   "aliases": [
+    "拉瓦",
+    "幼虫",
+    "说的道理",
+    "=⚡"
+   ],
+   "summary": "ガリガリさむし 的 Lv14+，圈内叫「拉瓦」。",
+   "detail": "ガリガリさむし 的作品，标准谱，MASTER 14.8，BPM 202。圈内叫「拉瓦」「幼虫」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "turing-no-ato",
+   "title": "チューリングの跡",
+   "aliases": [
+    "图灵之迹",
+    "图灵",
+    "萨克斯",
+    "白法院吹萨克斯",
+    "迹"
+   ],
+   "summary": "Frums 的 Lv14+，圈内叫「图灵」。",
+   "detail": "Frums 的作品，DX 谱，MASTER 14.8，BPM 180。圈内叫「图灵」「图灵之迹」，也因为有萨克斯被叫「白法院吹萨克斯」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "rex-lunatica",
+   "title": "ℝ∈Χ LUNATiCA",
+   "aliases": [
+    "rex",
+    "路西法",
+    "rexlunatica",
+    "实数属于x"
+   ],
+   "summary": "Kai 的 Lv14+，标题用数学符号写成。",
+   "detail": "Kai 的作品，DX 谱，MASTER 14.8，BPM 230。标题用数学符号写（实数属于 x），圈内简称「rex」「路西法」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wipe-out-memories",
+   "title": "WiPE OUT MEMORIES",
+   "aliases": [
+    "wom",
+    "舞立方",
+    "外炮",
+    "10周年",
+    "wipe",
+    "wmc走马灯"
+   ],
+   "summary": "t+pazolite 的 Lv14+，maimai 十周年曲。",
+   "detail": "t+pazolite 的作品，DX 谱，MASTER 14.8，BPM 210。是 maimai 十周年相关曲目，圈内简称「wom」，也叫「舞立方」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "纪念"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "busy-day",
+   "title": "忙シー日",
+   "aliases": [
+    "忙日",
+    "忙碌的一天",
+    "忙一天",
+    "红门守门员",
+    "忙ー日",
+    "龙之日",
+    "又忙一天",
+    "忙了一天"
+   ],
+   "summary": "原口沙輔 的 Lv14，MASTER 14.2。",
+   "detail": "原口沙輔、式部めぐり 的作品，DX 谱，MASTER 14.2，BPM 150。标题是「忙しい日」（忙碌的一天）的谐音写法，圈内叫「忙日」「忙碌的一天」。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "184-oku-kai",
+   "title": "184億回のマルチトニック",
+   "aliases": [
+    "184亿",
+    "184亿回",
+    "184",
+    "青门守门员",
+    "蓝门守门员",
+    "184亿次的振奋人心",
+    "18400000000",
+    "184亿次的multi-tonic"
+   ],
+   "summary": "Pizuya's Cell 的 Lv14，MASTER 14.1。",
+   "detail": "Pizuya's Cell feat.中村さん 的作品，DX 谱，MASTER 14.1，BPM 184。标题是「184 亿次的 multi-tonic」，圈内叫「184亿」「184」。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "regulus",
+   "title": "Regulus",
+   "aliases": [
+    "热咕噜",
+    "轩辕十四",
+    "瑞咕噜",
+    "巨乳",
+    "白法院",
+    "大奈子姐姐",
+    "ysk扭大腚"
+   ],
+   "summary": "お月さま交響曲 的 Lv14+，圈内叫「热咕噜」。",
+   "detail": "お月さま交響曲 的作品，DX 谱，MASTER 14.7，BPM 212。Regulus 是狮子座α星「轩辕十四」，圈内音译成「热咕噜」「瑞咕噜」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "atlas-rush",
+   "title": "ATLAS RUSH",
+   "aliases": [
+    "阿特拉斯",
+    "米饭",
+    "rice",
+    "全世界最燃的米饭",
+    "米",
+    "🍚",
+    "阿特拉斯冲刺"
+   ],
+   "summary": "kanone 的 Lv14+，圈内叫「米饭」。",
+   "detail": "kanone 的作品，DX 谱，MASTER 14.7，BPM 156。圈内叫「阿特拉斯」，也因为有 BGA 梗被叫「米饭」「全世界最燃的米饭」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "azure-vixen",
+   "title": "Λzure Vixen",
+   "aliases": [
+    "凯南",
+    "蓝的狐",
+    "azure vixen",
+    "阿祖儿微信",
+    "av",
+    "秦彻",
+    "有格调"
+   ],
+   "summary": "かめりあ 的 Lv14+，来自 CHUNITHM 的联动曲。",
+   "detail": "かめりあ 的作品，DX 谱，MASTER 14.6，BPM 163。来自 CHUNITHM 的联动曲，圈内叫「凯南」「蓝的狐」。",
+   "tags": [
+    "歌曲",
+    "14+",
+    "高难",
+    "联动"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "enchanted-wanderer",
+   "title": "enchanted wanderer",
+   "aliases": [
+    "ew",
+    "魔法流浪者",
+    "蓝青蛙",
+    "猫王子",
+    "蓝猫",
+    "哈基米王子",
+    "罗小黑战记",
+    "附魔流浪者",
+    "青蛙王子2",
+    "迷人的流浪者"
+   ],
+   "summary": "linear ring 的 Lv13+，圈内叫「ew」或「蓝青蛙」。",
+   "detail": "linear ring 的作品，DX 谱，MASTER 13.8，BPM 102。圈内简称「ew」，也叫「魔法流浪者」「蓝青蛙」「猫王子」。",
+   "tags": [
+    "歌曲",
+    "13+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "atsusugi-no-uta",
+   "title": "あつすぎの歌",
+   "aliases": [
+    "热死了",
+    "热死了之歌",
+    "夏热之歌",
+    "棍母",
+    "神牌",
+    "啊紫一",
+    "夏热歌",
+    "老奶奶",
+    "阿紫一",
+    "等老奶奶张嘴"
+   ],
+   "summary": "からめる 的 Lv13+，圈内叫「热死了」。",
+   "detail": "からめる 的作品，DX 谱，MASTER 13.8，BPM 180。标题就是「太热了之歌」，圈内叫「热死了」「夏热之歌」。",
+   "tags": [
+    "歌曲",
+    "13+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tape-stop-night",
+   "title": "tape/stop/night",
+   "aliases": [
+    "tsn",
+    "强虫",
+    "中国强虫",
+    "强虫蒙布朗",
+    "磁带",
+    "中文歌",
+    "tape",
+    "中国弱虫",
+    "fate/stay/night"
+   ],
+   "summary": "Sugar & Co. 的 Lv12+，圈内叫「tsn」。",
+   "detail": "Sugar & Co. 的作品，DX 谱，MASTER 12.8，BPM 115。圈内简称「tsn」，也被叫「强虫」「强虫蒙布朗」。",
+   "tags": [
+    "歌曲",
+    "12+级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "moon-of-noon",
+   "title": "Moon of Noon",
+   "aliases": [
+    "月之子",
+    "中午的月亮",
+    "五块钱",
+    "印度人磕头",
+    "神堇",
+    "铜人",
+    "月儿子",
+    "科比坐禅"
+   ],
+   "summary": "Sampling Masters MEGA 的 Lv14，MASTER 14.4。",
+   "detail": "Sampling Masters MEGA 的作品，标准谱，MASTER 14.4，BPM 200。圈内叫「月之子」「中午的月亮」，也有叫「五块钱」的。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hana-to-yuki-to",
+   "title": "花と、雪と、ドラムンベース。",
+   "aliases": [
+    "花雪",
+    "花一轮",
+    "间奏9秒",
+    "昭和金曲",
+    "🌸①🛞",
+    "女人打伞",
+    "昭和女人",
+    "ktv金曲"
+   ],
+   "summary": "kanone 的 Lv14，MASTER 14.3、Re:MASTER 13.8。",
+   "detail": "kanone feat. せんざい 的作品，标准谱，MASTER 14.3、Re:MASTER 13.8，BPM 180。Re:MASTER 反而比 MASTER 低，比较少见。圈内叫「花雪」「花一轮」，也因为有段长间奏被叫「间奏9秒」。",
+   "tags": [
+    "歌曲",
+    "14级"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kugatsu-eki",
+   "title": "「　」（无名曲）",
+   "aliases": [
+    "空白",
+    "空格",
+    "如月车站",
+    "请输入文本",
+    "「　」",
+    "如月",
+    "无名",
+    "无题",
+    "棍木",
+    "棍母",
+    "滚木",
+    "无名歌"
+   ],
+   "summary": "曲名就是一个全角空格的怪曲，DX 谱 MASTER 12.8，被叫「如月车站」。",
+   "detail": "x0o0x_ 的作品，DX 谱 MASTER 12.8，BPM 130。曲名就是一个全角空格（U+3000），所以搜不出来、也很难念，圈内叫「空白」「空格」，也因为有都市传说梗被叫「如月车站」。",
+   "tags": [
+    "歌曲",
+    "12+级",
+    "怪曲"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nihon-no-kome",
+   "title": "日本の米は世界一",
+   "aliases": [
+    "日本米",
+    "金坷垃",
+    "日本大米我狂炫",
+    "日本农协",
+    "必须要有金柯拉",
+    "日本农协宣传曲",
+    "日本米价世界一",
+    "日本缺米世界一",
+    "金坷垃好处都有啥"
+   ],
+   "summary": "打首獄門同好会 的曲子，Lv13，主题是日本大米。",
+   "detail": "打首獄門同好会 的作品，标准谱，MASTER 13.3，BPM 138。标题就是「日本的大米世界第一」，是首玩梗向的歌。圈内叫「日本米」「金坷垃」。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "整活"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "night-of-knights",
+   "title": "ナイト・オブ・ナイツ",
+   "aliases": [
+    "夜骑",
+    "骑士之夜",
+    "night of knights",
+    "夜骑士"
+   ],
+   "summary": "东方同人改编曲，标准谱 MASTER 13.3、Re:MASTER 14.4，圈内叫「夜骑」。",
+   "detail": "ビートまりお（COOL&CREATE）的东方同人曲，原曲是《东方红魔乡》的「U.N.オーエンは彼女なのか？」（芙兰朵露的主题曲）。标准谱 MASTER 13.3、Re:MASTER 14.4，BPM 180。是东方同人圈最有名的改编曲之一，圈内叫「夜骑」「骑士之夜」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "东方"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kanbu-de-tomatte",
+   "title": "患部で止まってすぐ溶ける～狂気の優曇華院",
+   "aliases": [
+    "患部",
+    "兔子跳",
+    "狂气优昙华院",
+    "铃仙",
+    "患部止"
+   ],
+   "summary": "IOSYS 的东方同人曲，标准谱 MASTER 13.7、Re:MASTER 14.0。",
+   "detail": "ARM＋夕野ヨシミ(IOSYS)feat. miko 的作品，东方同人曲，原曲是《东方永夜抄》的「狂気の瞳 ～ Invisible Full Moon」（铃仙的主题曲）。标准谱 MASTER 13.7、Re:MASTER 14.0，BPM 200。圈内叫「患部」「兔子跳」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "东方"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hatsune-miku-no-shoushitsu",
+   "title": "初音ミクの消失",
+   "aliases": [
+    "消失",
+    "初音未来的消失",
+    "暴走p的消失",
+    "比初音更快消失"
+   ],
+   "summary": "cosMo＠暴走P 的名曲，标准谱 MASTER 13.9、DX 谱 MASTER 14.5。",
+   "detail": "cosMo＠暴走P 的作品，初音未来演唱，标准谱 MASTER 13.9、DX 谱 MASTER 14.5，BPM 240。是术力口史上最有名的「高速」曲之一，歌词讲初音消失。圈内叫「消失」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hatsune-miku-no-gekkou",
+   "title": "初音ミクの激唱",
+   "aliases": [
+    "激唱",
+    "初音未来的激唱",
+    "机场",
+    "暴走p的激唱"
+   ],
+   "summary": "cosMo＠暴走P 的「消失」续作，标准谱 MASTER 14.5。",
+   "detail": "cosMo＠暴走P 的作品，初音未来演唱，标准谱 MASTER 14.5，BPM 200。是「初音ミクの消失」的续作，同样是超高 BPM 的高速曲。圈内叫「激唱」，也有谐音「机场」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nou-shou-sakuretsu",
+   "title": "脳漿炸裂ガール",
+   "aliases": [
+    "脑浆",
+    "脑浆炸裂少女",
+    "脑裂",
+    "脑浆炸裂",
+    "脑浆炸裂女孩",
+    "brain fluid explosion girl"
+   ],
+   "summary": "れるりり 的名曲，标准谱 MASTER 14.1，BPM 155。",
+   "detail": "れるりり 的作品，标准谱 MASTER 14.1、DX 谱 MASTER 12.9，BPM 155。是术力口里非常有名的一首，圈内叫「脑浆」「脑浆炸裂少女」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kagerou-days",
+   "title": "カゲロウデイズ",
+   "aliases": [
+    "阳炎",
+    "阳炎眩乱"
+   ],
+   "summary": "じん 的阳炎计划曲，标准谱 MASTER 13.2、Re:MASTER 14.1。",
+   "detail": "じん（自然の敵P）的作品，标准谱 MASTER 13.2、Re:MASTER 14.1，BPM 200。是「阳炎计划」系列的核心曲之一。圈内叫「阳炎」「阳炎眩乱」。",
+   "tags": [
+    "歌曲",
+    "14级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "rokuchou-nen",
+   "title": "六兆年と一夜物語",
+   "aliases": [
+    "六兆年",
+    "希腊奶"
+   ],
+   "summary": "kemu 的名曲，MASTER 13.8，标准谱和 DX 谱同难度。",
+   "detail": "kemu 的作品，标准谱和 DX 谱 MASTER 都是 13.8，BPM 186。是 kemu 最有名的一首，圈内叫「六兆年」，也有谐音「希腊奶」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ura-omote-lovers",
+   "title": "裏表ラバーズ",
+   "aliases": [
+    "里表情人",
+    "里表"
+   ],
+   "summary": "wowaka 的代表作，标准谱 MASTER 13.9。",
+   "detail": "wowaka 的作品，标准谱 MASTER 13.9，BPM 159。是 wowaka（后来的ヒトリエ）最有名的ボカロ曲之一，圈内叫「里表情人」「里表」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "mesmerizer",
+   "title": "メズマライザー",
+   "aliases": [
+    "催眠师",
+    "mesmerizer",
+    "催眠术",
+    "催眠者"
+   ],
+   "summary": "サツキ 的作品，初音未来×重音テト，DX 谱 MASTER 11.9、Re:MASTER 13.8。",
+   "detail": "サツキ feat.初音ミク・重音テト 的作品，DX 谱 MASTER 11.9、Re:MASTER 13.8，BPM 185。2024 年很火的一首，圈内叫「催眠师」「mesmerizer」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kyu-kurarin",
+   "title": "きゅうくらりん",
+   "aliases": [
+    "心跳不已",
+    "心跳不止",
+    "心梗不已",
+    "纱世里",
+    "心梗不止",
+    "蓝衣哭泣少女",
+    "kyu-kurarin"
+   ],
+   "summary": "いよわ 的作品，DX 谱 MASTER 13.7。",
+   "detail": "いよわ 的作品，DX 谱 MASTER 13.7，BPM 220。是いよわ最有名的一首，圈内叫「心跳不已」，也有玩梗叫「心梗不已」。",
+   "tags": [
+    "歌曲",
+    "13+级",
+    "术力口"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaikaikitan",
+   "title": "廻廻奇譚",
+   "aliases": [
+    "咒术回战",
+    "回回奇谭",
+    "回回奇潭"
+   ],
+   "summary": "Eve 唱的《咒术回战》第一季 OP，DX 谱 MASTER 11.8、Re:MASTER 13.5。",
+   "detail": "Eve 的作品，是 TV 动画《咒术回战》第一季的片头曲，DX 谱 MASTER 11.8、Re:MASTER 13.5，BPM 185。圈内一般直接叫「咒术回战」那首 OP。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "番剧"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "uta-ado",
+   "title": "唱",
+   "aliases": [
+    "Ado",
+    "唱"
+   ],
+   "summary": "Ado 的歌，DX 谱 MASTER 11.8、Re:MASTER 13.4，单字曲名。",
+   "detail": "Ado 的作品，DX 谱 MASTER 11.8、Re:MASTER 13.4，BPM 132。曲名就一个字「唱」，是 Ado 的代表作之一。",
+   "tags": [
+    "歌曲",
+    "13级",
+    "V圈"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "qu-shu-mu-shou",
+   "title": "躯樹の墓守",
+   "aliases": [
+    "墓守",
+    "躯树",
+    "躯树墓守",
+    "小红帽",
+    "蕾米坠机",
+    "躯树的墓守",
+    "朽木的守墓人",
+    "别开上下反",
+    "朽树的守墓人"
+   ],
+   "summary": "DX 谱 MASTER 14.9，BPM 211。",
+   "detail": "隣の庭は青い(庭師+Aoi) 的作品，DX 谱 MASTER 14.9，BPM 211。圈内叫「墓守」「躯树」，也因为它副标题被叫「小红帽」。是公认的 14.9 难关之一，副歌之后的密集配置很吃体力。官方别名库里的叫法有：墓守、躯树、躯树墓守、小红帽、蕾米坠机、躯树的墓守、朽木的守墓人、别开上下反。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "antinomie",
+   "title": "Åntinomiε",
+   "aliases": [
+    "antinomie",
+    "二律背反",
+    "黄门",
+    "antinomic",
+    "翡翠茶渍",
+    "黑白滴蜡熊",
+    "aminoac",
+    "太空熊二"
+   ],
+   "summary": "DX 谱 MASTER 14.6，BPM 242。",
+   "detail": "ああ…翡翠茶漬け… 的作品，DX 谱 MASTER 14.6，BPM 242。圈内叫「二律背反」「黄门」「太空熊二」。高速连打型，谱面花哨但判定要求高。官方别名库里的叫法有：antinomie、二律背反、黄门、antinomic、翡翠茶渍、黑白滴蜡熊、aminoac、太空熊二。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "eta-beta-eta",
+   "title": "エータ・ベータ・イータ",
+   "aliases": [
+    "hera2",
+    "赫拉2",
+    "工一夕八一夕人一夕",
+    "咱家那超级大串",
+    "工一夕",
+    "ἥβη",
+    "蓝原椿拿面具撑伞",
+    "艾塔贝塔伊塔"
+   ],
+   "summary": "DX 谱 MASTER 14.1，BPM 186。",
+   "detail": "ルゼ 的作品，DX 谱 MASTER 14.1，BPM 186。圈内叫「赫拉2」「艾塔贝塔伊塔」，因为和 HERA 同一个作者。主要是节奏切分难。官方别名库里的叫法有：hera2、赫拉2、工一夕八一夕人一夕、咱家那超级大串、工一夕、ἥβη、蓝原椿拿面具撑伞、艾塔贝塔伊塔。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ref-rain-7th-heaven",
+   "title": "Ref:rain (for 7th Heaven)",
+   "aliases": [
+    "refrain",
+    "咏人不知2",
+    "咏人2",
+    "相信彩虹2",
+    "酸栗贴贴",
+    "曲目 2/1",
+    "track 2/1",
+    "女同和好"
+   ],
+   "summary": "DX 谱 MASTER 14，BPM 188。",
+   "detail": "カモメサノエレクトリックオーケストラ include Limonène 的作品，DX 谱 MASTER 14，BPM 188。圈内叫「咏人2」「相信彩虹2」「女同和好」。是 Ref:rain 系列的 7th Heaven 版。官方别名库里的叫法有：refrain、咏人不知2、咏人2、相信彩虹2、酸栗贴贴、曲目 2/1、track 2/1、女同和好。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "moe-chakka-fire",
+   "title": "モエチャッカファイア",
+   "aliases": [
+    "鲨鱼娘",
+    "绝区零",
+    "萌萌点火fire",
+    "艾莲乔",
+    "鲨鱼妹",
+    "萌萌点火",
+    "zzz",
+    "有点冷淡的鲨鱼娘"
+   ],
+   "summary": "DX 谱 MASTER 13.8，BPM 163。",
+   "detail": "弌誠「ゲーム『ゼンレスゾーンゼロ』エレン・ジョー 同人イメージソング」 的作品，DX 谱 MASTER 13.8，BPM 163。《绝区零》艾莲·乔的同人曲，圈内直接叫「鲨鱼娘」「绝区零」「鲨鱼妹」。主要是好玩不是难。官方别名库里的叫法有：鲨鱼娘、绝区零、萌萌点火fire、艾莲乔、鲨鱼妹、萌萌点火、zzz、有点冷淡的鲨鱼娘。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "POPSアニメ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "yorugao",
+   "title": "Yorugao",
+   "aliases": [
+    "紫黑",
+    "犹如高",
+    "夜颜",
+    "牙膏",
+    "油乳膏",
+    "优乳膏",
+    "有乳膏"
+   ],
+   "summary": "DX 谱 MASTER 14.6，BPM 182。",
+   "detail": "An & Ryunosuke Kudo 的作品，DX 谱 MASTER 14.6，BPM 182。圈内叫「夜颜」，也因为它读音被玩成「牙膏」「油乳膏」「有乳膏」。属于 14 后半段的硬骨头。官方别名库里的叫法有：紫黑、犹如高、夜颜、牙膏、油乳膏、优乳膏、有乳膏。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pupa",
+   "title": "PUPA",
+   "aliases": [
+    "蝴蝶",
+    "公交车",
+    "扑爬",
+    "蓝蝴蝶",
+    "隐形的翅膀",
+    "🦋",
+    "扑棱蛾子"
+   ],
+   "summary": "DX 谱 MASTER 14.4，BPM 202。",
+   "detail": "モリモリあつし 的作品，DX 谱 MASTER 14.4，BPM 202。圈内叫「蝴蝶」「蓝蝴蝶」「扑棱蛾子」，也有人叫「公交车」。官方别名库里的叫法有：蝴蝶、公交车、扑爬、蓝蝴蝶、隐形的翅膀、🦋、扑棱蛾子。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hera",
+   "title": "HERA",
+   "aliases": [
+    "赫拉",
+    "纵连",
+    "狐狸快跑",
+    "火狐",
+    "火狐浏览器",
+    "1号键的危机",
+    "1号键性能检测"
+   ],
+   "summary": "标准谱 MASTER 14.3，BPM 185。",
+   "detail": "ルゼ 的作品，标准谱 MASTER 14.3，BPM 185。圈内直接叫「赫拉」，也因为它满屏纵连被叫「纵连」「1号键的危机」。纵连是这谱的核心难点。官方别名库里的叫法有：赫拉、纵连、狐狸快跑、火狐、火狐浏览器、1号键的危机、1号键性能检测。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "caliburne",
+   "title": "Caliburne ～Story of the Legendary sword～",
+   "aliases": [
+    "圣剑1",
+    "咖喱棒",
+    "生煎",
+    "福瑞跑步",
+    "生煎1",
+    "咖喱棒 ～圣剑传说～",
+    "额滴圣剑"
+   ],
+   "summary": "标准谱 MASTER 14.3，BPM 190。",
+   "detail": "Project Grimoire 的作品，标准谱 MASTER 14.3，BPM 190。圈内叫「圣剑」「咖喱棒」「生煎」。是老一代的高难曲。官方别名库里的叫法有：圣剑1、咖喱棒、生煎、福瑞跑步、生煎1、咖喱棒 ～圣剑传说～、额滴圣剑。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kita-saitama-2000",
+   "title": "きたさいたま2000",
+   "aliases": [
+    "2000",
+    "五兄弟",
+    "北埼玉2000",
+    "北琦玉2000",
+    "鬼叫2000",
+    "全网最帅五兄弟",
+    "北埼玉"
+   ],
+   "summary": "标准谱 MASTER 14.2，BPM 222。",
+   "detail": "LindaAI-CUE(BNGI)「太鼓の達人」より 的作品，标准谱 MASTER 14.2，BPM 222。《太鼓达人》来的曲子，圈内叫「2000」「五兄弟」「北埼玉2000」「鬼叫2000」。官方别名库里的叫法有：2000、五兄弟、北埼玉2000、北琦玉2000、鬼叫2000、全网最帅五兄弟、北埼玉。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "destroyer",
+   "title": "Destr0yer",
+   "aliases": [
+    "d0",
+    "削除射线",
+    "方块头",
+    "毁灭者",
+    "destroyer",
+    "一一一一一口",
+    "破坏者"
+   ],
+   "summary": "标准谱 MASTER 14.2、DX 谱 MASTER 12.9，BPM 90。",
+   "detail": "削除 feat. Nikki Simmons 的作品，标准谱 MASTER 14.2、DX 谱 MASTER 12.9，BPM 90。削除 的作品，圈内叫「d0」「方块头」「毁灭者」。标准谱和 DX 谱难度差很大，BPM 只有 90 但谱面很绕。官方别名库里的叫法有：d0、削除射线、方块头、毁灭者、destroyer、一一一一一口、破坏者。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "mopemope",
+   "title": "もぺもぺ",
+   "aliases": [
+    "毛八毛八",
+    "小蓝花",
+    "儿童金曲",
+    "mopemope",
+    "儿童邪典",
+    "儿童鞋垫",
+    "宝宝金曲"
+   ],
+   "summary": "DX 谱 MASTER 13.9，BPM 100。",
+   "detail": "LeaF & Optie 的作品，DX 谱 MASTER 13.9，BPM 100。圈内叫「毛八毛八」「小蓝花」「儿童金曲」「儿童邪典」。曲子听着像儿歌但谱面一点不儿歌。官方别名库里的叫法有：毛八毛八、小蓝花、儿童金曲、mopemope、儿童邪典、儿童鞋垫、宝宝金曲。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kyubibibibism",
+   "title": "きゅびびびびずむ",
+   "aliases": [
+    "cubibibibism",
+    "立体体体体主义",
+    "超天酱4",
+    "沙发发发发太太太太",
+    "超天酱3.5",
+    "248个绝赞",
+    "中间缺一块"
+   ],
+   "summary": "DX 谱 MASTER 13.8，BPM 185。",
+   "detail": "超てんちゃん 的作品，DX 谱 MASTER 13.8，BPM 185。超てんちゃん 的歌，圈内叫「超天酱」「立体体体体主义」。有「248 个绝赞」的梗。官方别名库里的叫法有：cubibibibism、立体体体体主义、超天酱4、沙发发发发太太太太、超天酱3.5、248个绝赞、中间缺一块。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "POPSアニメ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kattobi-keikyu-rider",
+   "title": "Kattobi KEIKYU Rider",
+   "aliases": [
+    "叮叮电车",
+    "叮叮车",
+    "京急电铁",
+    "叮叮叮叮叮",
+    "爱上火车",
+    "电车难题",
+    "新干线"
+   ],
+   "summary": "标准谱 MASTER 13.7，BPM 220。",
+   "detail": "Sampling Masters MEGA 的作品，标准谱 MASTER 13.7，BPM 220。圈内叫「叮叮电车」「京急电铁」「爱上火车」。叮叮声很洗脑。官方别名库里的叫法有：叮叮电车、叮叮车、京急电铁、叮叮叮叮叮、爱上火车、电车难题、新干线。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "x-blacklolita",
+   "title": "[X]",
+   "aliases": [
+    "无限",
+    "推特",
+    "x",
+    "twitter",
+    "高斯函数",
+    "传奇耐降王",
+    "埃隆马斯克"
+   ],
+   "summary": "DX 谱 MASTER 13.7，BPM 162。",
+   "detail": "Blacklolita 的作品，DX 谱 MASTER 13.7，BPM 162。圈内叫「无限」「推特」「埃隆马斯克」，因为曲名就是个 X。还有个「传奇耐降王」的梗。官方别名库里的叫法有：无限、推特、x、twitter、高斯函数、传奇耐降王、埃隆马斯克。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "scarlet-police",
+   "title": "スカーレット警察のゲットーパトロール24時",
+   "aliases": [
+    "斯卡雷特警察",
+    "funky",
+    "警察24时",
+    "蕾米琪露诺斗舞",
+    "警察",
+    "尾杀大b圈",
+    "东方警察"
+   ],
+   "summary": "DX 谱 MASTER 13.5，BPM 160。",
+   "detail": "七条レタスグループ 的作品，DX 谱 MASTER 13.5，BPM 160。东方同人曲，圈内叫「斯卡雷特警察」「东方警察」「警察24时」。是红魔乡组曲风格。官方别名库里的叫法有：斯卡雷特警察、funky、警察24时、蕾米琪露诺斗舞、警察、尾杀大b圈、东方警察。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "東方Project"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hibari",
+   "title": "ヒバリ",
+   "aliases": [
+    "姬雏鸟",
+    "七八刀",
+    "羽毛球",
+    "云雀",
+    "两个羽毛球",
+    "羽毛球跳舞",
+    "匕八刀"
+   ],
+   "summary": "DX 谱 MASTER 13.4，BPM 140。",
+   "detail": "HIMEHINA 的作品，DX 谱 MASTER 13.4，BPM 140。HIMEHINA 的歌，圈内叫「云雀」「羽毛球」「七八刀」「两个羽毛球」。官方别名库里的叫法有：姬雏鸟、七八刀、羽毛球、云雀、两个羽毛球、羽毛球跳舞、匕八刀。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "POPSアニメ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chururira",
+   "title": "チュルリラ・チュルリラ・ダッダッダ！",
+   "aliases": [
+    "告密教室",
+    "啾噜哩啦",
+    "打小报告",
+    "告老师",
+    "暗杀教室",
+    "结月缘杀人",
+    "宁宁二箱"
+   ],
+   "summary": "标准谱 MASTER 13.3，BPM 220。",
+   "detail": "和田たけあき(くらげP) 的作品，标准谱 MASTER 13.3，BPM 220。和田たけあき（くらげP）的作品，圈内叫「告密教室」「打小报告」「告老师」「暗杀教室」。讲的是举报同学的故事。官方别名库里的叫法有：告密教室、啾噜哩啦、打小报告、告老师、暗杀教室、结月缘杀人、宁宁二箱。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hao-deco27",
+   "title": "ハオ",
+   "aliases": [
+    "八才",
+    "女子",
+    "好好好",
+    "爹扣饭店",
+    "好",
+    "中",
+    "豪"
+   ],
+   "summary": "DX 谱 MASTER 13.2，BPM 176。",
+   "detail": "DECO*27 的作品，DX 谱 MASTER 13.2，BPM 176。是 DECO*27 比较新的一首。官方别名库里的叫法有：八才、女子、好好好、爹扣饭店、好、中、豪。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "suki-na-sozai-dragon",
+   "title": "好きな惣菜発表ドラゴン",
+   "aliases": [
+    "蔬菜龙",
+    "发表自己爱吃的菜的龙",
+    "好谱面发表龙",
+    "好物菜发表龙",
+    "物菜龙",
+    "蔬菜批发龙哥",
+    "好菜龙"
+   ],
+   "summary": "DX 谱 MASTER 12.5，BPM 160。",
+   "detail": "ンバヂ 的作品，DX 谱 MASTER 12.5，BPM 160。圈内叫「蔬菜龙」「好菜龙」「发表自己爱吃的菜的龙」。是很好笑的梗曲。官方别名库里的叫法有：蔬菜龙、发表自己爱吃的菜的龙、好谱面发表龙、好物菜发表龙、物菜龙、蔬菜批发龙哥、好菜龙。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "gigantomakhia",
+   "title": "GIGANTØMAKHIA",
+   "aliases": [
+    "老头环",
+    "faded",
+    "博士抱书",
+    "yoskip",
+    "巨人之战",
+    "kop3决胜曲"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 190。",
+   "detail": "BlackYooh vs. siromaru 的作品，DX 谱 MASTER 14.7，BPM 190。圈内叫「老头环」「巨人之战」「博士抱书」，也是 KOP3 决胜曲。属于顶尖难度。官方别名库里的叫法有：老头环、faded、博士抱书、yoskip、巨人之战、kop3决胜曲。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "credits-frums",
+   "title": "Credits",
+   "aliases": [
+    "信用",
+    "学分",
+    "18118181181111",
+    "天气预报",
+    "制作组",
+    "末影珍珠"
+   ],
+   "summary": "标准谱 MASTER 14.6，BPM 179。",
+   "detail": "Frums 的作品，标准谱 MASTER 14.6，BPM 179。圈内叫「信用」「学分」「制作组」。Frums 的谱面一向不讲道理。官方别名库里的叫法有：信用、学分、18118181181111、天气预报、制作组、末影珍珠。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "virtus",
+   "title": "ViRTUS",
+   "aliases": [
+    "水神2",
+    "本草纲目",
+    "紫菜蛋花汤",
+    "kop4日服决赛曲",
+    "kop4决赛曲",
+    "12个绝赞"
+   ],
+   "summary": "DX 谱 MASTER 14.6，BPM 225。",
+   "detail": "Hiro 的作品，DX 谱 MASTER 14.6，BPM 225。圈内叫「水神2」「本草纲目」「紫菜蛋花汤」，KOP4 决赛曲。官方别名库里的叫法有：水神2、本草纲目、紫菜蛋花汤、kop4日服决赛曲、kop4决赛曲、12个绝赞。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "saikyo-stronger",
+   "title": "最強STRONGER",
+   "aliases": [
+    "最强",
+    "血魔王",
+    "saikyo stronger",
+    "？！强强！？",
+    "最强霸者",
+    "最强死装哥"
+   ],
+   "summary": "DX 谱 MASTER 14.5，BPM 205。",
+   "detail": "REDALiCE vs USAO 的作品，DX 谱 MASTER 14.5，BPM 205。圈内叫「最强」「血魔王」「最强死装哥」。REDALiCE vs USAO 的对战曲。官方别名库里的叫法有：最强、血魔王、saikyo stronger、？！强强！？、最强霸者、最强死装哥。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "panopticon",
+   "title": "Panopticon",
+   "aliases": [
+    "监狱",
+    "圆形监狱",
+    "典狱长来了",
+    "学校",
+    "典狱长",
+    "监牢"
+   ],
+   "summary": "标准谱 MASTER 14.4、Re:MASTER 14.3，BPM 110。",
+   "detail": "cybermiso 的作品，标准谱 MASTER 14.4、Re:MASTER 14.3，BPM 110。圈内叫「监狱」「圆形监狱」「典狱长」，也有人说「学校」。但谱面极绕。官方别名库里的叫法有：监狱、圆形监狱、典狱长来了、学校、典狱长、监牢。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zitronectar",
+   "title": "Zitronectar",
+   "aliases": [
+    "炫压抑",
+    "柑橘花蜜",
+    "柠檬水露",
+    "zit",
+    "摸摸touch",
+    "柠檬蜜"
+   ],
+   "summary": "DX 谱 MASTER 14.3，BPM 222。",
+   "detail": "Reku Mochizuki 的作品，DX 谱 MASTER 14.3，BPM 222。圈内叫「柠檬蜜」「柑橘花蜜」「柠檬水露」。官方别名库里的叫法有：炫压抑、柑橘花蜜、柠檬水露、zit、摸摸touch、柠檬蜜。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "world-vanquisher",
+   "title": "World Vanquisher",
+   "aliases": [
+    "世界征服者",
+    "世征",
+    "wv",
+    "威猛先生",
+    "我的碗筷洗",
+    "噔噔噔噔噔"
+   ],
+   "summary": "标准谱 MASTER 14.3，BPM 170。",
+   "detail": "void (Mournfinale) 的作品，标准谱 MASTER 14.3，BPM 170。圈内叫「世征」「威猛先生」「我的碗筷洗」。是 CHUNITHM 移植过来的老牌高难。官方别名库里的叫法有：世界征服者、世征、wv、威猛先生、我的碗筷洗、噔噔噔噔噔。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "spider-no-ito",
+   "title": "蜘蛛の糸",
+   "aliases": [
+    "蜘蛛丝",
+    "蜘蛛系",
+    "spider's thread",
+    "不来方永爱",
+    "蜘蛛的丝",
+    "蜘蛛之丝"
+   ],
+   "summary": "DX 谱 MASTER 14.2，BPM 180。",
+   "detail": "きくお×cosMo＠暴走P feat.影縫英 的作品，DX 谱 MASTER 14.2，BPM 180。きくお×cosMo＠暴走P 的合作曲，圈内叫「蜘蛛丝」「蜘蛛之丝」。两位都是做诡异系曲子的。官方别名库里的叫法有：蜘蛛丝、蜘蛛系、spider's thread、不来方永爱、蜘蛛的丝、蜘蛛之丝。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "paramount-showtime",
+   "title": "パラマウント☆ショータイム！！",
+   "aliases": [
+    "至高表演时间",
+    "表演时间",
+    "兔子",
+    "魔术兔",
+    "showtime",
+    "礼帽兔子"
+   ],
+   "summary": "DX 谱 MASTER 14，BPM 222。",
+   "detail": "翡乃イスカ 的作品，DX 谱 MASTER 14，BPM 222。圈内叫「表演时间」「魔术兔」「礼帽兔子」。官方别名库里的叫法有：至高表演时间、表演时间、兔子、魔术兔、showtime、礼帽兔子。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ether-strike",
+   "title": "Ether Strike",
+   "aliases": [
+    "以太冲击",
+    "乙醚冲击",
+    "es",
+    "零光吹唢呐",
+    "零光",
+    "白内障"
+   ],
+   "summary": "DX 谱 MASTER 13.9，BPM 156。",
+   "detail": "Akira Complex 的作品，DX 谱 MASTER 13.9，BPM 156。圈内叫「以太冲击」「乙醚冲击」「零光吹唢呐」。官方别名库里的叫法有：以太冲击、乙醚冲击、es、零光吹唢呐、零光、白内障。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shigatsu-no-ame",
+   "title": "四月の雨",
+   "aliases": [
+    "四月雨",
+    "四月的雨",
+    "april showers",
+    "你先别急",
+    "bpm79",
+    "急急国王"
+   ],
+   "summary": "标准谱 MASTER 13.9，BPM 79。",
+   "detail": "cubesato 的作品，标准谱 MASTER 13.9，BPM 79。圈内叫「四月雨」「急急国王」「你先别急」，因为 BPM 只有 79 却被叫急。官方别名库里的叫法有：四月雨、四月的雨、april showers、你先别急、bpm79、急急国王。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hyper-active",
+   "title": "Hyper Active",
+   "aliases": [
+    "泥头车",
+    "大卡车",
+    "擎天柱",
+    "撞大运",
+    "大运重卡",
+    "百吨王"
+   ],
+   "summary": "标准谱 MASTER 13.9，BPM 160。",
+   "detail": "HiTECH NINJA 的作品，标准谱 MASTER 13.9，BPM 160。圈内叫「泥头车」「大卡车」「擎天柱」「百吨王」。谱面像卡车碾过来。官方别名库里的叫法有：泥头车、大卡车、擎天柱、撞大运、大运重卡、百吨王。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hoshikai-kanata",
+   "title": "星界ちゃんと可不ちゃんのおつかい合騒曲",
+   "aliases": [
+    "可不敢笑",
+    "星界可不合骚曲",
+    "马赛克",
+    "猫抓板",
+    "圆头耄耋模拟器",
+    "你跑不过我你信不信"
+   ],
+   "summary": "DX 谱 MASTER 13.8，BPM 220。",
+   "detail": "南ノ南 的作品，DX 谱 MASTER 13.8，BPM 220。圈内叫「可不敢笑」「星界可不合骚曲」「圆头耄耋模拟器」。官方别名库里的叫法有：可不敢笑、星界可不合骚曲、马赛克、猫抓板、圆头耄耋模拟器、你跑不过我你信不信。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "matsuyoi-naitobug",
+   "title": "マツヨイナイトバグ",
+   "aliases": [
+    "绿毛虫",
+    "萤火虫",
+    "莉格露",
+    "待宵的萤火虫",
+    "待宵夜虫"
+   ],
+   "summary": "DX 谱 MASTER 13.9、Re:MASTER 14.3，BPM 190。",
+   "detail": "COOL&CREATE feat.ビートまりおとまろん「東方ダンマクカグラ」 的作品，DX 谱 MASTER 13.9、Re:MASTER 14.3，BPM 190。东方同人曲，圈内叫「萤火虫」「绿毛虫」「莉格露」「待宵的萤火虫」。官方别名库里的叫法有：绿毛虫、萤火虫、莉格露、待宵的萤火虫、待宵夜虫。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "東方Project"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bug-kairiki-bear",
+   "title": "バグ",
+   "aliases": [
+    "bug",
+    "八股",
+    "咕噜咕噜",
+    "故障",
+    "爸爸的雷达",
+    "八夕"
+   ],
+   "summary": "DX 谱 MASTER 11.8、Re:MASTER 13.8，BPM 186。",
+   "detail": "かいりきベア 的作品，DX 谱 MASTER 11.8、Re:MASTER 13.8，BPM 186。圈内叫「八股」「故障」「爸爸的雷达」。DX 谱 MAS 只有，但 Re: 直接跳到。官方别名库里的叫法有：bug、八股、咕噜咕噜、故障、爸爸的雷达、八夕。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "respect-fuujin",
+   "title": "リスペク風神",
+   "aliases": [
+    "风神",
+    "岚神",
+    "风神respect",
+    "东方风神",
+    "respect风神",
+    "东方风神录"
+   ],
+   "summary": "DX 谱 MASTER 13.7，BPM 135。",
+   "detail": "ビートまりおとまろん 的作品，DX 谱 MASTER 13.7，BPM 135。东方同人曲，圈内叫「风神」「岚神」「东方风神录」。官方别名库里的叫法有：风神、岚神、风神respect、东方风神、respect风神、东方风神录。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "東方Project"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "magical-cure-love-shot",
+   "title": "M@GICAL☆CURE! LOVE ♥ SHOT!",
+   "aliases": [
+    "miku miku beam!",
+    "magical cure love shot",
+    "初音射线",
+    "mikumikubeam",
+    "魔法米库",
+    "miku射线"
+   ],
+   "summary": "DX 谱 MASTER 13.7，BPM 192。",
+   "detail": "SAWTOWNE 的作品，DX 谱 MASTER 13.7，BPM 192。圈内叫「初音射线」「魔法米库」「miku miku beam」。是 2024 年很火的初音曲。官方别名库里的叫法有：miku miku beam!、magical cure love shot、初音射线、mikumikubeam、魔法米库、miku射线。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "niconicoボーカロイド"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "excalibur",
+   "title": "Excalibur ～Revived resolution～",
+   "aliases": [
+    "圣剑2",
+    "ex咖喱棒",
+    "生煎2",
+    "福瑞跑步2",
+    "福瑞快跑"
+   ],
+   "summary": "标准谱 MASTER 14.8，BPM 200。",
+   "detail": "Project Grimoire 的作品，标准谱 MASTER 14.8，BPM 200。圈内叫「圣剑2」「生煎2」「ex咖喱棒」。是圣剑系列的第二首，尾杀很凶。官方别名库里的叫法有：圣剑2、ex咖喱棒、生煎2、福瑞跑步2、福瑞快跑。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "divide-et-impera",
+   "title": "Divide et impera!",
+   "aliases": [
+    "黑人打架2",
+    "猫娘打架",
+    "纱露朵大战米露库",
+    "迷迭香大战推进之王",
+    "分而治之"
+   ],
+   "summary": "DX 谱 MASTER 14.8，BPM 166。",
+   "detail": "BlackY a.k.a. WAiKURO survive 的作品，DX 谱 MASTER 14.8，BPM 166。圈内叫「分而治之」「黑人打架2」「猫娘打架」，还因为角色被叫「纱露朵大战米露库」。官方别名库里的叫法有：黑人打架2、猫娘打架、纱露朵大战米露库、迷迭香大战推进之王、分而治之。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "viii-bit-explorer",
+   "title": "VIIIbit Explorer",
+   "aliases": [
+    "浏览器",
+    "8bit",
+    "8比特",
+    "八比特",
+    "8比特浏览器"
+   ],
+   "summary": "标准谱 MASTER 14.5、DX 谱 MASTER 14.7，BPM 188。",
+   "detail": "Lime 的作品，标准谱 MASTER 14.5、DX 谱 MASTER 14.7，BPM 188。圈内叫「浏览器」「8比特浏览器」「8bit」。官方别名库里的叫法有：浏览器、8bit、8比特、八比特、8比特浏览器。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "lia-fail",
+   "title": "Lia=Fail",
+   "aliases": [
+    "圣剑3",
+    "生煎3",
+    "lia=失败",
+    "蓝牙连接失败",
+    "福瑞跑步3"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 186。",
+   "detail": "Team Grimoire 的作品，DX 谱 MASTER 14.7，BPM 186。圈内叫「圣剑3」「生煎3」「蓝牙连接失败」。官方别名库里的叫法有：圣剑3、生煎3、lia=失败、蓝牙连接失败、福瑞跑步3。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "koushou-daidou",
+   "title": "康莊大道",
+   "aliases": [
+    "康庄大道",
+    "羊角",
+    "羊",
+    "康庄",
+    "太太乐"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 208。",
+   "detail": "Spiegel vs Yukino 的作品，DX 谱 MASTER 14.7，BPM 208。圈内叫「康庄大道」「羊角」「太太乐」。官方别名库里的叫法有：康庄大道、羊角、羊、康庄、太太乐。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "cryptarithm",
+   "title": "Cryptarithm",
+   "aliases": [
+    "加密算法",
+    "削除不鬼叫",
+    "密码算数",
+    "削除鬼叫2",
+    "密码学"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 175。",
+   "detail": "削除 的作品，DX 谱 MASTER 14.7，BPM 175。圈内叫「密码学」「加密算法」「削除鬼叫2」，也有人说「削除不鬼叫」。官方别名库里的叫法有：加密算法、削除不鬼叫、密码算数、削除鬼叫2、密码学。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "end-time",
+   "title": "End Time",
+   "aliases": [
+    "et",
+    "终时",
+    "终焉之时",
+    "终末之时"
+   ],
+   "summary": "标准谱 MASTER 14.7，BPM 180。",
+   "detail": "Cres. 的作品，标准谱 MASTER 14.7，BPM 180。圈内叫「终时」「终焉之时」「终末之时」，也有直接叫「et」的。官方别名库里的叫法有：et、终时、终焉之时、终末之时。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "ゲームバラエティ"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "metamorphosism",
+   "title": "Metamorphosism",
+   "aliases": [
+    "变态主义",
+    "削除鬼叫",
+    "削除硅胶",
+    "我奶做梦"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 144。",
+   "detail": "削除 的作品，DX 谱 MASTER 14.7，BPM 144。圈内叫「削除鬼叫」「变态主义」「削除硅胶」。官方别名库里的叫法有：变态主义、削除鬼叫、削除硅胶、我奶做梦。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "temptation",
+   "title": "TEmPTaTiON",
+   "aliases": [
+    "小萝莉耳语",
+    "百合咲",
+    "诱惑"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 160。",
+   "detail": "かねこちはる 的作品，DX 谱 MASTER 14.7，BPM 160。圈内叫「诱惑」「小萝莉耳语」「百合咲」。官方别名库里的叫法有：小萝莉耳语、百合咲、诱惑。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "galatea-no-rasen",
+   "title": "ガラテアの螺旋",
+   "aliases": [
+    "螺旋",
+    "伽拉泰亚的螺旋"
+   ],
+   "summary": "标准谱 MASTER 14.6、Re:MASTER 14.7，BPM 200。",
+   "detail": "sasakure.UK 的作品，标准谱 MASTER 14.6、Re:MASTER 14.7，BPM 200。圈内叫「螺旋」「伽拉泰亚的螺旋」。官方别名库里的叫法有：螺旋、伽拉泰亚的螺旋。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "vertex",
+   "title": "VERTeX",
+   "aliases": [
+    "水神",
+    "水神1"
+   ],
+   "summary": "标准谱 MASTER 14.7，BPM 237。",
+   "detail": "Hiro「maimai」より 的作品，标准谱 MASTER 14.7，BPM 237。Hiro 的作品，圈内叫「水神」「水神1」。是水神系列第一首，高速连打。官方别名库里的叫法有：水神、水神1。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "lamia",
+   "title": "LAMIA",
+   "aliases": [
+    "拉面",
+    "拉米亚"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 199。",
+   "detail": "BlackY 的作品，DX 谱 MASTER 14.7，BPM 199。圈内叫「拉米亚」「拉面」。从 CHUNITHM 移植。官方别名库里的叫法有：拉面、拉米亚。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "オンゲキCHUNITHM"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "khymexa",
+   "title": "KHYMΞXΛ",
+   "aliases": [
+    "奇美拉",
+    "khy"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 220。",
+   "detail": "のらねこさい feat.ricono 的作品，DX 谱 MASTER 14.7，BPM 220。圈内叫「奇美拉」「khy」。官方别名库里的叫法有：奇美拉、khy。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "re-unknown-x",
+   "title": "Re:Unknown X",
+   "aliases": [
+    "未知x",
+    "东方那个14+"
+   ],
+   "summary": "DX 谱 MASTER 14.7，BPM 190。",
+   "detail": "まらしぃ 的作品，DX 谱 MASTER 14.7，BPM 190。东方同人，圈内叫「未知x」「东方那个14+」。官方别名库里的叫法有：未知x、东方那个14+。",
+   "tags": [
+    "maimai",
+    "曲目",
+    "東方Project"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nan-du-dang-wei",
+   "title": "五档难度体系",
+   "aliases": [
+    "BASIC",
+    "ADVANCED",
+    "EXPERT",
+    "MASTER",
+    "Re:MASTER",
+    "绿谱",
+    "黄谱",
+    "红谱",
+    "紫谱",
+    "白谱"
+   ],
+   "summary": "BASIC到Re:MASTER五档，对应绿黄红紫白五种颜色",
+   "detail": "每首歌最多挂五档：BASIC、ADVANCED、EXPERT、MASTER、Re:MASTER，颜色依次是绿、黄、红、紫、白。圈内几乎不用英文全称，都说\"绿谱\"\"紫谱\"\"白谱\"，比如\"这歌紫谱定数14.2\"比说MASTER自然得多。一般要先通关前一档才能选下一档，所以新曲初见通常只能从低档打起。Re:MASTER不是每首都有，多是老歌重制或人气曲补谱，白谱的定数经常和紫谱拉开一大截。别把档位当成难度刻度——同样是MASTER，定数能从7跨到15。",
+   "tags": [
+    "玩法",
+    "谱面"
+   ],
+   "source": "https://gamerch.com/maimai/533359",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "deng-ji-yu-deng-ji-zhi",
+   "title": "等级与等级值",
+   "aliases": [
+    "等级值",
+    "level_value",
+    "13+",
+    "14.9",
+    "定数区间"
+   ],
+   "summary": "不带加号只取.0到.5，带加号取.6到.9，15只有15.0",
+   "detail": "等级是显示给你看的一档（13、13+、14、14+、15），等级值是内部那一位小数，两条线是绑死的：不带加号的等级只落在.0–.5，带加号的落在.6–.9。所以13最高只到13.5，13.6一定是13+，14.9一定显示14+，而15目前只有15.0一种。这条规则拿lxns曲库全量数据跑一遍就能验证，没有例外。圈内说\"这首是13顶\"就是13.5，\"14+天花板\"就是14.9。会看这个的人算R值时能一眼估出手里那张谱值多少。",
+   "tags": [
+    "玩法",
+    "谱面",
+    "数据"
+   ],
+   "source": "https://maimai.lxns.net/docs/api/maimai",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xu-gao-xu-di",
+   "title": "虚高与虚低",
+   "aliases": [
+    "虚高",
+    "虚低",
+    "定数注水"
+   ],
+   "summary": "定数和实际手感对不上时的说法，虚高指标得高但好打，虚低反之",
+   "detail": "定数是人定的，同一档里手感能差出一整档，于是有了虚高虚低。虚高是定数标得偏高、实际打起来轻松，典型是配置单一靠手速堆的物量谱；虚低是定数标得低但很吃，多见于老谱、判定坑、触摸密集的谱。判断依据主要是自己跨定数的达成率：同定数能SSS却在这首卡AA，基本就是虚低。圈内也拿它评价谱师，说某人的谱\"注水\"或\"虚低\"。这说法带主观，同一个人不同时期给出的结论可能相反，别当客观结论用。",
+   "tags": [
+    "玩法",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pu-mian-shu-xing",
+   "title": "谱面属性（物量·技巧·体力）",
+   "aliases": [
+    "物量谱",
+    "技巧谱",
+    "体力谱",
+    "发狂谱"
+   ],
+   "summary": "圈内按吃什么给谱面分类：物量、技巧、体力、发狂",
+   "detail": "物量谱是note多、靠手速和耐力硬堆过去；技巧谱note不一定多但配置刁钻，吃读谱和手法；体力谱是长、后半段掉速；发狂则是配置离谱，初见基本打不动。同一档定数里这几类手感完全不同，所以\"定数一样\"绝不等于\"难度一样\"。判断方法看note数、BPM，再看自己掉分掉在哪——前半段掉是读谱问题，后半段掉是体力问题。圈内会直接说\"这首是物量谱，手速够就过\"，比报定数更说明问题。",
+   "tags": [
+    "玩法",
+    "谱面",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pan-ding-zhong-lei",
+   "title": "判定种类",
+   "aliases": [
+    "CRITICAL PERFECT",
+    "PERFECT",
+    "GREAT",
+    "GOOD",
+    "MISS",
+    "判定"
+   ],
+   "summary": "判定从CRITICAL PERFECT到MISS共五档，GOOD断连GREAT不断",
+   "detail": "判定从高到低是CRITICAL PERFECT、PERFECT、GREAT、GOOD、MISS。CRITICAL PERFECT是最高档，BREAK音符打好也是这一档，所以Break的分数权重比普通音符重得多。GREAT只压达成率、不断连；GOOD会直接断连，这一条就是FC+和FC的分界。结算里还会给Fast/Late统计，是调判定偏移的唯一依据。别把GREAT和GOOD搞混，前者掉分不掉连，后者两个都掉。",
+   "tags": [
+    "玩法",
+    "判定"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ping-ji-fen-shu-xian",
+   "title": "评级分数线",
+   "aliases": [
+    "S",
+    "SS",
+    "SSS",
+    "SS+",
+    "S+",
+    "AAA",
+    "评级"
+   ],
+   "summary": "S是97%、SS是99%、SSS是100%、SSS+是100.5%",
+   "detail": "完整档位是D、C、B、BB、BBB、A、AA、AAA、S、S+、SS、SS+、SSS、SSS+，分数线依次是40、50、60、70、75、80、90、94、97、98、99、99.5、100、100.5。注意带加号的是插在中间而不是往上加：S是97.00，S+是98.00，SS是99.00，SS+是99.50，别以为S+是97.5。SSS要正好100.00，SSS+要100.50以上，也就是说SSS+基本等于\"不能有GREAT\"。这也是圈内把鸟加看得比鸟重一档的根源，两者之间其实只差0.5个百分点。",
+   "tags": [
+    "玩法",
+    "判定",
+    "数据"
+   ],
+   "source": "https://gamerch.com/maimai/533647",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dan-qu-rating",
+   "title": "单曲R值与总R值的构成",
+   "aliases": [
+    "单曲R",
+    "总R",
+    "新曲枠",
+    "旧曲枠",
+    "B15",
+    "B35"
+   ],
+   "summary": "总R是新曲取最好15张加旧曲取最好35张的单曲R之和",
+   "detail": "单曲R值约等于谱面定数乘达成率再乘一个评级系数，结果截断小数；算R时达成率上限按100.5%计，就算打出101%也只按100.5算。总R是\"新曲枠取最高15张＋旧曲枠取最高35张\"相加，老版本是50张平铺，Splash PLUS之后才拆成15+35。新曲枠只收最近两个版本新增的谱面，Re:MASTER例外算进旧曲枠，其余全归旧曲枠。所以冲R的思路很清楚：先把15张新曲刷满，再回头磨35张旧曲里定数最高的那批。系数表（SSS+约22.4、SSS约22.2、SS约20.8、S约20.0、AAA约16.8）是社区反推的，各家数值有细微出入。",
+   "tags": [
+    "玩法",
+    "数据",
+    "系统"
+   ],
+   "source": "https://gamerch.com/maimai/533647",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "player-level",
+   "title": "Player Level",
+   "aliases": [
+    "玩家等级",
+    "PL",
+    "等级"
+   ],
+   "summary": "打歌累积出来的玩家等级，和R值、段位是三条不同的线",
+   "detail": "Player Level靠游玩累积经验往上涨，大致按难度和成绩给量，打得越多、难度越高涨得越快，上限很高。它本质是\"出勤量\"的可视化，和DX Rating代表的实力不是一回事：R值高的可能等级一般（只刷少数几首），等级高的可能R值普通（什么谱都打）。圈内看水平主要看R值和牌子，Player Level更多是\"这人真能出勤\"的旁证。有人拿它当社交货币，因为数字直观又天天在涨。",
+   "tags": [
+    "玩法",
+    "系统"
+   ],
+   "source": "https://gamerch.com/maimai/533359",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "wu-zhong-note",
+   "title": "五种音符",
+   "aliases": [
+    "Tap",
+    "Hold",
+    "Slide",
+    "Touch",
+    "Break",
+    "音符"
+   ],
+   "summary": "Tap、Hold、Slide、Touch、Break五种，Break分最重",
+   "detail": "Tap是单击，Hold要按住到结束，Slide是星星头起划到轨迹末端，Touch是DX谱特有的拍屏幕，Break是带绝赞判定的特殊音符、分数权重约为普通音符的五倍。标准谱没有Touch和TouchHold，也不会有Break化的Slide和Hold，这是两种谱最本质的区别。手法上Tap和Touch是两套完全不同的肌肉记忆，所以标准谱老手转DX谱常要先重新适应拍屏。Break还特别吃判定，打歪一个Break掉的达成率比打歪一串Tap都多。",
+   "tags": [
+    "玩法",
+    "谱面",
+    "判定"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zong-lian",
+   "title": "纵连",
+   "aliases": [
+    "纵连",
+    "连打",
+    "同位置连打"
+   ],
+   "summary": "同一位置连续快速点，靠手腕抖而不是抬手指",
+   "detail": "纵连是同一纵列上密集连打，常见于高BPM的副歌段。正确打法是手腕小幅抖动、手指贴住按键，靠\"抖\"而不是\"抬—落\"，一旦抬手指必然掉速。纵连吃的是手速上限和耐力，所以一首歌里的纵连段往往就是掉分点。圈内说\"这谱面纵连吃手速\"指的就是这个；反过来，虚高的谱里也常见\"纵连看着吓人但其实间距很松\"。练纵连基本靠降速对着节拍器磨均匀度，光靠硬打容易越打越僵。",
+   "tags": [
+    "玩法",
+    "手法"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jiao-hu",
+   "title": "交互",
+   "aliases": [
+    "trill",
+    "交替",
+    "左右交替"
+   ],
+   "summary": "左右手交替的连打型，考两手均衡而不是单手上限",
+   "detail": "交互是左右手轮流击打的连续配置，形式上是A-B-A-B的交替，比纵连省手速。它要求两手力度和节奏完全一致，一只手弱整段就\"瘸\"，所以是检验基本功的配置。练法是先慢速打均匀再加速度，别一上来就冲原速，那样只会把不均匀练成肌肉记忆。圈内夸人\"交互好\"通常是说他左手不拖后腿，这比单纯手速快更难得。",
+   "tags": [
+    "玩法",
+    "手法"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shuang-ya",
+   "title": "双押与多重押",
+   "aliases": [
+    "双押",
+    "二重",
+    "三重",
+    "四重",
+    "同时押"
+   ],
+   "summary": "两个以上音符同时按下，二重三重四重按同时按键数叫",
+   "detail": "双押是最基础的同时押，两个音符落在同一拍；三个、四个同时就是三重、四重，日文叫二重押し、三重押し。双押最大的坑是\"看着对称其实不同步\"，不少谱故意错开几毫秒，纯靠目押会打成一前一后。手法上双手要提前落位，靠手腕下沉压下去而不是手指戳。圈内说\"这段四重很脏\"，通常指同时押多且位置别扭，不是指速度。",
+   "tags": [
+    "玩法",
+    "手法"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "pai-hua",
+   "title": "拍滑",
+   "aliases": [
+    "拍星星",
+    "划星星",
+    "Slide",
+    "拍滑"
+   ],
+   "summary": "Slide的几种划法：顺着轨迹抹、先拍星星头再划、以及短划回中",
+   "detail": "Slide的判定是\"轨迹被经过\"，所以划法很自由，可以整只手顺着轨迹抹过去，也可以只用一根手指点着划。所谓拍滑是指先拍星星头拿到Tap判定、再接着划轨迹，难点在于星星头拍完还得接住同一位置的后续音符，手不能提前离开。短划和来回划则要注意回中，不回中很容易漏掉下一个反方向的轨迹。设置里的\"SLIDE显示时机\"和\"旋转滑动\"就是专门为这些手法调的，手感不对先动这两个。",
+   "tags": [
+    "玩法",
+    "手法",
+    "设置"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/3.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hui-zhuan",
+   "title": "旋转与\"皿\"",
+   "aliases": [
+    "回転",
+    "Spin",
+    "旋转",
+    "皿"
+   ],
+   "summary": "谱面绕圈转动的读谱压力，舞萌本体没有BEMANI那种实体皿",
+   "detail": "旋转（回転）指谱面或音符群整体绕判定圈转动，读谱要靠预判而不是逐个音符追。圈内偶尔借BEMANI的\"皿\"（转盘）来形容这种转圈配置，但舞萌机台没有实体转盘，这个说法只是比喻，别当官方术语用。旋转段最怕眼睛跟着转，正确做法是盯住判定线、用余光判断方向。设置里的\"旋转滑动\"会影响星星头旋转的表现，有人干脆关掉换读谱稳定。",
+   "tags": [
+    "玩法",
+    "手法",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "wai-jian-nei-jian",
+   "title": "外键与内键",
+   "aliases": [
+    "外键",
+    "内键",
+    "外圈",
+    "内圈"
+   ],
+   "summary": "外圈八个实体按键和屏幕触摸区是两套输入，手要在按和拍之间切",
+   "detail": "舞萌的输入分两套：外圈八个实体按键，和屏幕上的触摸区。圈内说\"外键\"多指按键、\"内键\"多指拍屏触摸区，也有把靠外侧/靠内侧的按键位置叫外键内键的，说法不完全统一。实际影响是DX谱大量混用按键和触摸，手要不停在\"按\"和\"拍\"之间切换，这是标准谱没有的负担。外键打久了手指疼、内键打久了手掌疼，两种累法不一样。",
+   "tags": [
+    "玩法",
+    "手法",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "jing-mian",
+   "title": "镜面 MIRROR",
+   "aliases": [
+    "MIRROR",
+    "镜像",
+    "上下反"
+   ],
+   "summary": "MIRROR把谱面左右镜像，用来救某只手够不到的配置",
+   "detail": "MIRROR是官方选项，开了之后整个谱面左右翻转，音符位置和Slide方向一起翻。用途是配置偏一侧、或者自己某只手明显弱时换手，成绩照样算、定数也不变，所以有人靠镜像刷自己不擅长的谱。要注意镜像只翻左右，不翻上下；\"上下反\"在通常模式里没有这个选项，那是宴会谱或别的音游的概念，别混着说。圈内讨论\"这首要不要开镜\"通常是在算哪只手更吃亏。",
+   "tags": [
+    "玩法",
+    "设置",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/871937",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "pan-ding-tiao-zheng",
+   "title": "判定调整",
+   "aliases": [
+    "OFFSET",
+    "延迟",
+    "判定调整A",
+    "判定调整B",
+    "音押",
+    "目押"
+   ],
+   "summary": "A调音押偏移、B调目押偏移，范围-2.0到2.0，步进0.1",
+   "detail": "判定调整分A和B：A调的是节奏层面（音押），B调的是音符到达判定线的视觉时机（目押），两条互相独立。范围都是-2.0到2.0，步进0.1，数值越大延迟越大。调法只看结算里的Fast/Late统计，一次别超过0.2，调完打两首再看数据。机台不同、外放和耳机不同都会影响手感，换机厅要重新校一遍，别把上一台的数值带过来。",
+   "tags": [
+    "玩法",
+    "设置"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/3.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "liu-su",
+   "title": "流速",
+   "aliases": [
+    "TAP速度",
+    "TOUCH速度",
+    "速度",
+    "流速"
+   ],
+   "summary": "TAP速度和TOUCH速度分开调，新手常落在4.5到5.5",
+   "detail": "流速在设置里分\"TAP速度\"和\"TOUCH速度\"两条，分别管按键音符和触摸音符的移动、闭合快慢，所以能调出\"按键快触摸慢\"这种混合手感。调快能压缩读谱密度、看得更早，但太快会来不及反应；调慢好读但音符容易堆积。圈内普遍建议新手从4.5–5.5起步，往上加一次别超过0.5，加完打几首再决定。流速纯属个人手感，不存在\"高手都用某个值\"这回事。",
+   "tags": [
+    "玩法",
+    "设置"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/3.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dang-ban",
+   "title": "遮罩与挡板",
+   "aliases": [
+    "遮罩",
+    "挡板",
+    "背景亮度",
+    "画面中央显示"
+   ],
+   "summary": "降背景亮度、开中央显示、挡视野，都是为了少分心",
+   "detail": "最常用的是把\"影像的亮度\"调暗，背景动画一亮就读不清音符。其次是\"画面中央显示\"，可以选COMBO、达成率、DX分数，或者\"距S/SS/SSS还差多少\"，很多人开\"距SSS\"实时知道自己掉没掉线。挡板（遮住一部分屏幕）不是官方选项，多是玩家自制或从别的音游带过来的习惯，用来强制自己不看某个区域、只靠节奏打。这些设置都不改判定，纯粹是读谱辅助，调完不影响成绩计算。",
+   "tags": [
+    "玩法",
+    "设置"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/3.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shou-tao",
+   "title": "手套",
+   "aliases": [
+    "手袋",
+    "手套",
+    "护手",
+    "指套"
+   ],
+   "summary": "戴手套打舞萌很常见，防滑防磨也防手汗",
+   "detail": "舞萌要大量拍屏幕和划轨迹，裸手打久了手指磨、出汗打滑，所以戴薄手套或专门的音游手套很常见。手套的作用是让滑动更顺、减少摩擦声和手汗，不是作弊，官方也不禁止。有人只戴负责滑动的那只手，也有人用指套。圈内还会讨论\"这机厅的屏是不是该擦了\"，因为脏屏比手套更影响手感。",
+   "tags": [
+    "玩法",
+    "机厅"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chu-zhang",
+   "title": "出张与分业",
+   "aliases": [
+    "出張",
+    "分业",
+    "双手分工"
+   ],
+   "summary": "一只手跨到另一侧去打叫出张，两手明确分工叫分业",
+   "detail": "出张（出張）是指本该由另一只手负责的区域，这只手伸过去打，常见于密集段或一只手腾不出来的时候。分业是更系统的说法：把谱面明确切成\"左手管哪块、右手管哪块\"，不按左右对称来分。分业做得好的人看起来手很闲，因为他从不做多余动作，也不跟另一只手抢位置。圈内夸人\"分业清楚\"是相当高的评价，比夸手速快更少见。",
+   "tags": [
+    "玩法",
+    "手法",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "an-mi",
+   "title": "餡蜜（糊）",
+   "aliases": [
+    "餡蜜",
+    "糊",
+    "糊判定",
+    "糊过去"
+   ],
+   "summary": "靠宽松判定把密集段糊过去，牺牲精度保连击",
+   "detail": "餡蜜原意是日式甜品，在音游圈指不按标准手法打、靠判定宽松混过去。舞萌里的典型做法是密集段整只手压上去、或者提前乱拍，靠GREAT和GOOD撑住不断连。这在保FC、保通关时有用，但会明显压达成率，冲SSS时是纯负收益。圈内说\"这段我直接糊了\"就是承认自己没打准，语气多半带点自嘲。",
+   "tags": [
+    "玩法",
+    "手法",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tou-bi-yu-lian-ji",
+   "title": "投币与联机",
+   "aliases": [
+    "投币",
+    "联机",
+    "断网",
+    "单机"
+   ],
+   "summary": "投币开局，联机决定能不能上传成绩、拼机和解禁",
+   "detail": "国服是投币制，投一次开一局，通常是三首，开双人模式会多一首。机台要联网才能登录账号、上传成绩、参加活动、拼机同步；断网时只能打单机，成绩不保存。圈内规矩很硬：别人正在打的时候绝对别投币，投币的提示音会直接毁掉对方节奏。国服服务器抽风是老问题，赶上活动首日尤其容易断，所以有人会先看群里有没有人报\"又断了\"再出门。",
+   "tags": [
+    "玩法",
+    "机厅",
+    "系统"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/1.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jie-jin",
+   "title": "解禁",
+   "aliases": [
+    "解歌",
+    "解禁",
+    "区域奖励",
+    "课题曲"
+   ],
+   "summary": "新曲要先在区域里打到或过课题曲才解锁，区域结束后通常自动解禁",
+   "detail": "新版本加的曲子大多不是直接可打，要在\"区域\"（地图）里推进距离拿到，或者打通课题曲（完美挑战曲）。区域一般开放一到两个月，结束后区域内的乐曲和谱面奖励通常会直接对所有人解禁，不管你当时推进到哪。所以不急着打活动也能等到解禁，只是会晚一两个版本。拼机时歌少的一方照样能打到对方有而自己没有的歌，这条跟解禁是两回事。",
+   "tags": [
+    "玩法",
+    "系统"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter3/1.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "huo-dong-qu",
+   "title": "活动曲与联动曲",
+   "aliases": [
+    "活动曲",
+    "联动曲",
+    "期间限定",
+    "复刻"
+   ],
+   "summary": "活动曲和联动曲有开放窗口，过了窗口要么等复刻要么等解禁",
+   "detail": "活动曲跟着活动区域一起开，联动曲则是和别的作品合作，既有SEGA自家的CHUNITHM、オンゲキ，也有外部IP。联动曲的谱面往往带对方风格，比如CHUNITHM系的配置更偏技巧和空中手势思维。窗口期过了之后，曲子一般会走通常解禁，但联动物料（称号、收藏品、头像框）常常不再复刻。圈内会盯着联动公告算\"这波要不要出勤\"，因为错过一次可能要等很久。",
+   "tags": [
+    "玩法",
+    "系统",
+    "音游"
+   ],
+   "source": "https://gamerch.com/maimai/533627",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "ge-qu-fen-lei",
+   "title": "歌曲分类",
+   "aliases": [
+    "genre",
+    "分类",
+    "POPS",
+    "niconico",
+    "东方",
+    "原创"
+   ],
+   "summary": "曲库按POPS动画、niconico、东方、游戏、原创等分类",
+   "detail": "官方分类大致是POPS＆アニメ、niconico＆ボーカロイド、東方Project、ゲーム＆バリエーション、maimai原创，外加オンゲキ＆CHUNITHM这类合作分类。分类不只是整理用：区域奖励、活动、排行榜都按分类走，刷分类完成度本身就是一种玩法。圈内说\"我主要打东方\"就是在说自己偏哪块。分类和难度、定数完全无关，同一个分类里定数能从个位数跨到15。",
+   "tags": [
+    "玩法",
+    "系统",
+    "数据"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "guo-fu-ri-fu",
+   "title": "国服、日服与国际服",
+   "aliases": [
+    "国服",
+    "日服",
+    "国际服",
+    "net",
+    "版本差"
+   ],
+   "summary": "三个服版本进度、net入口和可用功能都不一样",
+   "detail": "日服最新，国际服次之，国服通常落后一到两个版本。国服的net只能从微信公众号进，日服和国际服可以直接用浏览器打开maimai DX NET。国服的相册（上传成绩图）和排行榜功能因为政策和外挂问题关过，恢复时间不定。曲库上各服也会因为授权差异缺歌，查曲目要以对应服的net为准。跨服账号不互通，换服等于从零开始。",
+   "tags": [
+    "系统",
+    "机厅"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/6.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dx-kuang-ti",
+   "title": "DX框体与旧框体",
+   "aliases": [
+    "DX框体",
+    "旧框",
+    "无印框",
+    "上屏"
+   ],
+   "summary": "DX框体多了触摸屏和上方副屏，旧框只有外圈八个按键",
+   "detail": "DX框体的主屏是触摸屏，音符里才有Touch和TouchHold；上方还加了一块副屏，用来显示达成率、连击这些信息。旧框（maimai到FiNALE时代）没有触摸，只有外圈八个按键，所以那个时期的谱面里根本不存在触摸音符。国服现在跑的基本都是DX框体，旧框只在少数地方还能见到。圈内问\"这机台是DX的吗\"，通常是在确认能不能打DX谱。",
+   "tags": [
+    "系统",
+    "机厅"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/3.html",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xi-yi-ji",
+   "title": "为什么叫\"洗衣机\"",
+   "aliases": [
+    "洗衣机",
+    "洗濯機",
+    "洗衣服"
+   ],
+   "summary": "圆屏加转圈谱面像滚筒洗衣机，官方自己也玩这个梗",
+   "detail": "舞萌的框体是一个大圆屏加一圈按键，打起来谱面还在转，远看确实像滚筒洗衣机在转。这个外号不是玩家单方面起的，官方宣传里也自嘲过，所以圈内叫得毫无障碍。衍生说法还有\"洗衣服\"\"去洗衣房\"，指去机厅打舞萌。跟正经说\"打舞萌\"比，\"洗衣服\"更像是熟人之间的黑话，用出来就是自己人的信号。",
+   "tags": [
+    "圈子",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wu-meng-da-wang",
+   "title": "舞萌大王",
+   "aliases": [
+    "舞萌大王",
+    "机厅之王"
+   ],
+   "summary": "圈内对高强度出勤或机厅霸榜玩家的戏称，所指看语境",
+   "detail": "\"舞萌大王\"通常被当作玩家之间的戏称，多用来形容出勤极勤、在某个机厅长期霸榜、或者什么谱都敢打的人。语气多半是调侃不是贬义，也有人拿来自嘲\"我就是个舞萌大王\"。它没有严格定义，不同圈子指的人可能完全不一样，听到时得看上下文判断是夸还是损。跟\"国标\"\"牌子\"这类有明确门槛的说法比，它更偏社交玩笑。如果哪天在官方物料里看到同样四个字，含义要另算。",
+   "tags": [
+    "圈子",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "dian-wo",
+   "title": "\"打舞萌会电我\"",
+   "aliases": [
+    "电我",
+    "被电",
+    "打舞萌伤身"
+   ],
+   "summary": "自嘲梗，调侃打舞萌伤身——手麻、静电、打完虚脱",
+   "detail": "这是圈内的自嘲说法，把打舞萌说成\"被电\"，指向的是长时间拍屏后手麻、机台静电、以及打完一整局虚脱的那种感觉。它没有具体指向，就是\"这游戏伤身体但我还是打\"的黑色幽默。用法很随意，比如连打几局之后来一句\"又被电了\"。别把它理解成真的漏电事故，那是另一回事，两者在圈内语境里分得很清楚。",
+   "tags": [
+    "圈子",
+    "梗"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "low",
+   "sensitive": false
+  },
+  {
+   "slug": "sega-xi",
+   "title": "SEGA系三机种",
+   "aliases": [
+    "CHUNITHM",
+    "オンゲキ",
+    "中二",
+    "音击",
+    "ゲキチュウマイ"
+   ],
+   "summary": "maimai和CHUNITHM、オンゲキ同属SEGA，合称ゲキ！チュウマイ",
+   "detail": "三台机器都是SEGA的，圈内合称「ゲキ！チュウマイ」（オンゲキ＋CHUNITHM＋maimai），三家还有共同的全国大会KING of Performai。最直接的关系是互相移植曲：CHUNITHM和オンゲキ的歌会进舞萌，舞萌原创曲也会过去，所以曲库有相当一部分重叠。玩法差别不小，CHUNITHM是键盘式加空中手势，オンゲキ是按键加侧边滑条，舞萌是圆屏加触摸。会打其中一个不代表会打另一个，但读谱习惯能迁移一部分，跨机种的人不少。",
+   "tags": [
+    "音游",
+    "系统"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "yu-qi-ta-yin-you",
+   "title": "与其它音游的区别",
+   "aliases": [
+    "osu!",
+    "Phigros",
+    "Arcaea",
+    "音游"
+   ],
+   "summary": "街机、圆屏、无轨道，和手机音游、PC音游是两套操作逻辑",
+   "detail": "舞萌是街机，站着打、用整只手，谱面没有\"轨道\"概念，音符沿圆环向内收。osu!是PC上用鼠标或数位板点圈，Phigros和Arcaea是手机触屏、有判定线和轨道，操作全在指尖。所以手机音游的指法经验迁移到舞萌很有限，反过来舞萌玩家的手速和读谱密度倒是能带过去。圈内跨游的人不少，但普遍认为舞萌的体力门槛在这几款里最高。",
+   "tags": [
+    "音游",
+    "术语"
+   ],
+   "source": "https://gamerch.com/maimai/533406",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "lian-ji-yu-tong-bu",
+   "title": "连击与完全同步",
+   "aliases": [
+    "COMBO",
+    "SYNC",
+    "同步",
+    "完全同步"
+   ],
+   "summary": "连击看单人不断，完全同步看双人判定是否对齐，各有独立标记",
+   "detail": "结算画面左侧有两个圆位，一个记连击，一个记\"完全同步\"。完全同步是双人模式下两人在同一时刻打出同级判定，越同步奖励越高，全曲同步还有额外加成。单人打就只有连击那一侧有意义。双人时两人可以选不同难度，但谱面类型必须一致，都DX或都标准。圈内拼机时会算\"这局能不能同步\"，因为它直接影响这一局值不值。",
+   "tags": [
+    "玩法",
+    "系统"
+   ],
+   "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/Chapter2/4.html",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "magical-flavor",
+   "title": "Magical Flavor",
+   "aliases": [
+    "Magical Flavor",
+    "魔法味道"
+   ],
+   "summary": "DECO*27 写的咖啡店拉花曲，轻快好上手。",
+   "detail": "DECO*27 feat.Tia 的作品，标准谱 MASTER 13.3，BPM 98。DECO*27 少见的不劝退曲，很多人是从这首开始认他的舞萌曲。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "festivalight",
+   "title": "FestivaLight",
+   "aliases": [
+    "FestivaLight",
+    "节日光"
+   ],
+   "summary": "霜月はるか 唱的庆典曲，一听就是活动曲。",
+   "detail": "霜月はるか 的作品，标准谱 MASTER 13.4，BPM 125。旋律明亮，属于那种在机厅里放出来会让人心情好的类型。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tobidase-to-the-cosmic",
+   "title": "とびだせ！TO THE COSMIC!!",
+   "aliases": [
+    "とびだせ！TO THE COSMIC!!",
+    "飞向宇宙",
+    "猫娘开飞船"
+   ],
+   "summary": "みるく 和 しゃま 的正式合唱曲，两个角色一起唱。",
+   "detail": "t+pazolite feat. しゃま(CV:種﨑 敦美) & みるく(CV:伊藤 あすか) 的作品，DX 谱 MASTER 13.7，BPM 185。CV 分别是伊藤あすか和種﨑敦美。想提「Miruku 和夏玛一起唱歌」时，说的就是这首。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "milky-star-shooting-star",
+   "title": "ミルキースター・シューティングスター",
+   "aliases": [
+    "ミルキースター・シューティングスター",
+    "流星牛奶"
+   ],
+   "summary": "烏屋茶房 的偶像出道曲，标题是「牛奶星·流星」。",
+   "detail": "烏屋茶房 feat. 利香 的作品，DX 谱 MASTER 12.9，BPM 184。圈内一般按「出道曲」来提，讲的是站上舞台那一下。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hoshizora-spectacle",
+   "title": "ほしぞらスペクタクル",
+   "aliases": [
+    "ほしぞらスペクタクル",
+    "水母姐",
+    "水母娘"
+   ],
+   "summary": "奏音 的星空曲，看着可爱打起来要命。",
+   "detail": "奏音 的作品，DX 谱 MASTER 14.4，BPM 200。DX 谱难度不低，属于封面骗人的那一类。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "namida-to-ryusei",
+   "title": "ナミダと流星",
+   "aliases": [
+    "ナミダと流星",
+    "流星",
+    "泪水和流星",
+    "眼泪与流星"
+   ],
+   "summary": "芳川よしの 唱的抒情曲，流星题材。",
+   "detail": "芳川よしの 的作品，标准谱 MASTER 12.5、DX 谱 MASTER 13.3，BPM 190。标准谱和 DX 谱都有，适合心情一般的时候听。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "starry-colors",
+   "title": "Starry Colors",
+   "aliases": [
+    "Starry Colors"
+   ],
+   "summary": "BlackY 的作品，BMS 系作者进舞萌的代表之一。",
+   "detail": "BlackY feat. Risa Yuzuki 的作品，DX 谱 MASTER 14，BPM 177。Risa Yuzuki 演唱，海啸之后幸存者抬头看星星是它的故事。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ykwtd",
+   "title": "YKWTD",
+   "aliases": [
+    "YKWTD",
+    "一块玩土豆",
+    "你知道做什么",
+    "盈亏问题点",
+    "游客玩特大"
+   ],
+   "summary": "r-906 的神话曲，标题是「邪馬台」的缩写。",
+   "detail": "r-906 的作品，DX 谱 MASTER 13.8，BPM 174。讲一对 twin 兄弟打起来的事，属于日本神话二创。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "yoi-no-tori",
+   "title": "宵の鳥",
+   "aliases": [
+    "宵の鳥",
+    "宵鸟",
+    "宵之鸟",
+    "小纸鸟",
+    "小只鸟"
+   ],
+   "summary": "n.k 的和风曲，气质偏暗，影縫英 演唱。",
+   "detail": "n.k feat.影縫英 的作品，DX 谱 MASTER 13.6，BPM 145。故事是被家里管死的少年、邻居女孩，和一个要献祭的神。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "paradox-eve",
+   "title": "パラドクスイヴ",
+   "aliases": [
+    "パラドクスイヴ"
+   ],
+   "summary": "Teary Planet 的时间旅行曲，标题是「悖论前夜」。",
+   "detail": "Teary Planet 的作品，DX 谱 MASTER 13.5，BPM 180。讲造时光机救人的事，结果越改越乱。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "reffein",
+   "title": "リフヴェイン",
+   "aliases": [
+    "リフヴェイン",
+    "refvain"
+   ],
+   "summary": "青栗鼠 的作品，和 パラドクスイヴ 是同一条故事线的续篇。",
+   "detail": "青栗鼠 feat.sekai 的作品，DX 谱 MASTER 13.6，BPM 148。sekai 演唱。续篇换了法子，用克隆人回过去。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "period-sign",
+   "title": "ピリオドサイン",
+   "aliases": [
+    "ピリオドサイン",
+    "休止符"
+   ],
+   "summary": "Ponchi♪ 的作品，标题是「句点信号」。",
+   "detail": "Ponchi♪ feat.はぁち 的作品，DX 谱 MASTER 13.5，BPM 195。はぁち 演唱，故事收在「把一切托付出去」那一刻。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "falling",
+   "title": "Falling",
+   "aliases": [
+    "Falling",
+    "下落"
+   ],
+   "summary": "シノ 的抒情曲，樱花树下的三角题材。",
+   "detail": "シノ feat.しほ 的作品，DX 谱 MASTER 13.4，BPM 122。しほ 演唱，讲的是知道那个人不属于自己还是把任务做完了。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "real-voice",
+   "title": "REAL VOICE",
+   "aliases": [
+    "REAL VOICE",
+    "真声"
+   ],
+   "summary": "達見恵 的作品，蝴蝶印记加时间回溯。",
+   "detail": "達見 恵 featured by 佐野 宏晃 的作品，DX 谱 MASTER 12.8，BPM 183。佐野宏晃 featured，四个人手臂上出现蝴蝶印记是它的设定。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hoshimeguri",
+   "title": "星めぐり、果ての君へ。",
+   "aliases": [
+    "星めぐり、果ての君へ。",
+    "星斗流转",
+    "星果"
+   ],
+   "summary": "TAKU1175 的重逢曲，标题是「巡星、致尽头的你」。",
+   "detail": "TAKU1175 ft.駄々子 的作品，DX 谱 MASTER 12.9、DX 谱 Re:MASTER 13.1，BPM 175。駄々子 演唱，故事是回到过去抱住那个一直想见的人。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tenka-myojin",
+   "title": "天火明命",
+   "aliases": [
+    "天火明命",
+    "天火"
+   ],
+   "summary": "削除 的火神曲，取材日本神话。",
+   "detail": "削除 的作品，标准谱 MASTER 14，BPM 155。讲天火明命出生时把亲妈烧没了那一段，标准谱难度不低。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sage",
+   "title": "Sage",
+   "aliases": [
+    "Sage",
+    "圣徒",
+    "sega"
+   ],
+   "summary": "かめりあ 的群像曲，天界五个角色各一段。",
+   "detail": "かめりあ 的作品，DX 谱 MASTER 14.5，BPM 145。DX 谱偏难，属于「好听但不好打」的类型。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "yomibitoshirazu",
+   "title": "ヨミビトシラズ",
+   "aliases": [
+    "ヨミビトシラズ",
+    "东雪莲",
+    "東雪莲",
+    "咏人不知",
+    "咏人"
+   ],
+   "summary": "Limonène 的作品，标题是「黄泉人不知」。",
+   "detail": "Limonène (サノカモメ+月島春果) 的作品，DX 谱 MASTER 13.7，BPM 188。象征意味重，常被当成某个时代的收尾曲来提，听着像在道别。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "maxrage",
+   "title": "MAXRAGE",
+   "aliases": [
+    "MAXRAGE",
+    "满怒",
+    "极怒",
+    "麻油按按钮",
+    "迪卢克按按钮"
+   ],
+   "summary": "EBIMAYO 的作品，开头全是警告标志和一碗泡面。",
+   "detail": "EBIMAYO 的作品，DX 谱 MASTER 13.8、DX 谱 Re:MASTER 14.2，BPM 222。刻意做的前作精神续作，打起来很爽。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "unfinished-epic",
+   "title": "Unfinished Epic",
+   "aliases": [
+    "Unfinished Epic",
+    "未竟之诗",
+    "未竟的史诗"
+   ],
+   "summary": "标题就是「没写完的史诗」，收尾留白。",
+   "detail": "SLAVE.V-V-R feat.Sor△ 的作品，DX 谱 MASTER 13.8，BPM 185。SLAVE.V-V-R 的作品，Sor△ 演唱，那种「还没完」的感觉反而让人记着。",
+   "tags": [
+    "歌曲",
+    "maimai"
+   ],
+   "source": "https://maimai.lxns.net/api/v0/maimai/song/list",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaleidxscope",
+   "title": "KALEIDXSCOPE（万花筒）",
+   "aliases": [
+    "KALEIDXSCOPE",
+    "KALEID×SCOPE",
+    "万花筒",
+    "カレイドスコープ",
+    "解谜活动",
+    "解密活动"
+   ],
+   "summary": "PRiSM 起的大型解谜活动，八道门加一个隐藏门，通关解锁魔王曲。",
+   "detail": "KALEIDXSCOPE 是 maimai でらっくす PRiSM 起实装的「打歌解谜」模式，性质上接替 FiNALE 的 PANDORA BOXXX、MiLK 的生存模式。玩法：每个原创区域末尾有一道锁着的门，配一把对应的钥匙；拿到钥匙后从模式选择界面进去打三首歌的关卡（Course），三首全部通关才解锁该区域的魔王曲。规则很硬：非 PERFECT 判定各扣 1 点生命，中途不回血，命没了这一局立刻结束；用 TRACK SKIP 直接判失败。八道门按顺序编号，还有一道不在列表里的隐藏门（Phase #???），日服 2025 年 7 月、国服 2026 年 10 月才开。国服 CiRCLE 版本里前七个门默认解锁。这个模式在 CiRCLE PLUS 被移除，解锁曲改为默认开放。",
+   "tags": [
+    "maimai",
+    "系统",
+    "解谜"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "acid-jie-mi-juese",
+   "title": "ACID（解谜角色）",
+   "aliases": [
+    "ACID",
+    "Acid",
+    "acid",
+    "アシッド",
+    "解谜里的 Acid",
+    "KALEIDXSCOPE 的 Acid"
+   ],
+   "summary": "KALEIDXSCOPE 解谜里的关键角色，为了救 Ris 才把世界搞坏了。",
+   "detail": "ACID（アシッド）是 KALEIDXSCOPE 第二阶段的解谜角色，在官方 LINE 账号的对话里出现，那个头像是她的账号叫「unknown」。自述：为了让「Ris」从 7sRef 这个世界里解放出来，她在 7sRef 里种 bug、想拿到能改写世界法则的「Master Key」，结果崩坏比她预想的严重得多，连连接各个世界的门都被波及。Ris 为了阻止她解除了自己的保护机制，反而重启成了 7sRef 的管理程序「Prism」，开始把整个世界当缺陷要推倒重建。所以 ACID 才向玩家求助，要玩家帮她找回「最后的希望」。她和 Ris 是一对，结局 CG 是两人抱在一起、画面写「THANK YOU FOR PLAYING」。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "角色"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE/Acid_LINE_chats",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ris-7sref",
+   "title": "Ris（7sRef 里的角色）",
+   "aliases": [
+    "Ris",
+    "リズ",
+    "莉兹",
+    "7sRef 的 Ris",
+    "Prism"
+   ],
+   "summary": "7sRef 里的角色，为阻止崩坏重启成了管理程序 Prism。",
+   "detail": "Ris（リズ）是 7sRef 世界里的角色，也是 ACID 最在意的人。ACID 说她连自己的「碎片（Fragment）」都不被允许拥有，所以 ACID 才想用 Master Key 把她带出去、一起去看更广的世界。崩坏发生时 Ris 解除了自身保护机制去阻止，结果重启成了 7sRef 的管理程序「Prism」——Prism 眼里现在的 7sRef 全是缺陷，打算把世界整个摧毁重建，这就是玩家看到蓝屏的原因。玩家一路打到最终阶段，结局是两人重逢相拥。通关后 Ris 会作为游戏内搭档解锁。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "角色"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE/Acid_LINE_chats",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "7sref",
+   "title": "7sRef",
+   "aliases": [
+    "7sRef",
+    "7ref",
+    "7sref",
+    "7sRef 世界",
+    "七秒反射",
+    "セブンスリフ"
+   ],
+   "summary": "KALEIDXSCOPE 解谜里的世界名，靠门和别的世界连在一起。",
+   "detail": "7sRef 是 KALEIDXSCOPE 解谜故事里的世界，也是游戏里的一整个区域（7sRefちほー，分 1–4）。它靠「门」和别的世界相连，正常只需要六道门；但里面还有一道从没被打开过的「第七道门」，通向连 ACID 都不知道的世界。解谜第二阶段的核心就是这道门：ACID 用 Master Key 打开它，结果跳「LINK ERROR」，玩家得去 maimai DX NET 输入错误码、全服一起把进度条填到 300 万点，才算把连接修好。修好后又提示第七世界里的门坏了，系统紧急启用了「后门（backdoor）」。最终阶段的曲目《World's end BLACKBOX》《Ref:rain (for 7th Heaven)》都属于这条故事线。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "世界观"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaleidxscope-final-sequence",
+   "title": "KALEIDXSCOPE 最终阶段（Gate of Hope）",
+   "aliases": [
+    "Gate of Hope",
+    "希望の扉",
+    "希望之门",
+    "PANDORA 之门",
+    "Gate of PANDORA",
+    "FINAL SEQUENCE"
+   ],
+   "summary": "解谜最后一关，打的是 AFTER PANDORA 和 Xaleid◆scopiX。",
+   "detail": "KALEIDXSCOPE 的最终阶段（官方叫 FINAL SEQUENCE）在日服 2025 年 7 月 13 日、国服 2026 年 10 月 1 日开放。第八道门叫「希望の扉」（亚服/国际版译作 Gate of PANDORA），对应曲是削除的《AFTER PANDORA》，背景里能看到 PANDORA BOXXX 的残骸和立方体，视觉上致敬《系ぎて》。打完第八门之后还有一道隐藏的最终关：只打一首歌，前半段就是 Phase #??? 里那首信息被乱码盖住的曲子，中途暂停、回满血、再放后半段，这时才揭晓曲名是 xi 的《Xaleid◆scopiX》。通关后画面写「ALL COMPLETE!」，ACID 和 Ris 相拥，接着放《Ref:rain (for 7th Heaven)》作为额外曲。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "曲目"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaleidxscope-7th-gate",
+   "title": "第七道门与蓝屏（Phase #???）",
+   "aliases": [
+    "第七道门",
+    "7つ目の扉",
+    "Phase #???",
+    "蓝屏",
+    "7sRef.exe",
+    "LINK ERROR"
+   ],
+   "summary": "解谜里最出名的一段：打到最后游戏「崩溃」，蓝屏加错误码。",
+   "detail": "KALEIDXSCOPE 第二阶段（Phase #???，官方标成 ERROR）是整场解谜最出圈的部分。进关前会弹系统异常警告；选曲界面看不到历史成绩；打到第三首，屏幕上的分数、同步率全部变成横杠，中间一个红色倒计时从 2:38 开始走。曲子放完、倒计时归零后，会出现一串根本打不了的花样（四个同时 HOLD 加一大波 BREAK），BREAK 快到底线时画面卡住、花屏，然后「崩溃」，蓝屏十秒，上面写着 `A problem has been detect and 7sRef.exe has been shut down to prevent damage to your world.` 和错误码 `110112050904241903151605`。这不是真崩溃，是解谜的一环：玩家要拿这个错误码去 maimai DX NET 的页面输入，全服一起推进度条。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "名场面"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaleidxscope-zui-hou-xi-wang",
+   "title": "最后的希望（サイゴノキボウ）",
+   "aliases": [
+    "サイゴノキボウ",
+    "最后的希望",
+    "最後の希望",
+    "敲七下门",
+    "Delu-kuma 敲七次"
+   ],
+   "summary": "解谜第二阶段的跨媒体环节：找熊、敲门七下、等直播。",
+   "detail": "蓝屏之后，游戏里会留下「サイゴノキボウ ヲミツケテ」（去找最后的希望）和「キットクマガシッテイル」（熊一定知道）两句提示。玩家顺着提示去官方 LINE 账号发「最后的希望」，会连上 7sRef 世界，并加到一个头像是 ACID 的账号，跟她对话。之后线索转到线下：日服是回 FiNALE 官网，在 CAFE MiLK 的门上连点七下，跳出一个未公开的 YouTube 直播倒计时；国际版是点右下角的 Delu-kuma 图标七下，出现倒计时页面，归零后显示 `Gate of PANDORA Open`。亚服因为没 LINE，改成打特定曲目拿称号（`サイゴノキボウ ヲミツケテ`、`Knock the Bear 7th times`）来给提示。「敲门七下」这个梗就是从这来的。",
+   "tags": [
+    "maimai",
+    "解谜",
+    "名场面"
+   ],
+   "source": "https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tui-qin",
+   "title": "退勤",
+   "aliases": [
+    "退勤",
+    "耻辱退勤",
+    "悲伤退勤",
+    "退勤回去"
+   ],
+   "summary": "音游圈「打完收工、离开机厅」的说法，和出勤是一对。",
+   "detail": "去机厅打舞萌叫出勤，打完走人叫退勤。没打好就收工叫「耻辱退勤」「悲伤退勤」，是自嘲的用法；「两点退勤」是说打到两点就走。看到「退勤了」就是这一轮打完了，不是上下班打卡。",
+   "tags": [
+    "机厅",
+    "术语"
+   ],
+   "source": "聊天语料（来世 19 处用法：耻辱退勤 / 两点退勤 / 打完这把退勤）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "adx",
+   "title": "adx / AstroDX",
+   "aliases": [
+    "adx",
+    "AstroDX",
+    "astrodx",
+    "手机打舞萌"
+   ],
+   "summary": "手机上的舞萌模拟器，用真谱面练谱，跟机台不是一回事。",
+   "detail": "AstroDX 是手机端的舞萌模拟器（前身叫 MaipadDX），装上官方谱面就能在手机上打，圈内缩写成 adx。用来练谱、看谱、试难度都方便，但手感和机台差得远，也不能代替出勤。「在打 adx」＝在手机上打谱，不是在机厅。",
+   "tags": [
+    "舞萌",
+    "工具"
+   ],
+   "source": "https://wiki.astrodx.com/cn",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "rating-plate-color",
+   "title": "R 值底色 / 彩框 / 虹框",
+   "aliases": [
+    "彩框",
+    "虹框",
+    "彩虹框",
+    "金框",
+    "白金框",
+    "紫框",
+    "银框",
+    "铜框",
+    "红框",
+    "黄框",
+    "绿框",
+    "青框",
+    "白框",
+    "底色",
+    "rating 颜色"
+   ],
+   "summary": "R 值的底色按分数分档，15000 以上是虹框，圈里口语叫彩框。",
+   "detail": "R 值在 ID 旁边有个底色，按分数分档：白 999 以下、青 1000-1999、绿 2000-3999、黄 4000-6999、红 7000-9999、紫 10000-11999、铜 12000-12999、银 13000-13999、金 14000-14499、白金 14500-14999、虹 15000 以上。虹框就是最高的那档，中文圈口语爱叫「彩框」，所以「彩框」和「虹框」说的是同一个东西。另外从 CiRCLE 那版起还有 16000 的极和 14000 段上的星标细分，属于更细的层级。这是分数颜色，和段位认定挂的段位牌、和版本牌子都不是一回事，别混。",
+   "tags": [
+    "maimai",
+    "术语",
+    "R值",
+    "段位"
+   ],
+   "source": "SilentBlue.RemyWiki maimai_DX:Rating（Gen 3 起底色阶梯）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ban-ben-pai-zi",
+   "title": "版本牌子 / 极牌 / 将牌 / 神牌",
+   "aliases": [
+    "极牌",
+    "極牌",
+    "将牌",
+    "將牌",
+    "神牌",
+    "舞舞牌",
+    "霸者牌",
+    "覇者牌",
+    "版本牌子",
+    "全曲AP",
+    "全曲SSS",
+    "全曲FC"
+   ],
+   "summary": "极牌是将牌神牌那套，按某个版本全曲打成什么程度发，跟 R 值无关。",
+   "detail": "版本牌子是另一套东西，按某个版本分类里全部曲目的达成度发：极是 BASIC 到 MASTER 全 FC，将是全曲 SSS，神是全曲 AP，舞舞是 DX 谱全 AP，霸者另算。它跟 R 值底色没有大小关系——有人分数不高但某个版本刷满了，也有反过来。所以别拿「我极牌」和「我金框」比高低，那是两把尺子。",
+   "tags": [
+    "maimai",
+    "术语",
+    "牌子"
+   ],
+   "source": "SEGA 官方公告 2020-01-15「極・将・神・舞舞・覇者」プレート",
+   "confidence": "high",
+   "sensitive": false
+  }
+ ]
+}

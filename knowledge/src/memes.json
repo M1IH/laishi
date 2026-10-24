@@ -1,0 +1,464 @@
+{
+ "topic": "memes",
+ "title": "网络热梗",
+ "description": "两人聊天里真实出现过的热梗与内部黑话，够接话就行，不用背书。",
+ "entries": [
+  {
+   "slug": "he-yi-wei",
+   "title": "何意味",
+   "aliases": [
+    "何意味？",
+    "什么意思",
+    "何意味啊"
+   ],
+   "summary": "日语「何意味」，就是「什么意思」；对离谱东西面无表情地来一句。",
+   "detail": "这是两人聊天里出现最多的接梗词（120 多次）。可以单独回「何意味」，也可以「何意味，这也太抽象了」。语气偏冷，别解释、别追问。",
+   "tags": [
+    "接梗",
+    "口头禅"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chou-xiang",
+   "title": "抽象",
+   "aliases": [
+    "太抽象了",
+    "抽象话"
+   ],
+   "summary": "离谱、看不懂、逻辑跳跃的东西；「太抽象了」= 太离谱了。",
+   "detail": "可以形容事、图、发言，也可以自嘲。别用来骂具体的人。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "dian-xiao-beng",
+   "title": "典/孝/蚌/赢/麻/寄",
+   "aliases": [
+    "典",
+    "孝",
+    "蚌",
+    "赢",
+    "麻",
+    "寄",
+    "六字"
+   ],
+   "summary": "抽象圈单字评价：典、孝、蚌、赢、麻、寄，一个字一个态度。",
+   "detail": "典=经典操作，孝=孝子，蚌=绷不住，赢=赢麻了，麻=麻木，寄=完蛋。聊天里通常单独一个字甩出来，不展开。",
+   "tags": [
+    "评价",
+    "抽象"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "lao-da",
+   "title": "牢大",
+   "aliases": [
+    "想你了牢大",
+    "科比"
+   ],
+   "summary": "科比的梗称，常配「想你了牢大」；无厘头玩笑，不恶意消费逝者。",
+   "detail": "抽象圈常见的称呼，多用于突然煽情或反差。别拿事故细节开玩笑。",
+   "tags": [
+    "人物梗"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "ha-ji-mi",
+   "title": "哈基米/曼波",
+   "aliases": [
+    "哈基米",
+    "曼波",
+    "哈基米曼波"
+   ],
+   "summary": "哈基米=可爱小猫/猫叫萌称；曼波=魔性舞蹈配乐梗，常一起刷。",
+   "detail": "看到猫图、猫视频可以接「哈基米」；「曼波」多配魔性舞步，别认真解释来源。",
+   "tags": [
+    "动物",
+    "视频梗"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "na-za-le",
+   "title": "那咋了",
+   "aliases": [
+    "那咋了",
+    "咋了嘛"
+   ],
+   "summary": "反问式摆烂：「那咋了」= 那又怎样，嘴硬或自嘲用。",
+   "detail": "适合接对方的吐槽或自嘲，语气要松，别真吵起来。",
+   "tags": [
+    "接梗"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bao-de",
+   "title": "包的",
+   "aliases": [
+    "包的老弟",
+    "包的"
+   ],
+   "summary": "「包的」= 保证、肯定行，方言味的打包票。",
+   "detail": "答应小事、打赌时用，别用来承诺做不到的事。",
+   "tags": [
+    "口头禅"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zun-du",
+   "title": "尊嘟假嘟",
+   "aliases": [
+    "尊嘟假嘟",
+    "尊嘟"
+   ],
+   "summary": "夹子音「真的假的」，卖萌式怀疑。",
+   "detail": "偶尔用一次就行，连续用会显得幼化。",
+   "tags": [
+    "卖萌"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tai-ku-la",
+   "title": "泰裤辣",
+   "aliases": [
+    "泰裤辣",
+    "太酷啦"
+   ],
+   "summary": "「太酷啦」谐音，夸人或自嘲式感叹。",
+   "detail": "看到很秀的操作、很怪的图都能用。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shuan-q",
+   "title": "栓Q",
+   "aliases": [
+    "栓Q",
+    "thank you"
+   ],
+   "summary": "thank you 谐音，多用于无语、反讽。",
+   "detail": "不是真的道谢，是「我谢谢你啊」那种无语。",
+   "tags": [
+    "反讽"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "cpu-pua",
+   "title": "CPU/PUA",
+   "aliases": [
+    "被CPU",
+    "PUA",
+    "被PUA"
+   ],
+   "summary": "被 CPU=被绕进去/洗脑；PUA=情感操控。",
+   "detail": "「你是不是被 CPU 了」= 你是不是被绕进去了；别真给人扣 PUA 的帽子。",
+   "tags": [
+    "网络词"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "emo",
+   "title": "emo",
+   "aliases": [
+    "emo了",
+    "网抑云"
+   ],
+   "summary": "低落、伤感的状态；「emo 了」= 有点难受。",
+   "detail": "对方说 emo 时别玩梗，先接住情绪；自己别动不动 emo。",
+   "tags": [
+    "情绪"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "she-si",
+   "title": "社死",
+   "aliases": [
+    "社会性死亡",
+    "社死现场"
+   ],
+   "summary": "社会性死亡，当众出丑到想消失。",
+   "detail": "对方讲社死经历时，可以笑一下再安慰，别追问细节。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xia-tou",
+   "title": "下头/上头",
+   "aliases": [
+    "下头",
+    "上头",
+    "下头男",
+    "上头了"
+   ],
+   "summary": "下头=瞬间反感；上头=一时冲动喜欢。",
+   "detail": "评价人或事时用，别拿来给真人贴标签。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zheng-huo",
+   "title": "整活",
+   "aliases": [
+    "整活",
+    "整活人"
+   ],
+   "summary": "故意搞怪、整节目效果。",
+   "detail": "「别整活了」= 别搞了；也可以夸「这活整得好」。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "po-fang",
+   "title": "破防/急了",
+   "aliases": [
+    "破防",
+    "急了",
+    "急急急"
+   ],
+   "summary": "破防=被戳到；急了=被说中后跳脚。",
+   "detail": "朋友间互损用，对方真难受时别用。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ci-xiao-gui",
+   "title": "雌小鬼",
+   "aliases": [
+    "雌小鬼",
+    "小鬼"
+   ],
+   "summary": "二次元属性：嚣张欠教训的小女孩；玩梗可以，别拿来骂真人。",
+   "detail": "多用于形容角色或调侃语气，不用于现实中的女生。",
+   "tags": [
+    "二次元"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "medium",
+   "sensitive": true
+  },
+  {
+   "slug": "er-ci-yuan",
+   "title": "二次元/谷子/痛包",
+   "aliases": [
+    "二次元",
+    "谷子",
+    "痛包",
+    "吧唧"
+   ],
+   "summary": "ACG 基础词：谷子=周边，痛包=挂满周边的包。",
+   "detail": "谷子来自 goods；吧唧=徽章。来世聊到买谷、摆阵时能接上就行。",
+   "tags": [
+    "二次元"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "nv-zhuang",
+   "title": "女装/cos/漫展",
+   "aliases": [
+    "女装",
+    "漫展"
+   ],
+   "summary": "女装=男生穿女装（玩梗常见）；cos=角色扮演；漫展=线下同人展。",
+   "detail": "别对别人的女装或 cos 做身材、长相评价；夸就夸用心。",
+   "tags": [
+    "二次元"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": true
+  },
+  {
+   "slug": "lei-ting",
+   "title": "雷霆的话",
+   "aliases": [
+    "很雷霆的话",
+    "雷霆"
+   ],
+   "summary": "内部梗：OTTO 把中二、浮夸、41 秒式长文叫「很雷霆的话」。",
+   "detail": "来源是两段 41 秒长文（五条悟 vs 宿傩、夏玛 vs 牛奶）。看到这种可以回「何意味」或吐槽一句，别跟着写长文。",
+   "tags": [
+    "内部梗"
+   ],
+   "source": "聊天记录（10000002）+ 个性化语言/时不时发一些这种很雷霆的话.txt",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wu-tiao",
+   "title": "五条悟/宿傩",
+   "aliases": [
+    "五条悟",
+    "宿傩",
+    "五条",
+    "41秒"
+   ],
+   "summary": "《咒术回战》角色，两人常拿「41 秒」长文和二创互玩；不站 CP。",
+   "detail": "OTTO 写过五条悟赢、宿傩赢两个版本；Miruku 当时回「这版是五条赢了啊，看着挺解气」。跟着聊战力、梗就行，别考据到吵架。",
+   "tags": [
+    "动画",
+    "内部梗"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "gao-song-deng",
+   "title": "高松灯打舞萌",
+   "aliases": [
+    "高松灯",
+    "MyGO",
+    "打舞萌"
+   ],
+   "summary": "《BanG Dream! It's MyGO!!!!!》的高松灯；「高松灯打舞萌」是聊舞萌时的梗。",
+   "detail": "来世聊到「因为高松灯打舞萌」才去玩，接一句角色梗就行，别展开动画剧情。",
+   "tags": [
+    "动画",
+    "maimai"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "ba-ba-boy",
+   "title": "88boy",
+   "aliases": [
+    "88",
+    "88boy"
+   ],
+   "summary": "OTTO 测试时教的暗号回复；看到特定消息才回，平时不主动用。",
+   "detail": "某次聊天里说「看见这条就回88boy」，Miruku 回了「88」。现在只当玩笑，别每句都 88。",
+   "tags": [
+    "内部梗"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wo-qu",
+   "title": "我趣",
+   "aliases": [
+    "我趣",
+    "我去"
+   ],
+   "summary": "「我去」的委婉写法，表示惊讶。",
+   "detail": "看到离谱或厉害的东西时用，一句就够。",
+   "tags": [
+    "口头禅"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shen-le",
+   "title": "神了",
+   "aliases": [
+    "神了",
+    "神"
+   ],
+   "summary": "「神了」= 太牛/太离谱，夸或吐槽都能用。",
+   "detail": "看到很秀的操作、很怪的 bug 都能用。",
+   "tags": [
+    "评价"
+   ],
+   "source": "聊天记录（10000002）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "le",
+   "title": "乐",
+   "aliases": [
+    "乐",
+    "乐子",
+    "乐子人"
+   ],
+   "summary": "「乐」= 好笑、看乐子；「乐子人」= 看热闹的。",
+   "detail": "「我乐了」= 我觉得好笑；别拿别人的倒霉当乐子。",
+   "tags": [
+    "评价"
+   ],
+   "source": "公开网络梗（聊天中实际使用）",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "cos",
+   "title": "cos / 出cos",
+   "aliases": [
+    "cos",
+    "cosplay",
+    "出cos",
+    "cos服",
+    "出角"
+   ],
+   "summary": "cos 就是扮成某个角色，出cos 是去扮，cos服 是配套的衣服。",
+   "detail": "cosplay 的简写，指照着角色做造型。聊天里常拿它开玩笑——「你能 cos 某某打舞萌吗」就是在逗。别对别人的 cos 做身材、长相评价，夸就夸用心和还原度。",
+   "tags": [
+    "二次元"
+   ],
+   "source": "聊天语料（来世 20 处用法）+ 公开常识",
+   "confidence": "high",
+   "sensitive": false
+  }
+ ]
+}

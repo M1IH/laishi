@@ -1,0 +1,718 @@
+{
+  "topic": "vtuber",
+  "title": "V 圈 / 虚拟主播",
+  "description": "V 圈的机制、主要团体、常被提到的主播和圈内黑话。",
+  "entries": [
+    {
+      "slug": "vtuber",
+      "title": "VTuber / 虚拟主播",
+      "aliases": [
+        "VTuber",
+        "虚拟主播",
+        "VUP",
+        "バーチャルYouTuber",
+        "管人"
+      ],
+      "summary": "用虚拟形象出镜直播、做视频的创作者，真人不出镜。",
+      "detail": "VTuber 指用 Live2D 或 3D 虚拟形象出镜、本人不露脸的主播和创作者，日文写作バーチャルYouTuber，国内常说虚拟主播、VUP。2016 年绊爱（Kizuna AI）把这个形式带火，之后才有企业和团体陆续入场。圈内把看 V 的观众叫「管人观众」，自嘲时说「管人痴」。",
+      "tags": [
+        "概念",
+        "入门"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "pi-tao",
+      "title": "皮套 / 虚拟形象",
+      "aliases": [
+        "皮套",
+        "虚拟形象",
+        "Live2D",
+        "3D模型",
+        "立绘"
+      ],
+      "summary": "主播用的虚拟形象，分 Live2D 和 3D，换装叫新衣装。",
+      "detail": "皮套是观众对虚拟形象的俗称。技术上分 Live2D（平面分层，成本低，日常直播用）和 3D（全身动捕，演唱会和大活动用）。形象由画师出立绘、建模师做模型，圈内管这两位叫「妈妈」「爸爸」。换新衣服叫「新衣装披露」，通常会单独开一场直播。",
+      "tags": [
+        "概念",
+        "术语"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "zhong-zhi-ren",
+      "title": "中之人",
+      "aliases": [
+        "中之人",
+        "中の人",
+        "CV"
+      ],
+      "summary": "虚拟形象背后的真人，行业默认不公开现实身份。",
+      "detail": "中之人指操作皮套、提供声音和反应的真人，日文写「中の人」。行业默认不公开真实身份，观众也基本只认角色本身。讨论中之人的现实信息属于越界，和「开盒」是同一条线，遇到这类话题不追问、不传播。",
+      "tags": [
+        "概念",
+        "术语"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "chu-dao",
+      "title": "出道 / 初配信",
+      "aliases": [
+        "出道",
+        "初配信",
+        "首播",
+        "debut"
+      ],
+      "summary": "新主播第一次直播叫初配信，那天会被当周年纪念。",
+      "detail": "新人第一次直播叫「初配信」，中文圈直接说「出道」。初配信一般会讲设定、自我介绍、唱一首歌，观众会盯同接和订阅涨势。出道日会被粉丝当作周年纪念，之后每年有「周年直播」，是一个固定的仪式节点。",
+      "tags": [
+        "概念",
+        "仪式"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "qi-ye-shi",
+      "title": "企业势 / 个人势",
+      "aliases": [
+        "企业势",
+        "个人势",
+        "社团势",
+        "事务所"
+      ],
+      "summary": "签公司拿资源的是企业势，自己单干的是个人势。",
+      "detail": "企业势指签约在 hololive、彩虹社这类事务所旗下，公司提供皮套、法务、商务和演出资源；个人势自己找画师建模、自己谈合作。国内还有「社团势」，介于两者之间，由中小社团负责招募和分成。企业势资源多但受公司规则约束，个人势自由但什么都得自己扛。",
+      "tags": [
+        "概念",
+        "生态"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "zhi-bo-xing-shi",
+      "title": "3D回 / 歌回 / 杂谈",
+      "aliases": [
+        "3D回",
+        "歌回",
+        "杂谈",
+        "歌枠",
+        "雑談",
+        "同接"
+      ],
+      "summary": "常见直播类型：杂谈、歌回、游戏、3D回，同接看热度。",
+      "detail": "杂谈就是聊天，最日常；歌回（歌枠）整场唱歌，粉丝会点歌、刷 SC；游戏回看技术和反应；3D回用全身动捕，能跳舞、做小游戏，成本高，一般放在纪念日或活动。同接指同时在线观看人数，是圈内衡量一场直播热度的常用指标。",
+      "tags": [
+        "概念",
+        "术语"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "b-vs-jp",
+      "title": "B站 V 圈 / 日本 V 圈",
+      "aliases": [
+        "B站V圈",
+        "国内V圈",
+        "日V",
+        "国V"
+      ],
+      "summary": "国内看 B 站、讲舰长和切片；日本看 YouTube、讲同接。",
+      "detail": "国内 V 圈主战场是 B 站，生态围绕舰长、提督、总督（大航海）、粉丝牌、切片二创长起来，主播分国V（国内）和日V（日本来 B 站播）。日本主战场是 YouTube，常用词是同接、スパチャ（SC）、切り抜き（切片）。两边的梗和黑话有重叠，但不完全一样。",
+      "tags": [
+        "概念",
+        "生态",
+        "平台"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "hololive",
+      "title": "hololive",
+      "aliases": [
+        "holo",
+        "ホロライブ",
+        "木口",
+        "hololive production"
+      ],
+      "summary": "日本 COVER 旗下最大的 V 事务所，分 JP、EN、ID 三块。",
+      "detail": "hololive 是 COVER 株式会社旗下的虚拟主播事务所，2017 年时乃空出道起家，现在分日本（JP）、英语（EN）、印尼（ID）三个分支。一期生白上フブキ、二期生湊あくあ、三期生兎田ぺこら和宝鐘マリン、四期生常闇トワ和角巻わため都是常被提到的名字。特色是 3D 演唱会和 SUPER EXPO 这类线下活动，中文圈用「木口」这个谐音称呼。",
+      "tags": [
+        "团体",
+        "日本"
+      ],
+      "source": "https://hololive.hololivepro.com/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "hololive-en",
+      "title": "hololive English",
+      "aliases": [
+        "holoEN",
+        "hololive EN",
+        "EN组"
+      ],
+      "summary": "hololive 的英语分支，2020 年 Myth 一期打开欧美市场。",
+      "detail": "hololive EN 于 2020 年 9 月以一期生「Myth」（Gura、Amelia、Calliope、Kiara、Ina）出道，之后有 Council/Promise、Advent、Justice 等期数。主战场在 YouTube，以英语直播为主，和日本本部经常联动。Myth 是把 hololive 推到欧美的关键一期。",
+      "tags": [
+        "团体",
+        "英语圈"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "nijisanji",
+      "title": "彩虹社 / NIJISANJI",
+      "aliases": [
+        "彩虹社",
+        "にじさんじ",
+        "NIJISANJI",
+        "虹"
+      ],
+      "summary": "日本 ANYCOLOR 旗下 V 事务所，人多、联动和杂谈见长。",
+      "detail": "彩虹社是 ANYCOLOR（旧いちから）旗下的虚拟主播事务所，2018 年 1 月月ノ美兎等一期生出道。特色是人数多、男女混编、内部联动和大型企划多，杂谈和综艺感强。常被提到的有月ノ美兎、葛葉、剣持刀也、叶、星川サラ，中文圈简称「虹」。",
+      "tags": [
+        "团体",
+        "日本"
+      ],
+      "source": "https://www.nijisanji.jp/talents",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "nijisanji-en",
+      "title": "NIJISANJI EN",
+      "aliases": [
+        "にじさんじEN",
+        "虹EN",
+        "Nijisanji EN"
+      ],
+      "summary": "彩虹社英语分支，2021 年 LazuLight 起按波次出道。",
+      "detail": "NIJISANJI EN 于 2021 年 5 月以 LazuLight（Elira、Finana、Pomu）出道，之后按波次推出 OBSYDIA、Ethyria、Luxiem（Vox、Luca、Shu 等）、Noctyx 等。风格比本部更贴英语圈的直播习惯，男团 Luxiem 在亚洲也有很大量声。",
+      "tags": [
+        "团体",
+        "英语圈"
+      ],
+      "source": "https://www.nijisanji.jp/talents",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "vshojo",
+      "title": "VShojo",
+      "aliases": [
+        "VShojo",
+        "V少女"
+      ],
+      "summary": "美国起家的英语 V 团体，2025 年 7 月宣布停止运营。",
+      "detail": "VShojo 于 2020 年在美国成立，是早期最有影响力的英语个人势联合体，成员多来自 Twitch，Ironmouse、Zentreya、Projekt Melody 等都在其中。后来宣布停止运营，此前围绕慈善募捐款项的去向出现过争议，成员之后陆续转回个人活动。",
+      "tags": [
+        "团体",
+        "英语圈"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VShojo",
+      "confidence": "medium",
+      "sensitive": true
+    },
+    {
+      "slug": "virtuareal",
+      "title": "VirtuaReal",
+      "aliases": [
+        "VR",
+        "VirtuaReal",
+        "维阿"
+      ],
+      "summary": "B 站与彩虹社合作的国内企划，七海、阿梓都出自这里。",
+      "detail": "VirtuaReal 是 B 站和彩虹社（ANYCOLOR）合作的虚拟艺人企划，2019 年开始招募，中文圈简称「VR」。旗下有七海Nana7mi、阿梓等 B 站百万级粉丝的主播，风格偏日式杂谈加歌回。VR 的期数和分组比较多，粉丝常按期追。",
+      "tags": [
+        "团体",
+        "国内"
+      ],
+      "source": "https://space.bilibili.com/413748120",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "a-soul",
+      "title": "A-SOUL",
+      "aliases": [
+        "A-SOUL",
+        "灵境少女",
+        "AS"
+      ],
+      "summary": "字节与乐华合作的虚拟女团，2020 年出道，走偶像路线。",
+      "detail": "A-SOUL 是字节跳动与乐华娱乐合作的虚拟女团企划，2020 年 11 月出道，成员有嘉然、贝拉、乃琳、向晚、珈乐，走偶像路线，有团曲和舞台演出。2022 年 5 月成员珈乐进入休眠，处理方式在粉丝中引发过较大讨论。它是国内讨论度最高的虚拟偶像企划之一。",
+      "tags": [
+        "团体",
+        "国内"
+      ],
+      "source": "https://space.bilibili.com/703007996",
+      "confidence": "high",
+      "sensitive": true
+    },
+    {
+      "slug": "hoshimachi-suisei",
+      "title": "星街すいせい",
+      "aliases": [
+        "星街彗星",
+        "すいせい",
+        "すいちゃん",
+        "Suisei"
+      ],
+      "summary": "hololive 0 期生的歌姬，原创曲和唱功是招牌。",
+      "detail": "星街すいせい是 hololive 0 期生，2018 年开始活动，以唱歌和原创曲见长，《Stellar Stellar》《ビビデバ》都是圈内高传唱的曲子。她早期是个人势，后来才加入 hololive，这段经历常被拿来聊。中文圈叫「星街」「彗星」，粉丝自称星咏み。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本",
+        "音乐"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/hoshimachi-suisei/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "sakuramiko",
+      "title": "さくらみこ",
+      "aliases": [
+        "樱巫女",
+        "みこ",
+        "35",
+        "Elite Miko"
+      ],
+      "summary": "hololive 0 期生，自称精英巫女，口癖是「にぇ」。",
+      "detail": "さくらみこ是 hololive 0 期生，设定是神社的巫女，自称「エリート」，实际常被观众吐槽是废柴担当，这个反差就是她的卖点。口癖是「にぇ」，中文圈叫「樱巫女」，也用「35」（みこ谐音）代称。和星街すいせい是多年好友，两人一起的内容很多。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/sakuramiko/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "usada-pekora",
+      "title": "兎田ぺこら",
+      "aliases": [
+        "兔田佩克拉",
+        "ぺこら",
+        "peko",
+        "兔田"
+      ],
+      "summary": "hololive 三期生，兔子设定，口癖「こんぺこ」「ぺこ」。",
+      "detail": "兎田ぺこら是 hololive 三期生，2019 年出道，设定是从月球来的兔子。开场「こんぺこ」、句尾挂「ぺこ」是她的标志，中文圈直接叫「兔田」。Minecraft 和各类整活是她的主场，游戏里爱坑人的玩法常被调侃成「戦犯」。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/usada-pekora/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "houshou-marine",
+      "title": "宝鐘マリン",
+      "aliases": [
+        "宝钟玛琳",
+        "マリン",
+        "船長",
+        "Marine"
+      ],
+      "summary": "hololive 三期生，海贼船长设定，本人也是画师。",
+      "detail": "宝鐘マリン是 hololive 三期生，2019 年出道，设定是海贼船长，开场喊「Ahoy!」。她本人会画画，出道前有同人绘师经历，直播里常有大胆的段子，观众叫她「船長」。有多首原创曲，也常参与社内的音乐企划。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/houshou-marine/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "shirakami-fubuki",
+      "title": "白上フブキ",
+      "aliases": [
+        "白上吹雪",
+        "フブキ",
+        "Fubuki",
+        "小狐狸"
+      ],
+      "summary": "hololive 一期生，白发狐狸，最早一批出圈的名字之一。",
+      "detail": "白上フブキ是 hololive 一期生兼 GAMERS 成员，2018 年出道，设定是白发狐狸，画师是凪白みと。她是 hololive 早期最早被中文圈认识的一批人之一，粉丝叫「すこん部」。和夏色まつり同期，两人常一起出现。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/shirakami-fubuki/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "minato-aqua",
+      "title": "湊あくあ",
+      "aliases": [
+        "凑阿库娅",
+        "あくあ",
+        "阿库娅",
+        "Aqua"
+      ],
+      "summary": "hololive 二期生，女仆设定，2024 年 8 月毕业。",
+      "detail": "湊あくあ是 hololive 二期生，2018 年开始活动，设定是虚拟女仆，歌和游戏都拿手，和同期的互动是经典内容。后来从 hololive 毕业，官网现在把她列在毕业生名单里。中文圈常叫「阿库娅」。",
+      "tags": [
+        "主播",
+        "hololive",
+        "日本",
+        "已毕业"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/minato-aqua/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "gawr-gura",
+      "title": "Gawr Gura",
+      "aliases": [
+        "Gura",
+        "鲨鱼",
+        "小鲨鱼",
+        "ぐら"
+      ],
+      "summary": "hololive EN 一期生，鲨鱼设定，出道即爆红。",
+      "detail": "Gawr Gura 是 hololive English 一期生 Myth 的成员，2020 年 9 月出道，设定是来自亚特兰蒂斯的鲨鱼，身高 141cm，粉丝叫 chumbuds。出道时一句「a」成了英语 V 圈最出圈的梗之一。后来结束了常规活动，官网把她标成 Alum（校友）。",
+      "tags": [
+        "主播",
+        "hololive",
+        "英语圈"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/gawr-gura/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "mori-calliope",
+      "title": "Mori Calliope",
+      "aliases": [
+        "Calliope",
+        "Calli",
+        "死神"
+      ],
+      "summary": "hololive EN 的说唱歌手，原创曲产量在 EN 里靠前。",
+      "detail": "Mori Calliope 是 hololive English 一期生 Myth 的成员，2020 年 9 月出道，设定是死神的弟子，主业是说唱和原创音乐，和不少音乐人有过合作。她的原创曲在 EN 成员里产量和播放都很靠前，也常参与社内的大型音乐企划。",
+      "tags": [
+        "主播",
+        "hololive",
+        "英语圈",
+        "音乐"
+      ],
+      "source": "https://hololive.hololivepro.com/en/talents/mori-calliope/",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "tsukino-mito",
+      "title": "月ノ美兎",
+      "aliases": [
+        "月之美兔",
+        "美兎",
+        "委員長",
+        "Mito"
+      ],
+      "summary": "彩虹社一期生，虚拟 JK 委员长，杂谈整活的开山级人物。",
+      "detail": "月ノ美兎是彩虹社一期生，2018 年 1 月出道，设定是高中委员长，自称「清楚」但内容经常很混沌，这个反差是她的招牌。她的杂谈和企划对后来的日本 V 圈影响很大，中文圈叫「委员长」。",
+      "tags": [
+        "主播",
+        "彩虹社",
+        "日本"
+      ],
+      "source": "https://www.nijisanji.jp/talents/l/mito-tsukino",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "kuzuha",
+      "title": "葛葉",
+      "aliases": [
+        "葛叶",
+        "くずは",
+        "Kuzuha"
+      ],
+      "summary": "彩虹社男 V，吸血鬼设定，唱歌和游戏都很强。",
+      "detail": "葛葉是彩虹社的男性主播，2018 年 7 月出道，设定是吸血鬼，歌和游戏都是强项，FPS 类尤其出名。和叶组成组合 ChroNoiR，两人的联动是彩虹社最经典的组合内容之一。中文圈直接叫「葛叶」。",
+      "tags": [
+        "主播",
+        "彩虹社",
+        "日本",
+        "男V"
+      ],
+      "source": "https://www.nijisanji.jp/talents/l/kuzuha",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "jiaran",
+      "title": "嘉然",
+      "aliases": [
+        "嘉然今天吃什么",
+        "然然",
+        "Diana"
+      ],
+      "summary": "A-SOUL 成员，B 站粉丝最多的虚拟偶像之一。",
+      "detail": "嘉然是 A-SOUL 的成员，2020 年 11 月出道，账号「嘉然今天吃什么」在 B 站有 180 万以上粉丝，是国内虚拟偶像里认知度最高的角色之一。设定是小小只、很能吃的少女，直播以歌、游戏和互动为主，粉丝叫「嘉心糖」。",
+      "tags": [
+        "主播",
+        "A-SOUL",
+        "国内"
+      ],
+      "source": "https://space.bilibili.com/672328094",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "azusa",
+      "title": "阿梓",
+      "aliases": [
+        "阿梓从小就很可爱",
+        "梓宝",
+        "Azusa"
+      ],
+      "summary": "VirtuaReal 成员，B 站歌势，唱功是主要看点。",
+      "detail": "阿梓是 VirtuaReal 的成员，B 站账号「阿梓从小就很可爱」，粉丝叫她「梓宝」。内容以唱歌为主，歌回和翻唱是重点，也做杂谈和游戏。在国内女 V 里属于粉丝体量靠前的一批。",
+      "tags": [
+        "主播",
+        "VirtuaReal",
+        "国内"
+      ],
+      "source": "https://space.bilibili.com/7706705",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "nana7mi",
+      "title": "七海Nana7mi",
+      "aliases": [
+        "七海",
+        "Nana7mi",
+        "七海Nana7mi"
+      ],
+      "summary": "VirtuaReal 成员，B 站百万粉，歌回和杂谈都稳。",
+      "detail": "七海Nana7mi 是 VirtuaReal 的成员，B 站粉丝过百万，是 VR 里最早一批打开知名度的主播。内容以歌回、杂谈和游戏为主，节奏偏稳，中文圈一般直接叫「七海」。",
+      "tags": [
+        "主播",
+        "VirtuaReal",
+        "国内"
+      ],
+      "source": "https://space.bilibili.com/434334701",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "guan-ren",
+      "title": "管人 / 管人痴",
+      "aliases": [
+        "管人",
+        "管人痴",
+        "看管人",
+        "V圈"
+      ],
+      "summary": "管人是虚拟主播的俗称，管人痴是自嘲式的重度观众。",
+      "detail": "「管人」是国内观众对虚拟主播的俗称，来源说法不一，总之带点调侃。「管人痴」指沉迷看 V、花很多时间和钱的观众，多用于自嘲，不是骂人的词。类似的还有「DD」，指谁都看、谁都推。",
+      "tags": [
+        "术语",
+        "自嘲"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "tui-dan-tui",
+      "title": "推し / 单推 / 箱推 / DD",
+      "aliases": [
+        "推し",
+        "单推",
+        "箱推",
+        "DD",
+        "推"
+      ],
+      "summary": "推是支持的主播；单推一个，箱推整个团体，DD 全都推。",
+      "detail": "「推し」是日文，指你主要支持的那个人；「单推」只推一个，「箱推」推整个团体（箱=组合），「DD」是「誰でも大好き」的缩写，指谁都看、谁都推。日常说「我单推 XX」就是表态自己的主推是谁。",
+      "tags": [
+        "术语",
+        "饭圈"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "kai-he",
+      "title": "开盒 / 冲塔",
+      "aliases": [
+        "开盒",
+        "冲塔",
+        "人肉",
+        "扒中之人"
+      ],
+      "summary": "开盒是扒出中之人的现实身份，属于明确的恶行。",
+      "detail": "开盒指通过各种手段扒出主播的真实姓名、住址、社交账号等现实信息，冲塔指拿这些信息去现实账号或线下骚扰。这两件事在圈内是明确的恶行，会直接导致主播停播或毕业。遇到相关内容不传播、不追问，也不要在对话里复述具体信息。",
+      "tags": [
+        "术语",
+        "恶性行为"
+      ],
+      "source": "https://en.wikipedia.org/wiki/Doxxing",
+      "confidence": "high",
+      "sensitive": true
+    },
+    {
+      "slug": "yan-shang",
+      "title": "炎上",
+      "aliases": [
+        "炎上",
+        "翻车",
+        "塌房"
+      ],
+      "summary": "炎上指发言或行为引发大规模批评，是中性描述现象的日文词。",
+      "detail": "炎上是日文词，指某个发言、行为或处理方式引发大量批评，中文圈也说「翻车」。常见触发点是发言不当、联动纠纷、公司运营决策。聊到这类事只陈述发生了什么，不评价当事人人品，也不站队。",
+      "tags": [
+        "术语",
+        "争议"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": true
+    },
+    {
+      "slug": "bi-ye",
+      "title": "毕业",
+      "aliases": [
+        "毕业",
+        "卒業",
+        "毕业回",
+        "引退"
+      ],
+      "summary": "毕业指主播结束活动，通常有一场毕业直播作为收尾。",
+      "detail": "毕业是圈内对主播结束活动的说法，日文「卒業」，一般会有一场毕业直播作为收尾，之后账号和内容多半保留。原因可能是合约、身体或转型，也可能不公开。聊到毕业的主播时用平常语气，不煽情、不追问原因。",
+      "tags": [
+        "术语",
+        "仪式"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "b-xian",
+      "title": "B限",
+      "aliases": [
+        "B限",
+        "B站限定",
+        "b限"
+      ],
+      "summary": "B限指只在 B 站播的限定直播，日 V 来 B 站常挂这个词。",
+      "detail": "B限是「B 站限定」的缩写，指只在 B 站开、不在 YouTube 同步的直播，日 V 和海外成员来 B 站时常用。对国内观众来说 B限 是难得的互动机会，弹幕和 SC 会特别热闹。",
+      "tags": [
+        "术语",
+        "平台"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "ming-chang-mian",
+      "title": "名场面与名梗",
+      "aliases": [
+        "名场面",
+        "ビビデバ",
+        "こんぺこ",
+        "Gura的a",
+        "にぇ"
+      ],
+      "summary": "常被刷的名场面：ビビデバ舞、こんぺこ、Gura 的「a」。",
+      "detail": "星街すいせい的《ビビデバ》在 2024 年爆火，副歌舞步被大量翻跳，是近年最出圈的 V 圈曲子之一；兎田ぺこら的开场「こんぺこ」和句尾「ぺこ」是固定梗；Gawr Gura 出道时的一声「a」被剪成无数二创；さくらみこ的「にぇ」也是常见口癖。这些梗一般直接刷词就行，不需要解释。",
+      "tags": [
+        "梗",
+        "名场面"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "medium",
+      "sensitive": false
+    },
+    {
+      "slug": "fan-chang",
+      "title": "翻唱 / 术力口 / 原创曲",
+      "aliases": [
+        "翻唱",
+        "术力口",
+        "ボカロ",
+        "原创曲",
+        "歌ってみた"
+      ],
+      "summary": "V 圈和 Vocaloid 圈高度重叠，翻唱ボカロ曲是常见内容。",
+      "detail": "很多 V 的歌回和投稿会翻唱ボカロ（Vocaloid）曲，国内把ボカロ戏称「术力口」，两个圈的观众重叠很大。翻唱投稿常标「歌ってみた」，原创曲则是主播和制作人合作的正式作品，有原创曲通常被视为实力和资源的标志。",
+      "tags": [
+        "音乐",
+        "术语"
+      ],
+      "source": "https://en.wikipedia.org/wiki/Vocaloid",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "ru-keng",
+      "title": "怎么入坑",
+      "aliases": [
+        "入坑",
+        "新手",
+        "从哪开始看"
+      ],
+      "summary": "从切片入手最省时间，喜欢谁再去看完整直播。",
+      "detail": "不建议一上来就追完整直播，先看切片（剪辑过的高光片段）和熟肉（带中文字幕的翻译），几分钟就能判断喜不喜欢这个人。找到主推之后再看完整的杂谈、歌回或游戏回，跟着直播日程表走就行。",
+      "tags": [
+        "入门"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    },
+    {
+      "slug": "zai-na-kan",
+      "title": "在哪看",
+      "aliases": [
+        "在哪看",
+        "平台",
+        "直播平台"
+      ],
+      "summary": "日本 V 在 YouTube，国内 V 在 B 站，切片两边都有。",
+      "detail": "日本和英语圈的主播主要在 YouTube 直播，国内主播在 B 站，部分日 V 会开 B限过来播。看切片的话 B 站有大量搬运和二创，YouTube 上也有官方剪辑频道。追直播前看一眼主播的日程表，能省很多空等。",
+      "tags": [
+        "入门",
+        "平台"
+      ],
+      "source": "https://en.wikipedia.org/wiki/VTuber",
+      "confidence": "high",
+      "sensitive": false
+    }
+  ]
+}

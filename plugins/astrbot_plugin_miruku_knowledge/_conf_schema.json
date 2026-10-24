@@ -1,0 +1,17 @@
+{
+  "platform_id": {
+    "description": "AstrBot QQ 平台 ID",
+    "type": "string",
+    "default": "miruku"
+  },
+  "target_qq": {
+    "description": "仅对这个 QQ 私聊注入；留空则不注入",
+    "type": "string",
+    "default": ""
+  },
+  "knowledge_root": {
+    "description": "项目 knowledge 目录的绝对路径",
+    "type": "string",
+    "default": ""
+  }
+}

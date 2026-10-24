@@ -1,0 +1,8 @@
+name: astrbot_plugin_miruku_knowledge
+display_name: Miruku 本地知识注入
+author: OTTO
+version: 0.1.0
+desc: 仅对指定 QQ 私聊检索本地知识，并在 LLM 请求前附加简短参考块。
+astrbot_version: ">=4.29.1"
+support_platforms:
+  - aiocqhttp

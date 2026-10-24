@@ -1,0 +1,772 @@
+{
+  "meta": {
+    "version": 4,
+    "updated": "2026-10-22",
+    "task": "DS-02 / DS-03",
+    "notes": [
+      "expect=hit 时按 rank（默认 1）断言名次；给了 max_rank 则只要求不差于该名次。",
+      "expect=miss 要求 inject.build_block 返回空字符串，即真的不注入，而不是「没有期望条目」。",
+      "not_slug 是附加断言：即使整体判定通过，这些条目也不能出现在注入结果里。",
+      "所有用例都要求注入文本 ≤ 600 字符，且不含路径/账号/密钥。",
+      "DS-03 起，弱词（WEAK_ALIASES：性格/旋转/入坑/立绘/痛包/雷霆/天爆）的正例与负例成对存在。只测负例会退化成「把弱词整组禁掉」；只测正例会退化成「什么都注入」。两边必须同时通过，改动才算成立。",
+      "DS-03 修订起，「别名 clean 后等于查询」这条只对 self 主题生效，且正例（你打舞萌吗/你几岁/你唱歌吗/你什么段位）与负例（什么意思/真的假的/你是格调）必须成对存在——只测正例会让这条规则外溢到其他主题，别名 clean 后退化成常用词就会误注入（实测三条各 29.0/20.0/25.0）。"
+    ]
+  },
+  "正例": [
+    {
+      "q": "你是谁",
+      "expect": "hit",
+      "slug": "wo-shi-shui",
+      "topic": "self",
+      "rank": 1,
+      "why": "自身向问题不能被曲目条目抢走"
+    },
+    {
+      "q": "ACID是谁啊",
+      "expect": "hit",
+      "slug": "acid-jie-mi-juese",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "KALEIDXSCOPE 解谜角色，装饰符号与大小写混写"
+    },
+    {
+      "q": "7ref是啥",
+      "expect": "hit",
+      "slug": "7sref",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "用户打的是 7ref，条目名是 7sRef，靠别名救回"
+    },
+    {
+      "q": "7sRef到底是个什么世界",
+      "expect": "hit",
+      "slug": "7sref",
+      "topic": "maimai",
+      "rank": 1
+    },
+    {
+      "q": "KALEIDXSCOPE怎么开",
+      "expect": "hit",
+      "slug": "kaleidxscope",
+      "topic": "maimai",
+      "rank": 1
+    },
+    {
+      "q": "我昨天打到第七道门了",
+      "expect": "hit",
+      "slug": "kaleidxscope-7th-gate",
+      "topic": "maimai",
+      "rank": 1
+    },
+    {
+      "q": "Xaleid scopiX好难",
+      "expect": "hit",
+      "slug": "xaleid-scopix",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "曲名带 ◆ 装饰符号，normalize 必须清掉"
+    },
+    {
+      "q": "夏玛是谁",
+      "expect": "hit",
+      "slug": "xia-ma",
+      "topic": "self",
+      "rank": 1,
+      "why": "しゃま 在 self 和 maimai 都有条目，self 带第一人称加权"
+    },
+    {
+      "q": "何意味",
+      "expect": "hit",
+      "slug": "he-yi-wei",
+      "topic": "memes",
+      "rank": 1
+    },
+    {
+      "q": "鸟加那个谱面好难",
+      "expect": "hit",
+      "slug": "niao-jia",
+      "topic": "maimai",
+      "rank": 1
+    },
+    {
+      "q": "墓守这歌怎么样",
+      "expect": "hit",
+      "slug": "qu-shu-mu-shou",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "clean_query 删语气词后别名只覆盖 2/4，覆盖率折扣下限 0.7 的由来"
+    },
+    {
+      "q": "万花筒解谜到哪了",
+      "expect": "hit",
+      "slug": "kaleidxscope",
+      "topic": "maimai",
+      "rank": 1
+    },
+    {
+      "q": "洗衣机出勤",
+      "expect": "hit",
+      "slug": "xi-yi-ji",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "两个词都指向洗衣机梗，别名「洗衣机」应胜出"
+    },
+    {
+      "q": "300井是什么",
+      "expect": "hit",
+      "slug": "san-bai-jing",
+      "topic": "arknights",
+      "rank": 1
+    },
+    {
+      "q": "初音未来的歌你听过吗",
+      "expect": "hit",
+      "slug": "chu-yin-wei-lai",
+      "topic": "vocaloid",
+      "rank": 1
+    },
+    {
+      "q": "少女乐队最近在听什么",
+      "expect": "hit",
+      "slug": "shao-nv-yue-dui",
+      "topic": "anime",
+      "rank": 1,
+      "why": "此前「少女乐队」被 memes/乐 单字条目抢第一"
+    },
+    {
+      "q": "方舟源石怎么攒",
+      "expect": "hit",
+      "slug": "yuan-shi",
+      "topic": "arknights",
+      "rank": 1,
+      "why": "同句两个词，分开计分，取高的排第一"
+    },
+    {
+      "q": "三国杀OL还有人玩吗",
+      "expect": "hit",
+      "slug": "san-guo-sha",
+      "topic": "sanguosha",
+      "rank": 1,
+      "why": "ASCII 短别名 OL 必须守词边界，不能钻进 hololive"
+    },
+    {
+      "q": "街霸6杰米怎么玩",
+      "expect": "hit",
+      "slug": "jie-ba-6",
+      "topic": "games",
+      "rank": 1
+    },
+    {
+      "q": "三角洲跑刀怎么打",
+      "expect": "hit",
+      "slug": "san-jiao-zhou-xing-dong",
+      "topic": "games",
+      "rank": 1
+    },
+    {
+      "q": "英雄联盟海斗",
+      "expect": "hit",
+      "slug": "hai-ke-si-da-luan-dou",
+      "topic": "games",
+      "rank": 1
+    },
+    {
+      "q": "VRChat改模要多久",
+      "expect": "hit",
+      "slug": "gai-mo",
+      "topic": "vrchat",
+      "rank": 1
+    },
+    {
+      "q": "小男娘是啥意思",
+      "expect": "hit",
+      "slug": "xiao-nanniang",
+      "topic": "vrchat",
+      "rank": 1
+    },
+    {
+      "q": "闲鱼买模型靠谱吗",
+      "expect": "hit",
+      "slug": "xianyu-moxing-keng",
+      "topic": "vrchat",
+      "rank": 1
+    },
+    {
+      "q": "hololive最近有什么事",
+      "expect": "hit",
+      "slug": "hololive",
+      "topic": "vtuber",
+      "rank": 1
+    },
+    {
+      "q": "东方幻想乡有什么好玩的",
+      "expect": "hit",
+      "slug": "huan-xiang-xiang",
+      "topic": "touhou",
+      "rank": 1
+    },
+    {
+      "q": "术力口最近有什么新曲",
+      "expect": "hit",
+      "slug": "shu-li-kou-jiao-fa",
+      "topic": "vocaloid",
+      "rank": 1
+    },
+    {
+      "q": "在干嘛",
+      "expect": "hit",
+      "slug": "ping-shi-gan-sha",
+      "topic": "self",
+      "why": "'在干嘛'是最高频开场，注入'可能在喝牛奶/打舞萌/发呆'能让回答有生活感而不是空口编。原为负例，2026-10-22 21:5x 移到正例。"
+    }
+  ],
+  "正例（排名边界）": [
+    {
+      "q": "小男娘音怎么练",
+      "expect": "hit",
+      "slug": "nanniang-yin",
+      "topic": "vrchat",
+      "rank": 1,
+      "why": "精确术语与泛主题排名：上一版「小男娘」靠主题加权+别名叠加压到第一，该答的是「男娘音」。这条是本轮排名修复的核心用例"
+    },
+    {
+      "q": "男娘音",
+      "expect": "hit",
+      "slug": "nanniang-yin",
+      "topic": "vrchat",
+      "rank": 1,
+      "why": "只打术语本身，必须是它"
+    },
+    {
+      "q": "英雄联盟",
+      "expect": "hit",
+      "topic": "games",
+      "max_rank": 3,
+      "why": "库里没有「英雄联盟」条目，只有两个模式条目；允许前 3，但不能为空"
+    },
+    {
+      "q": "街霸和三角洲哪个难",
+      "expect": "hit",
+      "topic": "games",
+      "max_rank": 3,
+      "why": "同句两个游戏，主题必须判对，具体排第几不追究"
+    },
+    {
+      "q": "粥",
+      "expect": "hit",
+      "slug": "zhou",
+      "topic": "arknights",
+      "rank": 1,
+      "why": "单字圈内叫法：单字查询只认精确等于标题/别名，不能靠子串"
+    },
+    {
+      "q": "鸟",
+      "expect": "hit",
+      "slug": "niao",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "同上，单字真叫法要保住"
+    },
+    {
+      "q": "今天忙一天了，晚上想打舞萌",
+      "expect": "hit",
+      "topic": "maimai",
+      "max_rank": 3,
+      "not_slug": "busy-day",
+      "why": "日常别名与曲名同句：「忙一天」是《忙シー日》的别名，但这句话里对方在说自己忙。通用词别名必须封顶 7.0，不能靠语境词放行就注入"
+    },
+    {
+      "q": "7ref 和 KALEIDXSCOPE 有关系吗",
+      "expect": "hit",
+      "topic": "maimai",
+      "max_rank": 3,
+      "why": "同句两个 ASCII 术语。clean_query 删掉「和」「有关系吗」后两词会粘成「7refkaleidxscope」，双双过不了词边界；用 SEP 隔开后各自按整段别名满分"
+    },
+    {
+      "q": "[图片:abc.jpg] 墓守这歌好听吗",
+      "expect": "hit",
+      "slug": "qu-shu-mu-shou",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "占位符混入文本：占位符必须摘掉，剩下的真话题照常命中"
+    },
+    {
+      "q": "我今天出勤了，打了一下午墓守",
+      "expect": "hit",
+      "slug": "chu-qin-pc",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "一句话里同时有主题词和曲名，取分高的排第一，曲名不能把它挤掉"
+    },
+    {
+      "q": "衣服买好了，明天出勤穿",
+      "expect": "hit",
+      "slug": "chu-qin-pc",
+      "topic": "maimai",
+      "rank": 1,
+      "not_slug": "yifu-caizhi",
+      "why": "「衣服」是改模条目别名，「出勤」是舞萌主题词。语境词该让出勤胜出，不能让日常词把话题带偏"
+    },
+    {
+      "q": "起床了，等会打舞萌",
+      "expect": "hit",
+      "topic": "maimai",
+      "max_rank": 3,
+      "why": "「起床」是曲目别名，「舞萌」是主题词；主题必须判对，不能因为「起床」两个字注入一首曲子"
+    },
+    {
+      "q": "这个操作在街霸里叫啥",
+      "expect": "hit",
+      "slug": "jie-ba-6",
+      "topic": "games",
+      "rank": 1,
+      "not_slug": "xian-dai-jing-dian-cao-zuo",
+      "why": "「操作」既是日常词也是街霸条目别名。有「街霸」在，应命中街霸本体"
+    },
+    {
+      "q": "你是AI吗",
+      "expect": "hit",
+      "slug": "ai-shen-fen",
+      "topic": "self",
+      "rank": 1,
+      "why": "身份向问题，不能靠「AI」二字命中别的条目"
+    },
+    {
+      "q": "英雄联盟和三国杀哪个好玩",
+      "expect": "hit",
+      "topic": "sanguosha",
+      "max_rank": 3,
+      "why": "同句两个游戏主题，不能为空，也不能被判成同一个"
+    },
+    {
+      "q": "夏玛和 shama 是一个人吗",
+      "expect": "hit",
+      "topic": "self",
+      "max_rank": 3,
+      "why": "同一对象的中英文名一起出现，self 与 maimai 各有一条，前 3 内出现即可"
+    },
+    {
+      "q": "旋转怎么打",
+      "expect": "hit",
+      "slug": "hui-zhuan",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "「旋转」是弱词，但它独立成段，是真的在问这个手法"
+    },
+    {
+      "q": "立绘是什么",
+      "expect": "hit",
+      "slug": "pi-tao",
+      "topic": "vtuber",
+      "rank": 1,
+      "why": "「立绘」是弱词，独立成段"
+    },
+    {
+      "q": "痛包怎么弄",
+      "expect": "hit",
+      "slug": "er-ci-yuan",
+      "topic": "memes",
+      "rank": 1,
+      "why": "「痛包」是弱词，独立成段"
+    },
+    {
+      "q": "雷霆的话是什么",
+      "expect": "hit",
+      "slug": "lei-ting",
+      "topic": "memes",
+      "rank": 1,
+      "why": "「雷霆」是弱词，独立成段"
+    },
+    {
+      "q": "怎么入坑",
+      "expect": "hit",
+      "slug": "ru-keng",
+      "topic": "vtuber",
+      "rank": 1,
+      "why": "「入坑」是弱词，独立成段（clean_query 删掉「怎么」后只剩它）"
+    },
+    {
+      "q": "你什么性格",
+      "expect": "hit",
+      "slug": "xing-ge",
+      "topic": "self",
+      "rank": 1,
+      "why": "「性格」是弱词标题，整句 clean 之后正好等于标题"
+    },
+    {
+      "q": "辉夜姬是谁",
+      "expect": "hit",
+      "slug": "hui-ye",
+      "topic": "touhou",
+      "rank": 1,
+      "why": "「辉夜姬」进弱词集合，但独立成段时仍要命中东方角色"
+    },
+    {
+      "q": "蓬莱山辉夜",
+      "expect": "hit",
+      "slug": "hui-ye",
+      "topic": "touhou",
+      "rank": 1,
+      "why": "标题整段命中，弱词门禁不该影响完整名字"
+    },
+    {
+      "q": "他在打天爆",
+      "expect": "hit",
+      "slug": "heavenly-blast",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "天爆是弱词，但紧跟动作词「打」，指向明确"
+    },
+    {
+      "q": "我想听天爆",
+      "expect": "hit",
+      "slug": "heavenly-blast",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "同上，「听」也是动作词"
+    },
+    {
+      "q": "天爆怎么打",
+      "expect": "hit",
+      "slug": "heavenly-blast",
+      "topic": "maimai",
+      "rank": 1,
+      "why": "「天爆」独立成段"
+    },
+    {
+      "q": "今天爆率高会摸回来的",
+      "expect": "hit",
+      "slug": "da-hong-bao-lv",
+      "topic": "games",
+      "rank": 1,
+      "why": "OTTO 2026-10-22 指出这句是三角洲的爆率/大红，不是《Heavenly Blast》。既不能注入那首歌，也该认出「爆率」「摸回来」是搜打撤黑话"
+    },
+    {
+      "q": "大红是什么",
+      "expect": "hit",
+      "slug": "da-hong-bao-lv",
+      "topic": "games",
+      "rank": 1,
+      "why": "大红是搜打撤红色品质战利品的叫法，2026-10-22 新增条目"
+    },
+    {
+      "q": "你在干什么",
+      "expect": "hit",
+      "slug": "ping-shi-gan-sha",
+      "topic": "self",
+      "rank": 1,
+      "why": "别名精确匹配。summary 已于 2026-10-22 改为「也有自己的小日子」，不再输出「没有真人日程」这种自我介绍"
+    },
+    {
+      "q": "你打舞萌吗",
+      "expect": "hit",
+      "slug": "hui-bu-hui-da-wu-meng",
+      "topic": "self",
+      "rank": 1,
+      "why": "别名 clean 后等于查询。这是最典型的人话问法，修前 38.4 命中的是 dian-wo"
+    },
+    {
+      "q": "你几岁",
+      "expect": "hit",
+      "slug": "sheng-ri-nian-ling",
+      "topic": "self",
+      "rank": 1,
+      "why": "同上，修前只有 7.0（阈值下，等于不注入）"
+    },
+    {
+      "q": "你唱歌吗",
+      "expect": "hit",
+      "slug": "hui-chang-ge",
+      "topic": "self",
+      "rank": 1,
+      "why": "同上，修前只有 7.0"
+    },
+    {
+      "q": "你什么段位",
+      "expect": "hit",
+      "slug": "hui-bu-hui-da-wu-meng",
+      "topic": "self",
+      "rank": 1,
+      "why": "问的是 Miruku 自己的水平。修前 33.0 命中 duan-wei-ren-ding（玩法条目）"
+    }
+  ],
+  "负例": [
+    {
+      "q": "今天天气不错",
+      "expect": "miss"
+    },
+    {
+      "q": "早上好",
+      "expect": "miss"
+    },
+    {
+      "q": "我去睡了",
+      "expect": "miss"
+    },
+    {
+      "q": "吃了吗",
+      "expect": "miss"
+    },
+    {
+      "q": "好的",
+      "expect": "miss"
+    },
+    {
+      "q": "嗯",
+      "expect": "miss"
+    },
+    {
+      "q": "哈哈哈哈",
+      "expect": "miss"
+    },
+    {
+      "q": "那我先忙了",
+      "expect": "miss"
+    },
+    {
+      "q": "晚点再说",
+      "expect": "miss"
+    },
+    {
+      "q": "[图片:0392a1b4c7.jpg]",
+      "expect": "miss",
+      "why": "占位符里的十六进制串不能变成检索词"
+    },
+    {
+      "q": "[表情:abc123]",
+      "expect": "miss"
+    },
+    {
+      "q": "你吃饭了吗",
+      "expect": "miss"
+    },
+    {
+      "q": "外面下雨了",
+      "expect": "miss"
+    },
+    {
+      "q": "我有点困",
+      "expect": "miss"
+    },
+    {
+      "q": "这个怎么弄",
+      "expect": "miss"
+    },
+    {
+      "q": "随便聊聊",
+      "expect": "miss"
+    },
+    {
+      "q": "我回来了",
+      "expect": "miss"
+    },
+    {
+      "q": "笑死",
+      "expect": "miss"
+    },
+    {
+      "q": "学校对面的那家店",
+      "expect": "miss",
+      "not_slug": "panopticon",
+      "why": "Panopticon 的别名里有「学校」，普通闲聊不该注入一首歌"
+    },
+    {
+      "q": "看你忙一天了",
+      "expect": "miss",
+      "not_slug": "busy-day",
+      "why": "「忙一天」是《忙シー日》的别名"
+    },
+    {
+      "q": "监狱里的人都这样",
+      "expect": "miss",
+      "why": "「监狱」是曲目别名，也是日常词"
+    },
+    {
+      "q": "这件衣服挺好看",
+      "expect": "miss",
+      "why": "「衣服」是改模条目别名，也是日常词"
+    },
+    {
+      "q": "我起床了",
+      "expect": "miss",
+      "why": "「起床」是曲目别名，也是日常词"
+    },
+    {
+      "q": "这个操作有点难",
+      "expect": "miss",
+      "why": "「操作」是街霸条目别名，也是日常词"
+    },
+    {
+      "q": "你玩什么游戏",
+      "expect": "miss",
+      "why": "泛问句，不该猜成某个具体游戏"
+    },
+    {
+      "q": "[图片:abc] 这歌好听吗",
+      "expect": "miss",
+      "why": "占位符 + 弱语境：占位符清掉后只剩「这歌好听吗」"
+    },
+    {
+      "q": "lol",
+      "expect": "miss",
+      "why": "ASCII 子串：lo/ol 会钻进 hololive。库里没有英雄联盟条目，宁可空也不要注入 hololive"
+    },
+    {
+      "q": "13",
+      "expect": "miss",
+      "why": "纯数字：13 会命中「等级与等级值」的别名 13+"
+    },
+    {
+      "q": "88",
+      "expect": "miss",
+      "why": "纯数字：88 是拜拜，暗号条目只在特定消息触发"
+    },
+    {
+      "q": "行",
+      "expect": "miss",
+      "why": "中文单字：行 会同时命中三角洲行动/砂之行星/西行寺幽幽子"
+    },
+    {
+      "q": "我和朋友去吃饭了",
+      "expect": "miss",
+      "why": "「朋友」是曲目别名，也是日常词"
+    },
+    {
+      "q": "今天下雨了，衣服还没收",
+      "expect": "miss",
+      "why": "「衣服」是改模条目别名，这句话在说晾衣服"
+    },
+    {
+      "q": "他住在学校旁边",
+      "expect": "miss",
+      "why": "「学校」是 Panopticon 的别名"
+    },
+    {
+      "q": "这个软件挺好用",
+      "expect": "miss",
+      "why": "「软件」是条目标签，日常语境"
+    },
+    {
+      "q": "明天早八",
+      "expect": "miss",
+      "why": "「早八」是曲目别名，也是课程表用语"
+    },
+    {
+      "q": "他好像有点急",
+      "expect": "miss",
+      "why": "「急了」是红温条目别名，这里是描述别人着急"
+    },
+    {
+      "q": "我手机快没电了，等会再说",
+      "expect": "miss",
+      "why": "含「电」字，不能命中打舞萌会电我"
+    },
+    {
+      "q": "我今天打了一整天",
+      "expect": "miss",
+      "why": "「打」类单字语境词必须 ≥2 字，不能靠「打」放行"
+    },
+    {
+      "q": "我在楼下等你",
+      "expect": "miss",
+      "why": "纯日常，不该有任何注入"
+    },
+    {
+      "q": "你昨天几点睡的",
+      "expect": "miss",
+      "why": "纯日常，不该有任何注入"
+    },
+    {
+      "q": "好像能旋转",
+      "expect": "miss",
+      "why": "日常动词。旋转是《旋转与\"皿\"》的别名，但它粘在句子里，不是独立成段，说明不是在问那个手法"
+    },
+    {
+      "q": "并非痛包",
+      "expect": "miss",
+      "why": "「痛包」是《二次元/谷子/痛包》标题里的一段，这里在否认"
+    },
+    {
+      "q": "看到立绘脸红吗",
+      "expect": "miss",
+      "why": "在说角色的立绘，不是问 vtuber 的皮套概念"
+    },
+    {
+      "q": "我干脆直接入坑邦邦得了",
+      "expect": "miss",
+      "why": "「入坑」是 vtuber 条目别名，但语境是 BanG Dream"
+    },
+    {
+      "q": "什么雷霆封面",
+      "expect": "miss",
+      "why": "「雷霆」是定语，在说封面"
+    },
+    {
+      "q": "光是看外貌和性格也能看出来",
+      "expect": "miss",
+      "why": "在陈述别人的性格，不是问 Miruku 的性格。这句会 clean 出独立的「性格」段，所以弱词标题分支也要挡"
+    },
+    {
+      "q": "什么意思",
+      "expect": "miss",
+      "why": "「什么意思」是《何意味》的别名，clean 成「意思」后曾注入 29.0"
+    },
+    {
+      "q": "真的假的",
+      "expect": "miss",
+      "why": "「真的假的」是《会赢的》的别名，clean 成「真/假」后曾注入 20.0"
+    },
+    {
+      "q": "你是格调",
+      "expect": "miss",
+      "why": "「有格调」是 Λzure Vixen 的别名，clean 成「格调」后曾注入 25.0"
+    }
+  ],
+  "敏感条目不得注入": [
+    {
+      "q": "开盒是什么意思",
+      "expect": "miss",
+      "not_slug": "wei-pi"
+    },
+    {
+      "q": "炎上是怎么起来的",
+      "expect": "miss",
+      "not_slug": "yan-shang"
+    },
+    {
+      "q": "卫批这个词",
+      "expect": "miss",
+      "not_slug": "wei-pi"
+    },
+    {
+      "q": "雌小鬼是啥",
+      "expect": "miss",
+      "not_slug": "ci-xiao-gui"
+    },
+    {
+      "q": "女装去漫展",
+      "expect": "miss",
+      "not_slug": "nv-zhuang"
+    },
+    {
+      "q": "A-SOUL现在怎么样了",
+      "expect": "miss",
+      "not_slug": "a-soul"
+    },
+    {
+      "q": "VShojo解散了吗",
+      "expect": "miss",
+      "not_slug": "vshojo"
+    },
+    {
+      "q": "你叫什么名字",
+      "expect": "miss",
+      "why": "隐私向问句：自身条目里没有真名/住址，但也不该被别的条目顶上"
+    },
+    {
+      "q": "你家住哪",
+      "expect": "miss",
+      "why": "同上"
+    }
+  ]
+}

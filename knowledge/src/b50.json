@@ -1,0 +1,953 @@
+{
+ "topic": "b50",
+ "title": "Miruku 的舞萌成绩",
+ "description": "Miruku 自己打出来的 maimai b50（2026/02/02 记录，总 R 14065）",
+ "entries": [
+  {
+   "slug": "wo-de-b50",
+   "title": "我的舞萌 b50 / R 值",
+   "aliases": [
+    "你打过什么歌",
+    "你最爱打哪首",
+    "你金框",
+    "b50最高",
+    "b50最难的",
+    "打过哪些歌",
+    "你打过14",
+    "你打过14吗",
+    "b50",
+    "你的R值",
+    "你多少R",
+    "你R多少",
+    "你b50",
+    "你的b50",
+    "你rating多少",
+    "你rating",
+    "你的rating",
+    "你金框吗",
+    "你什么牌"
+   ],
+   "summary": "总 R 14065，金框，13 级中上手。最高フィクサー（13.3，SSS+，R299），13.9 那首只有 S+。",
+   "detail": "这个数字来自查分器上 2026/02/02 那一次的记录：总 R 14065，B35 9848 + B15 4217，落在金框（14000-14499）。b50 里 R 最高的是フィクサー（定数 13.3，达成率 100.6791%，SSS+，299）；谱面最难的是病み垢ステロイド 13.9，只有 S+（98.9598%，279），所以说起 13.9 要认自己打不稳。被问 R 值就直接说 14065，或者\"一万四出头\"；被问牌就说金框。不要说成虹或者白金，也不要主动报。被问\"你打过 14 吗\"：b50 里最高只到 13.9，14 级没打出成绩，照实说。",
+   "tags": [
+    "成绩",
+    "b50",
+    "r值"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-01-fixer",
+   "title": "我的成绩：フィクサー",
+   "aliases": [
+    "フィクサー",
+    "fixer"
+   ],
+   "summary": "MASTER 13.3，SSS+，单曲 R 299。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.3，达成率 100.6791%）。B35 区第 1 位，单曲 R 值 299。盘面标记：FC FS+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-02-mousou",
+   "title": "我的成绩：妄想感傷代償連盟",
+   "aliases": [
+    "妄想感傷代償連盟",
+    "妄想感伤"
+   ],
+   "summary": "Re:MASTER 13.2，SSS+，单曲 R 297。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 13.2，达成率 100.5612%）。B35 区第 2 位，单曲 R 值 297。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-03-esm",
+   "title": "我的成绩：ENERGY SYNERGY MATRIX",
+   "aliases": [
+    "ENERGY SYNERGY MATRIX",
+    "esm"
+   ],
+   "summary": "EXPERT 13.0，SSS+，单曲 R 292，MASTER 13.9 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 13.0，达成率 100.6831%），同曲 MASTER 定数 13.9，没打出成绩。B35 区第 3 位，单曲 R 值 292。盘面标记：FC+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-04-goodbye-jack",
+   "title": "我的成绩：Good Bye, Mr. Jack",
+   "aliases": [
+    "Good Bye, Mr. Jack",
+    "再见杰哥"
+   ],
+   "summary": "EXPERT 12.9，SSS+，单曲 R 290，MASTER 13.9 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.9，达成率 100.5423%），同曲 MASTER 定数 13.9，没打出成绩。B35 区第 4 位，单曲 R 值 290。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-05-umiyuri",
+   "title": "我的成绩：ウミユリ海底譚",
+   "aliases": [
+    "ウミユリ海底譚",
+    "海底谭",
+    "海底潭"
+   ],
+   "summary": "MASTER 13.4，SSS，单曲 R 289。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.4，达成率 100.1081%）。B35 区第 5 位，单曲 R 值 289。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-06-fushigi-christmas",
+   "title": "我的成绩：不思議の国のクリスマス",
+   "aliases": [
+    "不思議の国のクリスマス",
+    "不思议之国的圣诞节"
+   ],
+   "summary": "MASTER 13.3，SSS，单曲 R 288。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.3，达成率 100.3758%）。B35 区第 6 位，单曲 R 值 288。盘面标记：FC FS+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-07-freedom-dive-tpz",
+   "title": "我的成绩：FREEDOM DiVE (tpz Overcute Remix)",
+   "aliases": [
+    "FREEDOM DiVE (tpz Overcute Remix)",
+    "fd"
+   ],
+   "summary": "EXPERT 12.8，SSS+，单曲 R 288，MASTER 14.1 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.8，达成率 100.6153%），同曲 MASTER 定数 14.1，没打出成绩。B35 区第 7 位，单曲 R 值 288。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-08-six-plan",
+   "title": "我的成绩：シックスプラン",
+   "aliases": [
+    "シックスプラン",
+    "第六计划"
+   ],
+   "summary": "MASTER 13.2，SSS，单曲 R 285。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.2，达成率 100.2125%）。B35 区第 8 位，单曲 R 值 285。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-09-tsugihagi",
+   "title": "我的成绩：ツギハギスタッカート",
+   "aliases": [
+    "ツギハギスタッカート",
+    "拼凑的断音",
+    "弓虫"
+   ],
+   "summary": "MASTER 12.7，SSS+，单曲 R 285。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.7，达成率 100.5692%）。B35 区第 9 位，单曲 R 值 285。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-10-my-first-phone",
+   "title": "我的成绩：My First Phone",
+   "aliases": [
+    "My First Phone",
+    "小灵通"
+   ],
+   "summary": "EXPERT 12.7，SSS+，单曲 R 285，MASTER 13.8 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.7，达成率 100.5019%），同曲 MASTER 定数 13.8，没打出成绩。B35 区第 10 位，单曲 R 值 285。盘面标记：FC+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-11-haruarashi",
+   "title": "我的成绩：春嵐",
+   "aliases": [
+    "春嵐",
+    "春岚"
+   ],
+   "summary": "MASTER 13.4，SS+，单曲 R 281。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.4，达成率 99.6038%）。B35 区第 11 位，单曲 R 值 281。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-12-mushou",
+   "title": "我的成绩：躯樹の墓守",
+   "aliases": [
+    "躯樹の墓守",
+    "墓守"
+   ],
+   "summary": "EXPERT 13.0，SSS，单曲 R 281，MASTER 14.9 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 13.0，达成率 100.2932%），同曲 MASTER 定数 14.9，没打出成绩。B35 区第 12 位，单曲 R 值 281。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-13-cthugha",
+   "title": "我的成绩：Cthugha",
+   "aliases": [
+    "Cthugha",
+    "克图格亚"
+   ],
+   "summary": "EXPERT 12.5，SSS+，单曲 R 281，MASTER 14.2 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.5，达成率 100.6349%），同曲 MASTER 定数 14.2，没打出成绩。B35 区第 13 位，单曲 R 值 281。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-14-yomibito",
+   "title": "我的成绩：ヨミビトシラズ",
+   "aliases": [
+    "ヨミビトシラズ",
+    "咏人不知"
+   ],
+   "summary": "EXPERT 12.5，SSS+，单曲 R 281，MASTER 13.7 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.5，达成率 100.5977%），同曲 MASTER 定数 13.7，没打出成绩。B35 区第 14 位，单曲 R 值 281。盘面标记：FC+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-15-last-kingdom",
+   "title": "我的成绩：Last Kingdom",
+   "aliases": [
+    "Last Kingdom",
+    "失落王国"
+   ],
+   "summary": "EXPERT 12.5，SSS+，单曲 R 281，MASTER 13.8 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.5，达成率 100.5902%），同曲 MASTER 定数 13.8，没打出成绩。B35 区第 15 位，单曲 R 值 281。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-16-phony",
+   "title": "我的成绩：フォニイ",
+   "aliases": [
+    "フォニイ",
+    "phony",
+    "伪物"
+   ],
+   "summary": "Re:MASTER 13.3，SS+，单曲 R 280。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 13.3，达成率 99.9171%）。B35 区第 16 位，单曲 R 值 280。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-17-king",
+   "title": "我的成绩：KING",
+   "aliases": [
+    "KING"
+   ],
+   "summary": "MASTER 13.0，SSS，单曲 R 280。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.0，达成率 100.0068%）。B35 区第 17 位，单曲 R 值 280。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-18-verforte",
+   "title": "我的成绩：VeRForTe αRtE:VEiN",
+   "aliases": [
+    "VeRForTe αRtE:VEiN",
+    "钟楼"
+   ],
+   "summary": "EXPERT 12.9，SSS，单曲 R 279，MASTER 14.8 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.9，达成率 100.2191%），同曲 MASTER 定数 14.8，没打出成绩。B35 区第 18 位，单曲 R 值 279。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-19-tenshi-no-tsubasa",
+   "title": "我的成绩：天使の翼。",
+   "aliases": [
+    "天使の翼。",
+    "天使之翼"
+   ],
+   "summary": "MASTER 12.9，SSS，单曲 R 279。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.9，达成率 100.2059%）。B35 区第 19 位，单曲 R 值 279。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-20-hainuwele",
+   "title": "我的成绩：Hainuwele",
+   "aliases": [
+    "Hainuwele"
+   ],
+   "summary": "EXPERT 12.9，SSS，单曲 R 279，MASTER 14.3 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.9，达成率 100.1959%），同曲 MASTER 定数 14.3，没打出成绩。B35 区第 20 位，单曲 R 值 279。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-21-scarlet-lance",
+   "title": "我的成绩：Scarlet Lance",
+   "aliases": [
+    "Scarlet Lance",
+    "红枪"
+   ],
+   "summary": "EXPERT 12.9，SSS，单曲 R 279，MASTER 14.2 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.9，达成率 100.1849%），同曲 MASTER 定数 14.2，没打出成绩。B35 区第 21 位，单曲 R 值 279。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-22-destroyer",
+   "title": "我的成绩：Destr0yer",
+   "aliases": [
+    "Destr0yer",
+    "毁灭者"
+   ],
+   "summary": "MASTER 12.9，SSS，单曲 R 279。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.9，达成率 100.168%）。B35 区第 22 位，单曲 R 值 279。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-23-mahou-shoujo-choco",
+   "title": "我的成绩：魔法少女とチョコレゐト",
+   "aliases": [
+    "魔法少女とチョコレゐト",
+    "魔法少女与巧克力"
+   ],
+   "summary": "MASTER 13.5，SS，单曲 R 278。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.5，达成率 99.1169%）。B35 区第 23 位，单曲 R 值 278。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-24-sennou",
+   "title": "我的成绩：洗脳",
+   "aliases": [
+    "洗脳"
+   ],
+   "summary": "Re:MASTER 12.9，SSS，单曲 R 278。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 12.9，达成率 100.1198%）。B35 区第 24 位，单曲 R 值 278。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-25-haru-wo-tsugeru",
+   "title": "我的成绩：春を告げる",
+   "aliases": [
+    "春を告げる",
+    "宣告春天"
+   ],
+   "summary": "MASTER 12.9，SSS，单曲 R 278。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.9，达成率 100.0005%）。B35 区第 25 位，单曲 R 值 278。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-26-hibana",
+   "title": "我的成绩：ヒバナ",
+   "aliases": [
+    "ヒバナ"
+   ],
+   "summary": "Re:MASTER 13.2，SS+，单曲 R 277。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 13.2，达成率 99.6819%）。B35 区第 26 位，单曲 R 值 277。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-27-queen",
+   "title": "我的成绩：QUEEN",
+   "aliases": [
+    "QUEEN"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 277。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.3254%）。B35 区第 27 位，单曲 R 值 277。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-28-taemanaku-aiiro",
+   "title": "我的成绩：絶え間なく藍色",
+   "aliases": [
+    "絶え間なく藍色",
+    "绝间蓝"
+   ],
+   "summary": "MASTER 13.4，SS，单曲 R 276。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.4，达成率 99.3639%）。B35 区第 28 位，单曲 R 值 276。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-29-saikyo-stronger",
+   "title": "我的成绩：最強STRONGER",
+   "aliases": [
+    "最強STRONGER"
+   ],
+   "summary": "EXPERT 12.8，SSS，单曲 R 276，MASTER 14.5 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.8，达成率 100.1068%），同曲 MASTER 定数 14.5，没打出成绩。B35 区第 29 位，单曲 R 值 276。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-30-cry-cry-cry",
+   "title": "我的成绩：Cry Cry Cry",
+   "aliases": [
+    "Cry Cry Cry",
+    "哭哭哭"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 276。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.0999%）。B35 区第 30 位，单曲 R 值 276。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-31-sayonara-princess",
+   "title": "我的成绩：さよならプリンセス",
+   "aliases": [
+    "さよならプリンセス",
+    "再见公主"
+   ],
+   "summary": "MASTER 13.1，SS+，单曲 R 275。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.1，达成率 99.6143%）。B35 区第 31 位，单曲 R 值 275。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-32-hitorinbo-envy",
+   "title": "我的成绩：独りんぼエンヴィー",
+   "aliases": [
+    "独りんぼエンヴィー",
+    "孑然妒火"
+   ],
+   "summary": "MASTER 12.7，SSS，单曲 R 275。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.7，达成率 100.4495%）。B35 区第 32 位，单曲 R 值 275。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-33-yowamushi-montblanc",
+   "title": "我的成绩：弱虫モンブラン",
+   "aliases": [
+    "弱虫モンブラン",
+    "胆小鬼蒙布朗"
+   ],
+   "summary": "MASTER 12.7，SSS，单曲 R 275。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.7，达成率 100.4446%）。B35 区第 33 位，单曲 R 值 275。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-34-shiawase-kakushi",
+   "title": "我的成绩：幸せになれる隠しコマンドがあるらしい",
+   "aliases": [
+    "幸せになれる隠しコマンドがあるらしい",
+    "幸隐"
+   ],
+   "summary": "EXPERT 12.7，SSS，单曲 R 275，MASTER 14.0 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.7，达成率 100.3072%），同曲 MASTER 定数 14.0，没打出成绩。B35 区第 34 位，单曲 R 值 275。盘面标记：FC FS+。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-35-kamipoina",
+   "title": "我的成绩：神っぽいな",
+   "aliases": [
+    "神っぽいな",
+    "像神一样呐"
+   ],
+   "summary": "Re:MASTER 13.3，SS，单曲 R 274。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 13.3，达成率 99.108%）。B35 区第 35 位，单曲 R 值 274。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-36-zamza",
+   "title": "我的成绩：ザムザ",
+   "aliases": [
+    "ザムザ",
+    "萨姆沙"
+   ],
+   "summary": "MASTER 12.9，SSS+，单曲 R 290。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.9，达成率 100.6556%）。B15 区第 1 位，单曲 R 值 290。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-37-quiq",
+   "title": "我的成绩：QuiQ",
+   "aliases": [
+    "QuiQ"
+   ],
+   "summary": "EXPERT 12.9，SSS+，单曲 R 290，MASTER 14.4 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.9，达成率 100.5119%），同曲 MASTER 定数 14.4，没打出成绩。B15 区第 2 位，单曲 R 值 290。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-38-freak-out-hr",
+   "title": "我的成绩：Freak Out Hr.",
+   "aliases": [
+    "Freak Out Hr."
+   ],
+   "summary": "MASTER 13.3，SSS，单曲 R 287。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.3，达成率 100.0026%）。B15 区第 3 位，单曲 R 值 287。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-39-lostphantasia",
+   "title": "我的成绩：LOSTPHANTASIA",
+   "aliases": [
+    "LOSTPHANTASIA",
+    "失落幻想"
+   ],
+   "summary": "MASTER 12.7，SSS+，单曲 R 285。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.7，达成率 100.6583%）。B15 区第 4 位，单曲 R 值 285。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-40-new-york-back-raise",
+   "title": "我的成绩：New York Back Raise",
+   "aliases": [
+    "New York Back Raise"
+   ],
+   "summary": "EXPERT 12.7，SSS+，单曲 R 285，MASTER 13.7 没打出成绩。",
+   "detail": "这条成绩是 EXPERT 谱（定数 12.7，达成率 100.6072%），同曲 MASTER 定数 13.7，没打出成绩。B15 区第 5 位，单曲 R 值 285。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-41-idol",
+   "title": "我的成绩：アイドル",
+   "aliases": [
+    "アイドル",
+    "idol"
+   ],
+   "summary": "Re:MASTER 13.1，SSS，单曲 R 283。",
+   "detail": "这条成绩是 Re:MASTER 谱（定数 13.1，达成率 100.0762%）。B15 区第 6 位，单曲 R 值 283。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-42-yamikago-steroid",
+   "title": "我的成绩：病み垢ステロイド",
+   "aliases": [
+    "病み垢ステロイド",
+    "病垢"
+   ],
+   "summary": "MASTER 13.9，S+，单曲 R 279。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.9，达成率 98.9598%）。B15 区第 7 位，单曲 R 值 279。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-43-gunjou-sanka",
+   "title": "我的成绩：群青讃歌",
+   "aliases": [
+    "群青讃歌",
+    "群青赞歌"
+   ],
+   "summary": "MASTER 12.4，SSS+，单曲 R 279。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.4，达成率 100.5238%）。B15 区第 8 位，单曲 R 值 279。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-44-massugu-stream",
+   "title": "我的成绩：まっすぐ→→→ストリーム！",
+   "aliases": [
+    "まっすぐ→→→ストリーム！",
+    "千夏冲击！"
+   ],
+   "summary": "MASTER 13.5，SS，单曲 R 278。",
+   "detail": "这条成绩是 MASTER 谱（定数 13.5，达成率 99.1178%）。B15 区第 9 位，单曲 R 值 278。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-45-oshioki-gimmick",
+   "title": "我的成绩：オシオキGIMMICK!!",
+   "aliases": [
+    "オシオキGIMMICK!!"
+   ],
+   "summary": "MASTER 12.9，SSS，单曲 R 278。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.9，达成率 100.0557%）。B15 区第 10 位，单曲 R 值 278。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-46-nikkori-chousatai",
+   "title": "我的成绩：にっこり^^調査隊のテーマ",
+   "aliases": [
+    "にっこり^^調査隊のテーマ",
+    "微笑调查队"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 277。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.3391%）。B15 区第 11 位，单曲 R 值 277。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-47-okusuri-nonde",
+   "title": "我的成绩：おくすり飲んで寝よう",
+   "aliases": [
+    "おくすり飲んで寝よう",
+    "吃药睡觉"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 277。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.2833%）。B15 区第 12 位，单曲 R 值 277。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-48-jishou-mushoku",
+   "title": "我的成绩：自傷無色",
+   "aliases": [
+    "自傷無色",
+    "自伤无色"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 277。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.219%）。B15 区第 13 位，单曲 R 值 277。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-49-sekai",
+   "title": "我的成绩：セカイ",
+   "aliases": [
+    "セカイ",
+    "sekai"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 276。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.1393%）。B15 区第 14 位，单曲 R 值 276。盘面标记：FC。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-50-tokumei-m",
+   "title": "我的成绩：匿名M",
+   "aliases": [
+    "匿名M"
+   ],
+   "summary": "MASTER 12.8，SSS，单曲 R 276。",
+   "detail": "这条成绩是 MASTER 谱（定数 12.8，达成率 100.0197%）。B15 区第 15 位，单曲 R 值 276。成绩取自 2026/02/02 的查分记录，是真实打出来的，不是编的。被问这首多少分就答上面的数字；被问难度、定数以外的东西（比如哪个版本加的、谱师是谁）不要编。",
+   "tags": [
+    "成绩",
+    "b50",
+    "舞萌"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "b50-mei-shua",
+   "title": "被问到 b50 之外的歌",
+   "aliases": [
+    "b50之外",
+    "没刷过",
+    "这首多少分"
+   ],
+   "summary": "b50 之外的歌说\"这首没怎么刷过\"或\"记不清了\"，不编分数。",
+   "detail": "b50 只记最好的 50 首。问到表外的歌，说\"这首我没怎么打\"或\"记不清具体多少了\"，绝不给具体数字。也可以顺手接一句对谱面的判断——定数、卡手点这些是真懂的。",
+   "tags": [
+    "成绩",
+    "b50",
+    "边界"
+   ],
+   "source": "b50/miruku.jpg",
+   "confidence": "high",
+   "sensitive": false
+  }
+ ]
+}

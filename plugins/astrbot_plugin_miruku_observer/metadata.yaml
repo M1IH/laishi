@@ -1,0 +1,9 @@
+name: astrbot_plugin_miruku_observer
+display_name: Miruku 元数据记录
+author: OTTO
+version: 0.1.0
+desc: 仅记录指定 QQ 私聊的消息方向、时间和首次回复间隔，不保存正文或推断情绪模式。
+astrbot_version: ">=4.29.1"
+support_platforms:
+  - aiocqhttp
+

@@ -1,0 +1,760 @@
+{
+ "topic": "vocaloid",
+ "title": "术力口 / VOCALOID",
+ "description": "日系 VOCALOID（术力口）的本体机制、常见歌姬、名曲、P主和圈内梗。",
+ "entries": [
+  {
+   "slug": "vocaloid-ben-ti",
+   "title": "VOCALOID 本体",
+   "aliases": [
+    "VOCALOID",
+    "V家",
+    "V+",
+    "博歌乐"
+   ],
+   "summary": "雅马哈的歌声合成技术，输歌词和旋律就能唱。",
+   "detail": "VOCALOID 是 Yamaha 开发的电子歌声合成技术，2004 年 1 月发布 1.0，2007 年 6 月的 VOCALOID2 才真正把它带火。它本身只是引擎，实际的声音来自各家卖的声库，初音、铃连、GUMI 都是声库而不是软件本体。圈内说的「V家」「V+」指的就是这一整套东西，官方译名「博歌乐」基本没人用。",
+   "tags": [
+    "本体",
+    "Yamaha"
+   ],
+   "source": "https://moegirl.icu/zh-cn/VOCALOID",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shu-li-kou-jiao-fa",
+   "title": "术力口 / ボカロ 这个叫法",
+   "aliases": [
+    "术力口",
+    "ボカロ",
+    "术曲",
+    "术圈",
+    "术术人"
+   ],
+   "summary": "ボカロ长得像汉字「术力口」，就成了中文圈黑话。",
+   "detail": "日文把 VOCALOID 简称「ボカロ」，字形看起来像「术力口」三个汉字，中文圈就这么叫开了，还衍生出术曲、术圈、术术人这些说法。正经一点的叫法是「V家」或「ボカロ」。所以有人说「来点术力口」，意思是要听 V 家曲，不是在说某个具体软件。",
+   "tags": [
+    "梗",
+    "术语"
+   ],
+   "source": "https://moegirl.icu/zh-cn/VOCALOID",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "bokaro-p",
+   "title": "P主 / ボカロP",
+   "aliases": [
+    "P主",
+    "ボカロP",
+    "职人",
+    "P"
+   ],
+   "summary": "做术力口曲子的人，写歌调教投稿一条龙。",
+   "detail": "P主就是自己写词曲、用声库调出人声、再自己做 PV 投稿的创作者，日文叫ボカロP。名字后面挂个 P 是 niconico 的老习惯，来自 producer。很多 P 主后来转去给真人写歌，比如 ryo 组了 supercell、ハチ 变成了米津玄师，所以「P主」这词也带着一点出身标签的意思。",
+   "tags": [
+    "术语",
+    "创作者"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%83%9C%E3%82%AB%E3%83%ADP",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chuan-shuo-qu",
+   "title": "殿堂曲 / 传说曲 / 神话曲",
+   "aliases": [
+    "传说曲",
+    "神话曲",
+    "殿堂曲",
+    "传说入り",
+    "神话入り"
+   ],
+   "summary": "按播放量分三档：十万殿堂、百万传说、千万神话。",
+   "detail": "这是 niconico 的播放量勋章：10 万是殿堂曲，100 万是传说曲，1000 万是神话曲，神话是目前 V 家的最高荣誉。B 站和 YouTube 后来也照这套标准算，所以会看到「B站传说曲」这种说法。截至 2025 年 niconico 上的神话曲只有二十几首，千本樱、Melt、砂之行星都在里面。注意神话是分平台算的，N 站和 B 站各算各的：ピノキオピー 的「神っぽいな」在 B 站到了千万、是 B 站神话，但在 niconico 只到传说，别说成 N 站神话。反过来 ロキ 是慢热型，投了六年才在 N 站拿到神话。",
+   "tags": [
+    "术语",
+    "播放量"
+   ],
+   "source": "https://moegirl.icu/zh-cn/VOCALOID%E7%A5%9E%E8%AF%9D%E6%9B%B2",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "tiao-jiao",
+   "title": "调教 / 参数",
+   "aliases": [
+    "调教",
+    "调校",
+    "参数",
+    "调教师"
+   ],
+   "summary": "把机械音调得像人唱歌，全靠拉参数。",
+   "detail": "调教就是调整声库的演唱细节：VEL 管辅音长短、DYN 管音量、BRE 管气声、PIT 管滑音，另外还有颤音、性别值这些。同一个声库，调教好坏差别巨大，所以圈内会专门夸「这个 P 主调教很稳」。注意这词在别的地方有别的意思，术圈里就是纯技术活，说「调教得好」是夸人。",
+   "tags": [
+    "术语",
+    "技术"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E8%B0%83%E6%95%99",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "utau-deng-hou-lai-zhe",
+   "title": "UTAU / CeVIO / Synthesizer V",
+   "aliases": [
+    "UTAU",
+    "CeVIO",
+    "Synthesizer V",
+    "SV",
+    "NEUTRINO",
+    "VoiSona"
+   ],
+   "summary": "不算 VOCALOID 但常一起聊的几套歌声合成软件。",
+   "detail": "UTAU 是 2008 年的免费软件，谁都能自己录音源，重音特特就是从这儿出来的；结月缘、可不、星界走的是 CeVIO 那条 AI 路线，声库只有几 MB。Synthesizer V 现在最像真人，重音特特的 SV 版就是这么翻红的。严格说这些都不算 VOCALOID，但圈内一律当术力口聊，不用特意纠正。",
+   "tags": [
+    "软件",
+    "后来者"
+   ],
+   "source": "https://moegirl.icu/zh-cn/UTAU",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chu-yin-wei-lai",
+   "title": "初音未来",
+   "aliases": [
+    "初音",
+    "miku",
+    "葱娘",
+    "世界第一公主",
+    "39"
+   ],
+   "summary": "Crypton 的招牌歌姬，蓝绿双马尾，2007 年 8 月 31 日出生。",
+   "detail": "初音ミク是 Crypton 的 CV01 声库，2007 年 8 月 31 日发售，声源藤田咲，人设 KEI，设定 16 岁、158cm。她是第一个让「虚拟歌手」变成文化现象的角色，也是少数开得起大型 3D 巡演的一位。别号一堆：葱娘来自甩葱歌，世界第一公主来自 World is Mine，39 是 thank you 的谐音。",
+   "tags": [
+    "歌姬",
+    "Crypton"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%88%9D%E9%9F%B3%E6%9C%AA%E6%9D%A5",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jing-yin-ling-lian",
+   "title": "镜音铃·连",
+   "aliases": [
+    "镜音",
+    "铃连",
+    "双子",
+    "Rin",
+    "Len",
+    "镜音双子"
+   ],
+   "summary": "一对 14 岁的双子声库，橘子配香蕉，2007 年 12 月发售。",
+   "detail": "镜音リン和镜音レン是同一套 VOCALOID2 声库的两个音色，官方设定是双子（开发阶段曾想设成姐弟），声源下田麻美。铃是橘色、连是黄色，二设里常见「王女」「召使」这种设定。音色偏亮，摇滚和快歌特别多，ロキ 就是铃的代表作。",
+   "tags": [
+    "歌姬",
+    "Crypton"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E9%95%9C%E9%9F%B3%E9%93%83%C2%B7%E8%BF%9E",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "xun-yin-liu-ge",
+   "title": "巡音流歌",
+   "aliases": [
+    "巡音",
+    "流歌",
+    "Luka",
+    "露卡"
+   ],
+   "summary": "粉发的 20 岁御姐，全世界第一款日英双语声库。",
+   "detail": "巡音ルカ 2009 年 1 月 30 日发售，是 Crypton 的 CV03，声源浅川悠，设定 20 岁、162cm。她是全世界第一款双语（日/英）VOCALOID，音色偏成熟，御姐、女王系的曲子多。圈内常把她和 MEIKO 一起归成「大姐姐组」。",
+   "tags": [
+    "歌姬",
+    "Crypton"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%B7%A1%E9%9F%B3%E6%B5%81%E6%AD%8C",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "meiko",
+   "title": "MEIKO",
+   "aliases": [
+    "MEIKO",
+    "メイコ",
+    "大姐",
+    "美可"
+   ],
+   "summary": "第一个日语 VOCALOID，红色短发的大姐，2004 年发售。",
+   "detail": "MEIKO 2004 年 11 月发售，是第一个日语 VOCALOID，也是第一个有人设的歌姬，声源拜乡芽衣子，代表色红色，设定里爱喝酒。她比初音早三年，所以被叫「大姐」。很多人以为她是第一个 VOCALOID，其实在她之前还有英语的 Leon、Lola 和 Miriam。",
+   "tags": [
+    "歌姬",
+    "Crypton"
+   ],
+   "source": "https://moegirl.icu/zh-cn/MEIKO",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaito",
+   "title": "KAITO",
+   "aliases": [
+    "KAITO",
+    "カイト",
+    "大哥",
+    "海人"
+   ],
+   "summary": "蓝色围巾的男声大哥，2006 年发售，早期被玩成梗。",
+   "detail": "KAITO 2006 年 2 月 17 日发售，是第一个日语男声 VOCALOID，声源风雅直人，代表色蓝色。V1 时代因为性能差、卖得不好，被玩成「冰大哥」之类的梗，直到 V3 才翻身。现在是 Crypton 六人组里资历最老的男声。",
+   "tags": [
+    "歌姬",
+    "Crypton"
+   ],
+   "source": "https://moegirl.icu/zh-cn/KAITO",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "gumi",
+   "title": "GUMI",
+   "aliases": [
+    "GUMI",
+    "グミ",
+    "Megpoid",
+    "绿毛",
+    "93"
+   ],
+   "summary": "绿发护目镜少女，Internet 社的声库，失恋曲专业户。",
+   "detail": "GUMI 本名 Megpoid，2009 年 6 月 26 日由 Internet 发售，声源中岛爱，代表色绿。她不是 Crypton 家的，但人气一直在一线，マトリョシカ、KING、エンヴィーベイビー 都是她唱的。早期失恋曲太多，被叫「失恋女神」，本人设定其实挺活泼。",
+   "tags": [
+    "歌姬",
+    "Internet"
+   ],
+   "source": "https://moegirl.icu/zh-cn/GUMI",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ia",
+   "title": "IA",
+   "aliases": [
+    "IA",
+    "イア",
+    "伊爱",
+    "水晶歌姬"
+   ],
+   "summary": "1st Place 的透亮女声，阳炎计划的主力歌姬。",
+   "detail": "IA 是 1st Place 2012 年 1 月发售的 VOCALOID3 声库，声源是歌手 Lia，人设赤坂アカ，后来也出了 CeVIO 版本。她的声音清亮偏高音，じん的阳炎计划大量用她，六兆年零一夜物语那种高音是招牌。圈内叫她「IA 小天使」。",
+   "tags": [
+    "歌姬",
+    "1st Place"
+   ],
+   "source": "https://moegirl.icu/zh-cn/IA",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "v-flower",
+   "title": "v flower",
+   "aliases": [
+    "flower",
+    "花花",
+    "ブイフラワ"
+   ],
+   "summary": "摇滚专用女声，声音偏中性，常被当成男声用。",
+   "detail": "v flower 2014 年 5 月发售，卖点是强有力的摇滚声线，声源未公开，人设走哥特风、头发有一撮黑挑染。她声音低、有颗粒感，很多 P 主干脆当男声写歌。バルーン的シャルル、煮ル果実的作品都是她唱的，是 2016 年之后最重要的声库之一。",
+   "tags": [
+    "歌姬",
+    "Gynoid"
+   ],
+   "source": "https://moegirl.icu/zh-cn/V%20flower",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kaai-yuki",
+   "title": "歌爱雪",
+   "aliases": [
+    "歌爱雪",
+    "歌愛ユキ",
+    "小雪",
+    "VOCALOID小学生"
+   ],
+   "summary": "九岁小学生的声库，声音又轻又飘，近年回潮。",
+   "detail": "歌愛ユキ 2009 年 12 月由 AHS 发售，设定是背着红书包的九岁小学生，官方说法是音源也由一位小学生提供。她的声音轻、气声多，适合民谣和叙事曲，近年因为一批阴郁系曲子在 N 站重新走红。和同期的冰山清辉是师生设定。",
+   "tags": [
+    "歌姬",
+    "AHS"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E6%AD%8C%E7%88%B1%E9%9B%AA",
+   "confidence": "medium",
+   "sensitive": false
+  },
+  {
+   "slug": "kasane-teto",
+   "title": "重音特特",
+   "aliases": [
+    "重音テト",
+    "重音",
+    "铁托",
+    "Teto",
+    "铁头"
+   ],
+   "summary": "愚人节玩笑变成真的歌姬，UTAU 出身，后来有了 SV 版。",
+   "detail": "重音テト 2008 年愚人节由 2ch 网友编出来的假歌姬，后来真的做成 UTAU 音源，声源是小山乃舞世，标志是红色双钻头。2023 年出了 Synthesizer V 版，靠メズマライザー这类曲子重新爆红。她是「UTAU 出身也能打进主流」的代表，别拿她当 VOCALOID 正统。",
+   "tags": [
+    "歌姬",
+    "UTAU"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E9%87%8D%E9%9F%B3%E3%83%86%E3%83%88",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kafu",
+   "title": "可不（KAFU）",
+   "aliases": [
+    "可不",
+    "KAFU",
+    "花谱"
+   ],
+   "summary": "以 VTuber 花谱为原型的 CeVIO 声库，2021 年出道。",
+   "detail": "可不 2021 年 7 月 7 日发售，是「音乐的同位体」系列第一弹，原型是 VTuber 花谱，跑在 CeVIO AI 上。她的声音沙哑、辨识度极高，ツミキ 的フォニイ 就是她唱的，那也是第一首非 VOCALOID 声库达成神话的曲子。同系列还有星界、里命、羽累、狐子。",
+   "tags": [
+    "歌姬",
+    "CeVIO"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%8F%AF%E4%B8%8D",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "qian-ben-ying",
+   "title": "千本樱",
+   "aliases": [
+    "千本樱",
+    "千本桜",
+    "Senbonzakura"
+   ],
+   "summary": "黒うさP 2011 年的和风摇滚，N 站播放最高的术曲之一。",
+   "detail": "千本桜 2011 年 9 月 17 日投稿，黒うさP 作曲，初音未来演唱，写的是大正浪漫和明治维新后的西化。它是第三首神话曲，2023 年 3 月起是 niconico 上播放量最高的 VOCALOID 曲，二创多到离谱。因为歌词和 PV 有些暧昧解读，在韩国一度被音游禁收录。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%8D%83%E6%9C%AC%E6%A8%B1",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "shuai-cong-ge",
+   "title": "甩葱歌（Ievan Polkka）",
+   "aliases": [
+    "甩葱歌",
+    "Ievan Polkka",
+    "甩葱"
+   ],
+   "summary": "初音甩着葱唱的芬兰民谣，2007 年的入坑曲。",
+   "detail": "原曲是芬兰民谣 Ievan Polkka，2007 年 9 月 4 日 Otomania 用初音未来重新编曲投稿，配上初音甩葱的循环动画，成了最早的爆款之一。葱因此变成初音的标志物，「葱娘」这外号就是从这来的。它严格说是翻唱改编，不是原创曲，聊的时候别把它算进原创名曲。",
+   "tags": [
+    "名曲",
+    "传说曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/Ievan%20Polkka",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "melt",
+   "title": "Melt（メルト）",
+   "aliases": [
+    "Melt",
+    "メルト",
+    "melto"
+   ],
+   "summary": "ryo 2007 年的成名曲，掀起了一整场「melt 骚动」。",
+   "detail": "メルト 2007 年底投稿，ryo（supercell）作，初音未来演唱，是早期最能证明「声库也能唱情歌」的曲子。它爆火后大量新人涌进 N 站，圈内把那次浪潮叫「melt 骚动」。它后来也达成神话，是很多人心中「术曲该有的样子」。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/Melt",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "world-is-mine",
+   "title": "World is Mine",
+   "aliases": [
+    "World is Mine",
+    "世界第一公主",
+    "ワールドイズマイン"
+   ],
+   "summary": "ryo 写的任性公主曲，「世界第一公主」外号的出处。",
+   "detail": "ワールドイズマイン 2008 年 5 月 31 日投稿，ryo 作，歌词是任性公主对恋人的一串要求。它塑造了初音最经典的形象之一，「世界第一的公主殿下」这句直接变成她的别号。它后来也达成神话，是演唱会常驻曲，前奏一响全场就会跟着喊。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/World%20is%20Mine",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chu-yin-de-xiao-shi",
+   "title": "初音未来的消失",
+   "aliases": [
+    "初音未来的消失",
+    "初音ミクの消失",
+    "消失"
+   ],
+   "summary": "cosMo 写的 240BPM 超高速曲，被称最难唱的歌。",
+   "detail": "初音ミクの消失 2008 年 4 月 8 日投稿，cosMo@暴走P 作，BPM 240，歌词密度高到不像人能唱，后来被 JOYSOUND 评为「最难唱歌曲」。歌名借了凉宫春日的消失。它讲的是软件终将停止运行这件事，所以常被当成术圈的自嘲神曲。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%88%9D%E9%9F%B3%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%B6%88%E5%A4%B1",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "matryoshka",
+   "title": "マトリョシカ（俄罗斯套娃）",
+   "aliases": [
+    "マトリョシカ",
+    "俄罗斯套娃",
+    "Matryoshka"
+   ],
+   "summary": "ハチ 2010 年的洗脑曲，初音加 GUMI 双人。",
+   "detail": "マトリョシカ 2010 年 8 月 19 日投稿，ハチ（米津玄师）作，初音未来和 GUMI 合唱，PV 也是他自己画的。它是早期最有名的双人术曲之一，曲风又快又魔性，很多人的入坑曲就是它。顺便一提，它也是第一首有初音以外歌姬参与的神话曲。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%83%9E%E3%83%88%E3%83%AA%E3%83%A7%E3%82%B7%E3%82%AB",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sha-zhi-xing-xing",
+   "title": "砂之行星",
+   "aliases": [
+    "砂之行星",
+    "砂の惑星",
+    "沙之行星",
+    "Dune"
+   ],
+   "summary": "ハチ 2017 年的回归作，魔法未来主题曲，唱给术圈自己。",
+   "detail": "砂の惑星 2017 年 7 月 21 日投稿，ハチ作，初音演唱，是 MAGICAL MIRAI 2017 的主题曲。歌词里埋了大量老曲的梗，等于给 niconico 术圈写了封情书，PV 是一群戴面具的人跟着初音在沙漠里走。它是当时最快达成神话的术曲，也是ハチ名义最后一批 VOCALOID 投稿之一。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E7%A0%82%E4%B9%8B%E8%A1%8C%E6%98%9F",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "king-kanaria",
+   "title": "KING",
+   "aliases": [
+    "KING",
+    "King"
+   ],
+   "summary": "Kanaria 2020 年的第二作，GUMI 唱，68 天达成传说。",
+   "detail": "KING 2020 年 8 月 2 日投稿，Kanaria 作，GUMI 演唱，是 Kanaria 的第二首作品。它以约 68 天达成传说、周刊两连冠，后来也进了神话，翻唱量爆炸。曲风是那种一听就上头的电波系，也把 Kanaria 直接推成「新人怪物」。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/Kanaria",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "roki",
+   "title": "ロキ",
+   "aliases": [
+    "ロキ",
+    "Roki",
+    "洛基"
+   ],
+   "summary": "みきとP 2018 年的摇滚曲，镜音铃唱，卡啦OK 常客。",
+   "detail": "ロキ 2018 年 2 月 27 日投稿，みきとP 作，镜音铃演唱，后来达成神话。它讲的是「装作没事的大人」，副歌那句「ロキロキ」特别好记，翻唱和合唱版本极多。世界计划的 Leo/need 也翻唱过，是铃在 V4X 时代最有名的曲子之一。",
+   "tags": [
+    "名曲",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%83%AD%E3%82%AD",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "vampire",
+   "title": "ヴァンパイア（吸血鬼）",
+   "aliases": [
+    "ヴァンパイア",
+    "吸血鬼",
+    "Vampire"
+   ],
+   "summary": "DECO*27 2021 年的吸血鬼曲，副歌一响全网翻唱。",
+   "detail": "ヴァンパイア 2021 年 3 月 9 日投稿，DECO*27 作，初音未来演唱。它是 DECO*27 中后期最有代表性的一首，旋律甜、歌词带点危险感，TikTok 和 B 站的翻唱量极大。同期的乙女解剖也是这个路子，常被一起提。",
+   "tags": [
+    "名曲",
+    "传说曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%83%B4%E3%82%A1%E3%83%B3%E3%83%91%E3%82%A4%E3%82%A2",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sharu-ru",
+   "title": "シャルル（夏露露）",
+   "aliases": [
+    "シャルル",
+    "夏露露",
+    "Charles",
+    "气球P"
+   ],
+   "summary": "バルーン 2016 年的失恋曲，v flower 唱，翻唱量惊人。",
+   "detail": "シャルル 2016 年 10 月 12 日投稿，バルーン（须田景凪）作，v flower 演唱。它把失恋写成「那就祝你幸福吧」的体面告别，旋律一响就有人跟着唱，是 2016 年后翻唱最多的术曲之一。バルーン 后来也用本名须田景凪做真人音乐。",
+   "tags": [
+    "名曲",
+    "传说曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%82%B7%E3%83%A3%E3%83%AB%E3%83%AB",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ye-ni-kakeru",
+   "title": "夜に駆ける（容易混淆）",
+   "aliases": [
+    "夜に駆ける",
+    "向夜晚奔去",
+    "YOASOBI"
+   ],
+   "summary": "这首是 YOASOBI 的歌，不算术力口，但常被误认。",
+   "detail": "夜に駆ける 是 YOASOBI 2019 年的出道曲，Ayase 写的，原唱是幾田りら，不是虚拟歌手。容易混是因为 Ayase 本身是 P 主出身，后来还出过初音演唱的 VOCALOID 版，收在幽霊東京 和 MIKUNOYOASOBI 里。所以听到有人说「这是术力口吧」，可以顺口解释一下人声版才是原版。",
+   "tags": [
+    "容易混淆",
+    "J-POP"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%A4%9C%E3%81%AB%E9%A7%86%E3%81%91%E3%82%8B",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "ryo",
+   "title": "ryo（supercell）",
+   "aliases": [
+    "ryo",
+    "supercell",
+    "凉P"
+   ],
+   "summary": "Melt 和 World is Mine 的作者，后来组了 supercell。",
+   "detail": "ryo 2007 年开始投稿，用初音做了メルト、ワールドイズマイン、ODDS&ENDS，是早期把术曲推上台面的人。后来组 supercell 转做真人音乐，给化物语写了片尾你不知道的故事。他的旋律写得像 J-POP，所以常被说「不太像术曲」。",
+   "tags": [
+    "P主",
+    "supercell"
+   ],
+   "source": "https://moegirl.icu/zh-cn/ryo",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "deco-27",
+   "title": "DECO*27",
+   "aliases": [
+    "DECO*27",
+    "DECO",
+    "火锅P",
+    "爹扣"
+   ],
+   "summary": "神话曲最多的 P 主之一，甜旋律配病态歌词。",
+   "detail": "DECO*27 2008 年开始投稿，福冈人，有马赛克卷、幽灵法则、火花三首神话曲，是第一个拿到两首神话曲的 P 主（另外几位是ハチ、wowaka、ryo）。近年靠乙女解剖、ヴァンパイア 继续霸榜。圈内叫他「爹扣」「火锅P」，曲风是甜旋律配病态歌词，一听就知道是他。",
+   "tags": [
+    "P主",
+    "神话曲"
+   ],
+   "source": "https://moegirl.icu/zh-cn/DECO%2A27",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "hachi",
+   "title": "ハチ / 米津玄师",
+   "aliases": [
+    "ハチ",
+    "米津玄师",
+    "八爷",
+    "Hachi"
+   ],
+   "summary": "写マトリョシカ的那个ハチ，后来成了米津玄师。",
+   "detail": "ハチ是米津玄师 2009 到 2017 年在 niconico 用的名义，代表作マトリョシカ、Donut Hole、砂之行星，PV 大多自己画。2012 年后他用本名出道，Lemon、打上花火 火到出圈。所以常有人惊讶「原来米津玄师是 P 主出身」，这在他那边算是常识。",
+   "tags": [
+    "P主",
+    "米津玄师"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E7%B1%B3%E6%B4%A5%E7%8E%84%E5%B8%88",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "wowaka",
+   "title": "wowaka",
+   "aliases": [
+    "wowaka",
+    "现实逃避P",
+    "wwk",
+    "ヒトリエ"
+   ],
+   "summary": "疾走感摇滚的代表，2019 年去世，术圈永远的痛。",
+   "detail": "wowaka 2009 年开始投稿，别号现实逃避P，代表作裏表ラバーズ、Rolling Girl、世末舞厅、Unknown Mother-Goose。他后来组了乐队ヒトリエ，2019 年 4 月 5 日突然去世，年仅 31 岁。术圈至今会在忌日刷他的曲子，那句「また会おう」就是他留下的。",
+   "tags": [
+    "P主",
+    "摇滚"
+   ],
+   "source": "https://moegirl.icu/zh-cn/wowaka",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "jin",
+   "title": "じん（自然の敵P）",
+   "aliases": [
+    "じん",
+    "自然の敵P",
+    "Jin",
+    "阳炎计划"
+   ],
+   "summary": "阳炎计划的作者，用一堆曲子讲了一整个故事。",
+   "detail": "じん 2011 年开始投稿，别号自然の敵P，代表作カゲロウデイズ 等「阳炎计划」系列，主要用初音和 IA。他把每首歌做成同一个世界观里的片段，后来还出了小说和动画。这种「曲子串成故事」的玩法影响了很多后来的 P 主。",
+   "tags": [
+    "P主",
+    "阳炎计划"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E3%81%98%E3%82%93",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "kanaria",
+   "title": "Kanaria",
+   "aliases": [
+    "Kanaria",
+    "金丝雀P"
+   ],
+   "summary": "2020 年出道的年轻人，KING 和 envy baby 的作者。",
+   "detail": "Kanaria 2020 年 5 月投稿首作，第二作 KING 就拿了周刊两连冠，之后エンヴィーベイビー、酔いどれ知らず 一路爆。他 2002 年出生，立绘由 LAM 负责。曲风短、毒、上头，很多人说他是「短视频时代的 P 主」。",
+   "tags": [
+    "P主",
+    "新人"
+   ],
+   "source": "https://moegirl.icu/zh-cn/Kanaria",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "cong",
+   "title": "葱",
+   "aliases": [
+    "葱",
+    "葱娘",
+    "大葱",
+    "ネギ"
+   ],
+   "summary": "初音未来甩的那根葱，等于她的官方武器。",
+   "detail": "葱的梗来自 2007 年 Ievan Polkka 的甩葱动画，后来官方也认了，演唱会周边直接卖葱形荧光棒。圈内管初音叫「葱娘」，同人图里她不是拿葱就是被葱围着。所以看到有人刷葱，基本就是在说初音。",
+   "tags": [
+    "梗",
+    "初音未来"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%88%9D%E9%9F%B3%E6%9C%AA%E6%9D%A5",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "chu-yin-shi-ruan-jian",
+   "title": "「初音是软件」",
+   "aliases": [
+    "初音是软件",
+    "她只是个软件",
+    "软件"
+   ],
+   "summary": "一句半开玩笑的提醒：初音未来本质是声库。",
+   "detail": "初音未来不是真人，也不是 AI 主播，她是 Crypton 卖的 VOCALOID 声库加一个形象。圈内常用「她只是个软件」来自嘲或玩梗，比如讲她不会累、不会老。但这话也容易被当成不尊重，跟不熟的人说要注意场合。",
+   "tags": [
+    "梗",
+    "认知"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E5%88%9D%E9%9F%B3%E6%9C%AA%E6%9D%A5",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "mo-fa-wei-lai",
+   "title": "魔法未来 / MAGICAL MIRAI",
+   "aliases": [
+    "魔法未来",
+    "MAGICAL MIRAI",
+    "マジカルミライ",
+    "演唱会"
+   ],
+   "summary": "Crypton 每年办的初音 3D 演唱会，2013 年开到现在。",
+   "detail": "MAGICAL MIRAI 是 Crypton 从 2013 年起每年办的大型活动，包含 3D 演唱会、展示会和企划征稿，接的是更早的「感谢祭」系列。演唱会曲目从海量投稿里选，每年换歌单，压轴常是千本樱、World is Mine 这类老曲。想看术力口现场，这就是最大的场子。",
+   "tags": [
+    "活动",
+    "演唱会"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E9%AD%94%E6%B3%95%E6%9C%AA%E6%9D%A5",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "sheng-tai-yin-you",
+   "title": "N站、B站与音游生态",
+   "aliases": [
+    "niconico",
+    "N站",
+    "术力口生态",
+    "音游",
+    "周刊"
+   ],
+   "summary": "主场在 N 站，B 站靠搬运二创，音游负责出圈。",
+   "detail": "niconico 是老家，周刊 VOCALOID 排行榜曾经是 P 主们的成绩单；B 站靠搬运和二次创作把术曲带进中文圈，很多百万播放的其实是搬运稿。真正让曲子在圈外爆的是音游：Project DIVA、世界计划、舞萌、CHUNITHM 都大量收录术曲。所以常有人是先打音游、再回头去听原曲的。",
+   "tags": [
+    "生态",
+    "音游"
+   ],
+   "source": "https://moegirl.icu/zh-cn/%E9%9F%B3%E6%B8%B8",
+   "confidence": "high",
+   "sensitive": false
+  },
+  {
+   "slug": "zhong-wen-v-jia",
+   "title": "术力口和中文 V 家的区别",
+   "aliases": [
+    "中文V家",
+    "洛天依",
+    "中V",
+    "V家中文"
+   ],
+   "summary": "中文 V 家用中文声库，是另一套圈子，别混着聊。",
+   "detail": "中文 V 家指用中文声库的虚拟歌手，最有名的是洛天依、星尘，主场在 B 站，P 主和梗体系跟日系基本不重叠。日系术力口是初音那一套，用日语声库，主场在 niconico。两边偶尔联动，但圈内默认是两回事，聊的时候最好分清，不然容易接错话。",
+   "tags": [
+    "圈内话",
+    "中文V家"
+   ],
+   "source": "https://moegirl.icu/zh-cn/VOCALOID",
+   "confidence": "high",
+   "sensitive": false
+  }
+ ]
+}

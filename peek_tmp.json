@@ -1,0 +1,162 @@
+[
+ {
+  "slug": "ji-tai-wan-fa",
+  "title": "机台与基础玩法",
+  "aliases": [
+   "洗衣机",
+   "舞萌机台",
+   "打舞萌"
+  ],
+  "summary": "舞萌就是那台长得像洗衣机的街机，八个键加一块屏。",
+  "detail": "机器两台一组，单人一局三首，两个人拼机四首。判定从高到低是 CRITICAL PERFECT、PERFECT、GREAT、GOOD、MISS，谱面难度分绿黄红紫白（BASIC 到 Re:MASTER）。来世说「在投影屏上打舞萌DX」说的就是这个东西。Miruku 只是角色形象，不上机，但可以接话。",
+  "tags": [
+   "基础",
+   "机台"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "ding-shu",
+  "title": "定数",
+  "aliases": [
+   "谱面定数",
+   "定数表"
+  ],
+  "summary": "定数就是谱面的真实难度小数点，比等级更细。",
+  "detail": "等级只到十五级，定数精确到小数点后一位，同是十四级，十四点九就比十四点二难。算 R 值用的就是定数，目前最高是十五点零（PANDORA PARADOXXX 和系ぎて的 Re:MASTER）。来世问「定数多少」，通常就是问这歌有多难。",
+  "tags": [
+   "术语",
+   "谱面"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "niao",
+  "title": "鸟",
+  "aliases": [
+   "鸟了",
+   "SSS"
+  ],
+  "summary": "鸟就是 SSS，达成率打到一百以上。",
+  "detail": "这说法来自日文「トリプル」的「トリ」，念着念着就成了鸟。达成率一百点零到一百点四九九九都算鸟，来世说「鸟了」「二见鸟了」就是这一把拿了 SSS。比鸟再狠一档是鸟加。",
+  "tags": [
+   "术语",
+   "成绩"
+  ],
+  "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/introduction.html",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "niao-jia",
+  "title": "鸟加",
+  "aliases": [
+   "鸟加",
+   "SSS+",
+   "寸"
+  ],
+  "summary": "鸟加是 SSS+，达成率要一百点五以上，比鸟更狠。",
+  "detail": "一百点五到一百零一之间才是鸟加，绝赞全打成 CRITICAL PERFECT 才容易摸到。来世说「寸了就是鸟加了」，就是差一点点没到线；「你能帮我鸟加墓守吗」「我自己都没鸟加」都是这个梗。",
+  "tags": [
+   "术语",
+   "成绩"
+  ],
+  "source": "https://monkeycathyd.github.io/maimai-dx-tutorial/introduction.html",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "ap-fc",
+  "title": "AP / FC",
+  "aliases": [
+   "AP",
+   "FC",
+   "理论值",
+   "All Perfect"
+  ],
+  "summary": "AP 是一个 PERFECT 都不掉，FC 是一个 MISS 都不掉。",
+  "detail": "FC 是全连，FC+ 还不能有 GOOD；AP 是全部 PERFECT 以上；AP+ 又叫理论值，要一百零一，绝赞全 CRITICAL PERFECT。来世整活说「对 AP 的崇拜」，说的就是这个。",
+  "tags": [
+   "术语",
+   "成绩"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "jue-zan",
+  "title": "绝赞",
+  "aliases": [
+   "BREAK",
+   "绝赞粉"
+  ],
+  "summary": "绝赞就是 BREAK，橙红那种，一个顶好几分。",
+  "detail": "BREAK 的分数占比是普通 note 的五倍，判定还更严，全 CRITICAL PERFECT 才拿得满额外达成率。所以「绝赞掉一个，鸟加就飞了」。来世问「落绝赞会脖子前倾吗」，就是打到关键处人会往前凑。",
+  "tags": [
+   "术语",
+   "判定"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "r-zhi",
+  "title": "R 值（DX Rating）",
+  "aliases": [
+   "R值",
+   "DX Rating",
+   "底分",
+   "B50"
+  ],
+  "summary": "R 值是总实力分，旧曲前三十五加新曲前十五。",
+  "detail": "单曲 R 等于定数乘达成率乘评级系数，再向下取整；一个账号取旧版本最高的三十五首加当前版本最高的十五首。所以叫 B50。来世甩 lxns 链接，多半就是让人看这个数。",
+  "tags": [
+   "术语",
+   "成绩"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ },
+ {
+  "slug": "quan-liang",
+  "title": "全良",
+  "aliases": [
+   "全良",
+   "全PERFECT"
+  ],
+  "summary": "全良一般指一个都没打歪，舞萌里更常说 AP。",
+  "detail": "「良」是别的音游（比如太鼓）对最高判定的叫法，舞萌这边最高判定叫 CRITICAL PERFECT，全打满就是 AP 或理论值。圈里其实不太说全良，来世真这么说时，意思就是一个都没掉。",
+  "tags": [
+   "术语",
+   "成绩"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "medium",
+  "sensitive": false
+ },
+ {
+  "slug": "dx-pu",
+  "title": "DX 谱 / 标准谱",
+  "aliases": [
+   "DX谱",
+   "标准谱",
+   "ST谱"
+  ],
+  "summary": "DX 谱有触摸和绝赞长条，标准谱是老谱面。",
+  "detail": "标准谱没有 TOUCH，绝赞只有单点；DX 谱有 TOUCH、EX 判定，还有绝赞 HOLD 和绝赞 SLIDE。一首歌可能两种谱都有，选曲时同时按二号键和七号键切换。来世说「DX 谱」就是指新版那种。",
+  "tags": [
+   "谱面",
+   "术语"
+  ],
+  "source": "https://moegirl.icu/zh-cn/%E8%88%9E%E8%90%8CDX",
+  "confidence": "high",
+  "sensitive": false
+ }
+]

@@ -1,0 +1,7 @@
+name: astrbot_plugin_miruku_context_guard
+display_name: Miruku 上下文守卫
+author: OTTO
+version: 0.3.1
+desc: 请求组装前剥离历史里的 base64 图片并按字符预算裁剪最老轮次；回复后按消息锚点把完整历史还给落库。
+astrbot_version: ">=4.29.1"
+support_platforms: []

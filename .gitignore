@@ -1,0 +1,61 @@
+# ============================================================
+# Miruku 项目 .gitignore
+#
+# 原则：只入库「源码 / 文档 / 配置模板 / 可复跑的验收资产」，
+#      不入库「运行时数据 / 隐私正文 / 第三方二进制 / 可重建产物」。
+#
+# 本仓库是本地私有仓库：不含账号、密钥、聊天正文。
+# 任何情况下不要把本仓库推到公开远端。
+# ============================================================
+
+# ---------- 机密 ----------
+.env
+*.pem
+*.key
+
+# ---------- 运行时数据与隐私 ----------
+# data/ 下只放行「可复跑的验收脚本」；配置快照、备份、聊天库、
+# 含 sk- 密钥的 system-config 快照一律不入库。
+data/*
+!data/probe*.py
+!data/check_probe_asserts.py
+!data/build_regression_cases.py
+!data/regression_cases.json
+!data/knowledge_mine.md
+
+logs/
+images/
+# 真实聊天记录导出（含 QQ 号与正文），永不入库
+个性化语言/聊天记录/
+# 素材图（OTTO.png / miruku.jpg / slices），体积大且非源码
+b50/
+
+# ---------- 第三方二进制与副本（约 1.8 GB，可重新下载）----------
+NapCat.Shell.Windows.OneKey/
+NapCat-QCE-Windows-x64/
+AstrBot Launcher/
+*.zip
+*.exe
+.npm-cache/
+.tmp-asar/
+*.lnk
+*.url
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ---------- 可由 knowledge/src 重建的产物 ----------
+knowledge/*.sqlite3
+knowledge/*.sqlite3-*
+knowledge/review.html
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+.vs/
+Thumbs.db
+desktop.ini
