@@ -235,7 +235,7 @@ WB-06 任务单要求"明确候选生成、API 返回、QQ 端收到是不同事
 - 放 `suppressed` → 污染限流归因（正是第 ② 条要修的问题）；
 - 放 `sent` → 直接说谎。
 
-`crisis-alert.md` §「字段取值约束」里 `push_state` 只有 `pending` / `sent` / `suppressed` 三个值。**所以第 ② 条不是"改一句话"，它要求 `crisis-alert.md` 侧新增一个终态。** 已登记 `WORK_LOG.md` C-11，请 Codex 在实现 A/B 链路时一并定值（建议 `failed_final`，并由 `delivery.failed_reason` 携带原因）。
+`crisis-alert.md` §「字段取值约束」里 `push_state` 只有 `pending` / `sent` / `suppressed` 三个值。**所以第 ② 条不是"改一句话"，它要求 `crisis-alert.md` 侧新增一个终态。** 已登记 `docs/defect-register.md` §C-11，请 Codex 在实现 A/B 链路时一并定值（建议 `failed_final`，并由 `delivery.failed_reason` 携带原因）。
 
 **这条会卡在 A/B 链路实现前**：如果先写代码再补状态，B 档失败几乎必然被塞进 `pending`（最省事），而"发一次、不补发"会因此变成"无限重试"——**恰好是 OTTO 拍板时明确否掉的那个行为。**
 
