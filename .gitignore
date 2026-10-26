@@ -43,6 +43,8 @@ data/*
 
 logs/
 images/
+# Claude Code 的本地技能包（.claude/skills/create-ex 自带 .git 与二进制），不属于本项目资产
+.claude/
 # 真实聊天记录导出（含 QQ 号与正文），永不入库
 个性化语言/聊天记录/
 # 说话风格素材：ex-otto.skill 含 OTTO 本人 persona 与私人记忆摘录，
