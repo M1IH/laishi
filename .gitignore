@@ -22,11 +22,22 @@ data/*
 !data/build_regression_cases.py
 !data/regression_cases.json
 !data/knowledge_mine.md
+# DS-08 的 6 轮样本：Codex 要能复跑 `probe_reply_metrics.py --input`，
+# 不含 QQ 号、不含来世私聊，只有 OTTO 测试号的三条定向 smoke 与三条补测。
+!data/ds08_cx01_rounds.json
+# DS-08R 的反例回归与穷举矩阵：Codex 复核要能直接复跑，故连同 4 套合成样本一起放行。
+# 合成样本全部是编造的（她不 5 字、对方 10 字），不含任何真实对话、QQ 号或路径。
+!data/check_ds08r_regression.py
+!data/check_ds08r_matrix.py
+!data/ds08r_synthetic_*.json
 
 logs/
 images/
 # 真实聊天记录导出（含 QQ 号与正文），永不入库
 个性化语言/聊天记录/
+# 说话风格素材：ex-otto.skill 含 OTTO 本人 persona 与私人记忆摘录，
+# 大肥鱼 docx 是他人作品（版权），都不入库。判断保留在 docs/miruku-style-from-otto-tone.md。
+个性化语言/说话风格改善/
 # 素材图（OTTO.png / miruku.jpg / slices），体积大且非源码
 b50/
 

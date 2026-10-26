@@ -137,8 +137,16 @@ def check_conflict(entry: dict, others: list[dict]) -> list[str]:
 
 def preview(entry: dict, tests: list[str]) -> list[tuple[str, float]]:
     """用 query.score 直接给分。score 是纯函数（无 idf / 无全局统计），
-    所以这里的分数与运行期注入时的分数**一致**，不需要先落盘。"""
+    所以这里的分数与运行期注入时的分数**一致**，不需要先落盘。
+
+    `topic` 必须带上，否则预演会**系统性低估**：`query.score()` 里
+    「别名 clean 后与整句相同」这条 20.0 的路径只对 topic 为 self/b50 的
+    条目生效（`query.py:731`）。漏了它，self 的「你多少分」预演只有 5.00、
+    运行期实际 55.00，`add.py` 会据此拒绝一条本来完全够用的别名。
+    （2026-10-26 实测：漏 topic 时 5.00 / 2.50，带上 topic 时 55.00 / 49.50。）
+    """
     probe = {
+        "topic": entry.get("topic", ""),
         "title": entry.get("title", ""),
         "aliases": list(entry.get("aliases") or []),
         "summary": entry.get("summary", ""),
@@ -262,6 +270,9 @@ def main() -> int:
             print(f"[FAIL] {args.topic} 里没有 slug={args.update}")
             return 2
         entry = dict(entries[idx])
+        # JSON 源里没有 topic（它由 src 文件名决定、只在建库时写进 DB），
+        # 但 preview() 要靠 topic 才能走对分支，这里补上。
+        entry["topic"] = args.topic
         replaced = {k: v for k, v in {
             "title": args.title, "summary": args.summary, "detail": args.detail,
             "source": args.source, "confidence": args.confidence,
@@ -278,6 +289,7 @@ def main() -> int:
         print(f"[1/5] 改已有条目 {args.update}，覆盖字段：{', '.join(replaced)}")
     else:
         entry = {
+            "topic": args.topic,
             "slug": args.slug or "",
             "title": args.title or "",
             "aliases": split_list(args.aliases),
@@ -326,6 +338,9 @@ def main() -> int:
         return 0
 
     # ---- 写入
+    # topic 只存在于 DB 与内存里（JSON 文件名就是 topic），写回前必须摘掉，
+    # 否则每次 add.py 都会往源 JSON 里塞一个新字段，源文件被慢慢污染。
+    entry.pop("topic", None)
     backup = path.with_suffix(path.suffix + ".bak")
     backup.write_bytes(path.read_bytes())
     try:

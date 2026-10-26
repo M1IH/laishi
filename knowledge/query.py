@@ -166,6 +166,28 @@ WEAK_ALIASES = {"性格", "旋转", "入坑", "立绘", "痛包", "雷霆",
 WEAK_VERB_PREFIX = "打听放点练看上唱玩刷推"
 
 
+# 「版本牌子」的歧义处理（DS-09，2026-10-26）。
+# 极 / 将 / 神 / 舞舞 / 霸者 是舞萌的版本牌子名，但「极」「将」同时是超高频汉字，
+# 不能当普通别名（`score()` 里 `len(an) < 2` 也会直接跳过单字别名）。
+# 观察到的真实问法：「极和将是什么牌子」→ clean_query 得到「极\x01将\x01牌子」，
+# 「极」「将」各自独立成段，任何双语别名（「极牌」）都对不上，于是只命中通用
+# 条目 `pai-zi`（「牌子」独立成段），答不出「版本牌子」这条。
+#
+# 判据：**牌子词独立成段 + 至少一个牌名独立成段**，两个条件缺一不可。
+#   「极和将是什么牌子」→ 牌子✓ 极✓ 将✓ → 认
+#   「极牌和将牌呢」    → 牌子✗（没有裸「牌子」段）→ 走原别名路径（极牌已有别名，本来就命中）
+#   「终于下班了」      → 牌子✗ → 不认
+#   「将军」            → 牌子✗ → 不认
+#   「将来想做什么」    → 牌子✗ → 不认
+# 这样不需要把「极」「将」放进 WEAK_ALIASES（那会让「极其无聊」「极度疲惫」这类
+# 独立成段的「极」也参与匹配，反而更危险）。
+PLATE_NAMES = ("极", "極", "将", "將", "神", "舞舞", "霸者", "覇者")
+PLATE_CONTEXT_WORDS = ("牌子", "牌", "プレート", "plate")
+# 触发这条判据时给的分：高于注入阈值 10.0，但要低于「整句正好是标题/别名」的 20.0，
+# 因为它依赖两个词共现，比直接叫出名字弱一档。
+PLATE_CONTEXT_SCORE = 16.0
+
+
 def _weak_alias_ok(qn: str, an: str) -> bool:
     """弱词：独立成段，或紧跟动作词。"""
     if an in qn.split(SEP):
@@ -176,6 +198,31 @@ def _weak_alias_ok(qn: str, an: str) -> bool:
             return True
         i = qn.find(an, i + 1)
     return False
+
+
+def _plate_context_hit(qn: str) -> bool:
+    """这句是不是在问「版本牌子」。
+
+    两条判据，**任一成立**：
+
+    ① **牌子词 + 任一个牌名**，都独立成段。
+       `clean_query` 已把停用词换成 SEP，所以「极和将是什么牌子」
+       → segs = ['极','将','牌子']，「极」「将」各自是完整段；
+       而「将军」只有一段，不认；「终于下班了」「将来想做什么」没有牌子词，不认。
+
+    ② **两个及以上牌名同时独立成段**（问区别/比较的常见形态）：
+       「极和将有什么区别」→ segs = ['极','将','区别']，没有「牌子」二字，
+       但「极」「将」同时出现，指向已经明确。
+       要求 **≥2 个** 是硬条件：「终于想通了有什么区别」只有一个「终」（不是牌名），
+       「极其无聊有什么区别」只有「极」，都不认。
+    """
+    segs = set(qn.split(SEP))
+    names = [n for n in PLATE_NAMES if n in segs]
+    if not names:
+        return False
+    if any(w in segs for w in PLATE_CONTEXT_WORDS):
+        return True
+    return len(names) >= 2
 
 
 # 「水平」这条弱别名有一个上面门禁拦不住的漏口：**对方在自评**。
@@ -635,6 +682,14 @@ def score(entry: dict, q: str) -> float:
                 if _contains(pn, qn):
                     add(10.0, pn)
                     break
+
+    # DS-09：版本牌子的语境内判据（见 PLATE_NAMES / _plate_context_hit 定义处）。
+    # 「极和将是什么牌子」这类问法里，「极」「将」被 clean_query 拆成独立段，
+    # 任何双语别名（"极牌"）都对不上，只能靠这条补充。
+    # **只对 ban-ben-pai-zi 这条生效**，不改变其它条目的评分路径。
+    if entry.get("slug") == "ban-ben-pai-zi" and _plate_context_hit(qn):
+        total += PLATE_CONTEXT_SCORE
+        return total
 
     for alias in entry["aliases"]:
         an = normalize(alias)
