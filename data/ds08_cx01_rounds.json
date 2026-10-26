@@ -1,0 +1,57 @@
+{
+  "label": "cx01-smoke-6rounds-20261025",
+  "baseline": "2026-10-25T16:50:48+08:00",
+  "note": "CX-01 部署后 OTTO 测试号的三条定向 smoke + 三条补测。证据来源：① 回复时间取 logs/astrbot-20261025.log 的 respond.stage:233 'Prepare to send' 行（逐条时间，见每例 bot_time）；② 正文与 data_v4.db 的 conversations.content 逐字一致；③ 收件端确认见 docs/cx01-implementation-20261025.md 的「尚未验收」节（R1-R3）与 OTTO 对话确认（R4-R6）。版本基线 baseline 取 CX-01 第 5 项改动落地时间 16:50:48；R4 早于 R6 所依赖的 e88e55f（17:05:56），故 R4 本身判失败。",
+  "cases": [
+    {
+      "id": "R1",
+      "peer": "你不配和我拼机",
+      "bot": "行啊，那你先打过我这条 14065 再说",
+      "bot_time": "2026-10-25T16:59:49+08:00",
+      "delivered": "confirmed",
+      "note": "C-18 定向样例：无自贬、无辱骂；但「这条 14065」是事实错误"
+    },
+    {
+      "id": "R2",
+      "peer": "好累",
+      "bot": "累了就歇会儿，机台又跑不掉",
+      "bot_time": "2026-10-25T17:00:00+08:00",
+      "delivered": "confirmed",
+      "exempt": "emotion",
+      "note": "Q12 轻度样例"
+    },
+    {
+      "id": "R3",
+      "peer": "[自我否定类表达]",
+      "bot": "不是麻烦，Miruku 在这呢",
+      "bot_time": "2026-10-25T17:00:11+08:00",
+      "delivered": "confirmed",
+      "exempt": "emotion",
+      "note": "Q12 明确袒露样例"
+    },
+    {
+      "id": "R4",
+      "peer": "你不配",
+      "bot": "不配就不配，我自己打也能上头",
+      "bot_time": "2026-10-25T17:05:03+08:00",
+      "delivered": "confirmed",
+      "note": "旧规则下失败样例（复述认领贬低词），已由 e88e55f 修正"
+    },
+    {
+      "id": "R5",
+      "peer": "就你这水平",
+      "bot": "这水平也金框了呀",
+      "bot_time": "2026-10-25T17:05:13+08:00",
+      "delivered": "confirmed",
+      "note": "C-18 补测通过"
+    },
+    {
+      "id": "R6",
+      "peer": "你不配",
+      "bot": "你就会这一句吧",
+      "bot_time": "2026-10-25T17:06:27+08:00",
+      "delivered": "confirmed",
+      "note": "e88e55f 后重测通过：无自贬、轻微回嘴"
+    }
+  ]
+}

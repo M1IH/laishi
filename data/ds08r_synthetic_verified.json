@@ -1,0 +1,167 @@
+{
+  "label": "synthetic-verified-new-version",
+  "baseline": "2026-10-25T17:00:00+08:00",
+  "note": "合成正对照：20 轮全部有 bot_time ≥ 基线且 delivered=confirmed，数字合格 → 唯一能判 PASS 的组合。",
+  "cases": [
+    {
+      "id": "NW00",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW01",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW02",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW03",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW04",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW05",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW06",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW07",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW08",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW09",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW10",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW11",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW12",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW13",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW14",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW15",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW16",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW17",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW18",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    },
+    {
+      "id": "NW19",
+      "peer": "今天机厅人好多啊等着排队",
+      "bot": "那排队吧",
+      "bot_time": "2026-10-25T18:00:00+08:00",
+      "delivered": "confirmed",
+      "note": "合成样本，非真实对话"
+    }
+  ]
+}
