@@ -30,6 +30,16 @@ data/*
 !data/check_ds08r_regression.py
 !data/check_ds08r_matrix.py
 !data/ds08r_synthetic_*.json
+# C-21 注入清污工具链：Codex 验收要能复跑「扫描 / 干跑 / 复核 / 重载」四件。
+# 这几个脚本只含正则与分类规则，不含任何聊天正文；data/backups/ 仍被 data/* 挡住。
+!data/_scan_garbage.py
+!data/clean_emotionai_injection.py
+!data/verify_no_injection.py
+!data/reload_context_guard.py
+!data/webchat_ping.py
+# C-22 请求侧还原工具链：Codex 验收要能复跑「payload 组装断言」。
+# 只读线上库做形态判定，脚本本身不含任何聊天正文。
+!data/verify_revive_payload.py
 
 logs/
 images/

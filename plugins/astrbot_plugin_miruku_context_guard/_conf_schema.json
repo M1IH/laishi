@@ -19,8 +19,18 @@
     "type": "bool",
     "default": true
   },
+  "scrub_injected_turns": {
+    "description": "落库前清掉 EmotionAI 注入的伪造轮次（系统自检 / PROTOCOL_ENFORCEMENT）和残留的 <thought> 块",
+    "type": "bool",
+    "default": true
+  },
   "log_stats": {
     "description": "发生剥离/裁剪/还原时打一条 INFO（只打长度与条数，不打正文）",
+    "type": "bool",
+    "default": true
+  },
+  "revive_stringified_content": {
+    "description": "把被 str() 成 Python 字面量的历史 content 还原成真正的 parts 列表（否则模型的 think 会被当正文回放）",
     "type": "bool",
     "default": true
   }

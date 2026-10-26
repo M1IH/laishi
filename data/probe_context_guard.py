@@ -82,6 +82,7 @@ def make_guard(mod, **overrides):
         max_context_chars=400000,
         min_keep_rounds=1,
         restore_history_after_request=True,
+        revive_stringified_content=True,
         log_stats=False,
     )
     cfg.update(overrides)
@@ -91,6 +92,7 @@ def make_guard(mod, **overrides):
         "requests": 0,
         "images": 0,
         "chars": 0,
+        "revived": 0,
         "dropped_rounds": 0,
         "dropped_chars": 0,
     }

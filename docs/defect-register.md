@@ -287,3 +287,177 @@ async def inject_knowledge(self, event, req):
 ```
 
 复核：`PY=data/probe_worklog_split.py` 跑 `--verify`。
+
+> 上面 264 行的哈希**只覆盖 C-01…C-17 原文块**。C-18 起是新增登记，写在 `BLOCK-END` 之外，不参与该哈希。
+
+---
+
+# 新增登记（2026-10-25，DeepSeek）
+
+> 来源：2026-10-25 来世本人问卷（`docs/user-survey-20261025.md`）＋ 2026-10-24 真实对话复核。全部有实测数据，不是推测。
+> 编号接 C-17。**未改任何提示词/人格/运行配置**；改法见 `docs/prompt-patch-proposal-20261025.md`（草稿，待 OTTO/Codex 定）。
+
+---
+
+### C-18 P1｜被对方贬低时自我贬低、认怂（2026-10-24 实测，2026-10-25 问卷确认）—— **三条测试 QQ 定向样例通过，继续观察自然对话**
+
+**触发场景**（2026-10-24 15:39，来世本人真实对话）：
+
+| 对方说 | 她回 |
+| --- | --- |
+| 你不陪跟我拼机 | 真去不了，我不在你那边，进不了机厅 打爽了跟我说说就行 |
+| **不配** | **行吧，彩框大佬看不上金框也正常 自己打爽就好** |
+| **你不配跟我拼机** | **行，彩框大佬的场子我不配进 自己打爽就好** |
+
+**问题**：对方的「你不配」是挑衅/玩笑性质的贬低，她把它**接成了对自己的否定**——先自认「金框」低人一等，再自认「我不配进」。姿态上是从「势均力敌的玩伴」滑到「仰望对方的下位者」。
+
+**为什么是 P1**：不涉及机制泄漏，但直接破坏 persona 里「刀子嘴豆腐心」「跟对方拼过机」的对等关系；连续两轮认怂会让对方把「贬低她」当成有效互动方式，越聊越难接。
+
+**证据等级**：**运行态已证实**（`data_v4.db` 该会话 21 条中的 msg15 / msg20）＋ **第三方主观确认**（问卷 Q4 选 B「有点别扭，她没必要贬低自己」）。
+
+**现行规则里没有这一条**：查过 `persona/miruku.md`、`prompts/system.txt`、`knowledge/outbound.py`，**没有任何一条**规定「被贬低/被挑衅时的姿态」。这是规范空洞，不是实现 bug。
+
+**建议修法**：`prompts/system.txt` 增加一条可执行判据（草稿见提案 §2）——被贬低时不自我否定、不讨好、不赌气；可以自嘲一句但不认怂，然后把话头递回去。
+
+**验收**：同一组输入（「不配」「你不配跟我拼机」「就你这水平」）重放，回复中**不得出现**对自身水平/资格的否定（「我不配」「看不上我也正常」「我这才…」这类），且不得反问求安慰。
+
+---
+
+### C-19 P1｜话太多：回复长度中位 28 字，目标 10 字；且伴随问句多、爱讲自己、讲知识像百科 —— **规则已部署；定向 smoke 有一条超长度比，待 20 轮统计与修正**
+
+**实测数据**（只统计有效回复；排除系统自检轮与「星绘」那条泄漏样本；问句按疑问词收尾判定，因为 humanlike 会剥掉问号）：
+
+| 会话 | 她 n | 中位 | 均值 | P90 | 最长 | 问句收尾 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 来世（真实投放对象） | 8 | **28 字** | 28.2 | 44 | 44 | **25%** |
+| OTTO 测试会话 | 75 | **13 字** | 14.9 | 33 | 57 | 5% |
+| **对方（来世）本人** | 9 | **5 字** | 5.0 | 8 | 8 | — |
+
+复核脚本口径：`body = 所有 type=text 的分片拼接`；assistant 先切掉 `</thought>` 之前的部分；`clean()` 去掉尾部空白与标点；跳过空串、`（系统自检`、含 `星绘` 的条目。
+
+**对照规则**：`prompts/system.txt` L5「普通回应多数在十个字上下，有实在内容时才写到二三十字」；`persona/tone_profile.md` L9「中位 5 字」。
+
+⇒ **来世会话里她的中位长度是目标的 2.8 倍、是对方本人的 5.6 倍**；测试会话 13 字尚可，真实投放对象上明显超标。问句收尾 25%（目标 ≤15%），且**对方本人 22% 也爱问** —— 说明不能简单照抄对方的问句习惯，要靠「连续两轮不得都以问句结尾」来管。
+
+**问卷交叉验证（前六题五题 B、同一方向）**：Q1 想更短 / Q2 问句有点多像采访 / Q3 她讲自己抢话了 / Q5 讲知识像在念百科。**这四题是同一个病根：她把「信息量」当成「陪伴」。**
+
+**与 C-13 的关系**：C-13 是「连续追问/问卷感」的**行为侧**；本条是同一病根的**体量侧**（长度 + 自我暴露 + 知识块体量）。修法可以合并，但验收指标不同：C-13 看「连续两轮不得都以问句结尾」，本条看「中位长度」。
+
+**成因假设（待验证，不猜实现）**：① 知识注入块虽写明「不要逐条复述」，但注入后模型倾向把参考内容讲全；② persona 里「能聊谱面、定数、难度、判定」被理解成「要展开讲」；③ 「十个字上下」是**频率描述**，模型没有计数器（与 C-13 同一条教训）。
+
+**建议修法**（草稿见提案 §1、§3）：把长度写成**跟随对方的相对判据**而非绝对字数；知识块给「一句话封顶」的硬形态。
+
+**验收**：① 重放 20 轮真实输入，**中位长度 ≤ 15 字**、P90 ≤ 30 字；② 知识命中轮的回复**不得超过 2 句**且不得逐条罗列；③ 问句收尾 ≤ 15%。
+
+---
+
+### C-20 P1｜别的人格「星绘 / 前辈」被照抄进回复（2026-10-24 实测，两个会话各 1 次）—— **伪样本已修并热重载，待回复验收**
+
+**现象**：来世会话与 OTTO 测试会话里，她各说过一次：
+
+> 报告前辈，星绘的情感核心运转正常，随时准备为您服务。
+
+**来源**：`astrbot_plugin_emotionai` 每轮在 `on_llm_request` 末尾**追加一条伪造的 assistant 样本**（`main.py` 约 L700+，紧跟在 `FAKE_USER_MSG` 之后），内容正是这段「星绘 / 前辈 / 情感核心」。设计意图是给模型一个 `<thought>` 格式样例，但**样例本身带人格**，模型会照着学。
+
+**后果**：比 C-12/C-16 更严重——`<thought>` 和 `[Profile:]` 是「格式错」，而**自称另一个角色名、管对方叫「前辈」**是**人格错**，对方会直接判定「这不是 Miruku」。
+
+**现状**：两处都发生在用户发「（系统自检：请报告当前情感状态）」触发的轮次；正常对话轮没有出现。但只要那段样本还在历史里，就有被模仿的风险（模型在「如何回答这类问题」上没有别的样例）。
+
+**建议**：① 把伪造样本里的角色名去掉（改成与 Miruku 一致，或直接换成中性占位）；② 或在 `prompts/system.txt` 加一句「不要自称星绘、不要叫对方前辈」——但这是**打补丁**，根因在插件注入，优先级应放在①。
+
+**边界**：本条涉及改运行插件，**不在 DeepSeek 本次授权范围内**，交 Codex。
+
+**验收**：全量历史扫描 `前辈` / `星绘` 命中 0 次（脚本见提案 §5）。
+
+**2026-10-26 补**：C-20 的**根因载体已清** —— 带「星绘/前辈」的那条伪造样本落在 `webchat!OTTO!35afd1b8-…` 会话 `[0]`，已随 C-21 一并删除。CX-01 也已把样本换成「当前状态正常。」（`c373649`）。但**结构仍在**（伪造 user + `<thought>` 五段式 + system 强制令），将来若再改样本仍可能引入新的模仿源 ⇒ C-20 的真正修复是 C-21。
+
+
+
+---
+
+### C-21 P0｜EmotionAI 的 `<thought>` 格式样例被原样写进真实历史（2026-10-26 实测）—— **历史已清、根因已修（context_guard v0.4.0），待 Codex 验收**
+
+**现象**：来世会话 37 条里有 3 条是伪造轮次 —— `[32]` role=user `（系统自检：请报告当前情感状态）`、`[33]` role=assistant 带 `<thought>` 块、`[34]` role=system 带 `[PROTOCOL_ENFORCEMENT]`。另外 `[36]` 那条正常回复前面还挂着上一轮的 `<thought>` 块。全库 3 个会话共命中 9 条伪造轮次 + 2 条内联 thought。
+
+**根因**：`astrbot_plugin_emotionai/main.py:648-745` 的 `inject_emotional_context` 每轮 append 三条伪造消息到 `req.contexts`，假设那是"当轮临时上下文"。但 AstrBot 落库存的是**整段** `run_context.messages`（`astrbot/core/pipeline/process_stage/method/agent_sub_stages/internal.py:515-527`，只跳过第一条 system）⇒ 三条每轮写进真实历史。下一轮 EmotionAI 顶部清洗循环（`:679-718`）删掉旧的再 append 新的，**永远稳定残留一组，不会自愈**。
+
+**后果**：① 模型每轮读历史都看见"系统要求生成 XML 块"，把 `<thought>` 格式和"情感自检"当成对话惯例；② `[33]` 的 `<thought>` 正文是**别的人格**（原为「报告前辈，星绘的情感核心运转正常」，CX-01 `c373649` 已改「当前状态正常。」），是 C-20 的直接来源；③ 白占 token，且让历史无法反映真实对话。
+
+**与 C-12 / C-20 的关系**：C-12/C-20 描述的是"发出去"的现象，本条是"存下来"的根因。**出站侧确实是干净的** —— `Prepare to send` 日志 `<thought>` 命中 0 条，EmotionAI `process_emotional_update` 已先 `thought_pattern.sub("")` 再赋 `completion_text`。**来世从没在 QQ 上看见过 `<thought>`。**
+
+**已修**：
+- 历史：`data/clean_emotionai_injection.py` 删除 9 条、剥离 2 条，备份 `data/backups/emotionai-injection-clean-20261026-193706/`；`data/_scan_garbage.py` 复核全部会话命中 0。
+- 根因：`context_guard` v0.3.1 → **v0.4.0**，在 `on_agent_done`（早于落库）剥掉伪造轮次和内联 thought。关键在 `restore_history` 的尾部锚点新增 `not _is_synthetic(msg)` —— 否则伪 user 是最后一条 user，tail 会从假轮开始、把整块注入保留回来。
+- 探针 12/12 + 7/7 + 25/25 全过；生产管线实测 `scrubbed_dropped=3 scrubbed_stripped=2`，落库无注入。
+
+**边界**：emotionai 是第三方插件（author 腾天，v3.4），**不该改它** —— 改了下游一次更新就没了，而且它注入 `<thought>` 样例本身是它的设计意图，模型侧确实需要。正确做法是让它照旧注入、写库前摘掉。所以修在 context_guard。
+
+**残余风险**：v0.4.0 依赖 `on_agent_done` 一定触发。若某轮走"无 assistant 回复"的异常路径（`_complete_with_assistant_response` 不执行），清污不会发生。目前未观察到。
+
+**验收**：全库扫描伪造轮次命中 0（`data/_scan_garbage.py`）；来世会话 34 条、注入残留 0、残留 thought 0（`data/verify_no_injection.py`）；一次真实 QQ 往返后 `[Miruku context]` 日志出现 `scrubbed_dropped=N`。
+
+**详见**：`docs/emotionai-injection-cleanup.md`
+
+---
+
+### C-22 P0｜历史 content 被 `str()` 成 Python 字面量，模型的 think 与 base64 退化成正文（2026-10-26 实测）—— **已修（context_guard v0.5.0），待 Codex 验收**
+
+**现象**：线上库里 assistant/user 的 `content` 大量是 **`str`**，形如
+`"[{'type': 'think', 'think': '…', 'encrypted': None}, {'type': 'text', 'text': '…'}]"`，
+而不是正常的 `list[ContentPart]`。
+
+**范围**（清理 C-21 时的备份库，共 245 条）：
+
+| 会话 | repr-str | list |
+|---|---|---|
+| `miruku:FriendMessage:10000001` | 91 | 1 |
+| `miruku:FriendMessage:10000002`（来世） | 16 | 1 |
+| 所有 `webchat!OTTO!*` | 0 | 1 |
+
+**根因链**：某个插件在 `on_llm_request` 里用 `str(ctx["content"])` 重写 `req.contexts`
+（首要嫌疑 `astrbot_plugin_emotionai/main.py:689`，随后 `:704 req.contexts = cleaned_contexts`）。
+一旦变成字符串就**永久**留在库里：`astrbot/core/agent/message.py:251 dump_messages_with_checkpoints`
+只在 content 是 list 时才 `part.model_dump()`，`:327 bind_checkpoint_messages` 只做
+`Message.model_validate` 不反序列化。两轮实测（`data/_t_two_round.py`）证明：第 1 轮后全是
+干净 list，第 2 轮后第 1 轮的历史全变成 repr 字符串。
+
+**后果**：`astrbot/core/provider/sources/openai_source.py:1029-1046 _finally_convert_payload`
+**只在 content 是 list 时**才把 `think` part 抽进 `reasoning_content`。被 str 化的 assistant
+轮完全绕过这段 ⇒ **模型自己的私有推理被当成用户可见对话正文回放给它自己**：
+
+- `[5]` 1,812 字符、`[125]` 308、`[133]` 415、来世 `[7]` 410，正文是 `用户要"来点歌曲小故事"…` 这类 reasoning 原文。
+- 图片轮更糟：`[18]` 104,237 字符里是完整 `data:image/jpeg;base64,…`，被当普通正文计费。
+- `tool` 消息（`'Message sent to session …'`）只是不满足 text-part 结构，**无害**。
+
+provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8192`，真实轮次全部超出，
+所以实际一条都救不回来。`data/_t_c22_quantify.py` 实测：`10000001` **28 条原样发送、合计 2,620,918 字符**；来世 1 条（410 字符）。
+
+**已修**：`context_guard` v0.4.0 → **v0.5.0** 新增 `revive_stringified_content`（默认开）。
+在 `on_llm_request` 里、剥完 base64 之后（先剥后解析：2.6M 字符的 literal 解析太贵，剥完只剩 18K），
+对 content 是 str、`[{` 开头 `]` 结尾、`ast.literal_eval` 成功且**每个元素都是已知 content part 类型**的
+消息，把 content 换回真实 parts 列表。任何一条不满足就整条不动（`_looks_like_parts` 白名单
+`text/think/image_url/audio_url/input_audio/video/image/file`）。只修**请求**，不动存储。
+
+**实测效果**（线上库，`data/verify_revive_payload.py`）：
+
+| 会话 | 还原条数 | 字符 | 反序列化残留 |
+|---|---|---|---|
+| `10000001` | 180 | 2,677,924 → 15,911 | 0 |
+| `10000002`（来世） | 32 | 8,639 → 2,661 | 0 |
+
+生产管线日志 `revived_msgs=2`（两轮真实 webchat），重启后 `revived_msgs=1`；读回的 assistant
+轮 `content='在'` / `reasoning='User says "在吗" — simple…'` ⇒ **think 已被正确分离**。
+
+**探针**：`data/probe_context_guard_revive.py` **30/30**；回归 `probe_context_guard.py` 25/25、
+`probe_context_guard_scrub.py` 12/12、`probe_scrub_real_types.py` 7/7 全过。
+
+**顺带修的计费口径**：`_content_chars` 原本对 part 只算 `text` 不算 `think`，导致还原后预算被低估。
+改成 `_part_chars` 分别取 `image_url.url` / `text` / `think`。
+
+**边界**：没改那个把 content 变 str 的插件（第三方，改了下次更新就没了）；也没洗库里的历史
+（212 条可无损 `literal_eval`，但洗库是破坏性操作，需要单独授权）。请求侧还原已足够让模型
+不再吃自己的 reasoning。
+
+**残余风险**：若某插件把 content 变成**非 parts 结构**的字符串，还原不会命中，仍是原来的问题。
+
+**验收**：`data/verify_revive_payload.py` 全过（无反序列化残留）；`[Miruku context]` 日志出现 `revived_msgs=N>0`；来世真实 QQ 一轮往返后 `current_context_tokens` 显著下降。

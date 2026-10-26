@@ -43,6 +43,7 @@ It never deletes or rewrites stored conversation history, never touches
 
 from __future__ import annotations
 
+import ast
 import re
 from typing import Any
 
@@ -81,6 +82,39 @@ _INLINE_DATA_URI_RE = re.compile(
 # Event extra key holding the restore state between the two hooks.
 _EXTRA_KEY = "_miruku_context_guard_restore"
 _BEGIN_KEY = "_miruku_context_guard_begin"
+
+# ---------------------------------------------------------------------------
+# Injection scrub
+# ---------------------------------------------------------------------------
+# ``astrbot_plugin_emotionai`` appends three synthetic messages to
+# ``req.contexts`` on every single LLM request (``main.py:724-745``):
+#
+#   user      "（系统自检：请报告当前情感状态）"
+#   assistant "<thought>...收到系统自检指令...</thought>当前状态正常。"
+#   system    "[PROTOCOL_ENFORCEMENT] ... REQUIRED ACTION: Generate XML block."
+#
+# EmotionAI intends them as per-turn scaffolding and strips previous copies at
+# the top of its own hook. That works for the *request* but not for the
+# *conversation store*: ``internal.py:517-527`` saves the whole
+# ``run_context.messages`` after the turn, skipping only the leading system
+# message. So the three synthetic messages get written to the conversation
+# every turn, and because EmotionAI deletes the old set before appending a new
+# one, exactly one stale set is always sitting in the stored history. The model
+# then reads it on the next turn as if the user had sent it -- which is how she
+# once answered "那堆乱码不用理" to a message the user never wrote.
+#
+# This scrub runs from ``OnAgentDoneEvent`` (before ``_save_to_history``) and
+# drops those synthetic messages from what is about to be persisted. It only
+# ever removes text that matches EmotionAI's own constants; real user and
+# assistant messages are untouched.
+_FAKE_SELFCHECK = "（系统自检：请报告当前情感状态）"
+_PROTOCOL_MARK = "[PROTOCOL_ENFORCEMENT]"
+_FAKE_SAMPLE_HINT = "收到系统自检指令"
+
+_THOUGHT_BLOCK_RE = re.compile(
+    r"(?:```(?:xml|text)?\s*)?<(?:thought|thinking)>[\s\S]*?</(?:thought|thinking)>(?:\s*```)?",
+    re.IGNORECASE,
+)
 
 
 def _is_data_uri(value: Any) -> bool:
@@ -197,28 +231,125 @@ def _strip_message(msg: Any, stats: dict[str, int]) -> Any:
         return msg
 
 
+# ---------------------------------------------------------------------------
+# Revive stringified content
+# ---------------------------------------------------------------------------
+# AstrBot stores a message's ``content`` either as plain text or as a list of
+# content parts. Some plugin rewrites ``content`` with ``str(...)``, so a part
+# list is persisted as a *Python literal string*:
+#
+#   "[{'type': 'think', 'think': '...', 'encrypted': None}, {'type': 'text', ...}]"
+#
+# Once that happens it never recovers: ``dump_messages_with_checkpoints`` only
+# serialises a list (``astrbot/core/agent/message.py:345-361``) and
+# ``bind_checkpoint_messages`` only validates (``:327``), so the string is
+# reloaded verbatim every turn.
+#
+# The damage is that ``openai_source._finally_convert_payload``
+# (``astrbot/core/provider/sources/openai_source.py:1029-1046``) separates
+# ``think`` parts into ``reasoning_content`` **only when content is a list**.
+# Stringified assistant turns skip that branch entirely, so the model's private
+# reasoning is replayed to itself as if the user had said it. Worse, image
+# turns keep their whole base64 payload inside the literal, which then counts as
+# ordinary prose.
+#
+# The provider has a partial rescue for short strings only (``len < 8192``,
+# ``openai_source.py:806-828``), which every real turn exceeds. This revives the
+# parts here, before the payload is assembled, so the normal think/text
+# separation path applies again.
+#
+# Only the *request* is repaired; the conversation store is left as it is, which
+# keeps this plugin's promise not to rewrite stored history. A message is only
+# revived when the literal parses and every element is a recognised content
+# part -- anything else is left exactly as it was.
+_REVIVE_MAX_LEN = 4_000_000
+
+# Part types that ``Message`` accepts; anything else means "not a part list".
+_CONTENT_PART_TYPES = frozenset(
+    {"text", "think", "image_url", "audio_url", "input_audio", "video", "image", "file"}
+)
+
+
+def _looks_like_parts(value: Any) -> bool:
+    """True when ``value`` is a non-empty list of content-part dicts."""
+    if not isinstance(value, list) or not value:
+        return False
+    for item in value:
+        if not isinstance(item, dict):
+            return False
+        ptype = item.get("type")
+        if not isinstance(ptype, str) or ptype.lower() not in _CONTENT_PART_TYPES:
+            return False
+    return True
+
+
+def _revive_stringified_content(msg: Any, stats: dict[str, int]) -> Any:
+    """Turn a repr-stringified part list back into a real list of parts."""
+    content = msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", None)
+    if not isinstance(content, str):
+        return msg
+
+    text = content.strip()
+    if len(text) < 4 or len(text) > _REVIVE_MAX_LEN:
+        return msg
+    if not text.startswith("[") or not text.endswith("]"):
+        return msg
+
+    try:
+        value = ast.literal_eval(text)
+    except (ValueError, SyntaxError, MemoryError, RecursionError):
+        return msg
+
+    if not _looks_like_parts(value):
+        return msg
+
+    stats["revived"] += 1
+    if isinstance(msg, dict):
+        return {**msg, "content": value}
+    try:
+        return msg.model_copy(update={"content": value})
+    except Exception:
+        return msg
+
+
+def _part_chars(part: Any) -> int:
+    """Payload size of one content part.
+
+    ``think`` counts: the provider forwards it as ``reasoning_content``, which is
+    still billed, so leaving it out would under-report the budget.
+    """
+    if isinstance(part, dict):
+        holder = part.get("image_url") or part.get("audio_url") or {}
+        url = holder.get("url") if isinstance(holder, dict) else None
+        if isinstance(url, str):
+            return len(url)
+        text = part.get("text")
+        if isinstance(text, str):
+            return len(text)
+        think = part.get("think")
+        if isinstance(think, str):
+            return len(think)
+        return 0
+
+    holder = getattr(part, "image_url", None) or getattr(part, "audio_url", None)
+    url = getattr(holder, "url", None)
+    if isinstance(url, str):
+        return len(url)
+    text = getattr(part, "text", None)
+    if isinstance(text, str):
+        return len(text)
+    think = getattr(part, "think", None)
+    if isinstance(think, str):
+        return len(think)
+    return 0
+
+
 def _content_chars(content: Any) -> int:
     """Approximate payload size of one message's content."""
     if isinstance(content, str):
         return len(content)
     if isinstance(content, list):
-        total = 0
-        for part in content:
-            if isinstance(part, dict):
-                holder = part.get("image_url") or part.get("audio_url") or {}
-                url = holder.get("url") if isinstance(holder, dict) else None
-                if isinstance(url, str):
-                    total += len(url)
-                else:
-                    total += len(str(part.get("text", "")))
-            else:
-                holder = getattr(part, "image_url", None) or getattr(part, "audio_url", None)
-                url = getattr(holder, "url", None)
-                if isinstance(url, str):
-                    total += len(url)
-                else:
-                    total += len(getattr(part, "text", "") or getattr(part, "think", "") or "")
-        return total
+        return sum(_part_chars(part) for part in content)
     return 0
 
 
@@ -238,11 +369,109 @@ def _round_starts(contexts: list[Any]) -> list[int]:
     return starts or [0]
 
 
+def _content_text(content: Any) -> str:
+    """Best-effort plain text of one message's content, for marker matching."""
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        out = []
+        for part in content:
+            if isinstance(part, dict):
+                text = part.get("text")
+                if isinstance(text, str):
+                    out.append(text)
+            else:
+                text = getattr(part, "text", None)
+                if isinstance(text, str):
+                    out.append(text)
+        return "".join(out)
+    return str(content)
+
+
+def _is_synthetic(msg: Any) -> bool:
+    """True when this message is one of EmotionAI's injected scaffolding turns."""
+    role = _role_of(msg)
+    text = _content_text(msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", None))
+
+    if role == "user" and _FAKE_SELFCHECK in text:
+        return True
+    if role == "system" and _PROTOCOL_MARK in text:
+        return True
+    if role == "assistant" and _FAKE_SAMPLE_HINT in text and "<thought" in text:
+        return True
+    return False
+
+
+def _strip_thought_inline(msg: Any) -> Any:
+    """Remove an inline ``<thought>`` block from a real assistant message.
+
+    EmotionAI normally strips this from the outgoing text, but when it fails the
+    raw block reaches the conversation store. Dropping it keeps the stored
+    history equal to what was actually sent.
+    """
+    content = msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", None)
+
+    if isinstance(content, str):
+        if "<thought" not in content.lower() and "<thinking" not in content.lower():
+            return msg
+        new = _THOUGHT_BLOCK_RE.sub("", content).strip()
+        if new == content:
+            return msg
+        if not new:
+            return None
+        if isinstance(msg, dict):
+            return {**msg, "content": new}
+        try:
+            return msg.model_copy(update={"content": new})
+        except Exception:
+            return msg
+
+    if isinstance(content, list):
+        changed = False
+        new_parts: list[Any] = []
+        for part in content:
+            text = part.get("text") if isinstance(part, dict) else getattr(part, "text", None)
+            if isinstance(text, str) and "<thought" in text.lower():
+                new_text = _THOUGHT_BLOCK_RE.sub("", text).strip()
+                if new_text != text:
+                    changed = True
+                    if not new_text:
+                        continue
+                    if isinstance(part, dict):
+                        new_parts.append({**part, "text": new_text})
+                    else:
+                        try:
+                            new_parts.append(part.model_copy(update={"text": new_text}))
+                        except Exception:
+                            new_parts.append(part)
+                    continue
+            new_parts.append(part)
+        if not changed:
+            return msg
+        if isinstance(msg, dict):
+            return {**msg, "content": new_parts}
+        try:
+            return msg.model_copy(update={"content": new_parts})
+        except Exception:
+            return msg
+
+    return msg
+
+
 class MirukuContextGuard(Star):
     def __init__(self, context: Context, config: AstrBotConfig) -> None:
         super().__init__(context)
         self.config = config
-        self._stats = {"requests": 0, "images": 0, "chars": 0, "dropped_rounds": 0, "dropped_chars": 0}
+        self._stats = {
+            "requests": 0,
+            "images": 0,
+            "chars": 0,
+            "revived": 0,
+            "dropped_rounds": 0,
+            "dropped_chars": 0,
+        }
 
     def _cfg(self, key: str, default: Any) -> Any:
         try:
@@ -266,12 +495,20 @@ class MirukuContextGuard(Star):
         original = list(contexts)
         self._stats["requests"] += 1
         strip_stats = {"images": 0, "chars": 0}
+        revive_stats = {"revived": 0}
 
         # --- 1. strip inline payloads from *history* only -------------------
         if self._cfg("strip_history_images", True):
             contexts = [_strip_message(msg, strip_stats) for msg in contexts]
             self._stats["images"] += strip_stats["images"]
             self._stats["chars"] += strip_stats["chars"]
+
+        # --- 2. revive repr-stringified content back into real part lists ----
+        # Runs after the strip so a huge base64 literal is first collapsed to a
+        # placeholder: parsing 18K characters is cheap, parsing 2.6M is not.
+        if self._cfg("revive_stringified_content", True):
+            contexts = [_revive_stringified_content(msg, revive_stats) for msg in contexts]
+            self._stats["revived"] += revive_stats["revived"]
 
         # --- 2. enforce a character budget by dropping oldest rounds --------
         limit = int(self._cfg("max_context_chars", 400000) or 0)
@@ -303,7 +540,7 @@ class MirukuContextGuard(Star):
                 self._stats["dropped_rounds"] += dropped_rounds
                 self._stats["dropped_chars"] += dropped_chars
 
-        changed = strip_stats["images"] or dropped_rounds
+        changed = strip_stats["images"] or dropped_rounds or revive_stats["revived"]
         if not changed:
             return
 
@@ -320,9 +557,10 @@ class MirukuContextGuard(Star):
         if self._cfg("log_stats", True):
             # Lengths and counts only -- never message text, accounts or prompts.
             logger.info(
-                "[Miruku context] stripped_images=%d stripped_chars=%d dropped_rounds=%d dropped_chars=%d remaining_chars=%d",
+                "[Miruku context] stripped_images=%d stripped_chars=%d revived_msgs=%d dropped_rounds=%d dropped_chars=%d remaining_chars=%d",
                 strip_stats["images"],
                 strip_stats["chars"],
+                revive_stats["revived"],
                 dropped_rounds,
                 dropped_chars,
                 sum(_content_chars(m.get("content") if isinstance(m, dict) else getattr(m, "content", None)) for m in contexts),
@@ -376,21 +614,27 @@ class MirukuContextGuard(Star):
     async def restore_history(self, event: AstrMessageEvent, run_context: Any, response: Any) -> None:
         if event is None or not hasattr(event, "get_extra"):
             return
+
         state = event.get_extra(_EXTRA_KEY)
         begin = event.get_extra(_BEGIN_KEY)
-        if not isinstance(state, dict):
-            return
         event.set_extra(_EXTRA_KEY, None)
         event.set_extra(_BEGIN_KEY, None)
+
         try:
             messages = getattr(run_context, "messages", None)
-            original_msgs = state.get("original_msgs") or []
-            if not isinstance(messages, list) or not original_msgs:
+            if not isinstance(messages, list):
                 return
 
-            # Anchor the current turn. Identity is the strongest signal (a later hook
-            # may rewrite content or drop unrelated messages); fall back to the last
-            # user message, which is the turn being answered.
+            original_msgs = state.get("original_msgs") if isinstance(state, dict) else None
+            if not isinstance(original_msgs, list) or not original_msgs:
+                # Nothing was trimmed: the saved list is the live one. Scrub in place.
+                self._scrub_into(run_context, messages)
+                return
+
+            # Anchor the current turn. EmotionAI's synthetic "（系统自检...）" user
+            # turn is the *last* user message in this list, so it must be skipped
+            # when choosing the fallback anchor -- otherwise the tail slice starts
+            # at the fake turn and the whole injected block is preserved.
             tail_start = -1
             turn = begin.get("turn") if isinstance(begin, dict) else None
             if turn is not None:
@@ -400,7 +644,8 @@ class MirukuContextGuard(Star):
                         break
             if tail_start < 0:
                 for i in range(len(messages) - 1, -1, -1):
-                    if _role_of(messages[i]) == "user":
+                    msg = messages[i]
+                    if _role_of(msg) == "user" and not _is_synthetic(msg):
                         tail_start = i
                         break
             if tail_start < 0:
@@ -410,15 +655,61 @@ class MirukuContextGuard(Star):
             if messages and _role_of(messages[0]) == "system":
                 head = [messages[0]]
 
-            restored = head + original_msgs + messages[tail_start:]
-            run_context.messages = restored
-            if self._cfg("log_stats", True):
-                # Counts only: how much of her real history was kept.
-                logger.info(
-                    "[Miruku context] history restored for save: original_msgs=%d tail_msgs=%d total_msgs=%d",
-                    len(original_msgs),
-                    len(messages) - tail_start,
-                    len(restored),
-                )
+            tail = messages[tail_start:]
+            restored = head + original_msgs + tail
+            self._scrub_into(
+                run_context,
+                restored,
+                original_count=len(original_msgs),
+                tail_count=len(tail),
+                report=True,
+            )
         except Exception as exc:
             logger.error("[Miruku context] history restore failed: %s", exc, exc_info=True)
+
+    def _scrub_into(
+        self,
+        run_context: Any,
+        messages: list[Any],
+        *,
+        original_count: int = 0,
+        tail_count: int = 0,
+        report: bool = False,
+    ) -> None:
+        """Drop synthetic turns / inline <thought> blocks, then install the result."""
+        dropped = 0
+        stripped = 0
+        kept: list[Any] = []
+
+        if self._cfg("scrub_injected_turns", True):
+            for msg in messages:
+                if _is_synthetic(msg):
+                    dropped += 1
+                    continue
+                cleaned = _strip_thought_inline(msg)
+                if cleaned is None:
+                    stripped += 1
+                    continue
+                if cleaned is not msg:
+                    stripped += 1
+                kept.append(cleaned)
+        else:
+            kept = list(messages)
+
+        try:
+            run_context.messages = kept
+        except Exception as exc:
+            logger.error("[Miruku context] cannot assign messages after scrub: %s", exc)
+            return
+
+        if not self._cfg("log_stats", True):
+            return
+        if report or dropped or stripped:
+            logger.info(
+                "[Miruku context] history restored for save: original_msgs=%d tail_msgs=%d total_msgs=%d scrubbed_dropped=%d scrubbed_stripped=%d",
+                original_count,
+                tail_count,
+                len(kept),
+                dropped,
+                stripped,
+            )
