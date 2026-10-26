@@ -33,5 +33,10 @@
     "description": "把被 str() 成 Python 字面量的历史 content 还原成真正的 parts 列表（否则模型的 think 会被当正文回放）",
     "type": "bool",
     "default": true
+  },
+  "strip_outbound_marks": {
+    "description": "出站前剥掉回复里的内部标记（<thought> 五段式、[Profile:]、DSML、内心独白行等）；剥完为空则不发这条",
+    "type": "bool",
+    "default": true
   }
 }

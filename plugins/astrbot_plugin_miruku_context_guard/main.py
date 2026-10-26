@@ -54,6 +54,11 @@ from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.provider.entities import ProviderRequest
 
 try:  # AstrBot >= 4.x
+    from astrbot.core.message.components import Plain
+except Exception:  # pragma: no cover - keeps the plugin importable on forks
+    Plain = None  # type: ignore[assignment]
+
+try:  # AstrBot >= 4.x
     from astrbot.core.agent.message import bind_checkpoint_messages
 except Exception:  # pragma: no cover - keeps the plugin importable on forks
     bind_checkpoint_messages = None  # type: ignore[assignment]
@@ -115,6 +120,218 @@ _THOUGHT_BLOCK_RE = re.compile(
     r"(?:```(?:xml|text)?\s*)?<(?:thought|thinking)>[\s\S]*?</(?:thought|thinking)>(?:\s*```)?",
     re.IGNORECASE,
 )
+
+# ---------------------------------------------------------------------------
+# Outbound mark scrub
+# ---------------------------------------------------------------------------
+# Nothing in AstrBot itself guarantees that the model's internal markup never
+# reaches the chat. ``astrbot_plugin_emotionai`` does strip ``<thought>`` from
+# ``resp.completion_text`` (main.py:886) -- but only while its own
+# ``show_thought`` flag is off, and ``/心理显示`` is an ordinary user command
+# that flips that flag with no admin check (main.py:391-397, :958-960).
+# Measured on 2026-10-26 20:40 through the dashboard path: with the flag on, a
+# five-section ``<thought>`` block went out verbatim as reply text.
+#
+# So the outgoing message is scrubbed here as well, independent of any other
+# plugin's settings. Only things that can never be legitimate reply text are
+# removed: paired or orphaned thought tags, ``[Profile: ...]``, DSML markers, an
+# echoed ``<system_reminder>``, and bare monologue lines such as ``[感知] ...``.
+# Semantic checks (invite promises, fabricated scores) stay in
+# ``knowledge/outbound.py`` and are deliberately not duplicated here -- this
+# hook only enforces "no internal markup on the wire".
+_INVISIBLE_RE = re.compile(r"[\u200b-\u200f\u2060\ufeff\u00ad]")
+
+# ASCII full-width twins, plus the bracket variants Chinese input methods emit.
+_FULLWIDTH_EXTRA = {
+    "[": "［【",
+    "]": "］】",
+    "<": "＜",
+    ">": "＞",
+    ":": "：",
+    "/": "／",
+    "|": "｜",
+    "\\": "＼",
+    ".": "．",
+    "-": "－",
+    "_": "＿",
+}
+
+_LT = r"[<\uFF1C]"
+_GT = r"[>\uFF1E]"
+_SLASH = r"[/\uFF0F]"
+
+
+def _mark_lit(text: str) -> str:
+    """Compile a literal into a regex that accepts half- and full-width forms.
+
+    ``re.I`` alone is not enough: Python does not fold ``ｔ`` (U+FF54) into
+    ``t``, so ``＜ｔｈｏｕｇｈｔ＞`` -- a very common shape from a Chinese IME --
+    would slip through an ASCII-only pattern.
+    """
+    out: list[str] = []
+    for ch in text:
+        alts = [ch]
+        code = ord(ch)
+        if 0x21 <= code <= 0x7E:
+            alts.append(chr(code + 0xFEE0))
+        alts.extend(_FULLWIDTH_EXTRA.get(ch, ""))
+        if ch.isalpha():
+            alts.extend(alt.upper() for alt in list(alts))
+            alts.extend(alt.lower() for alt in list(alts))
+        uniq = list(dict.fromkeys(alts))
+        out.append("[" + "".join(re.escape(a) for a in uniq) + "]")
+    return "".join(out)
+
+
+def _tag(name: str) -> str:
+    """``<name>``, tolerant of full-width brackets and inner spaces."""
+    return _LT + r"\s*" + _mark_lit(name) + r"\s*" + _GT
+
+
+def _close_tag(name: str) -> str:
+    """``</name>``, same tolerance."""
+    return _LT + r"\s*" + _SLASH + r"\s*" + _mark_lit(name) + r"\s*" + _GT
+
+
+def _pair(name: str) -> re.Pattern[str]:
+    """Innermost-first paired matcher.
+
+    A plain non-greedy match leaves residue when the model nests tags:
+    ``<thought>a<thought>b</thought>c</thought>`` would drop only the inner
+    part and leave ``c`` in the reply. Forbidding a nested opener inside the
+    body makes the engine close the innermost block first, so repeated
+    substitution converges on the right answer.
+    """
+    return re.compile(
+        _tag(name) + r"(?:(?!" + _tag(name) + r")[\s\S])*?" + _close_tag(name)
+    )
+
+
+_OPEN_THOUGHT_RE = re.compile(_tag("thought"))
+_CLOSE_THOUGHT_RE = re.compile(_close_tag("thought"))
+
+# Paired markup. Ordered innermost-name-first; ``thinking`` must precede
+# ``think`` so the longest name wins.
+_PAIRED_TAGS = [
+    ("thought", _pair("thought")),
+    ("thinking", _pair("thinking")),
+    ("think", _pair("think")),
+]
+
+# Order matters: paired forms before bare tags, so a closing tag left behind by
+# a pair rule is not mistaken for an orphan and used to cut real text.
+_OUTBOUND_PATTERNS = [
+    # [Profile: 爱好=舞萌] -- closing bracket may be ], ］ or 】.
+    (re.compile(_mark_lit("[Profile:") + r"[^\]］】\n]*" + _mark_lit("]")), "profile"),
+    # Whole metadata line starting with `Profile:`. Anchored at line start so a
+    # sentence that merely mentions the word ("我的 profile 没啥好写的") is safe.
+    # Inline bare forms are deliberately not eaten: `Profile: 称呼=来世在吗` has
+    # no way to tell where the value stops and the reply begins, and cutting it
+    # sentence-wise loses real text.
+    (re.compile(r"(?im)^[ \t]*Profile\s*[:：][^\n]*"), "profile-line"),
+    # An emptied ```xml fence left behind after a thought block was removed.
+    (re.compile(r"```[ \t]*(?:xml|text)?[ \t]*\n?[ \t]*```"), "empty-fence"),
+    # DSML markers use two pipe characters: ASCII `|` and full-width `｜`.
+    (re.compile(r"</?[|｜]{1,3}DSML[|｜]{1,3}[^>＞]*[>＞]?"), "dsml"),
+    # An echoed reminder block, paired then unpaired.
+    (
+        re.compile(
+            _tag("system_reminder") + r".*?" + _close_tag("system_reminder"),
+            re.S,
+        ),
+        "sys-reminder",
+    ),
+    (re.compile(_tag("system_reminder")), "sys-reminder-tag"),
+    (re.compile(_close_tag("system_reminder")), "sys-reminder-tag"),
+    # Parenthesised internal state: 「（更新：joy:2）」.
+    (
+        re.compile(
+            r"[\(（]\s*(?:感知|评估|决策|更新|代谢|思考|内心|分析|自检|判定)"
+            r"\s*[:：][^\)）\n]*[\)）]"
+        ),
+        "state-paren",
+    ),
+    # Bare monologue line with no tags at all: `[感知] 对方问在不在…`.
+    (
+        re.compile(
+            r"[\[［【]\s*(?:感知|评估|决策|更新|代谢|思考|内心|分析|自检|判定)"
+            r"\s*[\]］】][^\n\[\]［］【】]*"
+        ),
+        "monologue-line",
+    ),
+    (re.compile(_mark_lit("tool_calls") + r"\s*[:：]?\s*"), "tool-calls"),
+    # Last resort: any bare tag still standing.
+    (re.compile(_close_tag("thought") + "|" + _tag("thought")), "thought-tag"),
+    (
+        re.compile(
+            _close_tag("think")
+            + "|"
+            + _tag("think")
+            + "|"
+            + _close_tag("thinking")
+            + "|"
+            + _tag("thinking")
+        ),
+        "think-tag",
+    ),
+    (
+        re.compile(_close_tag("tool_calls") + "|" + _tag("tool_calls")),
+        "tool-tag",
+    ),
+]
+
+
+def _strip_outbound_marks(text: str) -> tuple[str, list[str]]:
+    """Remove internal markup from one outgoing text segment.
+
+    Returns ``(cleaned, hits)``. An empty ``cleaned`` with non-empty ``hits``
+    means the segment was nothing but internal monologue and must not be sent.
+    """
+    hits: list[str] = []
+    if not text:
+        return text, hits
+
+    text = _INVISIBLE_RE.sub("", text)
+    for _ in range(4):
+        before = text
+
+        # Paired blocks first, repeatedly: nesting needs several passes.
+        for name, pattern in _PAIRED_TAGS:
+            for _ in range(4):
+                replaced = pattern.sub("", text)
+                if replaced == text:
+                    break
+                hits.append(name)
+                text = replaced
+
+        closes = list(_CLOSE_THOUGHT_RE.finditer(text))
+        opens = list(_OPEN_THOUGHT_RE.finditer(text))
+        if closes and not opens:
+            # The opening tag is gone (truncated output) but the block contents
+            # are still there. Drop the orphan marker; the monologue-line rules
+            # below handle any bare 感知/决策/更新 lines that remain. Cutting to
+            # the marker would also delete legitimate text written after it.
+            text = _CLOSE_THOUGHT_RE.sub("", text)
+            hits.append("thought-orphan-close")
+        elif opens:
+            last_close = closes[-1].start() if closes else -1
+            unclosed = [m for m in opens if m.start() > last_close]
+            if unclosed:
+                # Truncated output: the block never closed, so everything from
+                # the opener onward is still monologue.
+                text = text[: unclosed[0].start()]
+                hits.append("thought-unclosed")
+
+        for pattern, name in _OUTBOUND_PATTERNS:
+            if pattern.search(text):
+                hits.append(name)
+                text = pattern.sub("", text)
+
+        if text == before:
+            break
+
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return text, list(dict.fromkeys(hits))
 
 
 def _is_data_uri(value: Any) -> bool:
@@ -283,6 +500,40 @@ def _looks_like_parts(value: Any) -> bool:
     return True
 
 
+def _sanitize_revived_parts(value: list[Any]) -> list[Any]:
+    """Fix what the strip-then-revive order leaves behind (2026-10-26, server 400).
+
+    The strip pass replaces inline data URIs with ``IMAGE_PLACEHOLDER`` *inside
+    the repr string*; the revive pass then parses that string into a real part
+    list. Any ``image_url`` part that had held a data URI now carries the
+    placeholder text **as its url** -- and the provider sends
+    ``{"image_url": {"url": "[图片]"}}`` straight to DeepSeek, which rejects it
+    with ``Unsupported image_url format``. Measured on the server: the test
+    account's stored history is 180/184 stringified messages, so every
+    proactive call with images in context died at ``messages[19]`` while the
+    guard happily logged ``stripped_images=24``.
+
+    Rule: a media part whose url is our placeholder becomes a text part (the
+    history genuinely says "an image was here"); a media part with an empty
+    url is dropped outright. Real ``http(s)``/``data:`` urls are untouched --
+    short surviving data URIs below the strip floor stay valid payloads.
+    """
+    out: list[Any] = []
+    for part in value:
+        if isinstance(part, dict):
+            ptype = str(part.get("type", "")).lower()
+            if ptype in ("image_url", "image", "audio", "input_audio", "video"):
+                holder = part.get("image_url") or part.get("audio_url") or part.get(ptype)
+                url = holder.get("url") if isinstance(holder, dict) else None
+                if isinstance(url, str) and url.strip() == IMAGE_PLACEHOLDER:
+                    out.append({"type": "text", "text": IMAGE_PLACEHOLDER})
+                    continue
+                if url is None or (isinstance(url, str) and not url.strip()):
+                    continue
+        out.append(part)
+    return out
+
+
 def _revive_stringified_content(msg: Any, stats: dict[str, int]) -> Any:
     """Turn a repr-stringified part list back into a real list of parts."""
     content = msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", None)
@@ -303,6 +554,7 @@ def _revive_stringified_content(msg: Any, stats: dict[str, int]) -> Any:
     if not _looks_like_parts(value):
         return msg
 
+    value = _sanitize_revived_parts(value)
     stats["revived"] += 1
     if isinstance(msg, dict):
         return {**msg, "content": value}
@@ -471,6 +723,8 @@ class MirukuContextGuard(Star):
             "revived": 0,
             "dropped_rounds": 0,
             "dropped_chars": 0,
+            "outbound_scrubbed": 0,
+            "outbound_cleared": 0,
         }
 
     def _cfg(self, key: str, default: Any) -> Any:
@@ -713,3 +967,66 @@ class MirukuContextGuard(Star):
                 dropped,
                 stripped,
             )
+
+    @filter.on_decorating_result()
+    async def scrub_outbound(self, event: AstrMessageEvent) -> None:
+        """Strip internal markup from the outgoing chain.
+
+        Runs on every outbound message, including proactive ones (the
+        ``proactive_chat`` plugin dispatches this same event itself). Nothing
+        here depends on another plugin's settings.
+        """
+        if not self._cfg("strip_outbound_marks", True):
+            return
+        try:
+            result = event.get_result()
+            if result is None:
+                return
+            chain = getattr(result, "chain", None)
+            if not chain:
+                return
+
+            hits: list[str] = []
+            kept: list[Any] = []
+            emptied = 0
+            for comp in chain:
+                if Plain is not None and isinstance(comp, Plain):
+                    original = comp.text or ""
+                    cleaned, found = _strip_outbound_marks(original)
+                    hits.extend(found)
+                    if not cleaned and original.strip():
+                        # The segment was pure internal monologue: drop it
+                        # rather than send an empty bubble.
+                        emptied += 1
+                        continue
+                    if cleaned != original:
+                        comp.text = cleaned
+                kept.append(comp)
+
+            if not hits:
+                return
+
+            if not kept:
+                # Nothing sendable survived. Cancel the reply instead of
+                # delivering an empty message.
+                event.clear_result()
+                self._stats["outbound_cleared"] += 1
+                if self._cfg("log_stats", True):
+                    logger.info(
+                        "[Miruku outbound] cleared empty reply, marks=%s segments_dropped=%d",
+                        ",".join(dict.fromkeys(hits)),
+                        emptied,
+                    )
+                return
+
+            result.chain = kept
+            self._stats["outbound_scrubbed"] += 1
+            if self._cfg("log_stats", True):
+                logger.info(
+                    "[Miruku outbound] scrubbed marks=%s segments_dropped=%d kept=%d",
+                    ",".join(dict.fromkeys(hits)),
+                    emptied,
+                    len(kept),
+                )
+        except Exception as exc:  # never break the reply path
+            logger.error("[Miruku outbound] scrub failed: %s", exc, exc_info=True)

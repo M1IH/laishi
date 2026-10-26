@@ -436,6 +436,46 @@ async def main() -> int:
     await run_guard(guard, req)
     check("整串内容-内联 base64 被剥", count_data_uris(req.contexts) == 0 and "前文" in req.contexts[0]["content"], "占位后保留其它文字")
 
+    # ---- 字符串化分片列表（2026-10-26 服务器 400 的成因，必须锁死）------
+    # 生产历史里 content 常被 str() 成 Python 字面量。剥离先把串内的 base64
+    # 换成 "[图片]"，revive 再把串解析回真部件列表——若不清洗 revive 的产物，
+    # image_url 部件会带着 url="[图片]" 原样发给 provider，DeepSeek 直接
+    # 400：Unsupported image_url format。当时 25 项探针全绿仍漏，因为
+    # 没有一条用例同时经过「字符串化 + 剥离 + revive」这条路。
+    stringified = str([
+        {"type": "text", "text": "看图"},
+        {"type": "image_url", "image_url": {"url": data_uri(90_000), "id": None}},
+    ])
+    req = FakeReq([msg("user", stringified)])
+    guard = make_guard(mod, max_context_chars=0)
+    await run_guard(guard, req)
+    parts = req.contexts[0]["content"]
+    fake_img = [
+        p for p in (parts if isinstance(parts, list) else [])
+        if isinstance(p, dict) and str(p.get("type", "")).lower() in ("image_url", "image")
+        and str((p.get("image_url") or {}).get("url", "")).startswith("[图片]")
+    ]
+    check(
+        "字符串化分片-revive 后不残留假 image_url",
+        isinstance(parts, list) and not fake_img and any(
+            isinstance(p, dict) and p.get("text") == "[图片]" for p in parts),
+        f"部件 {len(parts) if isinstance(parts, list) else 'N/A'} 个，假 image_url {len(fake_img)} 个",
+    )
+    # 真 http 图 URL 不能被误伤
+    httpish = str([
+        {"type": "image_url", "image_url": {"url": "https://example.com/a.jpg"}},
+    ])
+    req = FakeReq([msg("user", httpish)])
+    guard = make_guard(mod, max_context_chars=0)
+    await run_guard(guard, req)
+    parts = req.contexts[0]["content"]
+    check(
+        "字符串化分片-http 图 URL 原样保留",
+        isinstance(parts, list) and len(parts) == 1
+        and (parts[0].get("image_url") or {}).get("url") == "https://example.com/a.jpg",
+        "占位清洗只针对 [图片]，不碰真 URL",
+    )
+
     # ---- 汇总 ----------------------------------------------------------
     failed = [r for r in RESULTS if not r[1]]
     for name, ok, detail in RESULTS:
