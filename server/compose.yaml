@@ -1,0 +1,37 @@
+services:
+  astrbot:
+    image: soulter/astrbot:latest
+    container_name: astrbot
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "127.0.0.1:6185:6185"
+      # proactive_chat 插件控制台（心跳判据与收件人切换都要用它）
+      # 注意：容器内必须绑 0.0.0.0，否则 host 的端口映射打不进去（见 migrate_config.py）
+      - "127.0.0.1:4100:4100"
+    volumes:
+      - ./astrbot/data:/AstrBot/data
+    networks: [miruku]
+
+  napcat:
+    image: mlikiowa/napcat-docker:latest
+    container_name: napcat
+    restart: unless-stopped
+    environment:
+      - MODE=reverse_ws
+      - ONEBOT_URL=ws://astrbot:6199/ws
+      - WEBUI_TOKEN=${NAPCAT_WEBUI_TOKEN}
+      - TZ=Asia/Shanghai
+    ports:
+      - "127.0.0.1:6099:6099"
+    volumes:
+      - ./napcat/qq:/app/.config/QQ
+      - ./napcat/config:/app/napcat/config
+      - ./napcat/plugins:/app/napcat/plugins
+    depends_on: [astrbot]
+    networks: [miruku]
+
+networks:
+  miruku:
+    driver: bridge
