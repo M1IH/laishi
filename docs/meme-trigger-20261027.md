@@ -49,3 +49,51 @@
 bash /opt/miruku/server/diag-meme-flow.sh   # 先只读诊断
 bash /opt/miruku/server/fix-meme-flow.sh    # 再按结论修
 ```
+
+## 6. 2026-10-27 17:2x 实锤：401 才是零表情的直接原因
+
+真机日志（`docker logs astrbot`，经本机面板 `/api/logs` 读取）：
+
+```
+[17:11:31] [ERRO] [mixins.event_handlers:1392] [meme_manager] 情感模型调用失败:
+           Error code: 401 - {'message': 'Invalid API Key', 'param': 'Please provide valid API Key',
+                              'code': '401', 'type': 'invalid_key'}
+[17:11:31] [INFO] [mixins.event_handlers:1398] [meme_manager] 去重后的最终表情列表: []
+```
+
+- 16:24–16:28 同一插件**能**选出标签（`['baka'] ['sad'] ['sigh'] ['sleep'] ['happy']`），说明链路通；
+- 17:11 起每次调用都 401，`最终表情列表` 恒为 `[]`，发送阶段自然无图可发；
+- 会话聊天正常（回复不断）⇒ 会话 provider（deepseek）的 key 没问题，坏的是
+  `generation.emotion.llm.provider_id` 指向的 `xiaomi/mimo-v2.6-flash`。
+- 「概率 65% / 选包 / scope」在本例中**都不是原因**（选包问题另有一条，见 §7）。
+
+## 7. 另两条已排除/已修的分支
+
+| 症状 | 实测 | 处置 |
+|---|---|---|
+| 选了分类但一张都不发，且日志无异常 | 运行时 default 包是 `builtin-default`，`memes/` 下 0 张图；`juxueli-meme-pack` 有 38 张却未在 `registry.json` 登记 | `fix-meme-pack.sh`：登记 pack + 改 `selection_rules.json` 的 default；**规则每消息现读，不用重启** |
+| 改完配置没反应 | `provider_id`/`probability`/`enable_mixed` 全部在插件 init 时读取（`main.py:240-278`） | 必须重启（或 WebUI 里重载插件） |
+
+> 注意键名：发送相关是 `generation.message.enable_mixed` / `mixed_probability`，
+> **不是** `enable_mixed_message`（后者只存在于内存属性名 `self.enable_mixed_message`）。
+
+## 8. 无需 SSH 的日志读取（本次关键解锁）
+
+本机面板进程已持有服务器 SSH：
+
+```
+http://127.0.0.1:8642/api/status            # 容器/服务/插件/provider/主动消息概览
+http://127.0.0.1:8642/api/logs?src=astrbot&n=2000
+http://127.0.0.1:8642/api/logs?src=napcat&n=2000
+```
+
+`src` 只认 `astrbot` / `napcat`，`n` 上限 2000 行、文本截断 400 KB。
+只读，**无 exec 能力**；需要改文件时仍得 OTTO 在服务器执行脚本。
+
+## 9. 判断表（补 401 行）
+
+| 日志现象 | 结论 | 动作 |
+|---|---|---|
+| `情感模型调用失败: 401 Invalid API Key` | 情感模型 provider 的 key 失效 | `fix-meme-emotion.sh`（改指会话 provider） |
+| `情感模型调用失败: <其他>` | provider 不可达/超时 | 同上；急需可用图可切 `--from-tags` |
+| `选择标签` 正常但 `最终表情列表: []` | 分类目录无图 | `diag-meme-pack.sh` 对账，补图或删描述 |
