@@ -4,7 +4,22 @@
 # 输出每一层 PASS/FAIL，FAIL 的第一层就是根因所在层。
 DATA=/opt/miruku/astrbot/data
 CFG=$DATA/config/meme_manager_config.json
-PACK=$DATA/plugin_data/meme_manager/packs/juxueli-meme-pack
+PD=$DATA/plugin_data/meme_manager
+# 运行时真正绑定的包＝selection_rules.json 里 scope=default 的 pack_id；取不到才退回猜一个
+RPACK=$(python3 - "$PD" <<'PY' 2>/dev/null || true
+import json,os,sys
+pd=sys.argv[1]
+try: d=json.load(open(os.path.join(pd,'selection_rules.json'),encoding='utf-8'))
+except Exception: raise SystemExit(0)
+for r in (d.get('rules') or []):
+    if isinstance(r,dict) and str(r.get('scope'))=='default':
+        v=r.get('pack_id') or r.get('pack_ids')
+        if isinstance(v,str) and v.strip(): print(v.strip()); break
+        if isinstance(v,list) and v: print(str(v[0]).strip()); break
+PY
+)
+RPACK=${RPACK:-builtin-default}
+PACK=$PD/packs/$RPACK
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
@@ -97,24 +112,43 @@ if not pc:
     print("  [WARN] 找不到 AstrBot 主配置 cmd_config.json，跳过 provider 存在性检查")
     raise SystemExit(0)
 ac=json.load(open(pc,encoding='utf-8-sig'))
-ps=((ac.get('provider_settings') or ac.get('provider') or {}).get('providers')) or []
+def collect(node, out):
+    if isinstance(node, list):
+        for x in node: collect(x, out)
+    elif isinstance(node, dict):
+        for key in ('providers','sources','provider_settings'):
+            if key in node: collect(node[key], out)
+        i = node.get('id') or ''
+        if i and isinstance(i, str): out.append(i)
+        t = node.get('type') or ''
+        m = ((node.get('model_config') or {}).get('model')) or ''
+        if t and m and isinstance(t,str) and isinstance(m,str): out.append(f"{t}/{m}")
 ids=[]
-for p in ps:
-    i=p.get('id') or ''
-    if i: ids.append(i)
-    t=p.get('type','')
-    m=(p.get('model_config') or {}).get('model') or ''
-    if t and m: ids.append(f"{t}/{m}")
-print("  AstrBot 已注册 provider 形态:", sorted(set(ids))[:20])
+for key in ('provider','provider_settings','providers'):
+    if key in ac: collect(ac[key], ids)
+# 从日志兜底：AstrBot 启动时会打印已加载 provider
+if not ids:
+    import subprocess
+    try:
+        lg=subprocess.run(['docker','logs','astrbot','--since','48h'],capture_output=True,text=True,errors='replace')
+        txt=(lg.stdout or '')+(lg.stderr or '')
+        import re
+        ids=[m.group(1) for m in re.finditer(r'Provider\(([^)]+)\)',txt)]
+    except Exception:
+        pass
+ids=sorted(set(ids))
+print("  AstrBot 已注册 provider 形态:", ids[:20] or "(解析不到)")
 if not pid:
     print("  [PASS] provider_id 为空 → 复用当前回复 provider，无单点")
+elif not ids:
+    print("  [WARN] 解析不到 provider 列表，此项不下结论（看第 5 节日志里有无『调用失败』）")
 elif pid in ids or pid.split('/')[0] in {x.split('/')[0] for x in ids}:
     print(f"  [PASS] {pid} 可解析")
 else:
     print(f"  [FAIL] {pid} 在 AstrBot 里不存在 → 情感模型每次调用都会失败 → 永远零表情")
 PY
 
-say "4. 表情包分类目录与图片数（0 张 = 该分类永远发不出）"
+say "4. 运行时包（$RPACK）的分类目录与图片数（0 张 = 该分类永远发不出）"
 if [ -d "$PACK" ]; then
   for d in "$PACK"/memes/*/; do
     [ -d "$d" ] || continue
