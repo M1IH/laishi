@@ -181,6 +181,20 @@ const pill=(ok,t)=>`<span class="pill ${ok?'p-ok':'p-bad'}">${t||(ok?'在线':'�
 const pw=(w,t)=>`<span class="pill ${w?'p-warn':'p-ok'}">${t}</span>`;
 function kv(pairs){return pairs.map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('');}
 function card(t,html){return `<div class="card"><h3>${t}</h3>${html}</div>`;}
+function banner(d){
+  // QQ 掉线时给一条最显眼的红条。2026-10-27 的教训：容器 running、6199 连着，
+  // 都不代表她在线——只有 NapCat 真有活动才算。那次漏看 3 小时才被人发现。
+  if (d.needs_rescan) return `<div class="card" style="border-color:#f85149;background:#2b1113;margin-bottom:12px">
+    <h3 style="color:#f85149">QQ 已掉线，需要重新扫码</h3>
+    <div style="margin-top:6px">心跳在 <b>${d.needs_rescan}</b> 检测到 NapCat 长时间无活动。
+    去 <b>NapCat·扫码</b> 页扫一次二维码即可恢复；<b>不要重启容器</b>——重启会让登录态失效，反而要重扫。</div>
+    </div>`;
+  if (d.last_status && d.last_status !== 'OK') return `<div class="card" style="border-color:#d29922;background:#2b2410;margin-bottom:12px">
+    <h3 style="color:#d29922">心跳状态：${d.last_status}</h3>
+    <div style="margin-top:6px">详见「日志 → 心跳」。若是 NO_WS_LINK 多为 AstrBot 侧问题；QQ_OFFLINE 才需要扫码。</div>
+    </div>`;
+  return '';
+}
 async function refresh(force){
  try{
   const r=await fetch('/api/status'+(force?'?t='+Date():''),{cache:'no-store'});
@@ -192,9 +206,11 @@ async function refresh(force){
   const memPct=Math.round(100*(h.mem_total_mb-h.mem_avail_mb)/h.mem_total_mb);
   const up=s.containers.astrbot.status==='running'&&s.containers.napcat.status==='running';
   $('#statusGrid').innerHTML=
+   banner(d)+
    card('总览',kv([['机器人',up?pill(1,'运行中'):pill(0,'停了')],
+     ['QQ 在线',d.needs_rescan?pill(0,'需扫码'):(d.last_status==='OK'?pill(1,'在线'):pw(true,d.last_status||'-'))],
      ['6199 链路',l.ws6199_established>=1?pill(1,'已连接'):pw(true,`未连接(${l.ws6199_established})`)],
-     ['心跳',pill((d.heartbeat||[]).some(x=>/status=OK/.test(x)),'最近 OK','最近未见 OK')],
+     ['心跳',pill(d.last_status==='OK',d.last_status||'未知')],
      ['负载',(h.load||[]).join(' / ')||'-']]))+
    card('主机',kv([['系统',h.os],['内核',h.kernel],['CPU',h.cpu_cores+' 核'],
      ['运行时长',h.uptime||'-'],

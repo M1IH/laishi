@@ -130,4 +130,18 @@ out["bot"]["plugin_versions"] = vers
 # 心跳日志里带插件返回的原始 jobs JSON（内含未掩码 UMO），必须过一遍掩码
 out["heartbeat"] = [mask(l) for l in sh("tail -8 /var/log/miruku-heartbeat.log").splitlines() if l.strip()]
 
+# ---- 是否需要人工扫码 ----
+# QQ 掉线时心跳会写 /opt/miruku/logs/needs-rescan；面板据此显示红条提醒，
+# 不必让人去翻日志（2026-10-27 那次掉线就是这么被漏了 3 小时的）。
+mark = pathlib.Path("/opt/miruku/logs/needs-rescan")
+out["needs_rescan"] = mark.read_text(encoding="utf-8").strip() if mark.is_file() else None
+
+# 最近一次心跳的状态关键字（OK / QQ_OFFLINE / NO_WS_LINK ...）
+last_status = ""
+for line in reversed(out["heartbeat"]):
+    if "status=" in line:
+        last_status = line.split("status=", 1)[1].split()[0]
+        break
+out["last_status"] = last_status
+
 print(json.dumps(out, ensure_ascii=False))
