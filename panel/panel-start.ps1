@@ -29,14 +29,41 @@ if ($panelProc) {
     exit 0
 }
 
-# 3) SSH reachability (key comes from ssh-agent; this script never touches the key file)
-Write-Host '[1/3] Checking SSH connectivity...'
+# 3) Make sure the key is loaded, then check SSH reachability.
+#    The key now lives in %USERPROFILE%\.ssh (moved out of the workspace, where it
+#    did not belong). After a reboot the agent is empty, so load it here -- the
+#    user then never has to run ssh-add by hand again.
+Write-Host '[1/3] Checking SSH agent and connectivity...'
+$agentSvc = Get-Service ssh-agent -ErrorAction SilentlyContinue
+if ($agentSvc -and $agentSvc.Status -ne 'Running') {
+    Write-Host '      Starting ssh-agent service...'
+    try { Set-Service ssh-agent -StartupType Automatic -ErrorAction Stop; Start-Service ssh-agent -ErrorAction Stop }
+    catch { Write-Host '[WARN] Could not start ssh-agent (needs admin once).' -ForegroundColor Yellow }
+}
+$loaded = (ssh-add -l 2>&1)
+if ($LASTEXITCODE -ne 0 -or $loaded -match 'no identities') {
+    # Prefer the tidy location (%USERPROFILE%\.ssh), fall back to the in-project
+    # copy so the launcher keeps working before the one-time move is done.
+    $candidates = @()
+    $candidates += (Join-Path $env:USERPROFILE '.ssh\miruku_deploy.pem')
+    $projDir = 'C:\Users\OTTO\Desktop\' + [string][char]0x6765 + [string][char]0x4E16
+    $candidates += @(Get-ChildItem -LiteralPath $projDir -Filter '*.pem' -ErrorAction SilentlyContinue |
+                     ForEach-Object { $_.FullName })
+    foreach ($k in $candidates) {
+        if (Test-Path -LiteralPath $k) {
+            Write-Host "      Loading key: $k"
+            ssh-add $k 2>&1 | Out-Null
+            break
+        }
+    }
+}
 $probe = ssh -o BatchMode=yes -o ConnectTimeout=10 $target 'echo ok' 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host ''
-    Write-Host '[ERROR] Cannot reach the server. The ssh-agent probably has no key.' -ForegroundColor Red
-    Write-Host '        Run this in PowerShell, then start again:'
-    Write-Host '            ssh-add "C:\Users\OTTO\Desktop\<project>\_miruku.pem"'
+    Write-Host '[ERROR] Cannot reach the server.' -ForegroundColor Red
+    Write-Host '        Expected key: %USERPROFILE%\.ssh\miruku_deploy.pem'
+    Write-Host '        If missing, run once in PowerShell:'
+    Write-Host '            ssh-add $env:USERPROFILE\.ssh\miruku_deploy.pem'
     Write-Host ''
     Write-Host ($probe | Select-Object -First 3)
     Read-Host 'Press Enter to exit'
