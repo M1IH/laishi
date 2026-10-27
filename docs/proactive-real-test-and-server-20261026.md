@@ -194,3 +194,58 @@ $enc = "$env:APPDATA\QQ\auth\login.enc"
 - 没重启 AstrBot
 - 没设置 `max_unanswered_times` 上限（那需要你决定）
 - 没触发额外的测试消息（只触发了 10:27 那一次，且失败未送达）
+
+---
+
+## 七、2026-10-27 复测（主动消息已通；失败可归因到掉线）
+
+### 7.1 结论
+
+功能本身是通的：**手动触发一次即送达**，排期、免打扰、计数、用户回话后取消这一整套逻辑都对。今天两次失败（18:01 / 18:36）**不是插件缺陷**，而是 NapCat 在 17:56 之后掉线，发送时没有任何在线会话。真正该补的是**可观测性**（见 7.5）。
+
+### 7.2 今日完整轨迹
+
+| 时间 | 结果 | 证据 |
+| --- | --- | --- |
+| 12:29:22 | ✅ 第 2 次发送完成 | `flow_orchestrator:203` 存档进对话历史 → `:224 未回复次数: 2`，下次 15:25 |
+| 12:40:12 | ✅ 第 3 次发送完成 | 同上，下次 16:39 |
+| 18:01:50 | ❌ 未送达 | `astrbot_event:257` 平台发送失败 → `:279` 核心 API 也失败 → `sender_service:452` → `:600` |
+| 18:36:42 | ❌ 未送达 | 同上，随后 `split_delivery:40` 跳过存档与计数并重排 |
+| 19:07:27 | — | NapCat 出二维码 ⇒ 确认掉线 |
+| 19:14:50 / :54 | — | 用户回「hello」「晚上好」→ `event_handlers:154` 取消任务、`:158` 计数归零，重排 20:08 → 20:15:53 |
+| 19:27:14 | 手动触发 | `gating_feature:74 开始生成第 1 次主动消息，当前未回复次数: 0` |
+| 19:27:15 | ✅ LLM | `llm_service:195 调用 LLM 成功` → `:272 长度 7` |
+| 19:27:18 | ✅ 送达 | `sender_service:480 开始发送` → `flow_orchestrator:224 第 1 次主动消息已发送完成，未回复次数: 1`，下次 20:40:23 |
+
+### 7.3 手动触发配方（插件 Web 端 4100，容器内）
+
+```bash
+docker exec astrbot curl -s http://127.0.0.1:4100/api/auth-info   # {"auth_required":false} 未开鉴权
+docker exec astrbot curl -s http://127.0.0.1:4100/api/jobs        # 看 next_run_time / unanswered_count
+docker exec astrbot curl -s -X POST \
+  'http://127.0.0.1:4100/api/jobs/miruku:FriendMessage:10000001/trigger'
+```
+
+三个坑：
+
+1. umo 里带冒号，**整个 URL 必须加引号**，否则 shell 会把 `:FriendMessage:` 当命令分隔。
+2. `trigger` 是异步的，返回 `{"ok":true,"in_progress":true}` 不代表已送达，**等 3~5 秒再读日志**。
+3. 配置仍要走 `POST /api/config`（见 §五）——**改磁盘 JSON 不生效**，插件 init 时已把配置读进内存。
+
+### 7.4 日志判据
+
+**成功链**：`gating_feature:74` → `llm_service:195` → `:272` → `sender_service:480` → `flow_orchestrator:203`（存档）→ `:224`（计数 +1）→ `:266`（下次时间）
+
+**失败链**：`sender_service:452`（事件发送与核心 API 兜底均未送达）→ `:600`（未能送达任何平台）→ `split_delivery:40`（跳过存档与计数，直接重排）
+
+判读要点：
+
+- 看到 `:600` **先查 NapCat 登录态**，再看 astrbot 容器内 `/proc/net/tcp` 有没有到 `6199` 的 ESTABLISHED（只有 LISTEN 就是没连上）。
+- 有失败日志但 `unanswered_count` 没动 ⇒ 没送达（符合设计）。
+- 「聊了没回复」先分清**掉线**还是**链路问题**：`docker logs astrbot` 完全静止 + `Prepare to send` 计数 0 = 掉线。
+
+### 7.5 三处观测缺口（是否补请 OTTO 定）
+
+1. **失败原因丢失**：`adapters/astrbot_event.py:257/279/264` 三处把异常拼进日志时拿到的是空串，日志只有「平台发送失败喵，尝试核心 API 兜底: 」后面什么都没有。补成 `repr(e)` 即可，但要动第三方插件（升级会覆盖）。
+2. **掉线不告警**：心跳已有 `QQ_OFFLINE` 判据，但没有主动推送通道。18:01 那次掉线，用户体感只是「她不理我」。
+3. **直发绕过 respond 管线**：主动消息不走 `on_decorating_result` / `after_message_sent`，所以观察插件测不到 bot 方向的主动消息，也测不到「用户多久才回」——即 WORK_LOG 里记的 P2 观测缺口。
