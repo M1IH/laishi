@@ -38,6 +38,24 @@ for n in ['on_waiting_llm_request','on_llm_request','on_llm_response','on_decora
     print('  ', n, '=', hasattr(f,n))
 " 2>&1 | sed 's/^/  /' || warn "docker exec 失败，跳过"
 
+say "1c. 版本账：插件要求的 AstrBot 版本 vs 实际装的"
+REQ=$(grep -m1 -oE 'astrbot_version:\s*"[^"]+"' "$DATA/plugins/meme_manager/metadata.yaml" 2>/dev/null | sed 's/.*"\(.*\)"/\1/')
+echo "  插件 metadata 要求: ${REQ:-未知}"
+VER=$(docker exec astrbot python -c "import astrbot;print(getattr(astrbot,'__version__',''))" 2>/dev/null | tr -d '\r')
+[ -z "$VER" ] && VER=$(docker exec astrbot sh -c "pip show astrbot 2>/dev/null | grep -i '^Version:' | cut -d' ' -f2" 2>/dev/null | tr -d '\r')
+echo "  容器内 AstrBot 实际: ${VER:-取不到}"
+if [ -n "$VER" ] && [ -n "$REQ" ]; then
+  python3 - "$VER" "$REQ" <<'PY'
+import re,sys
+v,r=sys.argv[1],sys.argv[2]
+def tup(s):
+    return tuple(int(x) for x in re.findall(r'\d+',s)[:3])
+a,b=tup(v),tup(r)
+if a and b:
+    print("  [PASS] 版本满足" if a>=b else f"  [FAIL] AstrBot {v} < 插件要求 {r} → 插件可能 import 失败/钩子缺失")
+PY
+fi
+
 say "2. 生效配置（线上真实值，不是 stage 里的）"
 python3 - "$CFG" <<'PY'
 import json,sys
