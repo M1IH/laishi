@@ -85,3 +85,11 @@ desktop.ini
 
 # ---------- 面板凭据（含真实口令，永不入库） ----------
 panel/*凭据*.txt
+
+# 本地 SSH 执行代理（2026-10-27）
+.local-shell-token
+
+# 临时工作目录/日志（.tmp-* 一律不入库）
+.tmp-*/
+.tmp-*.log
+.tmp-*.py

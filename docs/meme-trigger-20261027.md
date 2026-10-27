@@ -97,3 +97,49 @@ http://127.0.0.1:8642/api/logs?src=napcat&n=2000
 | `情感模型调用失败: 401 Invalid API Key` | 情感模型 provider 的 key 失效 | `fix-meme-emotion.sh`（改指会话 provider） |
 | `情感模型调用失败: <其他>` | provider 不可达/超时 | 同上；急需可用图可切 `--from-tags` |
 | `选择标签` 正常但 `最终表情列表: []` | 分类目录无图 | `diag-meme-pack.sh` 对账，补图或删描述 |
+| 完全没有 `event_bus` 入站、6199 无 `ESTABLISHED`、NapCat 日志出二维码 | **QQ 会话被踢，bot 掉线**（不是模型/表情问题） | 扫码重登；**别用重启容器当修复** |
+
+## 10. 2026-10-27 19:2x 验证通过（端到端）
+
+执行 `server/fix-meme-emotion.sh` 后线上配置回读：
+
+```
+provider_id = deepseek/deepseek-flash   (原 xiaomi/mimo-v2.6-flash，key 401)
+probability = 90                        (原 65)
+max_memes_per_message = 1
+备份: config/meme_manager_config.json.bak.emotion
+```
+
+真实聊天实测（`docker logs astrbot`，时间戳为服务器本地时区）：
+
+```
+[19:14:56.922] [meme_manager] 情感模型选择标签: ['baka']
+[19:14:56.923] [meme_manager] 去重后的最终表情列表: ['baka']
+[19:14:56.987] [respond.stage] Prepare to send - OTTO/10000001: 怎么，上课无聊了 [图片]
+[19:15:07.304] [meme_manager] 情感模型选择标签: ['sad']
+[19:15:07.407] [respond.stage] Prepare to send - OTTO/10000001: 晚上好，慢慢熬吧 [图片]
+```
+
+**结论**：选择标签 → 出图 → 合并进消息链，全链路通；两条连续消息都带图。
+
+### 10.1 同一时段踩到的第二个坑：NapCat 掉线
+
+重启 AstrBot 后出现「聊了但没有回复」，实测判据：
+
+- `docker logs astrbot` 停在启动日志，`event_bus` 零入站，`Prepare to send` 计数 0；
+- AstrBot 容器内 `/proc/net/tcp` 的 6199 只有 `LISTEN`，无任何 `ESTABLISHED`；
+- NapCat 日志出现 `二维码已保存到 /app/napcat/cache/qrcode.png`（QQ 会话被踢）。
+
+扫码后 `aiocqhttp(OneBot v11) 适配器已连接`（19:11:39），`ESTABLISHED from 172.18.0.3` 出现，随后一切正常。
+**排查顺序**：先看有没有入站事件 → 再看 6199 链路 → 最后才怀疑模型/插件。
+
+### 10.2 取二维码图的实操
+
+`docker exec napcat base64 -w0 /app/napcat/cache/qrcode.png` 取原始 PNG（147×147，约 600 B），
+本地用 PIL 最近邻放大 5× 再给人扫；NapCat 每次重启/重试都会刷新该文件，
+二维码有效期约 2 分钟，**先让对方准备好再取图**。
+
+### 10.3 待调项
+
+`probability=90` 属于「先确保能发」的临时高值；连发两条都命中说明偏高，
+按 OTTO 体感可回落到 50~60（改完仍需重启，因该值在插件 init 时读取）。
