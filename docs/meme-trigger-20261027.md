@@ -143,3 +143,38 @@ max_memes_per_message = 1
 
 `probability=90` 属于「先确保能发」的临时高值；连发两条都命中说明偏高，
 按 OTTO 体感可回落到 50~60（改完仍需重启，因该值在插件 init 时读取）。
+**2026-10-27 19:34 已执行**：`probability` → **45**，`max_memes_per_message` 仍为 1，备份 `config/meme_manager_config.json.bak.freq`。
+
+---
+
+## 11. 2026-10-27 19:3x 两个后续问题（她否认发图 / 发的是图片不是 QQ 表情）
+
+### 11.1 她为什么说「我发的都是字吧」
+
+两条独立原因叠在一起：
+
+1. **她自己的图不在历史里**。查 `data_v4.db` 的 `conversations`（`user_id=miruku:FriendMessage:10000001`，272 条），assistant 记录只有 `[think, text]`，**没有任何 image part**。原因是 AstrBot 在 `on_decorating_result` **之前**就把这一轮落库了，而 meme_manager 是在 `on_decorating_result` 里才把 Image 组件插进消息链的——**发出去的图永远不入历史**。
+2. **人格里明写着不能发图**。`prompts/system.txt` L13 原文「不能发照片、拍视频、发语音、打电话，不能把图片、表情包或聊天内容存到本地」。她的 think 原文（库里的 `think` 字段）直接写：*“Per persona: I can't actually send stickers/images, and I don't control that.”* 于是回答「我发的都是字吧」。
+
+**已修（人格侧）**：L13 追加例外条款——
+
+> 唯一的例外是配图：你回话时可能被顺手配上一张表情包，那不算“发文件”，就当是你自己顺手配的。被问“你怎么老发表情包”“你发的什么图”时不要否认，别答“我发的都是字”“我发不了图”，就说顺手配的、觉得这个合适，不解释机制，也不提插件、发送层这类词。
+
+部署方式：容器内用 `cmd_config.json` 的 dashboard 凭据签 5 分钟 JWT → `PUT /api/v1/personas/by-id`（`persona_id=miruku`），回读 `installed exactly: True`，长度 3803 → 3926。
+
+**没修（历史侧）**：要让图真的进历史，得在落库前把「本轮配了图」写成文本标记，属于改插件时序，暂不做——人格条款已足够让她不否认。
+
+### 11.2 为什么发的是图片，不是 QQ 里那种表情包
+
+NapCat 的 OneBot 实现**支持**发 `mface` 段（源码里 `[ze.mface]` → `elementType: MFACE`，字段 `emoji_package_id` / `emoji_id` / `key` / `summary`）。但 mface 是**商城表情**：
+
+- `emoji_package_id` + `emoji_id` 必须是 QQ 表情商城里真实存在的表情包；
+- `key` 是服务器为那个表情下发的 token，伪造无效；
+- 自定义图（橘雪梨这张）根本不在商城里，没有 ID 可言。
+
+所以**包里的 jpg/png 只能以 `image` 段发出**，QQ 客户端就显示为图片。这是素材+协议的限制，不是配置漏了或插件写错。
+唯一能让观感更像“表情包”的，是让素材本身更像梗图（尺寸小、留白少、单图单句），但它仍然是图片。
+
+### 11.3 附带：为什么“一直”是她
+
+`juxueli-meme-pack` 是**单角色包**（橘雪梨），38 张全是一个人，9 个分类。触发率降下来之后频率会正常，但角色单一这件事只能靠**加更多包轮换**解决（`selection_rules.json` 支持多包），需要 OTTO 定要不要找素材。
