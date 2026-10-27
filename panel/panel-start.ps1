@@ -52,7 +52,12 @@ if ($LASTEXITCODE -ne 0 -or $loaded -match 'no identities') {
     foreach ($k in $candidates) {
         if (Test-Path -LiteralPath $k) {
             Write-Host "      Loading key: $k"
+            # ssh-add reports success on STDERR; never let that look like a failure
+            $ErrorActionPreference = 'SilentlyContinue'
             ssh-add $k 2>&1 | Out-Null
+            $addRc = $LASTEXITCODE
+            $ErrorActionPreference = 'Continue'
+            if ($addRc -ne 0) { Write-Host "      [WARN] ssh-add returned $addRc" -ForegroundColor Yellow }
             break
         }
     }
