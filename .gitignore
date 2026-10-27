@@ -82,3 +82,6 @@ knowledge/review.html
 .vs/
 Thumbs.db
 desktop.ini
+
+# ---------- 面板凭据（含真实口令，永不入库） ----------
+panel/*凭据*.txt

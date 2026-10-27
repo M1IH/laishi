@@ -22,6 +22,8 @@ services:
       - MODE=reverse_ws
       - ONEBOT_URL=ws://astrbot:6199/ws
       - WEBUI_TOKEN=${NAPCAT_WEBUI_TOKEN}
+      # 有值则 entrypoint 走 `qq -q <uin>` 快速登录（免扫码）；空则回落二维码
+      - ACCOUNT=${NAPCAT_ACCOUNT:-}
       - TZ=Asia/Shanghai
     ports:
       - "127.0.0.1:6099:6099"
@@ -30,7 +32,13 @@ services:
       - ./napcat/config:/app/napcat/config
       - ./napcat/plugins:/app/napcat/plugins
     depends_on: [astrbot]
-    networks: [miruku]
+    networks:
+      miruku:
+        # 钉死 MAC：NTQQ 登录态与设备信息绑定，容器 recreate 换 MAC 会让
+        # 快速登录报「登录态已失效，请重新登录」（2026-10-26 实测：
+        # 23:10 扫码登录 → 23:39 recreate 换 MAC → 快速登录失效）。
+        # 官方 NapCat-Docker 模板里注释掉的 mac_address 就是同一用途。
+        mac_address: "1e:b1:b3:26:2f:25"
 
 networks:
   miruku:

@@ -47,30 +47,38 @@ if [ "$status" = OK ]; then
   [ "$ws" = -1 ] && status=EXEC_FAIL
 fi
 
-append "status=$status up=$astrbot_up/$napcat_up dash=$dash ws6199=$ws jobs=$(echo "$jobs" | tr -d '\n' | head -c 110)"
+# 落盘前掩码：jobs 原文里带未掩码的 QQ 号，日志文件不该写明文
+append_masked(){ echo "$(NOW) $*" | sed -E 's/([0-9]{3})[0-9]{4}([0-9]{3})/\1***\2/g' >> "$LOG"; }
+append_masked "status=$status up=$astrbot_up/$napcat_up dash=$dash ws6199=$ws jobs=$(echo "$jobs" | tr -d '\n' | head -c 110)"
 
 # 自愈：只动坏的那一侧；NO_WS_LINK 先等一轮自愈窗口（NapCat 自己会重连），
 # 连续两轮仍无链路才重启 napcat，避免每次抖动都打断正在进行的登录。
-# NapCat 在「尚未扫码登录」时必然没有 6199 链路。此时若照判据重启 napcat，
-# 会把用户正在扫的二维码刷掉（登录永远完不成）。因此 WS 自愈要等
-# logs/qr-acked 出现（扫码完成后由人/脚本 touch）才生效；在此之前只记日志。
-WS_HEAL=off
-[ -f "$APP/logs/qr-acked" ] && WS_HEAL=on
-
+# 链路断的处置（2026-10-26 实测后收紧）：
+# 原设计「连续两轮无链路就 docker restart napcat」被证明**有害**——重启 NapCat
+# 会让 QQ 登录态失效（实测：23:33 重启进二维码等待 → 23:39 快速登录报
+# 「登录态已失效」），等于把一次可自愈的抖动升级成必须人工重扫。
+# NapCat 自身带 1 秒重连，链路长期不通通常是**对端**（AstrBot）的问题，
+# 所以只重启 astrbot；真需要重扫时交给人，不自动动 napcat。
 case "$status" in
   ASTRBOT_DOWN) append "ALERT self-heal: up astrbot"; docker compose up -d astrbot >>"$LOG" 2>&1 ;;
   NAPCAT_DOWN)  append "ALERT self-heal: up napcat";  docker compose up -d napcat  >>"$LOG" 2>&1 ;;
   DASHBOARD_UNREACH) append "ALERT dashboard unreachable; restart astrbot"; docker restart astrbot >>"$LOG" 2>&1 ;;
   NO_WS_LINK)
-    streak_file=$APP/logs/ws-streak
-    n=$(cat "$streak_file" 2>/dev/null || echo 0)
-    n=$((n+1)); echo "$n" > "$streak_file"
-    if [ "$WS_HEAL" = on ]; then
-      append "ws link down (streak=$n/2, heal=on)"
-      [ "$n" -ge 2 ] && { append "ALERT restart napcat to force reconnect"; docker restart napcat >>"$LOG" 2>&1; echo 0 > "$streak_file"; }
+    # 先看 astrbot 侧 6199 有没有在听；没在听就是 astrbot 的锅，重启它
+    listen=$(docker exec astrbot python3 -c "
+n=0
+for f in ('/proc/net/tcp','/proc/net/tcp6'):
+    try:
+        for l in open(f).read().splitlines()[1:]:
+            p=l.split()
+            if p[1].endswith(':1837') and p[3]=='0A': n+=1
+    except OSError: pass
+print(n)" 2>/dev/null || echo 0)
+    if [ "$listen" -ge 1 ]; then
+      append "ALERT ws link down but astrbot is listening -> 大概率 QQ 登录态失效，需人工扫码（不自动重启 napcat）"
     else
-      append "ws link down (heal=off: 未扫码登录，不动 napcat；streak=$n)"
+      append "ALERT ws link down and no 6199 listener; restart astrbot"
+      docker restart astrbot >>"$LOG" 2>&1
     fi
     ;;
-  *) [ "$status" = OK ] && echo 0 > "$APP/logs/ws-streak" ;;
 esac
