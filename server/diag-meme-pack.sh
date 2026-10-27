@@ -98,9 +98,12 @@ say "4. 最近选中的分类，在运行时包里有没有图"
 python3 - "$PD" <<'PY'
 import json,os,re,subprocess,sys
 pd=sys.argv[1]
-try: out=subprocess.run(['docker','logs','astrbot','--since','24h'],capture_output=True,text=True,errors='replace').stderr
-except Exception: out=''
-logs=out or subprocess.run(['docker','logs','astrbot','--since','24h'],capture_output=True,text=True,errors='replace').stdout
+logs=''
+try:
+    r=subprocess.run(['docker','logs','astrbot','--since','24h'],capture_output=True,text=True,errors='replace')
+    logs=(r.stdout or '')+(r.stderr or '')
+except Exception as e:
+    print("  [WARN] 取日志失败:",e)
 sel=[]
 for m in re.finditer(r"情感模型选择标签:\s*(\[[^\]]*\])",logs):
     try: sel.extend([x for x in eval(m.group(1)) if isinstance(x,str)])
