@@ -104,3 +104,6 @@ panel/*凭据*.txt
 .stage.tgz
 .stage-*.tgz
 .tmp-*.json
+
+# 微信推送密钥（Server酱 SendKey，永不入库）
+.wechat-sendkey
