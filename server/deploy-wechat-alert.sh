@@ -45,12 +45,23 @@ else
 import io, sys
 path = sys.argv[1]
 src = io.open(path, encoding="utf-8").read()
+
+# 先补变量定义：heartbeat.sh 有 set -u，未定义变量会让整条心跳中止
+var_anchor = 'APP=/opt/miruku'
+var_inject = var_anchor + '''
+# 微信告警（2026-10-28）
+KEYFILE="$APP/.wechat-sendkey"
+SENTFLAG="$APP/logs/wechat-sent"'''
+if src.count(var_anchor) != 1:
+    raise SystemExit("  !! APP 变量锚点不唯一（%d 处），中止" % src.count(var_anchor))
+src = src.replace(var_anchor, var_inject)
+
 anchor = 'date \'+%F %T\' > "$APP/logs/needs-rescan" 2>/dev/null || true'
 inject = anchor + '''
     # 微信推送（2026-10-28）：掉线即通知，不等 OTTO 发现机器人失联
     # 防轰炸：30 分钟内只推一次；恢复在线后清除标记（见脚本末尾）
     if [ ! -f "$SENTFLAG" ] || [ $(( $(date +%s) - $(stat -c %Y "$SENTFLAG" 2>/dev/null || echo 0) )) -gt 1800 ]; then
-      wechat_push "$idle_min" && date '+%F %T' > "$SENTFLAG"
+      wechat_push "${idle_min:-?}" && date '+%F %T' > "$SENTFLAG"
     fi'''
 if src.count(anchor) != 1:
     raise SystemExit("  !! QQ_OFFLINE 锚点不唯一（%d 处），中止" % src.count(anchor))

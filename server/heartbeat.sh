@@ -13,8 +13,28 @@ set -uo pipefail
 
 LOG=/var/log/miruku-heartbeat.log
 APP=/opt/miruku
+# 微信告警（2026-10-28）
+KEYFILE="$APP/.wechat-sendkey"
+SENTFLAG="$APP/logs/wechat-sent"
 NOW(){ date '+%F %T'; }
 append(){ echo "$(NOW) $*" >> "$LOG"; }
+
+# Server酱推送：https://sct.ftqq.com/
+# 成功/失败都写日志（推送是唯一的"人不在场也能知道"的通道，静默失败等于没装）
+wechat_push(){
+  local key idle resp
+  key=$(cat "$KEYFILE" 2>/dev/null) || { append "WARN wechat: no key file"; return 1; }
+  idle="${1:-?}"
+  local title="Miruku 掉线了"
+  local desc="QQ 已 ${idle} 分钟无活动，需要重新扫码。"
+  desc="${desc}%0A打开面板（桌面快捷方式）→ NapCat 扫码页扫一下即可。"
+  resp=$(curl -s -m 10 -X POST "https://sctapi.ftqq.com/${key}.send" \
+    -d "title=${title}" -d "desp=${desc}" 2>&1) || { append "WARN wechat push curl failed"; return 1; }
+  case "$resp" in
+    *'"code":0'*) append "wechat push OK (idle=${idle})"; return 0 ;;
+    *) append "WARN wechat push rejected: $(echo "$resp" | head -c 160)"; return 1 ;;
+  esac
+}
 
 cd "$APP"
 
@@ -111,6 +131,11 @@ case "$status" in
     # 面板会显示「需扫码」红条，不必去翻日志。
     append "ALERT QQ_OFFLINE: NapCat 已 $idle_min 分钟无活动，QQ 疑似掉线 —— 需人工重扫二维码（勿自动重启）"
     date '+%F %T' > "$APP/logs/needs-rescan" 2>/dev/null || true
+    # 微信推送（2026-10-28）：掉线即通知，不等 OTTO 发现机器人失联
+    # 防轰炸：30 分钟内只推一次；恢复在线后清除标记（见脚本末尾）
+    if [ ! -f "$SENTFLAG" ] || [ $(( $(date +%s) - $(stat -c %Y "$SENTFLAG" 2>/dev/null || echo 0) )) -gt 1800 ]; then
+      wechat_push "${idle_min:-?}" && date '+%F %T' > "$SENTFLAG"
+    fi
     ;;
   NAPCAT_BODY_GONE)
     append "ALERT napcat.mjs 进程不在了（容器仍 running）；重启容器"
@@ -135,3 +160,9 @@ print(n)" 2>/dev/null || echo 0)
     fi
     ;;
 esac
+
+# 恢复在线：清掉"已推送"标记，让下次掉线能再推
+if [ "$status" = OK ] && [ -f "$SENTFLAG" ]; then
+  rm -f "$SENTFLAG"
+  append "wechat: back online, sent-flag cleared"
+fi
