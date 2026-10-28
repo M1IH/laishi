@@ -261,3 +261,88 @@ emotion_llm  = True deepseek/deepseek-flash
 **主动消息永远不会带图**，每天 20+ 条。修法只有一条：改 meme_manager 或改 proactive_chat，让主动消息也走装饰阶段，或者在 `sender_service` 里显式调一次选图+拼链。属于第三方插件改动，未做。
 
 按当前配置，**普通回复**配图率理论上限 = `80% × 100% = 80%`。
+
+---
+
+## 13. 2026-10-28 19:3x 终局：配图率的唯一闸门是 `probability`
+
+> **本节更正 §12.1 与 §12.5。** 那两条的结论「主动消息绕过装饰阶段、恒无图」**是错的**，
+> 代码级反证见 13.1。真实情况是：装饰链对主动消息**是通的**，配图率低只有一个原因——概率掷骰。
+
+### 13.1 更正：主动消息**会**走装饰钩子
+
+`proactive_chat/core/services/sender_service.py:238` 定义了 `run_decorating_hooks(event, components)`：
+
+```python
+result = MessageEventResult()
+result.set_result_content_type(ResultContentType.LLM_RESULT)
+result.chain = list(components)
+event.set_result(result)
+stopped = await dispatch_event_hook(event, EventType.OnDecoratingResultEvent)
+```
+
+`:520-540` 的发送顺序是 `should_send_text` → 补 `Plain(text)` → `run_decorating_hooks(...)` → 发送。
+所以 `[主动消息] 开始发送` 这条日志**打在装饰之前**（`:480`），日志里看不到图是正常的，不代表没配图。
+
+同时确认 `astr_message_event.py:195 _outline_chain` 确实把 `Image` 渲染成 `[图片]`，
+所以「`Prepare to send` 无 `[图片]`」在**非流式**路径上确实是没图——但本项目 `streaming_compatibility=true`，
+`STREAMING_FINISH` 走 `event_handlers.py:1498-1507` → `_send_memes_streaming()`，
+图片经 `context.send_message()` **作为独立消息直发**，压根不出现在 `Prepare to send` 里。
+
+⇒ **拿 `Prepare to send` 带 `[图片]` 的次数当配图率，是错误口径**，会把真实值低估好几倍。
+
+### 13.2 正确口径与实测
+
+以 `去重后的最终表情列表`（装饰阶段真正拿到的分类列表）为准，40 小时窗口：
+
+| 指标 | 值 |
+|---|---|
+| 进入情感模型并选中标签 | **45** |
+| 最终表情列表非空 | **45 / 103 = 44%** |
+| 情感模型调用失败 | **0** |
+| 情感模型「未选择有效标签」（空选） | **0** |
+
+**关键结论：情感模型只要被调用，就 100% 能选出标签。**
+那 56% 的空列表，全部是**根本没进模型**——被 `probability` 掷骰挡在门外：
+
+`event_handlers.py:1348` `legacy_probability_hit = probability_hit(self.emotions_probability)`
+→ `:1350` 只有 `legacy_probability_hit` 为真才调情感模型。
+44% 实测值正好对上改前的 `probability=45`。
+
+⇒ **`generation.emotion.probability` 就是配图率本身**，中间没有别的损耗。
+（另：`_filter_emotion_selection` 只去重、`_parse_emotion_llm_selection` 支持精确/大小写折叠/剥 `&&`
+和反引号，都不构成损耗；`_get_category_meme_files` 遍历**全部** `pack_dirs`，两包分类都能取到图。）
+
+### 13.3 已排除的两个疑点
+
+- **`juxueli-meme-pack` 的 `manifest.categories`（10 个语义键）与实际目录（9 个）对不上**——
+  无害。`backend/packs/resolver.py:217 load_pack_category_mapping` **优先读 `memes_data.json`**，
+  只有它为空才回落 `manifest.categories`；该包的 `memes_data.json` 正好是那 9 个目录名。
+- **两包合并后 18 个候选分类里有 9 个只属于 atri**（`approval/angry/tired/eating/affection/greeting/refusal/teasing/action`）——
+  也无害，`_get_category_meme_files:595-598` 遍历所有 `pack_dirs`，atri 目录在列表里。
+
+### 13.4 最终配置（2026-10-28 19:30 生效并回读）
+
+| 键 | §12 的值 | 现在 | 说明 |
+|---|---|---|---|
+| `generation.emotion.probability` | 80 | **75** | 唯一配图闸门。45 → 75 后实测上限从 44% 提到 75% |
+| `generation.emotion.max_memes_per_message` | 1 | 1 | 一条回复最多 1 张 |
+| `generation.message.enable_mixed` | true | true | |
+| `generation.message.mixed_probability` | 100 | 100 | 恒内联，不走 pending 补发 |
+| `generation.prompt.quantity_guidance_enabled` | true | true | **必须为 true，否则下一行文案完全不生效** |
+| `generation.prompt.quantity_guidance` | 「每约 4 条回复中 1 条配图」 | 「每约 2 条回复中 1 条配图」 | 从 25% 提到 50%，放宽模型主动配图意愿 |
+| `generation.emotion.llm.provider_id` | deepseek/deepseek-flash | 不变 | |
+| `generation.trigger.scope` | chat_and_plugin_llm | 不变 | 主动消息属于 plugin origin，靠它放行 |
+
+> **坑记**：`quantity_guidance` 受 `quantity_guidance_enabled` 开关控制
+> （`main.py:471-486 _build_meme_quantity_prompt`），开关为 false 时改文案**完全无效**。
+> 改这一段前先回读开关。
+
+备份 `config/meme_manager_config.json.bak.rate2`。19:30:12 插件重载，回读全部对上。
+
+### 13.5 仍未解决的
+
+- **语义检索不可用**：`semantic.vision_provider_id` 与 `embedding_provider_id` 都是空串，
+  启动日志 `首次开启语义检索：juxueli-meme-pack 的图片描述尚未全部完成`。走的是 legacy 分类路径，不影响配图。
+- **主动消息的实际送达**：`/tmp/al.txt` 里 `[主动消息] 平台发送失败喵` retcode 1200
+  `result: 1006514 网络连接异常!` —— 这是 QQ 侧网络问题，不是配图问题。
