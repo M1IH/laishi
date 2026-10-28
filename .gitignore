@@ -93,6 +93,8 @@ panel/*凭据*.txt
 .tmp-*/
 .tmp-*.log
 .tmp-*.py
+.tmp-*.sh
+.tmp-*.b64
 
 # ---------- 服务器快照（2026-10-27）----------
 # `.stage/` 是从服务器拉回来的「插件源码 + 配置 + 聊天库」的完整副本，
@@ -103,6 +105,9 @@ panel/*凭据*.txt
 .stage/
 .stage.tgz
 .stage-*.tgz
+# `.stage-meme/` 是从服务器拉回来的 meme_manager 插件源码单文件副本（80 KB，
+# 只含 mixins/），用于离线读第三方插件逻辑、无需每次连服务器。同为镜像而非资产。
+.stage-meme/
 .tmp-*.json
 
 # 微信推送密钥（Server酱 SendKey，永不入库）

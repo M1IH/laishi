@@ -178,3 +178,86 @@ NapCat 的 OneBot 实现**支持**发 `mface` 段（源码里 `[ze.mface]` → `
 ### 11.3 附带：为什么“一直”是她
 
 `juxueli-meme-pack` 是**单角色包**（橘雪梨），38 张全是一个人，9 个分类。触发率降下来之后频率会正常，但角色单一这件事只能靠**加更多包轮换**解决（`selection_rules.json` 支持多包），需要 OTTO 定要不要找素材。
+
+**2026-10-28 14:4x 已解决**：已加 `atri-meme-pack`（551 张 / 15 分类），`selection_rules.json` 的 `default` 规则改为 `pack_ids: ["juxueli-meme-pack","atri-meme-pack"]` 两包轮换。两个旧包没有的分类（`tired` / `angry` / `teasing` 等）已实测被选中。
+
+---
+
+## 12. 2026-10-28 18:4x 「聊了好多一条也没发」的根因与修复
+
+OTTO 反馈：表情包触发率还是低，聊了很多一句都没配图。查下来**不是概率设置的问题**，是两条路径各自漏图。
+
+### 12.1 主动消息 100% 不带图（代码级，配置改不了）
+
+真正把图片塞进消息链的是 `mixins/event_handlers.py:1475 _on_decorating_result_impl`，由 `@filter.on_decorating_result()` 触发——**这个钩子只存在于 AstrBot 的 respond 管线里**。
+
+主动消息走的是 `proactive_chat/services/sender_service.py:480` 的 `send_by_session()` 直发，**不经过 respond.stage**，所以那个钩子永远不会执行。
+
+日志实证（24h 窗口）：
+
+```
+14:44:40.769  情感模型选择标签: ['reply']
+14:44:40.771  [主动消息] 开始发送          ← 间隔 2ms，标签算出来但从没用上
+```
+
+15:23:53 / 16:03:54 / 16:33:27 / 17:09:41 五条主动消息**全部**是这个形态。情感模型跑得好好的，标签也选出来了，但没有任何代码把它变成图。
+
+**结论：主动消息配图率恒为 0%，与 `probability` 取什么值完全无关。** 这也解释了 OTTO 的体感——主动消息一天 20+ 条，占了对话量的大头。
+
+### 12.2 普通回复也有 50% 掉进 pending 黑洞
+
+`event_handlers.py:1542`（语义路径）与 `:1602`（legacy 路径）同一套判定：
+
+```python
+use_mixed_message = not cleaned_components
+if cleaned_components and self.enable_mixed_message:
+    use_mixed_message = random.randint(1, 100) <= self.mixed_message_probability
+```
+
+- `cleaned_components` 非空（即这一轮有文字，几乎总是如此）+ `enable_mixed=true` → 再掷一次 `mixed_probability`（改前 **50**）
+- 命中 → `_merge_components_with_images()` 把图并进正文，图正常发出
+- 未命中 → `event.set_extra("meme_manager_pending_images", ...)`，交给 `:1641 @filter.after_message_sent()` 的事后补发
+
+事后补发这条路很脆：`astrbot/core/pipeline/respond/stage.py:406` 才触发 `OnAfterMessageSentEvent`，而 `:211-213` 明确写了「空消息链…不打日志、也不触发 `after_message_sent`」。一旦清理后正文为空，补发直接不执行，图就静默丢了。
+
+### 12.3 量化对账
+
+24h 窗口统计：
+
+| 指标 | 次数 |
+|---|---|
+| `Prepare to send` | 38 |
+| 其中带 `[图片]` | 9（**23.7%**）|
+| `情感模型选择标签` | 32（模型侧正常）|
+| `去重后的最终表情列表: []` | 29 |
+
+改前理论值：`45% × 100% = 45%`；实测 23.7%，与 `45% × 50% = 22.5%` 几乎吻合——**正好说明 pending 分支大面积没落地**。
+
+### 12.4 修复（只改配置，不动第三方源码）
+
+决策：**不改 meme_manager 源码**（第三方 anka 5.2.6，改了升级即覆盖，且主动消息那条要动 AstrBot 管线时序，风险高）。用配置把能修的那条路拉满。
+
+| 键 | 改前 | 改后 | 理由 |
+|---|---|---|---|
+| `generation.emotion.probability` | 45 | **80** | 情感模型命中率 |
+| `generation.message.mixed_probability` | 50 | **100** | 让图恒合并进正文，彻底绕开 pending |
+
+`enable_mixed` 保持 `true`、`max_memes_per_message` 保持 `1`、`emotion.llm` 保持 `deepseek/deepseek-flash`。
+
+`mixed_probability=100` 后 `random.randint(1,100) <= 100` 恒成立 → `use_mixed_message` 恒为 True（在有文字时）→ pending 分支永不进入。这是纯配置能达到的最优解。
+
+备份 `config/meme_manager_config.json.bak.rate-20261028-184627`。18:46:54 重启，回读全部对上：
+
+```
+probability  = 80
+mixed_prob   = 100
+enable_mixed = True
+max_memes    = 1
+emotion_llm  = True deepseek/deepseek-flash
+```
+
+### 12.5 遗留（需 OTTO 知情的已知缺陷）
+
+**主动消息永远不会带图**，每天 20+ 条。修法只有一条：改 meme_manager 或改 proactive_chat，让主动消息也走装饰阶段，或者在 `sender_service` 里显式调一次选图+拼链。属于第三方插件改动，未做。
+
+按当前配置，**普通回复**配图率理论上限 = `80% × 100% = 80%`。
