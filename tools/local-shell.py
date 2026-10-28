@@ -66,6 +66,51 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def do_POST(self):
+        """POST /run：body 为 JSON {"cmd": "..."}，用于超长命令（GET 的 URL 有限长）。"""
+        u = urlparse(self.path)
+        if u.path != "/run":
+            return self._json(404, {"error": "not found"})
+        if self.headers.get("X-Token", "") != TOKEN:
+            return self._json(403, {"error": "bad token"})
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except ValueError:
+            return self._json(400, {"error": "bad content-length"})
+        if length <= 0 or length > 2_000_000:
+            return self._json(400, {"error": f"bad body size {length}"})
+        try:
+            payload = json.loads(self.rfile.read(length).decode("utf-8"))
+        except Exception as e:  # noqa: BLE001
+            return self._json(400, {"error": f"bad json: {e}"})
+        cmd = str(payload.get("cmd") or "")
+        if not cmd.strip():
+            return self._json(400, {"error": "empty cmd"})
+
+        argv = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", SSH_HOST, cmd]
+        t0 = time.time()
+        try:
+            p = subprocess.run(argv, capture_output=True, timeout=TIMEOUT)
+            out = (p.stdout or b"") + (p.stderr or b"")
+            code = p.returncode
+        except subprocess.TimeoutExpired:
+            return self._json(504, {"error": f"timeout after {TIMEOUT}s"})
+        except Exception as e:  # noqa: BLE001
+            return self._json(500, {"error": f"{type(e).__name__}: {e}"})
+
+        text = out.decode("utf-8", "replace")
+        truncated = len(text) > MAX_OUT
+        if truncated:
+            text = text[:MAX_OUT] + "\n...[truncated %d bytes]" % (len(out) - MAX_OUT)
+        return self._json(200, {
+            "ok": code == 0,
+            "exit": code,
+            "elapsed_ms": int((time.time() - t0) * 1000),
+            "truncated": truncated,
+            "cmd": cmd[:200],
+            "out": text,
+        })
+
     def do_GET(self):
         u = urlparse(self.path)
         if u.path == "/health":
