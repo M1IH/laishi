@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # 面板状态聚合（服务器侧执行，输出单行 JSON；所有 QQ 号一律掩码，绝不输出凭据值）
+# 2026-10-29: SnowLuma 版 —— QQ 在线状态改从 snowluma 容器 hook 日志判断，
+#             napcat 保留为 stopped 对照；心跳 timer 已停（SnowLuma 场景未改造）。
 import json
 import os
 import pathlib
@@ -44,17 +46,16 @@ out["host"] = {
     "load": (sh("cat /proc/loadavg").split() + ["", "", ""])[:3],
     "mem_total_mb": int(m1[1]), "mem_used_mb": int(m1[2]), "mem_avail_mb": int(m1[6]),
     "swap_total_mb": int(m2[1]),
-    "disk": sh("df -h / | awk 'NR==2{print $2\" 总 / \"$3\" 已用 / \"$4\" 可用\"}'").strip(),
+    "disk": sh("df -h / | awk 'NR==2{print $2\" total / \"$3\" used / \"$4\" free\"}'").strip(),
     "ip": (sh("hostname -I").split() or [""])[0],
 }
 
 # ---- 服务 ----
 units = {}
-for u in ("miruku-xvfb", "miruku-desktop", "miruku-vnc", "miruku-novnc",
-          "miruku-heartbeat.timer", "docker"):
+for u in ("docker", "miruku-heartbeat.timer"):
     units[u] = (sh(f"systemctl is-active {u}").strip() or "unknown")
 containers = {}
-for c in ("astrbot", "napcat"):
+for c in ("astrbot", "snowluma", "napcat"):
     st = sh(f"docker inspect -f '{{{{.State.Status}}}}|{{{{.RestartCount}}}}|{{{{.State.StartedAt}}}}' {c}").strip()
     parts = st.split("|")
     containers[c] = ({"status": parts[0], "restarts": parts[1], "started": parts[2]}
@@ -63,9 +64,26 @@ out["services"] = {"systemd": units, "containers": containers}
 
 # ---- 链路：进 astrbot 容器读它自己 netns（宿主 ss 查不到跨容器连接）----
 ws = sh("docker exec astrbot python3 /AstrBot/data/laishi/ws_probe.py 01").strip()
-ls = sh("docker exec astrbot python3 /AstrBot/data/laishi/ws_probe.py 0A").strip()
+ls_ = sh("docker exec astrbot python3 /AstrBot/data/laishi/ws_probe.py 0A").strip()
 out["link"] = {"ws6199_established": int(ws) if ws.isdigit() else -1,
-               "ws6199_listen": int(ls) if ls.isdigit() else -1}
+               "ws6199_listen": int(ls_) if ls_.isdigit() else -1}
+
+# ---- QQ 在线（SnowLuma hook 日志）：最后一条 login 相关行定生死 ----
+hook = sh('docker exec snowluma sh -c "grep -hE \'login detected|awaiting login\' /app/data/logs/*.log 2>/dev/null" | tail -3')
+hlines = [l.strip() for l in hook.splitlines() if l.strip()]
+last_hook = hlines[-1] if hlines else ""
+wscl = sh('docker exec snowluma sh -c "grep -h \'WS-Client\' /app/data/logs/*.log 2>/dev/null" | tail -3')
+wlines = [l.strip() for l in wscl.splitlines() if l.strip()]
+last_ws = wlines[-1] if wlines else ""
+ab_ws = sh("docker logs astrbot --tail 300 2>&1 | grep -E 'aiocqhttp' | tail -2")
+out["qq"] = {
+    "online": ("login detected" in last_hook) if last_hook else None,  # None=未知
+    "detail": last_hook,
+    "wsclient": ("connected" if ("connected" in last_ws and "closed" not in last_ws)
+                 else ("disconnected" if last_ws else "unknown")),
+    "wsclient_detail": last_ws,
+    "adapter_log": ab_ws.strip()[-300:],
+}
 
 # ---- 机器人 ----
 cmd = jload(os.path.join(DATA, "cmd_config.json"))
@@ -78,14 +96,16 @@ pc = jload(os.path.join(DATA, "config", "astrbot_plugin_proactive_chat_config.js
 fs = pc.get("friend_settings", {}) or {}
 sch = fs.get("schedule_settings", {}) or {}
 ats = fs.get("auto_trigger_settings", {}) or {}
-kc = jload(os.path.join(DATA, "config", "astrbot_plugin_miruku_knowledge_config.json"))
 jobs = []
+jobs_raw = sh('docker exec astrbot python3 -c "import urllib.request;'
+              "print(urllib.request.urlopen('http://127.0.0.1:4100/api/jobs',timeout=6).read().decode())\"")
 try:
-    for j in json.loads(sh("curl -s --max-time 6 http://127.0.0.1:4100/api/jobs") or "{}").get("jobs", []):
+    for j in json.loads(jobs_raw.strip().splitlines()[-1]).get("jobs", []):
         jobs.append({"umo": mask(j.get("id")), "next": (j.get("next_run_time") or "")[:19],
                      "unanswered": j.get("unanswered_count")})
 except Exception:
     pass
+kc = jload(os.path.join(DATA, "config", "astrbot_plugin_miruku_knowledge_config.json"))
 kroot = kc.get("knowledge_root") or ""
 entries = 0
 if kroot:
@@ -93,6 +113,11 @@ if kroot:
     n = sh(f"sqlite3 {host_db} 'select count(*) from entries' 2>/dev/null").strip()
     entries = int(n) if n.isdigit() else 0
 pdir = pathlib.Path(DATA) / "plugins"
+mc = jload(os.path.join(DATA, "config", "meme_manager_config.json"))
+gen = mc.get("generation") or {}
+emo = gen.get("emotion") or {}
+msg = gen.get("message") or {}
+llm = emo.get("llm") if isinstance(emo.get("llm"), dict) else {}
 out["bot"] = {
     "platforms": plats,
     "providers": [{"id": x.get("id"), "enable": x.get("enable")} for x in cmd.get("provider", [])],
@@ -110,6 +135,13 @@ out["bot"] = {
         "auto_trigger": ats.get("enable_auto_trigger"),
         "auto_trigger_after_minutes": ats.get("auto_trigger_after_minutes"),
     },
+    "meme": {
+        "probability": emo.get("probability"),
+        "mixed_probability": msg.get("mixed_probability"),
+        "max_memes": (emo.get("max_memes_per_message")
+                      or gen.get("max_memes_per_message")),
+        "emotion_llm": llm.get("provider_id") or emo.get("provider_id"),
+    },
     "jobs": jobs,
     "knowledge": {"target_qq": mask(kc.get("target_qq")), "entries": entries},
     "plugins": sorted(p.name for p in pdir.iterdir() if p.is_dir()) if pdir.is_dir() else [],
@@ -122,26 +154,16 @@ for name in out["bot"]["plugins"]:
     if m.is_file():
         for line in m.read_text(encoding="utf-8", errors="replace").splitlines():
             if line.strip().startswith("version:"):
-                vers[name] = line.split(":", 1)[1].strip()
+                vers[name] = line.split(":", 1)[1].split("#", 1)[0].strip().strip('"')
                 break
 out["bot"]["plugin_versions"] = vers
 
-# ---- 心跳最近几行 ----
-# 心跳日志里带插件返回的原始 jobs JSON（内含未掩码 UMO），必须过一遍掩码
+# ---- 心跳最近几行（timer 停用中，仅作历史参考）----
 out["heartbeat"] = [mask(l) for l in sh("tail -8 /var/log/miruku-heartbeat.log").splitlines() if l.strip()]
+out["heartbeat_active"] = units.get("miruku-heartbeat.timer") == "active"
 
-# ---- 是否需要人工扫码 ----
-# QQ 掉线时心跳会写 /opt/miruku/logs/needs-rescan；面板据此显示红条提醒，
-# 不必让人去翻日志（2026-10-27 那次掉线就是这么被漏了 3 小时的）。
+# ---- 是否需要人工扫码（遗留机制，heartbeat 停用后不再产生）----
 mark = pathlib.Path("/opt/miruku/logs/needs-rescan")
 out["needs_rescan"] = mark.read_text(encoding="utf-8").strip() if mark.is_file() else None
-
-# 最近一次心跳的状态关键字（OK / QQ_OFFLINE / NO_WS_LINK ...）
-last_status = ""
-for line in reversed(out["heartbeat"]):
-    if "status=" in line:
-        last_status = line.split("status=", 1)[1].split()[0]
-        break
-out["last_status"] = last_status
 
 print(json.dumps(out, ensure_ascii=False))

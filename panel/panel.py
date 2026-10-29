@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 """Miruku 服务器管理面板（本地启动，数据全部经 SSH 从服务器取，不开任何公网端口）。
 
-用法： python panel.py   （由 启动面板.bat 调用，也可单独跑，前提是隧道已在跑）
+用法： python panel.py   （由 启动服务器面板.bat 调用，也可单独跑，前提是隧道已在跑）
 
 路由：
   GET /                    面板页面
   GET /api/status          服务器/服务/机器人状态（ssh 执行 server/panel-status.py）
-  GET /api/logs?src=..&n=  容器日志（src=astrbot|napcat|heartbeat）
-三个 WebUI（AstrBot / NapCat / noVNC）由 SSH 隧道映射到本机回环，页面里 iframe 内嵌。
+  GET /api/logs?src=..&n=  容器日志（src=astrbot|snowluma|heartbeat|journal）
+WebUI（AstrBot / SnowLuma / noVNC / meme 插件）由 SSH 隧道映射到本机回环，页面里 iframe 内嵌。
+2026-10-29: SnowLuma 版 —— 扫码入口从 NapCat WebUI(6099) 换成 noVNC(6081)，
+            SnowLuma WebUI 5099 新增；心跳 timer 停用中，仅展示历史。
 """
 from __future__ import annotations
 
@@ -70,7 +72,8 @@ def fetch_status():
 
 LOG_SOURCES = {
     "astrbot": "docker logs astrbot --tail {n} --timestamps 2>&1 | tail -n {n}",
-    "napcat": "docker logs napcat --tail {n} --timestamps 2>&1 | grep -vE '^[0-9a-f]{{40,}}$' | tail -n {n}",
+    "snowluma": 'docker exec snowluma sh -c "tail -qn {n} /app/data/logs/*.log 2>/dev/null" | tail -n {n}',
+    "snowluma_gw": "docker logs snowluma --tail {n} --timestamps 2>&1 | tail -n {n}",
     "heartbeat": "tail -n {n} /var/log/miruku-heartbeat.log 2>&1",
     "journal": "journalctl -u miruku-heartbeat.service -n {n} --no-pager 2>&1 | tail -n {n}",
 }
@@ -138,8 +141,9 @@ padding:5px 8px;border-radius:7px}
   <a class="tab" href="#bot" onclick="show('bot',this)">机器人</a>
   <a class="tab" href="#log" onclick="show('log',this)">日志</a>
   <a class="tab" href="#ab" onclick="show('ab',this)">AstrBot</a>
-  <a class="tab" href="#nc" onclick="show('nc',this)">NapCat·扫码</a>
-  <a class="tab" href="#vn" onclick="show('vn',this)">noVNC</a>
+  <a class="tab" href="#sl" onclick="show('sl',this)">SnowLuma</a>
+  <a class="tab" href="#vn" onclick="show('vn',this)">noVNC·扫码</a>
+  <a class="tab" href="#pl" onclick="show('pl',this)">表情插件</a>
   <button onclick="refresh(true)">刷新</button>
 </header>
 <main>
@@ -152,8 +156,9 @@ padding:5px 8px;border-radius:7px}
   <div class="row">
     <select id="logSrc">
       <option value="astrbot">AstrBot 容器</option>
-      <option value="napcat">NapCat 容器</option>
-      <option value="heartbeat">心跳</option>
+      <option value="snowluma">SnowLuma（QQ 网关）</option>
+      <option value="snowluma_gw">SnowLuma 网关进程</option>
+      <option value="heartbeat">心跳（历史）</option>
       <option value="journal">心跳服务(journal)</option>
     </select>
     <select id="logN"><option>100</option><option selected>300</option><option>800</option><option>2000</option></select>
@@ -164,13 +169,21 @@ padding:5px 8px;border-radius:7px}
   <pre id="logBox">（未加载）</pre>
 </section>
 <section id="ab"><iframe class="frame" src="http://127.0.0.1:6185/"></iframe></section>
-<section id="nc">
-  <div class="hint">登录二维码在此页面（NapCat WebUI → 导航/Overview）。token：<code>见 面板凭据.txt</code>
-  　若 iframe 空白请 <a style="color:var(--acc)" target="_blank" href="http://127.0.0.1:6099/webui/">新窗口打开</a></div>
-  <iframe class="frame" src="http://127.0.0.1:6099/webui/"></iframe>
+<section id="sl">
+  <div class="hint">SnowLuma WebUI（账号配置 / OneBot 网络）。临时密码见首次部署日志；
+   若 iframe 空白请 <a style="color:var(--acc)" target="_blank" href="http://127.0.0.1:5099/">新窗口打开</a></div>
+  <iframe class="frame" src="http://127.0.0.1:5099/"></iframe>
 </section>
-<section id="vn"><div class="hint">运维兜底桌面（QQ 在 Linux 下无窗口，扫码请用左边 NapCat 页）。密码见 面板凭据.txt</div>
-  <iframe class="frame" src="http://127.0.0.1:6080/vnc.html?autoconnect=true&resize=scale"></iframe></section>
+<section id="vn">
+  <div class="hint">QQ 桌面（登录 / 掉线扫码都在这里）。密码见 面板凭据.txt。
+   掉线时：点掉安全提醒弹窗的「确认」→ 点「刷新」出二维码 → 手机 QQ 扫。</div>
+  <iframe class="frame" src="http://127.0.0.1:6081/vnc.html?autoconnect=true&resize=scale"></iframe>
+</section>
+<section id="pl">
+  <div class="hint">meme_manager 插件 WebUI（表情包管理）。若空白请
+   <a style="color:var(--acc)" target="_blank" href="http://127.0.0.1:14100/">新窗口打开</a></div>
+  <iframe class="frame" src="http://127.0.0.1:14100/"></iframe>
+</section>
 </main>
 <script>
 const $=s=>document.querySelector(s);
@@ -179,38 +192,41 @@ function show(id,el){document.querySelectorAll('section').forEach(x=>x.classList
  el.classList.add('on'); if(id==='log')loadLogs();}
 const pill=(ok,t)=>`<span class="pill ${ok?'p-ok':'p-bad'}">${t||(ok?'在线':'离线')}</span>`;
 const pw=(w,t)=>`<span class="pill ${w?'p-warn':'p-ok'}">${t}</span>`;
+const un=(t)=>`<span class="pill p-warn">${t??'未知'}</span>`;
 function kv(pairs){return pairs.map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('');}
 function card(t,html){return `<div class="card"><h3>${t}</h3>${html}</div>`;}
 function banner(d){
-  // QQ 掉线时给一条最显眼的红条。2026-10-27 的教训：容器 running、6199 连着，
-  // 都不代表她在线——只有 NapCat 真有活动才算。那次漏看 3 小时才被人发现。
-  if (d.needs_rescan) return `<div class="card" style="border-color:#f85149;background:#2b1113;margin-bottom:12px">
-    <h3 style="color:#f85149">QQ 已掉线，需要重新扫码</h3>
-    <div style="margin-top:6px">心跳在 <b>${d.needs_rescan}</b> 检测到 NapCat 长时间无活动。
-    去 <b>NapCat·扫码</b> 页扫一次二维码即可恢复；<b>不要重启容器</b>——重启会让登录态失效，反而要重扫。</div>
-    </div>`;
-  if (d.last_status && d.last_status !== 'OK') return `<div class="card" style="border-color:#d29922;background:#2b2410;margin-bottom:12px">
-    <h3 style="color:#d29922">心跳状态：${d.last_status}</h3>
-    <div style="margin-top:6px">详见「日志 → 心跳」。若是 NO_WS_LINK 多为 AstrBot 侧问题；QQ_OFFLINE 才需要扫码。</div>
-    </div>`;
+  const q=d.qq||{};
+  if(q.online===false) return `<div class="card" style="border-color:#f85149;background:#2b1113;margin-bottom:12px">
+    <h3 style="color:#f85149">QQ 已掉线，需要在 noVNC 里重新扫码</h3>
+    <div style="margin-top:6px">SnowLuma 最近状态：<b>${q.detail||'awaiting login'}</b>。
+    去 <b>noVNC·扫码</b> 页：点掉安全提醒弹窗的「确认」→「刷新」→ 手机扫码。
+    <b>不要重启容器</b>——重启不会让登录态复活。</div></div>`;
+  if(q.online==null) return `<div class="card" style="border-color:#d29922;background:#2b2410;margin-bottom:12px">
+    <h3 style="color:#d29922">QQ 在线状态未知</h3>
+    <div style="margin-top:6px">SnowLuma 日志里没有登录记录（可能容器刚重建）。去 noVNC 页确认。</div></div>`;
   return '';
 }
 async function refresh(force){
  try{
-  const r=await fetch('/api/status'+(force?'?t='+Date():''),{cache:'no-store'});
+  const r=await fetch('/api/status'+(force?'?t='+Date.now():''),{cache:'no-store'});
   const d=await r.json();
   if(d.error){$('#lastErr').textContent='状态获取失败：'+d.error;return;}
   $('#lastErr').textContent='';
-  const h=d.host,s=d.services,l=d.link;
+  const h=d.host,s=d.services,l=d.link,q=d.qq||{};
   $('#hostchip').textContent=`${h.hostname} · ${h.os} · ${h.ip}`;
   const memPct=Math.round(100*(h.mem_total_mb-h.mem_avail_mb)/h.mem_total_mb);
-  const up=s.containers.astrbot.status==='running'&&s.containers.napcat.status==='running';
+  const up=s.containers.astrbot.status==='running'&&s.containers.snowluma.status==='running';
+  const qqPill = q.online===true?pill(1,'在线'):(q.online===false?pill(0,'掉线·需扫码'):un('未知'));
+  const wsPill = l.ws6199_established>=1?pill(1,'6199 已连接'):pw(true,`未连接(${l.ws6199_established})`);
+  const wscPill = q.wsclient==='connected'?pill(1,'WS 反连 OK'):(q.wsclient==='disconnected'?pill(0,'WS 反连断开'):un('WS 未知'));
   $('#statusGrid').innerHTML=
    banner(d)+
    card('总览',kv([['机器人',up?pill(1,'运行中'):pill(0,'停了')],
-     ['QQ 在线',d.needs_rescan?pill(0,'需扫码'):(d.last_status==='OK'?pill(1,'在线'):pw(true,d.last_status||'-'))],
-     ['6199 链路',l.ws6199_established>=1?pill(1,'已连接'):pw(true,`未连接(${l.ws6199_established})`)],
-     ['心跳',pill(d.last_status==='OK',d.last_status||'未知')],
+     ['QQ',qqPill],
+     ['AstrBot 链路',wsPill],
+     ['SnowLuma 反连',wscPill],
+     ['心跳',d.heartbeat_active?pill(d.last_status==='OK',d.last_status||'未知'):pw(true,'已停用(SnowLuma 未改造)')],
      ['负载',(h.load||[]).join(' / ')||'-']]))+
    card('主机',kv([['系统',h.os],['内核',h.kernel],['CPU',h.cpu_cores+' 核'],
      ['运行时长',h.uptime||'-'],
@@ -221,16 +237,20 @@ async function refresh(force){
    card('系统服务',kv(Object.entries(s.systemd).map(([k,v])=>[k,pill(v==='active',v)])));
   const b=d.bot;
   $('#botGrid').innerHTML=
-   card('平台与人格',kv([['人格',b.persona],
+   card('平台与人格',kv([['人格',b.persona||'-'],
      ...b.platforms.map(p=>[p.id,`${p.type} ws=${p.ws} ${pill(!!p.enable,p.enable?'启用':'停用')}`])]))+
    card('模型',kv([...(b.providers||[]).map(p=>['会话模型',`${p.id} ${pill(!!p.enable,p.enable?'启用':'停用')}`]),
      ...(b.provider_sources||[]).map(p=>[`源 ${p.id}`,`${p.base} 凭据:${p.cred}`])]))+
    card('主动消息',kv([['开关',pill(!!b.proactive.enable)],
      ['收件人',(b.proactive.recipients||[]).join('<br>')||'-'],
-     ['间隔',`${b.proactive.interval_minutes?.[0]}–${b.proactive.interval_minutes?.[1]} 分钟`],
-     ['免打扰',b.proactive.quiet_hours],['未回复上限',b.proactive.max_unanswered===0?'不限制':b.proactive.max_unanswered],
+     ['间隔',`${b.proactive.interval_minutes?.[0]??'?'}–${b.proactive.interval_minutes?.[1]??'?'} 分钟`],
+     ['免打扰',b.proactive.quiet_hours||'-'],['未回复上限',b.proactive.max_unanswered===0?'不限制':(b.proactive.max_unanswered??'-')],
      ['静默自动触发',b.proactive.auto_trigger?`开 · ${b.proactive.auto_trigger_after_minutes} 分钟`:'关'],
      ['排期任务',(b.jobs||[]).map(j=>`${j.umo}<br>下次 ${j.next} · 未回 ${j.unanswered}`).join('<br>')||'（当前无排期任务）']]))+
+   card('表情包',kv([['配图概率',b.meme.probability+'%'],
+     ['混发概率',b.meme.mixed_probability+'%'],
+     ['单条上限',b.meme.max_memes+' 张'],
+     ['情感模型',b.meme.emotion_llm||'-']]))+
    card('知识库 / 插件',kv([['知识条目',b.knowledge.entries+' 条'],
      ['注入对象',b.knowledge.target_qq],
      ...(b.plugins||[]).map(p=>[p.replace('astrbot_plugin_',''),(b.plugin_versions||{})[p]||'-'])]));

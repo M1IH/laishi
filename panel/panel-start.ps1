@@ -76,17 +76,19 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # 4) Tunnel: reuse an existing one if present, otherwise start it
+#    2026-10-29: SnowLuma era. 6185 AstrBot WebUI, 5099 SnowLuma WebUI,
+#    6081 noVNC (QQ login/QR), 14100 -> 4100 meme plugin WebUI.
 Write-Host '[2/3] Setting up SSH tunnel...'
 $existing = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -eq 'ssh.exe' -and $_.CommandLine -like '*6185:127.0.0.1:6185*' }
+    Where-Object { $_.Name -eq 'ssh.exe' -and $_.CommandLine -like '*6081:127.0.0.1:6081*' }
 $ssh = $null
 if ($existing) {
     Write-Host '      Existing tunnel found, reusing it.'
 } else {
     $fwd = @('-N','-o','BatchMode=yes','-o','ServerAliveInterval=30','-o','ServerAliveCountMax=3',
              '-o','ExitOnForwardFailure=yes',
-             '-L','6185:127.0.0.1:6185','-L','6099:127.0.0.1:6099',
-             '-L','6080:127.0.0.1:6080','-L','14100:127.0.0.1:4100',$target)
+             '-L','6185:127.0.0.1:6185','-L','5099:127.0.0.1:5099',
+             '-L','6081:127.0.0.1:6081','-L','14100:127.0.0.1:4100',$target)
     $ssh = Start-Process ssh -ArgumentList $fwd -NoNewWindow -PassThru
 }
 
@@ -94,7 +96,7 @@ $deadline = (Get-Date).AddSeconds(30)
 $tun = $false
 while ((Get-Date) -lt $deadline) {
     Start-Sleep -Milliseconds 800
-    try { Invoke-WebRequest 'http://127.0.0.1:6099/webui/' -UseBasicParsing -TimeoutSec 3 | Out-Null; $tun = $true; break } catch {}
+    try { Invoke-WebRequest 'http://127.0.0.1:6081/vnc.html' -UseBasicParsing -TimeoutSec 3 | Out-Null; $tun = $true; break } catch {}
 }
 if (-not $tun) { Write-Host '[WARN] Tunnel not ready after 30s; panel may show no data.' -ForegroundColor Yellow }
 
@@ -112,6 +114,7 @@ else { Write-Host '[WARN] Panel did not answer; check panel.py output.' -Foregro
 
 Write-Host ''
 Write-Host '  Ready. Closing this window stops the tunnel AND the panel.' -ForegroundColor Green
+Write-Host '  QQ login/QR: noVNC tab (http://127.0.0.1:6081/vnc.html).'
 Write-Host '  Credentials: see panel folder (Chinese file name).'
 Write-Host ''
 
