@@ -262,6 +262,8 @@ async def inject_knowledge(self, event, req):
 
 **DeepSeek 补充（2026-10-23 晚，B-1~B-14 修复后）**：`knowledge/outbound.py` 的 L1 层已经能清 `[Profile: …]` 的**全部已知变体**（半角/全角括号、无括号 `Profile:`、`[感知]/[决策]/[更新]` 裸行、零宽字符、未闭合 `<thought>`、只有 `</thought>` 的残尾），探针 90/90 覆盖。但**接入时有一个必须先定死的接口问题**：`guard()` 返回 `(text, used_fallback)`，**分不清「输入本来就是空」和「剥完标记之后是空」**——`guard('<thought>x</thought>')` 和 `guard('')` 都返回 `('', False)`。C-16 接上去之后，遇到「整条都是内部独白」会静默不发（按 `fb=False` 当成正常内容发空串）。这条不是 bug 是接口设计，需要调用方显式判 `text.strip() == ""`，或让 `guard()` 增加第三个返回值区分三态。**在这条定死之前不要接 C-16。**
 
+**接入记录（2026-10-30 DeepSeek，C-16 已接入）**：以 AstrBot 插件 `astrbot_plugin_miruku_outbound` v0.1.0 接入运行链路（`on_agent_done(priority=1)` + `on_decorating_result(priority=1)` 双钩子，后者覆盖主动消息直发路径）。验收：探针 53+9 与 102/102 全绿（KNOWN_BUGS 清零）；**168 条真实历史重跑，清洗后 L1 残留 0**（原命中 7 条全为结构标记类，剥离保留正文无误伤）。**三态接口按取舍落地**：空 fixed → agent_done 路径保留原文照发、decorating 路径保原文——理由：真实运营中 thought 已被 emotionai 剥离，completion_text 整条为独白的场景几乎不存在；保原文防的是更严重的「发空消息」事故。若未来观测到整条独白误发，再改 `guard()` 三态返回。部署坑与验收明细见 WORK_LOG 2026-10-30 17:0x 条与 `docs/outbound-guard-verdict.md` §十。
+
 
 ---
 
