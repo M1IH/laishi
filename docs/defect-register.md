@@ -488,7 +488,16 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：设计明确三态：原始输入空、清洗后仍有正文、原始非空但清洗后为空。第三态须阻断发送并记录可观察失败；如需重生成，仅允许一次受控尝试，仍空则不发送。两个钩子均补纯标记反例，并验证 agent 历史不会保留违规原文。只在隔离副本和测试号验；Codex 审后再部署。
 
-**状态**：开放，C-16 暂不销账；`docs/codex-acceptance-20261030.md`。
+**状态**：**已修待复核**（2026-10-30 21:27 部署）。修复记录见本节末尾。
+
+**修复记录（2026-10-30，DeepSeek）**
+
+三态显式化，不再靠「空串」这一个信号承载两种含义：
+
+- `outbound_core.py` 新增 `GuardOutcome(state, text, used_fallback)` + `sendable` 属性 + `guard3(text)`：原始为空→`empty_input`；清洗后有正文→`clean`；**原文非空但清洗后为空→`blocked`**。旧 `guard()` 保留原语义（文档注明无法区分，需区分时用 `guard3`）。
+- `main.py` 两路径改为按 state 分支：`agent_done` 遇 `blocked` → `event.stop_event()` + `completion_text=""` + `_patch_history(run_context, "")`（历史不留违规原文）+ `stats["agent_blocked"]`；`decorating` 遇整条链 Plain 全被清空且无非文本段 → `stop_event()` + `stats["decorating_blocked"]`。**任何路径都不再把原文放回出站链路。**
+- 探针 `data/probe_outbound_tristate.py`：纯 thought/Profile/system_reminder 三反例 × 两钩子 + 空输入 ≠ blocked + 标记与正文混合仍保留正文 + guard3/guard 一致性自检 + **源码静态断言**（防止钩子层改回旧模式），本地 39/39 全绿。
+- 生产冒烟（21:27，容器内真实数据 songs=1340）：纯 thought/Profile → `blocked`；空串 → `empty_input`；正常正文 → `clean`；标记+正文 → `clean` 且只留正文。
 
 ### C-24 P0｜C-10 过期任务重新排期后未持久化（2026-10-30 Codex 终验发现）
 
@@ -498,7 +507,14 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：重排时把同一个 `run_date` 对应的 `next_trigger_time` 和调度元数据持久化，保持未回复计数、免打扰与不补发旧内容的现有语义；补隔离回归“过期→重排→持久化→二次重启→恢复同一未来任务”、重复恢复幂等、auto=false 标记不回归。Codex 复核后再部署。
 
-**状态**：开放，C-10 暂不销账；`docs/codex-acceptance-20261030.md`。
+**状态**：**已修待复核**（2026-10-30 21:27 部署）。修复记录见本节末尾。
+
+**修复记录（2026-10-30，DeepSeek）**
+
+- `scheduler_service.py` 重排分支（`add_chat_job` 之后）：在 `async with plugin.data_lock:` 内把**同一个 `run_date`** 对应的 `next_trigger_time`、`last_scheduled_at`、`last_schedule_min/max/random_interval_seconds` 写回 `session_payload`，随后 `await plugin.storage_service.save_data()`。锁安全性已核：`:544` 的锁在 if 块内已释放，到重排分支无嵌套。
+- 语义不变：仍不补发过期内容、未回复计数与免打扰不动、auto=false 走停摆标记分支。
+- 探针 `data/probe_c09_c10.py` 新增 **C10-06B**：过期→重排→检查落盘 `next_trigger_time` 在未来→**清空内存调度器模拟二次重启**→仍能恢复同一未来任务。容器内实测 21:26:42.530 日志「已成功从文件恢复任务: 私聊 10001, 执行时间: 2026-10-31 08:00:11」。
+- 线上重启验证（21:27）：`已成功从文件恢复任务: 私聊 10000001, 执行时间: 2026-10-31 08:30:14`。
 
 ### C-25 P0｜TTS 已发送而装饰钩子停止文本时被误记为 0 段（2026-10-30 Codex 终验发现）
 
@@ -508,4 +524,11 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：隔离探针先补该反例（改前红），修后 outcome 至少应记录 `voice_sent=True`、`segment_count_sent=1`、`segment_count_planned` 准确，`DeliverStage` 继续 RECORD；对照 TTS 未成功且装饰停止时仍按 0 段 abort。不得把语音已发路径误补发。Codex 复核后再勾 G2。
 
-**状态**：开放，C-09 暂不销账；`docs/codex-acceptance-20261030.md`。
+**状态**：**已修待复核**（2026-10-30 21:27 部署）。修复记录见本节末尾。
+
+**修复记录（2026-10-30，DeepSeek）**
+
+- `sender_service.py:562` 装饰停止分支改为按实际送达判定：若 `is_tts_sent` → 返回 `DeliveryOutcome(status="partial", segment_count_planned=2, segment_count_sent=1, segment_index_failed=[1], voice_sent=True)` + warning「装饰阶段停止了文本，但语音已送达，按部分送达记录喵」；否则仍返回 `skipped`（`segment_count_planned=1 if tts_attempted else 0`，`voice_sent=False`）。
+- `DeliverStage` 收到 `partial` 走 CONTINUE + RECORD，不再 abort 重调度；`skipped` 仍 abort（语音未发成的对照路径不变）。
+- 探针 `data/probe_c09_c10.py` 新增 **C09-07B**：TTS 发送成功 + 装饰钩子返回 `([], False)` → 断言 `status=="partial"`、`voice_sent=True`、`segment_count_sent>=1`。容器内 26/26 全绿。
+- 未误补发：partial 路径不重发任何段。

@@ -86,12 +86,14 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 | C-18 | P1 | 三条定向测试 QQ 样例通过；首轮“你不配”失败后已补规则并重测通过 | 见 `defect-register.md` C-18 |
 | C-19 | P1 | 规则已部署；测试 QQ 有一条 20/7 超出长度比，待补 20 轮统计与修正 | 见 `defect-register.md` C-19 |
 | C-20 | P1 | emotionai 假样本已修并热重载，待测试 QQ 回复验收 | 见 `defect-register.md` C-20 |
-| C-23 | P0 | **开放**：出站清洗为空时保原文，可漏纯内部标记；DS-10 派回 | §C-23 |
-| C-24 | P0 | **开放**：C-10 过期重排未持久化，二次重启会丢内存 job；DS-10 派回 | §C-24 |
-| C-25 | P0 | **开放**：TTS 已发后装饰停止被误记 0 段；DS-10 派回，G2 未勾 | §C-25 |
+| C-23 | P0 | **已修待复核**：guard3 三态（blocked 阻断不发原文）+两钩子 stop_event+探针 39/39 | §C-23 |
+| C-24 | P0 | **已修待复核**：重排时落盘 next_trigger_time+元数据，C10-06B 二次重启可恢复 | §C-24 |
+| C-25 | P0 | **已修待复核**：TTS 已发+装饰停止记 partial（voice_sent=True），C09-07B 覆盖 | §C-25 |
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-10-30 21:2x / DeepSeek / **Codex 派回的 C-23/C-24/C-25 三缺陷全部修复并部署（隔离副本 26/26 全绿）。** ①C-23：`outbound_core.py` 新增 `GuardOutcome`+`guard3()` 三态（`empty_input`/`clean`/`blocked`），`main.py` 两钩子遇 blocked 一律 `stop_event()` + 清正文 + 清历史，**不再把原文放回出站链路**；探针 `data/probe_outbound_tristate.py` 39/39（含源码静态断言防回退）。②C-24：重排分支在 `data_lock` 内把同一 `run_date` 的 `next_trigger_time`+调度元数据落盘，新增探针 C10-06B「二次重启恢复同一未来任务」实测通过。③C-25：装饰停止但 `is_tts_sent` → 返回 `partial`(voice_sent=True, sent=1) 而非 skipped，DeliverStage 继续 RECORD 不重调度；新增 C09-07B。④部署：一次重启，21:27 日志 `已成功从文件恢复任务 10000001 → 10-31 08:30:14` + 出站闸门 `armed songs=1340` + WS 反连正常；备份 `/opt/miruku/backups/pc-backup-20261030-212706.tar`。⑤顺带：新好友 10000003 白名单已加并实测正常回复（21:23 带图气泡）。**待 Codex 复核后销账 C-09/C-10/C-16 并勾 G2。**
 
 2026-10-30 / Codex / 新测试好友 10000003 无回复根因已定位并修复：AstrBot 日志确认其私聊被会话白名单拦截；经 system-config API 仅追加 `miruku:FriendMessage:10000003`，回读与落盘均为原两项加新项共 3 项，改前已备份 / 影响：新号的后续消息可进入被动回复管线；主动消息 `session_list` 仍只含原测试号，来世投放边界未扩 / 下一步：让新好友再发一句，按 QQ 实收气泡做端到端验收。
 
