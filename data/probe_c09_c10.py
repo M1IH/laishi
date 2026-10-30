@@ -79,18 +79,19 @@ from astrbot_plugin_proactive_chat.utils.time_utils import is_quiet_time  # noqa
 
 # ---------------------------------------------------------------------------
 # 已知失败登记（= C-09/C-10 的现状缺陷清单，修好后逐条删除）
+#
+# 2026-10-30 17:49 全部清零：DeliveryOutcome 四级判定 + 七日故事窗口 +
+# 停摆标记/重新上膛 已部署（线上 commit 见 WORK_LOG 10-30 条目），
+# 容器内探针 24/24 全绿。此表保留为空 dict——新回归在此登记。
+# 修复内容：sender_service.DeliveryOutcome（attempted/partial/all_segments_accepted/
+# segment_count/segment_index_failed/voice_sent）、
+# _record_story_state（<data_dir>/proactive/story_state.json）、
+# DeliverStage partial→CONTINUE+delivery_outcome、
+# finalize_and_reschedule(delivery=...) 顶层写 segment_count_*、
+# SchedulerService._mark_stall_state（<data_dir>/stall_state.json）+
+# init_jobs_from_data 过期分支（auto 开→重排；auto 关→停摆标记）。
 # ---------------------------------------------------------------------------
 KNOWN_BUGS: dict[str, str] = {
-    "C09-01": "0/N 段只返回 bool False，没有 attempted 态，调用方分不清「一段没出去」和「配置缺失」",
-    "C09-02": "1/N 段返回 bool True，被 RecordsStage 当整条成功继续走（C-09 本体）",
-    "C09-03": "非分段单条也只有 bool True，没有 all_segments_accepted 与段数",
-    "C09-04": "首段失败、后段成功同样返回 True，缺 partial 与「哪几段失败」",
-    "C09-05": "N/N 全成功仍是 bool，没有 segment_count 供审计",
-    "C09-06": "TTS 已发、文本段全失败 → 返回 True，文本全丢却记成整条成功",
-    "C09-07": "部分送达的历史条目没有 segment_count_sent / segment_count_planned",
-    "C09-09": "七日窗口未实现：插件源码 0 处读写 story_state.json，窗口根本无法按「首段平台接受」计时",
-    "C10-05": "过期任务 + enable_auto_trigger=false → 只有一行 info 日志，没有点名本会话的停摆状态（C-10 本体）",
-    "C10-06": "过期任务 + enable_auto_trigger=true → 同样只有日志，没有重新上膛路径",
 }
 
 

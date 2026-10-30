@@ -136,20 +136,22 @@
 - **但换出一个新事实**：派发在循环之后**只调用一次** → 观察侧每"一次主动消息"记 **1 行**，而 QQ 端可能有 **2 个气泡**（分段）。**出站记录行数 ≠ 气泡数**，验收一律以气泡为准，别拿数据库行数当送达证据。详见 `docs/reconnect-experience-acceptance.md` §六-7。
 - **验收**：发一条两段式主动消息 → QQ 2 气泡、观察侧 1 行，**这是正常的**。
 
-### C-09 P0｜分段投递"任一段成功"被当成"整条送达"（2026-10-22，WB-06 发现）
+### C-09 P0｜分段投递"任一段成功"被当成"整条送达"（2026-10-22，WB-06 发现）—— **已修复接入（2026-10-30 17:49，DeepSeek）**
 
 - **现象**：`sender_service.py` L467 docstring 写明"任一环节实际送出至少一条即视为成功"；L519 `any_sent = is_tts_sent`，L552–567 逐段累加，L599–603 仅在**全部失败**时返回 False。
 - **后果**：第 1 段成功、第 2 段失败 → 返回成功 → `flow_orchestrator.py` L219–225 未回复计数 +1、L191–196 把**整段全文**写进对话历史。QQ 端只有半句，系统记录是完整故事，且**没有任何标记**。
 - **为什么是 P0**：这与 `crisis-alert.md` §三 已废除的"任一层成功即算送达"是同一个错误形状，只是发生在陪伴消息上。故事续段、后续"上次说到哪"的判断都会读这份被污染的历史。
 - **修法**：拆成 `attempted / platform_accepted / all_segments_accepted / partial` 四级，记录 `segment_count_sent` 与 `segment_count_planned`；`partial` 不作为"已发送"参与故事窗口计时。
 - **验收**：手动断网制造第 2 段失败（`docs/reconnect-experience-acceptance.md` §五 T7）→ 记录必须体现"部分送达"。
+- **接入记录（2026-10-30）**：`send_proactive_message` 返回 `DeliveryOutcome`（status=skipped/attempted/partial/all_segments_accepted + segment_count_planned/sent/segment_index_failed/voice_sent）；`DeliverStage` partial/all→CONTINUE 并把 outcome 传给 RECORD（仅 0 段出去才 abort 重调度）；`finalize_and_reschedule(delivery=...)` 把段数**顶层**写进会话数据；七日窗口（C-08 修法）一并落地 `_record_story_state`（`<data_dir>/proactive/story_state.json` 原子写）。**验收**：`data/probe_c09_c10.py` 容器内 24/24 全绿（KNOWN_BUGS 10 条清零），部署后 `docker restart` 复验任务自动恢复。待 Codex 复核销账。
 
-### C-10 P0｜停机跨过预定时刻 >60 秒后，主动消息静默停摆（2026-10-22，WB-06 发现）
+### C-10 P0｜停机跨过预定时刻 >60 秒后，主动消息静默停摆（2026-10-22，WB-06 发现）—— **已修复接入（2026-10-30 17:49，DeepSeek，保守+重排双路径）**
 
 - **现象**：`scheduler_service.py` L157 有效条件 `now < next_trigger + 60`；超时则 `init_jobs_from_data` 清状态不恢复；运行配置 `auto_trigger_settings.enable_auto_trigger = false`（2026-10-22 只读实测）→ L421 返回 `"disabled"`，**没有第二条重新上膛的路径**。私聊唯一重排入口是 `event_handlers.py` L161–166 `on_friend_message` 末尾的 `schedule_next_chat_and_save(reset_counter=True)`。
 - **后果**：**夜间关机 8 小时必然跨过该窗口** → 次日开机后主动消息永久停发，直到来世本人先说话。且全程只有 info/debug 级日志，OTTO 看到的表现是"她最近不主动了"，与"设计上的克制"**无法从行为上区分**。
 - **修法（需 OTTO 拍板方向）**：① 默认保守=不自动上膛，但写显式停摆告警（日志 + PENDING，或按 `crisis-alert.md` §8.2 方式"搭车"）；② 或启动时无条件重排一次。取舍见 `docs/reconnect-experience-acceptance.md` §四 D1/D3。
 - **验收**：让停机跨过 `next_trigger+60s` 再启动（§五 T5）→ 日志必须出现"已过期"+"未启用自动主动消息"两行。
+- **接入记录（2026-10-30）**：两个方向都做了，按配置分流——`init_jobs_from_data` 过期分支：`enable_auto_trigger=true` → 按当前配置**重新上膛**（compute_next_trigger 推到下一可发时刻，**不补发过期内容**）；`false` → 写显式停摆标记 `<data_dir>/stall_state.json`（`{sessions:{sid:{session_key,reason="persisted_task_expired",stalled_at(UTC),expired_next_trigger,unanswered_count,auto_trigger_enabled,recover_when="next_peer_message"}}}`，幂等合并），warning 日志措辞含「主动消息链路已停摆」。**验收**：探针 C10-05/06 全绿 + 线上 17:49 重启实测「已成功从文件恢复任务: 私聊 10000001, 执行时间: 2026-10-31 08:30:52」。注意：线上 auto_trigger 已开（true），停摆标记分支主要服务未来关掉 auto 的场景；探针 KNOWN_BUGS 清零。待 Codex 复核销账。
 
 ### C-08 P1｜故事七日窗口没有持久化载体
 

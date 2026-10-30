@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 # Miruku 心跳与自愈（D4 第 1/3/4 条的实现载体）——每 5 分钟由 systemd timer 跑一次
+# 2026-10-30 v2：QQ 载体从 NapCat 换成 SnowLuma，判据全面重写。
 #
 # 四项判据：
-#   A 两容器 running
-#   B AstrBot dashboard 可访问（401 也算活着，4000 才是不通）
-#   C NapCat↔AstrBot 的 6199 链路 ESTABLISHED
-#     ——注意：**不能**在宿主 netns 里 ss 查（跨容器连接不在宿主 socket 表里），
-#     也不能信插件 /api/status 的 ws_connections（本机实测该字段与实际不符）；
+#   A 两容器 running（astrbot + snowluma）
+#   B AstrBot dashboard 可访问（401 也算活着，000 才是不通）
+#   C SnowLuma↔AstrBot 的 6199 链路 ESTABLISHED
+#     ——不能在宿主 netns 里 ss 查（跨容器连接不在宿主 socket 表里），
 #     唯一可信读法是进 astrbot 容器读它自己 netns 的 /proc/net/tcp。
 #   D 主动任务有排期（插件控制台 4100 已在 compose 里映射到宿主回环）
+#
+# QQ 业务层在线判定（v2 核心变更）：
+#   SnowLuma 按天写 /app/data/logs/snowluma-YYYY-MM-DD.log（宿主卷直读），
+#   登录成功记 `login detected`，凭据失效/登出记 `awaiting login`。
+#   这是事件驱动信号，比 NapCat 时代的「70 分钟无活动」启发式可靠。
+#   登录可能发生在昨天（之后一直在线），所以合并昨天+今天两个文件取最后一条。
 set -uo pipefail
 
 LOG=/var/log/miruku-heartbeat.log
 APP=/opt/miruku
-# 微信告警（2026-10-28）
+SNOW_LOGDIR=/var/lib/docker/volumes/qq-gateway-data/_data/logs
+# 微信告警
 KEYFILE="$APP/.wechat-sendkey"
 SENTFLAG="$APP/logs/wechat-sent"
 NOW(){ date '+%F %T'; }
@@ -22,16 +29,15 @@ append(){ echo "$(NOW) $*" >> "$LOG"; }
 # Server酱推送：https://sct.ftqq.com/
 # 成功/失败都写日志（推送是唯一的"人不在场也能知道"的通道，静默失败等于没装）
 wechat_push(){
-  local key idle resp
+  local key resp
   key=$(cat "$KEYFILE" 2>/dev/null) || { append "WARN wechat: no key file"; return 1; }
-  idle="${1:-?}"
   local title="Miruku 掉线了"
-  local desc="QQ 已 ${idle} 分钟无活动，需要重新扫码。"
-  desc="${desc}%0A打开面板（桌面快捷方式）→ NapCat 扫码页扫一下即可。"
+  local desc="QQ 登录态失效，需要重新扫码。"
+  desc="${desc}%0A打开桌面「Miruku 面板」快捷方式 → noVNC·扫码页，点确认后用手机 QQ 扫码。"
   resp=$(curl -s -m 10 -X POST "https://sctapi.ftqq.com/${key}.send" \
     -d "title=${title}" -d "desp=${desc}" 2>&1) || { append "WARN wechat push curl failed"; return 1; }
   case "$resp" in
-    *'"code":0'*) append "wechat push OK (idle=${idle})"; return 0 ;;
+    *'"code":0'*) append "wechat push OK"; return 0 ;;
     *) append "WARN wechat push rejected: $(echo "$resp" | head -c 160)"; return 1 ;;
   esac
 }
@@ -39,7 +45,7 @@ wechat_push(){
 cd "$APP"
 
 astrbot_up=$(docker inspect -f '{{.State.Running}}' astrbot 2>/dev/null || echo false)
-napcat_up=$(docker inspect -f '{{.State.Running}}' napcat 2>/dev/null || echo false)
+snowluma_up=$(docker inspect -f '{{.State.Running}}' snowluma 2>/dev/null || echo false)
 
 dash=$(curl -s -o /dev/null -w '%{http_code}' --max-time 8 http://127.0.0.1:6185/api/v1/system-config || echo 000)
 
@@ -56,50 +62,27 @@ for f in ("/proc/net/tcp","/proc/net/tcp6"):
 print(n)
 ' 2>/dev/null || echo -1)
 
-# 「QQ 是否真的在线」判据（2026-10-27 事故后新增，最关键的一条）
-#
-# 为什么必须加：当天 09:57 QQ 掉线，之后 3 小时收发全断，而旧心跳一直报 OK——
-# 因为它只看容器间 6199 有没有 ESTABLISHED。NapCat 断网时那条 TCP 还挂着
-# （对端没发 FIN，TCP 自己不知道），于是「容器 running + ws6199=1」看着天衣无缝。
-#
-# 试过但**全部不可用**，别再走回头路（每一条都实测过）：
-#   ① 数 /proc/net/tcp 的 ESTABLISHED —— QQ 不走普通 TCP socket。在线收发
-#      完全正常时该表也数不出来（恒 0~1），用它当判据只会天天误报。
-#   ② http://napcat:3000/get_status —— onebot11 里 httpServers 是空数组，
-#      NapCat 只开了 websocketClients，根本没有 HTTP 接口。
-#   ③ 自己连 ws://127.0.0.1:6199 发 OneBot 动作 —— 6199 是 AstrBot 的平台
-#      适配器端口，走它自己的握手协议，发动作收不到回包（实测超时）。
-#   ④ ps aux | grep napcat.mjs —— 进程名对不上，计数恒 0。
-#
-# 可用信号：NapCat 每小时输出一行 `[ServerTime] 时间同步完成`，是与腾讯维持
-# 会话的副产物；QQ 掉线后这行就停了（实测 09:57 掉线 → 12:24 重启前无新行）。
-# 做法：取日志里最近一条 「ServerTime / 接收 / 发送」的时间戳，超过 70 分钟
-# 没动静就判疑似掉线（心跳本身 60 分钟一次，留 10 分钟余量）。
+# QQ 业务层在线判定（SnowLuma 事件驱动）
 qq_online=false
-last_active=$(docker logs napcat --since 150m 2>&1 \
-  | sed 's/\x1b\[[0-9;]*m//g' \
-  | grep -E 'ServerTime|接收 <-|发送 ->' \
-  | tail -1 \
-  | grep -oE '^[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}' || true)
-if [ -n "$last_active" ]; then
-  last_ts=$(date -d "2026-$last_active" +%s 2>/dev/null || echo 0)
-  now_ts=$(date +%s)
-  if [ "$last_ts" -gt 0 ]; then
-    idle_min=$(( (now_ts - last_ts) / 60 ))
-    [ "$idle_min" -lt 70 ] && qq_online=true
-  fi
-else
-  idle_min=-1
-fi
+login_state=no-signal
+YDAY=$(date -d yesterday +%F)
+TODAY=$(date +%F)
+last_login=$(grep -hE 'login detected|awaiting login' \
+  "$SNOW_LOGDIR/snowluma-$YDAY.log" "$SNOW_LOGDIR/snowluma-$TODAY.log" 2>/dev/null | tail -1)
+case "$last_login" in
+  *"login detected"*) qq_online=true;  login_state=online ;;
+  *"awaiting login"*) qq_online=false; login_state=awaiting ;;
+  *) qq_online=false; login_state=no-signal ;;
+esac
 
 jobs=$(curl -s --max-time 8 http://127.0.0.1:4100/api/jobs 2>/dev/null || echo '{}')
 
 status=OK
 [ "$astrbot_up" = true ] || status=ASTRBOT_DOWN
-[ "$napcat_up" = true ] || [ "$status" != OK ] || status=NAPCAT_DOWN
+[ "$snowluma_up" = true ] || { [ "$status" != OK ] || status=SNOWLUMA_DOWN; }
 case "$dash" in 200|401|403) ;; *) [ "$status" = OK ] && status=DASHBOARD_UNREACH ;; esac
 if [ "$status" = OK ]; then
-  # 先判 QQ 是否真的在线（业务层探活，见上面注释）
+  # 先判 QQ 是否真的在线（业务层探活，见头部注释）
   if [ "$qq_online" != true ]; then
     status=QQ_OFFLINE
   elif ! [ "$ws" -ge 1 ]; then
@@ -110,39 +93,28 @@ fi
 
 # 落盘前掩码：jobs 原文里带未掩码的 QQ 号，日志文件不该写明文
 append_masked(){ echo "$(NOW) $*" | sed -E 's/([0-9]{3})[0-9]{4}([0-9]{3})/\1***\2/g' >> "$LOG"; }
-append_masked "status=$status up=$astrbot_up/$napcat_up dash=$dash ws6199=$ws qq_online=$qq_online idle_min=$idle_min jobs=$(echo "$jobs" | tr -d '\n' | head -c 100)"
+append_masked "status=$status up=$astrbot_up/$snowluma_up dash=$dash ws6199=$ws qq_login=$login_state jobs=$(echo "$jobs" | tr -d '\n' | head -c 100)"
 
-# 自愈：只动坏的那一侧；NO_WS_LINK 先等一轮自愈窗口（NapCat 自己会重连），
-# 连续两轮仍无链路才重启 napcat，避免每次抖动都打断正在进行的登录。
-# 链路断的处置（2026-10-26 实测后收紧）：
-# 原设计「连续两轮无链路就 docker restart napcat」被证明**有害**——重启 NapCat
-# 会让 QQ 登录态失效（实测：23:33 重启进二维码等待 → 23:39 快速登录报
-# 「登录态已失效」），等于把一次可自愈的抖动升级成必须人工重扫。
-# NapCat 自身带 1 秒重连，链路长期不通通常是**对端**（AstrBot）的问题，
-# 所以只重启 astrbot；真需要重扫时交给人，不自动动 napcat。
+# 自愈（v2）：
+# - astrbot 侧问题照旧重启 astrbot；
+# - SnowLuma 容器 DOWN 用 docker start 拉起（登录态在卷里，重启安全）；
+# - QQ_OFFLINE（awaiting login）= 登录态凭据失效，重启无法修复（10-29 16:51 s26 实证），
+#   只告警等人工扫码，绝不自动重启 snowluma。
 case "$status" in
   ASTRBOT_DOWN) append "ALERT self-heal: up astrbot"; docker compose up -d astrbot >>"$LOG" 2>&1 ;;
-  NAPCAT_DOWN)  append "ALERT self-heal: up napcat";  docker compose up -d napcat  >>"$LOG" 2>&1 ;;
+  SNOWLUMA_DOWN) append "ALERT self-heal: start snowluma"; docker start snowluma >>"$LOG" 2>&1 ;;
   DASHBOARD_UNREACH) append "ALERT dashboard unreachable; restart astrbot"; docker restart astrbot >>"$LOG" 2>&1 ;;
   QQ_OFFLINE)
-    # 2026-10-27 事故：QQ 掉线时容器和 6199 全都正常，只有到腾讯的连接归零。
-    # 这种状态**不能靠重启修复**——重启会让登录态失效，还得人工扫码，反而更糟。
-    # 所以只做一件事：把告警写清楚，等人来扫。同时写一个标记文件，
-    # 面板会显示「需扫码」红条，不必去翻日志。
-    append "ALERT QQ_OFFLINE: NapCat 已 $idle_min 分钟无活动，QQ 疑似掉线 —— 需人工重扫二维码（勿自动重启）"
+    # 登录态失效，需人工扫码（勿自动重启，见 case 上方注释）
+    append "ALERT QQ_OFFLINE: SnowLuma 报 awaiting login（登录态失效）—— 需人工扫码（noVNC），勿自动重启"
     date '+%F %T' > "$APP/logs/needs-rescan" 2>/dev/null || true
-    # 微信推送（2026-10-28）：掉线即通知，不等 OTTO 发现机器人失联
-    # 防轰炸：30 分钟内只推一次；恢复在线后清除标记（见脚本末尾）
+    # 微信推送：掉线即通知；30 分钟内只推一次；恢复在线后清除标记（见脚本末尾）
     if [ ! -f "$SENTFLAG" ] || [ $(( $(date +%s) - $(stat -c %Y "$SENTFLAG" 2>/dev/null || echo 0) )) -gt 1800 ]; then
-      wechat_push "${idle_min:-?}" && date '+%F %T' > "$SENTFLAG"
+      wechat_push && date '+%F %T' > "$SENTFLAG"
     fi
     ;;
-  NAPCAT_BODY_GONE)
-    append "ALERT napcat.mjs 进程不在了（容器仍 running）；重启容器"
-    docker restart napcat >>"$LOG" 2>&1
-    ;;
   NO_WS_LINK)
-    # 先看 astrbot 侧 6199 有没有在听；没在听就是 astrbot 的锅，重启它
+    # SnowLuma 侧自带 5 秒重连；链路长期不通通常是对端（AstrBot）的问题
     listen=$(docker exec astrbot python3 -c "
 n=0
 for f in ('/proc/net/tcp','/proc/net/tcp6'):
@@ -153,7 +125,7 @@ for f in ('/proc/net/tcp','/proc/net/tcp6'):
     except OSError: pass
 print(n)" 2>/dev/null || echo 0)
     if [ "$listen" -ge 1 ]; then
-      append "ALERT ws link down but astrbot is listening -> 大概率 QQ 登录态失效，需人工扫码（不自动重启 napcat）"
+      append "ALERT ws link down but astrbot is listening -> 等 SnowLuma 自动重连；若下轮仍断则 QQ 大概率掉线"
     else
       append "ALERT ws link down and no 6199 listener; restart astrbot"
       docker restart astrbot >>"$LOG" 2>&1
