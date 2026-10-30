@@ -1,0 +1,18 @@
+name: astrbot_plugin_miruku_outbound
+display_name: Miruku 出站闸门
+short_desc: 出站回复确定性校验与清洗（泄漏剥离/约局删除/成绩编造降级）
+desc: >-
+  对 Miruku 发出的每条回复做最后一道确定性检查：L1 结构标记剥离
+  （thought/profile/DSML/system_reminder）、L2 约局承诺分句删除、
+  L2.5 自称会打动词改写、L3 编造成绩数字删除或降级。
+  判定依据 docs/outbound-guard-verdict.md（四层不重生成，分层改写）。
+  同时挂 on_agent_done（正常回复+历史一致性）与 on_decorating_result
+  （覆盖主动消息路径）。日志只记类别计数，不打正文。
+help: 无命令。自动生效，日志关键字 [miruku_outbound]。
+version: 0.1.0
+author: DeepSeek
+repo: ""
+astrbot_version: ">=4.29.0"
+tags:
+  - 出站闸门
+  - 安全

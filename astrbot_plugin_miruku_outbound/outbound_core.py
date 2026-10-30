@@ -871,12 +871,52 @@ def degrade(text: str) -> tuple[str, list[str]]:
     return out, dropped
 
 
+@dataclass
+class GuardOutcome:
+    """三态出站判定结果（C-23）。
+
+    旧的 `guard()` 把「本来就没内容」和「剥完变空」压成同一个 `('', ...)`，
+    调用方分不清这两件事，只好一律「保原文」——于是纯 `<thought>` 这类整条
+    内部标记会被原样放行到 QQ（Codex 终验反例）。这里把三态显式化：
+
+    - ``empty_input``：原始输入就没有正文。没有可发的东西，不存在泄漏。
+    - ``clean``     ：有可发正文（可能被改写/兜底过）。
+    - ``blocked``    ：**原文非空、清洗后为空**——整条都是内部标记或违规内容。
+      调用方必须阻断发送并留下可观察的失败记录，**绝不能退回原文**。
+    """
+
+    state: str  # empty_input | clean | blocked
+    text: str = ""
+    used_fallback: bool = False
+
+    @property
+    def sendable(self) -> bool:
+        return self.state == "clean" and bool(self.text.strip())
+
+
+def guard3(text: str, do_strip: bool = True) -> GuardOutcome:
+    """三态版 guard：区分「本来没内容」与「清洗后为空必须阻断」。"""
+    raw = (text or "").strip()
+    fixed, used_fallback = guard(text, do_strip=do_strip)
+    fixed_text = (fixed or "").strip()
+    if fixed_text:
+        return GuardOutcome(state="clean", text=fixed, used_fallback=used_fallback)
+    # 清洗后为空：原始也没内容 = 空输入；原始有内容 = 整条被判违规，必须阻断。
+    return GuardOutcome(
+        state="empty_input" if not raw else "blocked",
+        text="",
+        used_fallback=used_fallback,
+    )
+
+
 def guard(text: str, do_strip: bool = True) -> tuple[str, bool]:
     """一站式出站处理：剥离 → 改写 → 兜底。
 
     返回 (可发送文本, used_fallback)。
     **文本为空表示不要发。** `used_fallback=True` 表示这条已经不是你原本想说的
     内容（改成了兜底句，或者本来就没有可发正文）。
+
+    注意：本函数无法区分「本来没内容」和「剥完变空」。需要区分时用 `guard3()`。
     """
     report = check(text, do_strip=do_strip)
     if report.ok:

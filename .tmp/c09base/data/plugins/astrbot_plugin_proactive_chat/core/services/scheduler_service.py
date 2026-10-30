@@ -601,6 +601,27 @@ class SchedulerService:
                             plugin.session_service.normalize_session_id(session_id)
                         )
                         self.add_chat_job(normalized_session_id, run_date)
+                        # C-24：上面 clear_session_schedule_state() 已经把
+                        # next_trigger_time 抹掉，这里只注册内存 job 不写回的话，
+                        # 方法末尾的 save_data() 落盘的是一个「没有下次」的会话。
+                        # 一旦这个 job 执行前再重启一次，持久化数据里什么都没有，
+                        # 主动侧会重新停摆。所以调度字段必须与 job 同源落盘。
+                        async with plugin.data_lock:
+                            session_payload = plugin.session_data.setdefault(
+                                normalized_session_id, {}
+                            )
+                            session_payload["next_trigger_time"] = _next_trigger_time
+                            session_payload["last_scheduled_at"] = _scheduled_at
+                            session_payload[
+                                "last_schedule_min_interval_seconds"
+                            ] = _min_interval
+                            session_payload[
+                                "last_schedule_max_interval_seconds"
+                            ] = _max_interval
+                            session_payload[
+                                "last_schedule_random_interval_seconds"
+                            ] = _random_interval
+                            await plugin.storage_service.save_data()
                         restored_count += 1
                         logger.warning(
                             f"[主动消息] {plugin.session_service.get_session_log_str(session_id, session_config)} 的持久化任务已过期，自动触发已开启，已按当前配置重新排期至 {run_date} 喵（不补发过期内容）。"

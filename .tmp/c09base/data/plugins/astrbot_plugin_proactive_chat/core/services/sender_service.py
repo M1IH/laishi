@@ -561,7 +561,25 @@ class SenderService:
             )
             if not should_send:
                 self._clear_event_result(event)
-                return DeliveryOutcome(status="skipped")
+                # C-25：装饰钩子停止文本时，语音可能已经送达。此时记成 skipped
+                # 会让上层按 0 段 abort 并重调度——对方明明收到了一条语音，
+                # 系统却当没发过，等于同一句话下次再说一遍。按实际送达记 partial。
+                if is_tts_sent:
+                    logger.warning(
+                        "[主动消息] 装饰阶段停止了文本，但语音已送达，按部分送达记录喵。"
+                    )
+                    return DeliveryOutcome(
+                        status="partial",
+                        segment_count_planned=2,
+                        segment_count_sent=1,
+                        segment_index_failed=[1],
+                        voice_sent=True,
+                    )
+                return DeliveryOutcome(
+                    status="skipped",
+                    segment_count_planned=1 if tts_attempted else 0,
+                    voice_sent=False,
+                )
             if not decorated_chain:
                 logger.debug("[主动消息] 装饰后消息链为空，跳过文本发送喵。")
 

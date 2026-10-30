@@ -41,8 +41,10 @@ class OutboundGuard(Star):
         self.stats = {
             "agent_rewritten": 0,
             "agent_fallback": 0,
+            "agent_blocked": 0,
             "decorating_rewritten": 0,
             "decorating_fallback": 0,
+            "decorating_blocked": 0,
         }
         try:
             songs = outbound.song_levels()
@@ -93,16 +95,23 @@ class OutboundGuard(Star):
         """
         changed = False
         used_fallback = False
+        blocked_count = 0
 
         def _fix(text: str):
-            nonlocal changed, used_fallback
-            fixed, fb = outbound.guard(text)
-            if not fixed:
-                return text  # guard 对空输出不负责；这里保原文避免发空消息
-            if fixed != text:
+            nonlocal changed, used_fallback, blocked_count
+            outcome = outbound.guard3(text)
+            if outcome.state == "blocked":
+                # C-23：原文非空、清洗后为空 = 整条都是内部标记。
+                # 退回原文等于把 <thought>/[Profile:] 原样发出去，必须清空这一段。
+                blocked_count += 1
                 changed = True
-            used_fallback = used_fallback or fb
-            return fixed
+                return ""
+            if not outcome.sendable:
+                return text  # 本来就没内容，保持原样
+            if outcome.text != text:
+                changed = True
+            used_fallback = used_fallback or outcome.used_fallback
+            return outcome.text
 
         if isinstance(chain, str):
             fixed = _fix(chain)
@@ -129,11 +138,27 @@ class OutboundGuard(Star):
         if not text or not text.strip():
             return
         try:
-            fixed, used_fallback = outbound.guard(text)
+            outcome = outbound.guard3(text)
         except Exception as e:
             logger.error(f"[miruku_outbound] guard 异常(放行原文): {e!r}")
             return
-        if not fixed or fixed == text:
+        if outcome.state == "blocked":
+            # C-23：整条都是内部标记。既不能发原文，也不能发空消息——阻断发送。
+            # stop_event 会让 respond 阶段不再送出这条 result。
+            event.stop_event()
+            resp.completion_text = ""
+            self._patch_history(run_context, "")
+            self.stats["agent_blocked"] += 1
+            logger.warning(
+                f"[miruku_outbound] agent_done 阻断：清洗后无正文 "
+                f"(history_cleared=True, count={self.stats['agent_blocked']})"
+            )
+            return
+        if not outcome.sendable:
+            return  # 本来就没内容，无需动作
+        fixed = outcome.text
+        used_fallback = outcome.used_fallback
+        if fixed == text:
             return
         resp.completion_text = fixed
         patched = self._patch_history(run_context, fixed)
@@ -171,6 +196,33 @@ class OutboundGuard(Star):
         if not changed:
             return
         result.chain = fixed_chain
+        # C-23：若整条链的 Plain 都被判 blocked（清成空串），链里已经没有可发正文。
+        # 只保留图片/表情等非文本段；纯文本全空时阻断发送，不发空消息也不发原文。
+        remaining_text = "".join(
+            getattr(comp, "text", "") or ""
+            for comp in (
+                fixed_chain.chain if isinstance(fixed_chain, MessageChain)
+                else fixed_chain if isinstance(fixed_chain, list)
+                else []
+            )
+            if isinstance(comp, Plain)
+        ).strip()
+        has_non_text = any(
+            not isinstance(comp, Plain)
+            for comp in (
+                fixed_chain.chain if isinstance(fixed_chain, MessageChain)
+                else fixed_chain if isinstance(fixed_chain, list)
+                else []
+            )
+        )
+        if not remaining_text and not has_non_text:
+            event.stop_event()
+            self.stats["decorating_blocked"] += 1
+            logger.warning(
+                f"[miruku_outbound] decorating 阻断：清洗后无正文 "
+                f"(count={self.stats['decorating_blocked']})"
+            )
+            return
         if used_fallback:
             self.stats["decorating_fallback"] += 1
             logger.info(

@@ -1,5 +1,7 @@
 # 投放前决策单（Pilot Go / No-Go）
 
+> **2026-10-30 Codex 终验更新**：G4 已通过；G2 因 C-25、G5 因 C-23 未过；D4-⑦ 尚缺空窗回复气泡实测。下文旧版叙述为历史快照，当前状态以本补记、§六勾选及 `docs/codex-acceptance-20261030.md` 为准。正式投放仍 No-Go。
+
 > **给谁看**：OTTO 一个人。**用途**：把 `docs/prelaunch-checklist.md`、`docs/first-week-experience-watch.md`、`docs/crisis-alert.md`、
 > `docs/outbound-guard-verdict.md` 与 `docs/defect-register.md`（C-01…C-17 原文，2026-10-24 从 `WORK_LOG.md` 迁出）压成一页，回答一个问题——
 > **现在能不能把 Miruku 交给来世？**
@@ -196,13 +198,13 @@ $PY data/probe_uptime_selftest.py     # 30 项固定样例，验证判据本身�
 | # | 门槛 | 可核查证据（2026-10-23 只读核对） | 状态 | 未满足时的动作 |
 |---|---|---|---|---|
 | **G1** | **QQ 登录与收件端** | ① 今日日志 `logs/astrbot-20261023.log` 17:46:37 `platform.manager:144 Loading IM platform adapter aiocqhttp(miruku)`——**只证明加载，没有连接成功、没有收到消息的行**；今日段内 `适配器已连接` **0 次**；② `logs/napcat-console-20261023.log` 全文仅一行 `Boot Command:...`，无二维码/登录成功记录；③ 观察库 `message_events` 共 **7 行**，最后一条 `observed_at_utc = 2026-10-20T04:24:19Z` → **此后近三天零事件** | **未验证** | 先解决登录（要人工扫码，不能无人值守）。**验收必须看到"机器人回复气泡"，两条路径在这一点上没有区别**——**路径 A（现配置，不动任何东西）**＝**测试号那一侧收到 Miruku 的回复气泡** ＋ 日志 `core.event_bus:116` 出现该条消息行；此时**观察库不会新增**（`observer.target_qq` 指向来世，测试号往来不入库），所以 A 里不许出现"观察库 +1"。**路径 B（临时改 `target_qq` 指向测试号，须先留痕、验完改回）**＝**机器人回复气泡（必达）** ＋ 观察库新增 1 行（**额外证据，不能替代气泡**：入库只证明"入站被观察到了"，不证明"回复发出去了"）。**两条路径都不得用"观察库有行"当唯一证据** |
-| **G2** | **C-09 分段送达** | `core/services/sender_service.py:519` `any_sent = is_tts_sent`、`:599` **全部失败才** 返回 False；上层拿这个布尔计数并写**整段全文**进历史。四级判定（`attempted/platform_accepted/all_segments_accepted/partial`）**未实现** | **未验证**（未实现） | 要么实现四级判定，要么接受：**系统记录可能比 QQ 气泡多**。首周不许用"记录里发了"当送达证据，只能数气泡（WB-08 §二 已按此写） |
+| **G2** | **C-09 分段送达** | 四级 `DeliveryOutcome` 已接入，旧探针 24/24；但 TTS 已发、装饰停止文本时误记 0 段，见 C-25 | **未验证（新增阻断）** | 补 C-25 反例并修复，再做真实 QQ 部分送达观察 |
 | **G3** | **C-10 主动消息停摆** | `core/services/scheduler_service.py:157` 有效条件 `check_time < (next_trigger + 60)`；`:39–41` 与 `:417–421` 两处 `enable_auto_trigger=False` 直接 return（后者返回 `"disabled"`）；今日启动日志 17:46:37 两行：「任务恢复检查完成，共恢复 **0** 个定时任务喵」「**没有会话启用自动主动消息功能**喵」；运行配置 `auto_trigger_settings.enable_auto_trigger = false` | **已验证（而且现在就是停摆态）** | 阶段二开工前必须先拍：**谁触发**（手工触发一次／打开 auto_trigger／接受"只有来世先说话才重排"）。不拍就没法区分"她克制"和"她根本不发" |
-| **G4** | **C-15 运行期知识注入** | 实例 `core/data/plugins` 下 grep `build_block`／`knowledge.inject` → **0 处**（今日复跑）；实例数据目录 grep b50 总 R `14065` → **0**（2026-10-22）；离线 `data/probe_regression.py` **120/120**（今日复跑）——那只证明**库能检索**，不证明请求里带它；现靠 `prompts/b50_block.txt`（2023 B，`deploy_miruku.py:17` 拼进 `system_prompt`）硬塞 50 首 | **未验证**（未接通） | 不接也能上线，但代价写清楚：**她只有"这 50 首"和"不要报数字"，问表外曲目＝空**。接法与锚点已勘过：框架有**两个** `OnLLMRequestEvent` 调用点——`core/astrbot/core/pipeline/process_stage/method/agent_sub_stages/internal.py:307`（当前 deepseek/openai_chat_completion 走这条）与 `third_party.py:333`；范例 `core/data/plugins/astrbot_plugin_soulmap/main.py:211`（`@filter.on_llm_request()`，`:235` 直接 `req.system_prompt +=`） |
-| **G5** | **出站闸门接入**（修 C-16 `[Profile:]` 泄漏／C-12 `<thought>` 泄漏／C-14 约局承诺／成绩编造。**C-13 追问不归它**——那是风格问题，属提示词层，闸门兜不住也不该兜，与 §六 一致） | 实例插件目录 grep `outbound` → **0 处**（未接入）；离线 `knowledge/outbound.py` ＋ `data/probe_outbound_guard.py` **53 + 9 全过**（今日复跑）；落点判定见 `docs/outbound-guard-verdict.md`：**必须 `on_agent_done(priority=1)` 且同时改 `run_context.messages`**，否则"发出去的话"和"模型记住的话"不一致 | **未验证**（未接入） | 不接就等于**裸奔**：`prompts/system.txt` L9「不要发标签」是概率约束，不是闸门。首周 A 档错误里的第 6、12 项直接由它兜 |
+| **G4** | **C-15 运行期知识注入** | 线上多日真实请求出现 `[Miruku knowledge] armed: platform=miruku, injections=1`；此前离线/钩子回归通过 | **已验证（接入）** | 回复事实准确性继续按知识质量观察 |
+| **G5** | **出站闸门接入** | v0.1.0 双钩子已上线、合成规则探针通过；纯内部标记清洗后为空时仍保原文发送，见 C-23 | **未验证（接入有阻断）** | 修 C-23 并复核两钩子的空输出路径后再勾 |
 | **G6** | **C-17 危机告警** | 实例插件目录**无 alert 类插件**；`alert_ack.py` **不存在**；观察库 7 行 `crisis_mode_triggered` **全为 NULL**，而 `store.py:31`（列定义）＋ `:33`（CHECK 约束）之外，**全插件 `.py` 里零引用，没有任何写入方**；`docs/crisis-alert.md` 是**规范 v5（27 项验收）**，**零实现** | **未验证**（未实现） | **这一条不满足，我建议按 No-Go 处理。** 理由不是"少个通知"，是：A 档一关，事件在 `STAGES_ORDER` 第 2–3 位被 `stop_event()`，`core/astrbot/core/pipeline/scheduler.py` 三处 `break`（`:61`／`:71`／`:81`）直接终止后续阶段 → **观察与检测一起停**。危险时段等于蒙眼 |
 | **G7** | **A2 会话暂停端到端** | `data/probe_whitelist_empty.py` **10/10**（只证明白名单空表会反向放行，**不证明刹车**）；A2 主张的开关有源码依据（`session_status_check/stage.py:24–40` → `session_llm_manager.py:173–186`，键缺失默认 `True`），但**从未在运行实例上做关→开对照** | **未验证** | 没跑通就只用 B 档（只停主动）。**A 档不得写进首周预案**——写进去就是拿未验证的刹车当刹车 |
-| **G8** | **白名单与准入机制** | `cmd_config.json` → `enable_id_white_list = true`、`id_whitelist` **2 项**、`id_whitelist_log = true`；`whitelist_check/stage.py:39–41` 空列表**直接 return**、`:61–71` 不在列表才 `stop_event()`；探针 10/10 | **已验证**（机制） | 唯一红线：**改完立刻核对"项数 ≥ 1"**。清空＝全员放行，与"暂停"完全相反 |
+| **G8** | **白名单与准入机制** | `cmd_config.json` → `enable_id_white_list = true`、`id_whitelist` **3 项**（2026-10-30 新增好友测试号 10000003）、`id_whitelist_log = true`；`whitelist_check/stage.py:39–41` 空列表**直接 return**、`:61–71` 不在列表才 `stop_event()`；探针 10/10 | **已验证**（机制；新号端到端待测） | 唯一红线：**改完立刻核对"项数 ≥ 1"**。清空＝全员放行，与"暂停"完全相反 |
 | **G9** | **主动消息·测试号阶段** | 配置 `friend_settings.session_list` **1 项**（是谁需人工核对，本文不抄号）；`observer.target_qq` **已配且指向来世** → 测试号往来**一条都不入库**；今日 0 个定时任务（G3） | **待 OTTO 决定**（已按决议 D10 挂起；技术上同时未满足 G1/G3） | 现在开＝看不到东西：没登录证据、不自己排期、入库也记不到。**与 G10 合并成一次问**，不单独占决策位 |
 | **G10** | **来世收件人切换** | `docs/first-week-experience-watch.md` §二 阶段三：**"只有 OTTO 能决定"**，本文不提议时间；切换动作＝移除测试私聊（`prelaunch-checklist.md` 第 1 条）＋ `session_list` 换成来世；届时 `target_qq` 才对得上，观察库才有效 | **待 OTTO 决定**（**已按决议 D10 挂起**：先不定，解冻条件＝G1/G3 当日证据＋C-09 已勾＋自愈七项通过） | 切换当天顺序固定：**先确认白名单剩 ≥1 项** → 再换 `session_list` → 再用气泡确认一条进出。切换后 24 小时内不判"效果"（那时看到的全是新鲜感） |
 
@@ -279,17 +281,17 @@ $PY data/probe_uptime_selftest.py     # 30 项固定样例，验证判据本身�
       **A（现配置，不动任何东西）** **机器人回复气泡** ＋ 日志 `core.event_bus:116` 出现该条消息行；
       **B（临时把 `target_qq` 指向测试号，先留痕、验完改回）** **机器人回复气泡（必达）** ＋ 观察库新增 1 行（**额外证据，不能替代气泡**）。
       **A 路径下"观察库新增"不可能发生**（`target_qq` 指向来世），别把它写进 A；**B 路径也不能只靠观察库那一行**——入库只证明入站被观察到了，不证明回复发出去了。
-- [ ] **G2** 分段送达（C-09）——**必须二选一，不许空着**：
+- [ ] **G2** 分段送达（C-09）——线上五文件与隔离副本一致、探针 24/24，但终验发现 C-25：TTS 已发、装饰停止文本时误记 0 段。补反例与修复后再勾。原决策说明如下：
       **① 实现四级判定**（`attempted`／`platform_accepted`／`all_segments_accepted`／`partial`；落点是 `core/services/sender_service.py` 里现在那个 `any_sent` 布尔）；
       **② 书面接受残余风险**：系统记录可能比 QQ 气泡多，首周**只认气泡**、不认"记录里发了"，也不许拿记录去回答"她说过什么"。
       选 ② 要写清代价：**这会同时污染历史与七日窗口**——记多了，之后所有关于"她说过什么"的判断都建立在一份多出来的记录上。
-      → **OTTO 2026-10-24 已选 ①（实现四级判定）**，见 `docs/otto-decisions-20261024.md` **D2**。**决策已定，工程未完成，所以本勾仍未勾上**——勾上要等 `data/probe_c09_c10.py` 的 10 条 `KNOWN_BUGS` 清零、默认模式自己退 0。
+      → **OTTO 2026-10-24 已选 ①（实现四级判定）**，见 `docs/otto-decisions-20261024.md` **D2**。24 条旧探针虽绿，C-25 是新增漏测，G2 继续未勾。
 - [ ] **G3** 触发来源已拍定：谁触发、断线/关机恢复后怎么办
 - [x] **G6** 危机告警可用 **或** OTTO 明确书面接受"无人接管时段不保"（本条不接受口头默认）
       → **OTTO 2026-10-24 选择"接受"，并已写成书面代价**：`docs/otto-decisions-20261024.md` **D1**。要点：C-17 不实现，系统里没有任何东西会通知 OTTO；与 WB-08 危机操作卡的冲突已明确——**无人值守时段视为无覆盖**，有人在场才按操作卡执行。**每次投放都要重新确认这一条仍被接受**，不许当作永久豁免。
 - [ ] **G7** A2 跑通；没跑通则首周只有 B 档，且写进预案
 - [ ] **G5** 出站闸门接通（**这条建议设为硬门槛**：它同时兜 C-12 泄漏／C-14 约定／成绩编造三类，且不依赖别的项。**C-13 追问不归它**——那是风格问题，属提示词层，闸门兜不住也不该兜）
-- [ ] **G4** 知识注入接通 **或** 书面接受"问表外曲目她一定空、只能靠提示词里那 50 首"
+- [x] **G4** 知识注入接通：2026-10-30 Codex 复核线上多日真实请求注入日志，见 C-15 销账记录。
 - [ ] **G8** 白名单项数 ≥1 且已核对
 - [ ] **G10** OTTO 明确说"可以给来世"，并指定切换窗口
 

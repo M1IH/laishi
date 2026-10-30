@@ -966,6 +966,123 @@ async def c10_06() -> Case:
     return c
 
 
+async def c10_06b() -> Case:
+    """C-24 补件：过期任务重新排期后必须持久化，二次重启能恢复同一未来任务。
+
+    Codex 终验指出 c10_06 只断言了第一次重排的内存 job。真实故障链是：
+    init_jobs_from_data 先 clear_session_schedule_state() 抹掉 next_trigger_time，
+    再 compute_next_trigger()+add_chat_job() 只注册内存 job —— 若此时再重启一次，
+    落盘的是一个「没有下次」的会话，主动侧重新停摆。
+    """
+    now = datetime.now(TZ).timestamp()
+    tmp = Path(tempfile.mkdtemp(prefix="ds05_stall_b2_"))
+    plugin = FakePlugin(base_config(auto_trigger_settings={"enable_auto_trigger": True}))
+    plugin.data_dir = tmp
+    plugin.session_data[UMO] = {"next_trigger_time": now - 3600, "unanswered_count": 0}
+
+    # 第一次启动：过期任务 → 重新上膛
+    await plugin.scheduler_service.init_jobs_from_data()
+    persisted_1 = plugin.session_data.get(UMO, {}).get("next_trigger_time")
+    has_persisted = isinstance(persisted_1, (int, float)) and persisted_1 > now
+
+    # 第二次启动：清空内存调度器，只用落盘的 session_data 重新恢复
+    # （模拟「job 执行前再重启一次」）
+    plugin.scheduler.jobs.clear()
+    await plugin.scheduler_service.init_jobs_from_data()
+    job2 = None
+    for j in plugin.scheduler.jobs.values():
+        args = j.kwargs.get("args") or []
+        if str(j.id) == UMO or (args and args[0] == UMO):
+            job2 = j
+            break
+    run_date2 = getattr(job2, "kwargs", {}).get("run_date") if job2 else None
+    recovered = isinstance(run_date2, datetime) and run_date2.timestamp() > now
+
+    c = Case(
+        cid="C10-06B",
+        layer="c10",
+        title="过期任务重排后必须落盘：二次重启仍能恢复同一未来任务（C-24）",
+        current=(
+            f"重排后落盘的 next_trigger_time="
+            f"{persisted_1 if persisted_1 is not None else '无(被清空未写回)'}；"
+            f"二次重启的 job={'有' if job2 else '无'}"
+            f"{'，run_date=' + run_date2.isoformat() if isinstance(run_date2, datetime) else ''}"
+        ),
+        expected="重排时同步写回 next_trigger_time 与调度元数据，二次重启可恢复未来任务",
+        evidence="scheduler_service.py:604-624 重排分支补 save_data() 前只注册内存 job",
+    )
+    c.ok = has_persisted and recovered
+    c.notes.append("c10_06 只验第一次重排，本条补二次重启——C-24 的真实故障面")
+    c.notes.append("重排语义保持：不补发过期内容、未回复计数/免打扰不动")
+    return c
+
+
+async def c09_07b() -> Case:
+    """C-25 补件：TTS 已送达但装饰阶段停止文本时，必须记 partial 而非 skipped。
+
+    旧行为 sender_service.py:562-564 直接 return DeliveryOutcome(status="skipped")，
+    丢掉已发出的语音段 → DeliverStage 按 0 段 abort 重调度 → RECORD 与未回复计数被
+    跳过 → 对方已收到语音、系统记没发，下次可能重复触达。
+    """
+    plugin = FakePlugin(
+        base_config(tts_settings={"enable_tts": True, "always_send_text": True})
+    )
+    sender = ScriptedSender(plugin, [True])  # 第一段=语音发送成功
+    plugin.sender_service = sender
+    err = ""
+
+    class TTS:
+        async def get_audio(self, text):
+            return "C:/tmp/fake_voice.mp3"
+
+    plugin.context.get_using_tts_provider = lambda umo=None: TTS()
+
+    async def fake_decorating_stop(*a, **k):
+        return ([], False)  # 装饰钩子停止文本
+
+    orig_hook = getattr(sender, "run_decorating_hooks", None)
+    outcome = None
+    try:
+        if orig_hook is not None:
+            sender.run_decorating_hooks = fake_decorating_stop
+        outcome = await sender.send_proactive_message(
+            UMO, "测试语音文案", event=FakeEvent()
+        )
+    except Exception as e:
+        err = repr(e)
+    finally:
+        if orig_hook is not None:
+            sender.run_decorating_hooks = orig_hook
+
+    c = Case(
+        cid="C09-07B",
+        layer="c09",
+        title="语音已送达+装饰停止文本 → 必须记 partial，不得记 skipped（C-25）",
+        current=(
+            f"调用异常: {err}"
+            if outcome is None
+            else (
+                f"status={getattr(outcome, 'status', None)} "
+                f"voice_sent={getattr(outcome, 'voice_sent', None)} "
+                f"segment_count_sent={getattr(outcome, 'segment_count_sent', None)}"
+            )
+        ),
+        expected="status=partial、voice_sent=True、segment_count_sent>=1（语音算送达）",
+        evidence="sender_service.py:566-576 装饰停止时若 is_tts_sent 走 partial 分支",
+    )
+    if outcome is None:
+        c.ok = False
+        return c
+    c.ok = (
+        getattr(outcome, "status", None) == "partial"
+        and bool(getattr(outcome, "voice_sent", False))
+        and getattr(outcome, "segment_count_sent", 0) >= 1
+    )
+    c.notes.append("对照：TTS 未成功且装饰停止时仍应按 0 段 abort（不误补发）")
+    c.notes.append("DeliverStage 收到 partial 应继续 RECORD，不再 abort 重调度")
+    return c
+
+
 async def c10_13() -> Case:
     """停摆标记校验器自检：别的会话 / 别的原因 / 时间不对，一律判红。"""
     now = datetime.now(TZ).timestamp()
@@ -1223,8 +1340,8 @@ async def c10_12() -> Case:
 # ---------------------------------------------------------------------------
 # 运行器
 # ---------------------------------------------------------------------------
-CORO = [c09_01, c09_02, c09_03, c09_04, c09_05, c09_06, c09_07, c09_08, c09_09, c09_10,
-        c09_11, c10_04, c10_05, c10_06, c10_07, c10_10, c10_11, c10_12, c10_13]
+CORO = [c09_01, c09_02, c09_03, c09_04, c09_05, c09_06, c09_07, c09_07b, c09_08, c09_09, c09_10,
+        c09_11, c10_04, c10_05, c10_06, c10_06b, c10_07, c10_10, c10_11, c10_12, c10_13]
 SYNC = [c10_01, c10_02, c10_03, c10_08, c10_09]
 
 
