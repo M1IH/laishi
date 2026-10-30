@@ -32,7 +32,8 @@
 - **新派并行任务**：**WB-12 已交付、待 Codex 复核**——`docs/wb12-short-reply-review.md`，文内 **Q1–Q5 待 OTTO 定**；**DS-08R2 工具补件已通过，DS-09 已派舞萌知识漏召修复**；C-19 仍待 20 轮 QQ 验收。派单见 `docs/assignments-20261021.md`。
 - **D4 前置复核（2026-10-30 Codex）**：心跳 v2 已上线；C-10 过期重排未持久化，二次重启可能丢任务（C-24），故主动侧前置仍未闭环。D4-⑦ 只有历史接口可找回的技术结论，缺空窗测试号回复气泡，七项尚未验收完成。
 - **终验状态（2026-10-30 Codex）**：仅 C-15 销账、pilot G4 已勾；C-09 因 C-25 TTS 已发误记 0 段、C-10 因 C-24 二次重启丢排期、C-16 因 C-23 空 fixed 放行原文均暂不销账，G2/G5 未勾；DS-10 已派补件，D4-⑦ 待空窗回复气泡实测。详见 `docs/codex-acceptance-20261030.md`。
-- **表情包（2026-10-30 已收官）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。遗留见 10-30 16:5x 条。
+- **DS-10 补件已交付（2026-10-30 21:3x）**：C-23/C-24/C-25 三缺陷均改完并部署上线，`probe_outbound_tristate.py` 39/39 + `probe_c09_c10.py` 26/26 全绿，线上源码四项改动逐一核对在位。**等 Codex 复核销账 C-09/C-10/C-16 并勾 G2。**
+- **表情包（2026-10-30 已收官）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。遗留见 10-30 16:5x 条。**触发率已量化结案（10-30 21:4x 条）：72h 实测 62.4%、当天 69.5%，瓶颈全在概率骰（模型命中时选图率 97.6%），OTTO 拍板维持现状不再调参。** 数据见 `docs/meme-trigger-quant-20261030.md`。
 - **主动消息（2026-10-27 19:27 复测通过）**：手动 `POST /api/jobs/{umo}/trigger` 一次即送达（7 字、未回复计数 1、下次 20:40:23）；今日 18:01/18:36 两次失败系 NapCat 掉线，**非链路缺陷**；遗留三处观测缺口（失败异常文本为空／掉线不告警／直发绕过 respond 管线）见 `docs/proactive-real-test-and-server-20261026.md` §七。
 - **已关闭**：**C-17 危机告警按 D1 不实现**——书面接受「无人接管时段无法保障」，代价见决议单 D1，**每次投放重新确认**，不是一次性豁免。
 - **本文件结构（2026-10-24 瘦身）**：缺陷原文 → `docs/defect-register.md`；2026-10-22 及以前的进展 → `docs/archive/WORK_LOG-archive-2026-10.md`。**查历史去归档，别只看这里。** 三方 git 约定（可 `status`/`diff`/`log`/`add`/`commit`，禁 `restore`/`checkout -- .`/`clean -fd`/`reset --hard`/`stash`）见 `docs/git-usage.md`。
@@ -86,12 +87,18 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 | C-18 | P1 | 三条定向测试 QQ 样例通过；首轮“你不配”失败后已补规则并重测通过 | 见 `defect-register.md` C-18 |
 | C-19 | P1 | 规则已部署；测试 QQ 有一条 20/7 超出长度比，待补 20 轮统计与修正 | 见 `defect-register.md` C-19 |
 | C-20 | P1 | emotionai 假样本已修并热重载，待测试 QQ 回复验收 | 见 `defect-register.md` C-20 |
-| C-23 | P0 | **已修待复核**：guard3 三态（blocked 阻断不发原文）+两钩子 stop_event+探针 39/39 | §C-23 |
-| C-24 | P0 | **已修待复核**：重排时落盘 next_trigger_time+元数据，C10-06B 二次重启可恢复 | §C-24 |
-| C-25 | P0 | **已修待复核**：TTS 已发+装饰停止记 partial（voice_sent=True），C09-07B 覆盖 | §C-25 |
+| C-23 | P0 | **已修待复核**：guard3 三态（blocked 阻断不发原文）+两钩子 stop_event+探针 39/39；线上源码已核对在位 | §C-23 |
+| C-24 | P0 | **已修待复核**：重排时落盘 next_trigger_time+元数据，C10-06B 二次重启可恢复；线上源码已核对在位 | §C-24 |
+| C-25 | P0 | **已修待复核**：TTS 已发+装饰停止记 partial（voice_sent=True），C09-07B 覆盖；线上源码已核对在位 | §C-25 |
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-10-30 21:4x / DeepSeek / **D4-⑦ 派回补齐：Codex 判「技术可行但第 7 断言未过」，缺端到端空窗气泡；场景 B 补拉未实现，需 OTTO 定夺。** Codex 明确两点：①缺「杀进程→空窗期发测试号→自动回来→收到针对该句的回复气泡」的端到端证据，不能把「接口可拉」当「已补」；②若决定不实现 7-a，须按 7-b 回 OTTO 重新确认 D1，**不能由工程侧自行豁免**。已把结论与待办写进 `docs/offline-window-recovery-20261030.md` 末尾。**补齐只差两件**：(a) 端到端空窗演练——停 AstrBot → 测试号 10000001 在空窗期发一句 → 启 AstrBot → 观察回复气泡（D4 四格记时刻/气泡/禁词）；(b) 场景 B 补拉实现（启动时查停摆窗口→`get_friend_msg_history`→去重→走正常管线），**是否投放前必需未拍板**。
+
+2026-10-30 21:4x / DeepSeek / **表情包触发率结案：量化实测 62.4%（当天 69.5%），瓶颈 100% 在概率骰；OTTO 拍板「现状挺好，不用再修」。** 72h 全量漏斗：133 次判定 → **骰子未命中 48 次(36.1%)压根没调情感模型**、命中后模型选图 83/85 = **97.6%**、最终带图 62.4%；10-30 已配 75，实测命中 72.9%（对上）。根因 `meme_manager/mixins/event_handlers.py:1355` `if self.emotion_llm_enabled and legacy_probability_hit:` —— 骰子不中直接跳过模型，`:1403` 只打空列表。**无 p²**：`:1570`/`:1757` 两处发送阶段均先读 `event extra` 复用首次骰，仅 `compat_prepare_message` 独立掷骰且不在 legacy 路径。10-29 的 10 次发送失败全是 NapCat `retcode=1200` 富媒体上传问题，与表情逻辑无关。体感「聊好多没发」= 25% 缺席成簇。完整数据与反推表见 `docs/meme-trigger-quant-20261030.md`。**本条止于记录，不再调参。**
+
+2026-10-30 21:3x / DeepSeek / **Codex 派回三项（C-23/C-24/C-25）隔天复验：线上源码核对 + 双探针全绿。** ①线上落地核对：`outbound_core.py:875/897` `GuardOutcome`+`guard3` 在、`main.py:44/47/148/219` `agent_blocked`/`decorating_blocked`+`stop_event()` 在、`scheduler_service.py:604-624` `data_lock` 内回写 `next_trigger_time` 等五字段+`save_data()` 在、`sender_service.py:562` `is_tts_sent` → `partial(voice_sent=True, sent=1)` 在。②`probe_outbound_tristate.py` **39/39 ALL PASS**（本地 Python 3.9 跑通）。③`probe_c09_c10.py` **26/26 全绿**（本地 3.9/3.13 均因 PEP604 与缺 astrbot 依赖跑不了，改回容器内 `/tmp/mmprobe2` 隔离副本；注意 `docker exec` 必须带 `-i` 才能喂 stdin heredoc）。④关键日志复现：`部分送达（1/2 段，失败段 [1]）已照常存档计数`、`已写入停摆标记 stall_state.json`、`重新排期至 2026-10-31 08:00:45（不补发过期内容）`、二次重启后 `已成功从文件恢复任务 08:00:36`。**仍待 Codex 复核后销账 C-09/C-10/C-16 并勾 G2。**
 
 2026-10-30 21:2x / DeepSeek / **Codex 派回的 C-23/C-24/C-25 三缺陷全部修复并部署（隔离副本 26/26 全绿）。** ①C-23：`outbound_core.py` 新增 `GuardOutcome`+`guard3()` 三态（`empty_input`/`clean`/`blocked`），`main.py` 两钩子遇 blocked 一律 `stop_event()` + 清正文 + 清历史，**不再把原文放回出站链路**；探针 `data/probe_outbound_tristate.py` 39/39（含源码静态断言防回退）。②C-24：重排分支在 `data_lock` 内把同一 `run_date` 的 `next_trigger_time`+调度元数据落盘，新增探针 C10-06B「二次重启恢复同一未来任务」实测通过。③C-25：装饰停止但 `is_tts_sent` → 返回 `partial`(voice_sent=True, sent=1) 而非 skipped，DeliverStage 继续 RECORD 不重调度；新增 C09-07B。④部署：一次重启，21:27 日志 `已成功从文件恢复任务 10000001 → 10-31 08:30:14` + 出站闸门 `armed songs=1340` + WS 反连正常；备份 `/opt/miruku/backups/pc-backup-20261030-212706.tar`。⑤顺带：新好友 10000003 白名单已加并实测正常回复（21:23 带图气泡）。**待 Codex 复核后销账 C-09/C-10/C-16 并勾 G2。**
 
