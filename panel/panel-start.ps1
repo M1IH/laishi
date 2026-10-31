@@ -101,7 +101,11 @@ while ((Get-Date) -lt $deadline) {
 if (-not $tun) { Write-Host '[WARN] Tunnel not ready after 30s; panel may show no data.' -ForegroundColor Yellow }
 
 # 5) Panel
+#    Bind 0.0.0.0 so a phone on the same WiFi can open the QR page at
+#    http://<lan-ip>:8642/scan (the panel relays to the server over SSH,
+#    so no extra cloud security-group port is needed).
 Write-Host "[3/3] Starting panel on http://127.0.0.1:$panelPort/ ..."
+$env:MIRUKU_PANEL_BIND = '0.0.0.0'
 $panel = Start-Process $py -ArgumentList ('"' + $panelPy + '"') -NoNewWindow -PassThru
 $deadline = (Get-Date).AddSeconds(30)
 $up = $false
@@ -109,13 +113,19 @@ while ((Get-Date) -lt $deadline) {
     Start-Sleep -Milliseconds 700
     try { Invoke-WebRequest "http://127.0.0.1:$panelPort/healthz" -UseBasicParsing -TimeoutSec 3 | Out-Null; $up = $true; break } catch {}
 }
-if ($up) { Start-Process "http://127.0.0.1:$panelPort/" }
+if ($up) {
+    Start-Process "http://127.0.0.1:$panelPort/"
+    $lan = (Get-NetIPAddress -AddressFamily IPv4 |
+            Where-Object { $_.IPAddress -notlike '127.*' -and $_.IPAddress -notlike '169.254.*' } |
+            Select-Object -First 1).IPAddress
+    if ($lan) { Write-Host "  Phone QR page (same WiFi): http://${lan}:$panelPort/scan" -ForegroundColor Cyan }
+}
 else { Write-Host '[WARN] Panel did not answer; check panel.py output.' -ForegroundColor Yellow }
 
 Write-Host ''
 Write-Host '  Ready. Closing this window stops the tunnel AND the panel.' -ForegroundColor Green
-Write-Host '  QQ login/QR: noVNC tab (http://127.0.0.1:6081/vnc.html).'
-Write-Host '  Credentials: see panel folder (Chinese file name).'
+Write-Host '  QQ login/QR: noVNC tab (http://127.0.0.1:6081/vnc.html) or /scan on your phone.'
+Write-Host '  Credentials: Status tab, "扫码登录" card (noVNC password + phone QR link).'
 Write-Host ''
 
 # 6) Keep the console alive while the tunnel lives; clean up when it dies

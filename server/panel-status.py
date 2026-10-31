@@ -8,6 +8,7 @@ import pathlib
 import re
 import socket
 import subprocess
+import urllib.request
 
 DATA = "/opt/miruku/astrbot/data"
 
@@ -68,22 +69,105 @@ ls_ = sh("docker exec astrbot python3 /AstrBot/data/laishi/ws_probe.py 0A").stri
 out["link"] = {"ws6199_established": int(ws) if ws.isdigit() else -1,
                "ws6199_listen": int(ls_) if ls_.isdigit() else -1}
 
-# ---- QQ 在线（SnowLuma hook 日志）：最后一条 login 相关行定生死 ----
-hook = sh('docker exec snowluma sh -c "grep -hE \'login detected|awaiting login\' /app/data/logs/*.log 2>/dev/null" | tail -3')
-hlines = [l.strip() for l in hook.splitlines() if l.strip()]
-last_hook = hlines[-1] if hlines else ""
+# ---- QQ 在线：优先问 SnowLuma HTTP 接口（权威）----
+# 2026-10-31: 原日志法被僵尸 --relaunch 进程污染（同秒打出 awaiting login，tail -1 永久取到它），
+#             导致面板与 heartbeat 一起误报掉线。日志法降级为接口不可用时的兜底。
+GW_CONF = "/var/lib/docker/volumes/qq-gateway-data/_data/config/onebot.json"
+
+
+def gw_token():
+    try:
+        with open(GW_CONF, encoding="utf-8") as f:
+            return (json.load(f).get("networks", {})
+                    .get("httpServers", [{}])[0].get("accessToken", ""))
+    except Exception:
+        return ""
+
+
+def gw_api(action, timeout=6):
+    """POST 到 SnowLuma 容器的 OneBot HTTP，返回解析后的 dict 或 None。"""
+    tok = gw_token()
+    ip = sh("docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' snowluma").strip()
+    if not tok or not ip:
+        return None
+    try:
+        req = urllib.request.Request(
+            f"http://{ip}:3000/{action}", data=b"{}",
+            headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json"},
+            method="POST")
+        raw = urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")
+        return json.loads(raw) if raw.strip() else None
+    except Exception:
+        return None
+
+
+qq_online = None
+qq_detail = ""
+stat = gw_api("get_status")
+if stat and isinstance(stat.get("data"), dict) and "online" in stat["data"]:
+    qq_online = bool(stat["data"].get("online"))
+    info = gw_api("get_login_info") or {}
+    uin = (info.get("data") or {}).get("user_id")
+    qq_detail = (f"SnowLuma 接口：online={str(qq_online).lower()}"
+                 + (f" uin={mask(uin)}" if uin else ""))
+else:
+    # 兜底：日志法（近 7 个文件，取**最后一条 login detected**，避免被 awaiting 覆盖）
+    hook = sh('docker exec snowluma sh -c "ls -1 /app/data/logs/*.log 2>/dev/null | sort | tail -7"')
+    files = " ".join(hook.split())
+    last_hook = ""
+    if files:
+        last_hook = sh(
+            "docker exec snowluma sh -c "
+            f"\"grep -h 'login detected' {files} 2>/dev/null | tail -1\"").strip()
+    qq_online = True if last_hook else None
+    qq_detail = last_hook or "接口不可用且日志无登录记录"
+
 wscl = sh('docker exec snowluma sh -c "grep -h \'WS-Client\' /app/data/logs/*.log 2>/dev/null" | tail -3')
 wlines = [l.strip() for l in wscl.splitlines() if l.strip()]
 last_ws = wlines[-1] if wlines else ""
 ab_ws = sh("docker logs astrbot --tail 300 2>&1 | grep -E 'aiocqhttp' | tail -2")
 out["qq"] = {
-    "online": ("login detected" in last_hook) if last_hook else None,  # None=未知
-    "detail": last_hook,
+    "online": qq_online,
+    "detail": mask(qq_detail)[:300],
     "wsclient": ("connected" if ("connected" in last_ws and "closed" not in last_ws)
                  else ("disconnected" if last_ws else "unknown")),
     "wsclient_detail": last_ws,
     "adapter_log": ab_ws.strip()[-300:],
 }
+
+# ---- 扫码凭证（面板状态栏直接展示，避免每次翻文件）----
+cred = {}
+vnc_pw = sh('docker exec snowluma sh -c "cat /app/data/config/vnc-password 2>/dev/null"').strip()
+if vnc_pw:
+    cred["novnc_password"] = vnc_pw
+    cred["novnc_url"] = "http://127.0.0.1:6081/vnc.html"
+webui = None
+try:
+    raw = sh('docker exec snowluma sh -c "cat /app/data/config/webui.json 2>/dev/null"')
+    webui = json.loads(raw) if raw.strip() else None
+except Exception:
+    webui = None
+if isinstance(webui, dict):
+    cred["snowluma_webui"] = "http://127.0.0.1:5099/"
+    cred["snowluma_must_change_pw"] = bool(webui.get("mustChangePassword"))
+# 手机扫码页（/opt/miruku/server/qrpage.py，systemd miruku-qrpage）
+# 注意：这里破例输出 token —— OTTO 明确要求「凭证显示在状态栏」，避免每次翻文件。
+# 该 token 等价于「能看/能点 QQ 桌面」，所以 qrpage 只应绑 127.0.0.1 + 走隧道/反代。
+try:
+    tok = pathlib.Path("/opt/miruku/logs/qrpage-token").read_text(encoding="utf-8").strip()
+except Exception:
+    tok = ""
+if tok:
+    base = ""
+    try:
+        base = pathlib.Path("/opt/miruku/server/qrpage-base").read_text(encoding="utf-8").strip()
+    except Exception:
+        base = ""
+    qr_port = "8663"
+    cred["qrpage_token"] = tok
+    cred["qrpage_url"] = (base.rstrip("/") + "/?t=" + tok) if base else f"http://127.0.0.1:{qr_port}/?t={tok}"
+    cred["qrpage_local"] = f"http://127.0.0.1:{qr_port}/?t={tok}"
+out["cred"] = cred
 
 # ---- 机器人 ----
 cmd = jload(os.path.join(DATA, "cmd_config.json"))

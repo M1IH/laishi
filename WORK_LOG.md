@@ -37,6 +37,7 @@
 - **表情包（2026-10-31 09:4x 二次调整）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。**10-30 量化结案（72h 62.4%、瓶颈全在概率骰）后，10-31 OTTO 仍反馈偏少，`probability` 由 75 提到 90 并重启生效；同日纠正一条误判——流式模式下表情图是独立消息、不出现在 `Prepare to send` 行里，用 QQ 历史核验 40/40 全部真实送达，无丢图。OTTO 定：表情包到此为止，不再追。** 数据见 `docs/meme-trigger-quant-20261030.md`。
 - **联网检索（2026-10-31 09:4x）**：新好友问「穿心怎么打」被编造回答。根因=persona 自认懂舞萌（L24 给了 14065 分/金框/能聊谱面）+ L8 搜索只是描述性 + L17 禁止「我这就去查」→ 24h 内 anysearch 零调用。**已改 DB 生效版 persona（3524→3684 字）：遇具体谱面名/术语/新梗/作品/赛事/机型/新闻，先搜再答，搜不到就说不清楚、不许编；并声明「搜东西不用报备、不算描述步骤」。已重启加载，待 OTTO 真实对话验收模型是否真调 anysearch。** 备份脚本 `server/patch-persona-search.py`。
 - **回复延迟（2026-10-31 10:2x 三项优化）**：朋友反馈「回消息太慢」，只读排查后定位两处真因——①anysearch 搜索结果 1~3 万字符原样进会话历史、每轮重付（核心截断阈值 27500 token 约合 10 万字符，等于不设防）；②表情包情感模型每轮多一次 LLM 调用（1.4~6.5s）。已上线 `tool_result_max_chars=4000` 截断、`probability` 90→75、批量搜索引导提示词（工具间无法并行，实测 batch 仅 1.78x，截断才是主收益）。含 2 次搜索的一轮 13.7~16.2s→10.5s，无工具轮 5.5~6.4s。补丁 `server/patches/20261031-anysearch-truncate/`，数据见 `docs/latency-tuning-20261031.md`。**待 OTTO/朋友长期验收体感。**
+- **扫码登录（2026-11-01 00:3x）**：面板「扫码登录」卡片直显 noVNC 密码 + 手机扫码页链接；手机开 `http://<PC局域网IP>:8642/scan` 即可看 QQ 桌面、唤出窗口、点刷新、点击，全程走 PC 面板中转（SSH 到服务器 `qrpage.py`），不动云安全组。面板 `online` 误判同时修掉（改问 SnowLuma 接口）。
 - **主动消息（2026-10-27 19:27 复测通过）**：手动 `POST /api/jobs/{umo}/trigger` 一次即送达（7 字、未回复计数 1、下次 20:40:23）；今日 18:01/18:36 两次失败系 NapCat 掉线，**非链路缺陷**；遗留三处观测缺口（失败异常文本为空／掉线不告警／直发绕过 respond 管线）见 `docs/proactive-real-test-and-server-20261026.md` §七。
 - **已关闭**：**C-17 危机告警按 D1 不实现**——书面接受「无人接管时段无法保障」，代价见决议单 D1，**每次投放重新确认**，不是一次性豁免。
 - **本文件结构（2026-10-24 瘦身）**：缺陷原文 → `docs/defect-register.md`；2026-10-22 及以前的进展 → `docs/archive/WORK_LOG-archive-2026-10.md`。**查历史去归档，别只看这里。** 三方 git 约定（可 `status`/`diff`/`log`/`add`/`commit`，禁 `restore`/`checkout -- .`/`clean -fd`/`reset --hard`/`stash`）见 `docs/git-usage.md`。
@@ -96,6 +97,8 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-11-01 00:3x / DeepSeek / **手机扫码页 + 面板凭证栏 + 面板掉线误判，三件一起修。** ①面板误判：`server/panel-status.py` 与心跳同源（`tail -3` 取到僵尸进程的 `awaiting login`），改为优先问 SnowLuma `get_status`/`get_login_info`、日志法降级兜底；同一时刻新旧版对照 `online:false`（旧）vs `online:true`（新）。②凭证入栏：新增「扫码登录」卡片，展示 noVNC 密码（读容器 `/app/data/config/vnc-password`）、noVNC 地址、SnowLuma WebUI 首启改密提醒；掉线横幅也直接给手机链接。③手机扫码页：新增 `server/qrpage.py`（systemd `miruku-qrpage`，绑 127.0.0.1:8663，token 在 `/opt/miruku/logs/qrpage-token`），自带 XWD→PNG 转换（容器无 PIL/convert）、按 QQ 窗口裁剪、`/tap` `/refresh` `/unmap` 三个动作。**手机入口走 PC 面板中转** `http://<PC局域网IP>:8642/scan`，无需动阿里云安全组。实测 `/scan` 200、`/scan/shot` 200 + `X-Crop 560,300` 登录窗 320x460、整屏 1920x1080；点击偏移已内建（xdotool 比截图横坐标多 240px，`TAP_OFFSET_X`）。**遗留**：「刷新」按钮坐标 `REFRESH_BTN=(150,400)` 还没在真实掉线场景验证过。
 
 2026-10-31 23:5x / DeepSeek / **心跳告警误报修复：QQ 实际在线却全天报 awaiting。** 现象：当天 460 条 `QQ_OFFLINE`，但 `get_status` 返回 `online:true`、17:39 还在正常发图。根因：`heartbeat.sh` v3 用 `tail -1` 取最后一条登录事件，而 13:03:01 同一秒内既打 `login detected: PID=25627`（主进程）又打 `awaiting login: PID=13666`（2 天前的 `--relaunch` 残留进程）→ 稳定取到 awaiting。修复：改为优先向 SnowLuma 的 OneBot HTTP 接口要权威状态（`get_status` + `get_login_info`），日志法降级为兜底，新增 `login_state=online-api`。验证：干跑与正式运行均 `status=OK qq_login=online-api`，sent-flag 自动清除，清掉误报产物 `needs-rescan`，线上与仓库 md5 一致。详见 `docs/heartbeat-false-alarm-20261031.md`。
 
