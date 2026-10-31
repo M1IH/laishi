@@ -97,6 +97,8 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 ## 最新进展（按时间倒序追加，旧记录不删）
 
+2026-10-31 23:4x / DeepSeek / **补记历史遗漏：C-09/C-10/C-23/C-24/C-25 的线上代码改动此前只存在于服务器和 `.tmp/`，仓库里没有。** 已把线上实跑版 5 个文件原样导出入仓 `server/patches/20261031-proactive-chat-c09-c10/`（`sender_service` / `split_delivery` / `history_writer` / `flow_orchestrator` / `scheduler_service`），README 记录每个文件对应哪个缺陷、关键改动锚点（`DeliveryOutcome`、`:562` C-25 分支、`_mark_stall_state`、C-24 的 `data_lock` 回写）、26/26 + 39/39 探针结果与部署步骤。**做法**：`docker exec tar` 从容器导出 → `docker cp` → `scp` 回本地 → 按相对路径入仓，并用 md5 逐个核对本地副本与线上一致（首轮发现 `.tmp/c09ship` 已过时，`sender_service`/`scheduler_service` 两文件后续又改过，故重新导出）。 / 影响：此前仓库无法重现线上行为，现在可回溯；另补记 anysearch 截断补丁同一处理方式（`server/patches/20261031-anysearch-truncate/`）。
+
 2026-10-31 10:2x / DeepSeek / **回复太慢排查完成：三项优化上线，含 2 次搜索的一轮从 13.7~16.2s 降到 10.5s。** 根因不是网络（容器到 api.deepseek.com 握手 9~15ms）而是：①anysearch 返回 1~3 万字符原文全部留在会话历史，每轮重付，核心阈值 `TOOL_RESULT_MAX_ESTIMATED_TOKENS=27_500`（约 10 万字符）根本不管；②表情包情感模型独立跑一次 LLM，实测 1.4~6.5s。 / 改法：`tool_result_max_chars=4000` 截断（batch 按查询数放大、上限 20000）+ `probability` 90→75 + 批量搜索引导提示词；工具间无法并行（`tool_loop_agent_runner.py:1195` 是 for 循环逐个 await），实测 batch 只 1.78x，截断才是主收益。 / 实测：context_guard 前后只增 8930 字符（改前同场景 14435+），无工具轮 5.5~6.4s，表情图仍正常出。补丁入仓 `server/patches/20261031-anysearch-truncate/` + `server/deploy-anysearch-truncate.sh`，数据见 `docs/latency-tuning-20261031.md`。
 
 2026-10-31 / Codex / **投放前 1–4 项复核完成：0-a/G1/G3/G7(A2)/G8 有当日证据，已校准 pilot 清单；正式投放仍 No-Go。** 阿里云服务器与心跳在线；测试 QQ 当日入站和实收气泡一致；仅测试会话 `session_enabled` 关时无气泡、恢复后同句有气泡，原值已恢复；主动名单仅测试号、白名单 3 项非空 / 影响：约局与查证抽检过界未见，疲惫回复有轻度建议化留观察；G10 未授权，D1 需投放时重确认 / 下一步：OTTO 审视风险与切换窗口前，不动来世主动收件人。详见 `docs/prelaunch-final-gates-20261031.md`。
