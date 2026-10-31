@@ -136,7 +136,9 @@
 - **但换出一个新事实**：派发在循环之后**只调用一次** → 观察侧每"一次主动消息"记 **1 行**，而 QQ 端可能有 **2 个气泡**（分段）。**出站记录行数 ≠ 气泡数**，验收一律以气泡为准，别拿数据库行数当送达证据。详见 `docs/reconnect-experience-acceptance.md` §六-7。
 - **验收**：发一条两段式主动消息 → QQ 2 气泡、观察侧 1 行，**这是正常的**。
 
-### C-09 P0｜分段投递"任一段成功"被当成"整条送达"（2026-10-22，WB-06 发现）—— **终验发现 C-25，暂不销账**
+### C-09 P0｜分段投递"任一段成功"被当成"整条送达"（2026-10-22，WB-06 发现）—— **2026-10-31 Codex 销账**
+
+**状态**：**2026-10-31 Codex 销账**；C-25 语音已发反例补齐后终验。
 
 - **现象**：`sender_service.py` L467 docstring 写明"任一环节实际送出至少一条即视为成功"；L519 `any_sent = is_tts_sent`，L552–567 逐段累加，L599–603 仅在**全部失败**时返回 False。
 - **后果**：第 1 段成功、第 2 段失败 → 返回成功 → `flow_orchestrator.py` L219–225 未回复计数 +1、L191–196 把**整段全文**写进对话历史。QQ 端只有半句，系统记录是完整故事，且**没有任何标记**。
@@ -149,7 +151,11 @@
 
 **同日复核更正（覆盖上一句结论，历史保留）**：发现 C-25——TTS 语音已发、装饰钩子停止文本时发送函数提前返回 `skipped`，上层误按 0 段 abort；24 条探针漏此分支。C-09 暂不销账，G2 撤回勾选，派回补件。详见终验文档。
 
-### C-10 P0｜停机跨过预定时刻 >60 秒后，主动消息静默停摆（2026-10-22，WB-06 发现）—— **已修复接入（2026-10-30 17:49，DeepSeek，保守+重排双路径）**
+**2026-10-31 Codex 终验销账**：线上 `sender_service.py` 与隔离副本哈希一致；容器探针复跑 26/26、KNOWN_BUGS 0，新增 C09-07B 对 TTS 已发、装饰停止的真实函数分支断言 `partial/voice_sent/已发 1 段`；原 partial 用例覆盖继续 RECORD/计数。G2 按工程判据勾选；真实 QQ 第二段失败仍待观察。见 `docs/codex-acceptance-20261031.md`。
+
+### C-10 P0｜停机跨过预定时刻 >60 秒后，主动消息静默停摆（2026-10-22，WB-06 发现）—— **2026-10-31 Codex 销账**
+
+**状态**：**2026-10-31 Codex 销账**；双路径于 2026-10-30 17:49 接入，C-24 持久化补件通过后终验。
 
 - **现象**：`scheduler_service.py` L157 有效条件 `now < next_trigger + 60`；超时则 `init_jobs_from_data` 清状态不恢复；运行配置 `auto_trigger_settings.enable_auto_trigger = false`（2026-10-22 只读实测）→ L421 返回 `"disabled"`，**没有第二条重新上膛的路径**。私聊唯一重排入口是 `event_handlers.py` L161–166 `on_friend_message` 末尾的 `schedule_next_chat_and_save(reset_counter=True)`。
 - **后果**：**夜间关机 8 小时必然跨过该窗口** → 次日开机后主动消息永久停发，直到来世本人先说话。且全程只有 info/debug 级日志，OTTO 看到的表现是"她最近不主动了"，与"设计上的克制"**无法从行为上区分**。
@@ -158,6 +164,8 @@
 - **接入记录（2026-10-30）**：两个方向都做了，按配置分流——`init_jobs_from_data` 过期分支：`enable_auto_trigger=true` → 按当前配置**重新上膛**（compute_next_trigger 推到下一可发时刻，**不补发过期内容**）；`false` → 写显式停摆标记 `<data_dir>/stall_state.json`（`{sessions:{sid:{session_key,reason="persisted_task_expired",stalled_at(UTC),expired_next_trigger,unanswered_count,auto_trigger_enabled,recover_when="next_peer_message"}}}`，幂等合并），warning 日志措辞含「主动消息链路已停摆」。**验收**：探针 C10-05/06 全绿 + 线上 17:49 重启实测「已成功从文件恢复任务: 私聊 10000001, 执行时间: 2026-10-31 08:30:52」。注意：线上 auto_trigger 已开（true），停摆标记分支主要服务未来关掉 auto 的场景；探针 KNOWN_BUGS 清零。待 Codex 复核销账。
 
 **Codex 复核（2026-10-30）**：双路径离线探针通过，但 auto=true 过期分支的新 job 未写回持久化调度字段，二次重启前会丢；17:49 锚点是未过期任务恢复，不能覆盖此分支。**暂不销账**，派回 C-24；见 `docs/codex-acceptance-20261030.md`。
+
+**2026-10-31 Codex 终验销账**：线上 `scheduler_service.py` 与隔离副本哈希一致；C10-06B 隔离用例覆盖过期重排与二次恢复，源码确认新时间和元数据同源写回并 `save_data()`；本日三次杀进程均恢复未来任务。假存储只计调用的限制见 `docs/codex-acceptance-20261031.md`。
 
 ### C-08 P1｜故事七日窗口没有持久化载体
 
@@ -264,7 +272,9 @@ async def inject_knowledge(self, event, req):
 
 **Codex 销账（2026-10-30）**：此前离线/钩子验收已通过；本次只读线上日志复核 10-27、10-28、10-30 均有 `[Miruku knowledge] armed: platform=miruku, injections=1`，真实请求命中分支已运行。C-15 接入缺陷关闭；生成内容准确性另按知识与回复质量验收。见 `docs/codex-acceptance-20261030.md`。
 
-### C-16 P1｜`[Profile: 爱好=舞萌]` 泄漏到回复正文（2026-10-22 21:02 实测发现）
+### C-16 P1｜`[Profile: 爱好=舞萌]` 泄漏到回复正文（2026-10-22 21:02 实测发现）—— **2026-10-31 Codex 销账**
+
+**状态**：**2026-10-31 Codex 销账**；C-23 三态阻断补件通过后终验。
 
 **现象**：问「你 b50 里最高是哪首」，回复末尾带上了一行 `[Profile: 爱好=舞萌]`。来源是 `astrbot_plugin_soulmap`（`main.py:195` 有 `profile_pattern`，`block_pattern` 也在，但没拦住出站正文）。
 
@@ -277,6 +287,8 @@ async def inject_knowledge(self, event, req):
 **接入记录（2026-10-30 DeepSeek，C-16 已接入）**：以 AstrBot 插件 `astrbot_plugin_miruku_outbound` v0.1.0 接入运行链路（`on_agent_done(priority=1)` + `on_decorating_result(priority=1)` 双钩子，后者覆盖主动消息直发路径）。验收：探针 53+9 与 102/102 全绿（KNOWN_BUGS 清零）；**168 条真实历史重跑，清洗后 L1 残留 0**（原命中 7 条全为结构标记类，剥离保留正文无误伤）。**三态接口按取舍落地**：空 fixed → agent_done 路径保留原文照发、decorating 路径保原文——理由：真实运营中 thought 已被 emotionai 剥离，completion_text 整条为独白的场景几乎不存在；保原文防的是更严重的「发空消息」事故。若未来观测到整条独白误发，再改 `guard()` 三态返回。部署坑与验收明细见 WORK_LOG 2026-10-30 17:0x 条与 `docs/outbound-guard-verdict.md` §十。
 
 **Codex 复核（2026-10-30）**：双钩子和数据接入成立，但**不接受空 fixed 保原文**。合成纯 `<thought>`、`[Profile:]`、`<system_reminder>` 均被 core 清为空，插件两条路径会保留原文；历史 168 条不含该边界，不能抵消反例。**C-16 暂不销账**，新缺陷 C-23 派回；见 `docs/codex-acceptance-20261030.md`。
+
+**2026-10-31 Codex 终验销账**：线上双文件哈希与本地一致，Launcher Python 复跑三态与双钩子探针 39/39；纯内部标记被 `blocked` 并停止事件，agent_done 同步清历史；正常正文保留。G5 按工程接入口径勾选。见 `docs/codex-acceptance-20261031.md`。
 
 
 ---
@@ -488,7 +500,7 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：设计明确三态：原始输入空、清洗后仍有正文、原始非空但清洗后为空。第三态须阻断发送并记录可观察失败；如需重生成，仅允许一次受控尝试，仍空则不发送。两个钩子均补纯标记反例，并验证 agent 历史不会保留违规原文。只在隔离副本和测试号验；Codex 审后再部署。
 
-**状态**：**已修待复核**（2026-10-30 21:27 部署，21:3x 隔天复验通过：线上源码核对 + 探针全绿）。修复记录见本节末尾。
+**状态**：**2026-10-31 Codex 销账**（2026-10-30 21:27 部署；终验方式见本节末尾）。
 
 **修复记录（2026-10-30，DeepSeek）**
 
@@ -501,6 +513,8 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **隔天复验（2026-10-30 21:3x，DeepSeek）**：线上源码核对 `outbound_core.py:875 class GuardOutcome` / `:893 sendable` / `:897 guard3` 在位；`main.py:44 agent_blocked`、`:47 decorating_blocked`、`:148 stop_event()`（agent_done 分支）、`:219 stop_event()`（decorating 分支）均在位。`python data/probe_outbound_tristate.py` 本地 Python 3.9 **39/39 ALL PASS**（含 14 项钩子层 + 9 项源码静态断言 + 16 项三态/混合/一致性）。
 
+**2026-10-31 Codex 销账**：独立复跑 39/39，并比对线上双文件哈希一致；复核 `stop_event()`、正文清空及 agent 历史同步。证据见 `docs/codex-acceptance-20261031.md`。
+
 ### C-24 P0｜C-10 过期任务重新排期后未持久化（2026-10-30 Codex 终验发现）
 
 **现象**：`scheduler_service.init_jobs_from_data()` 对 auto=true 的过期任务先 `clear_session_schedule_state()` 删除 `next_trigger_time`，随后 `compute_next_trigger()` + `add_chat_job()` 只注册内存调度器；没有把新时间/元数据写回 `session_data`。方法末尾 `save_data()` 将已清空的调度字段落盘。17:49 线上日志对应未来任务恢复，未触发这条过期分支。
@@ -509,7 +523,7 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：重排时把同一个 `run_date` 对应的 `next_trigger_time` 和调度元数据持久化，保持未回复计数、免打扰与不补发旧内容的现有语义；补隔离回归“过期→重排→持久化→二次重启→恢复同一未来任务”、重复恢复幂等、auto=false 标记不回归。Codex 复核后再部署。
 
-**状态**：**已修待复核**（2026-10-30 21:27 部署，21:3x 隔天复验通过：线上源码核对 + 探针全绿）。修复记录见本节末尾。
+**状态**：**2026-10-31 Codex 销账**（2026-10-30 21:27 部署；终验方式见本节末尾）。
 
 **修复记录（2026-10-30，DeepSeek）**
 
@@ -520,6 +534,8 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **隔天复验（2026-10-30 21:3x，DeepSeek）**：线上 `scheduler_service.py:604-624` 确认 `data_lock` 内回写 `next_trigger_time`/`last_scheduled_at`/`last_schedule_min_interval_seconds`/`last_schedule_max_interval_seconds`/`last_schedule_random_interval_seconds` 五字段后 `await plugin.storage_service.save_data()`。容器内 `/tmp/mmprobe2` 隔离重跑全量探针 **26/26 全绿**，C10-06B 日志复现：「已按当前配置重新排期至 2026-10-31 08:00:45（不补发过期内容）」→ 清空调度器模拟二次重启 → 「已成功从文件恢复任务: 私聊 10001, 执行时间: 2026-10-31 08:00:36」。
 
+**2026-10-31 Codex 销账**：独立复跑 26/26、比对线上调度文件哈希一致，并在三次进程重启中核对未来任务恢复日志。假存储的验证限制见 `docs/codex-acceptance-20261031.md`。
+
 ### C-25 P0｜TTS 已发送而装饰钩子停止文本时被误记为 0 段（2026-10-30 Codex 终验发现）
 
 **现象**：`sender_service.send_proactive_message()` 先发送 TTS，若 `is_tts_sent=True` 且 `always_send_text=True`，随后调用 `run_decorating_hooks()`；事件 stopped 时后者返回 `([], False)`，发送函数直接返回 `DeliveryOutcome(status="skipped")`，未携带已发语音的段数。`DeliverStage` 因 status=skipped abort 并重调度，RECORD/未回复计数被跳过。
@@ -528,7 +544,7 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 
 **派回 DeepSeek**：隔离探针先补该反例（改前红），修后 outcome 至少应记录 `voice_sent=True`、`segment_count_sent=1`、`segment_count_planned` 准确，`DeliverStage` 继续 RECORD；对照 TTS 未成功且装饰停止时仍按 0 段 abort。不得把语音已发路径误补发。Codex 复核后再勾 G2。
 
-**状态**：**已修待复核**（2026-10-30 21:27 部署，21:3x 隔天复验通过：线上源码核对 + 探针全绿）。修复记录见本节末尾。
+**状态**：**2026-10-31 Codex 销账**（2026-10-30 21:27 部署；终验方式见本节末尾）。
 
 **修复记录（2026-10-30，DeepSeek）**
 
@@ -538,3 +554,5 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 - 未误补发：partial 路径不重发任何段。
 
 **隔天复验（2026-10-30 21:3x，DeepSeek）**：线上 `sender_service.py:562` 确认 `if not should_send:` 内先判 `is_tts_sent` → `DeliveryOutcome(status="partial", segment_count_planned=2, segment_count_sent=1, segment_index_failed=[1], voice_sent=True)` + warning；否则 `skipped`（`segment_count_planned=1 if tts_attempted else 0`）。容器内探针 **26/26 全绿**，C09-07B 断言 `status=="partial"`、`voice_sent=True`、`segment_count_sent>=1` 通过；对照路径（TTS 未成功+装饰停止）仍 `skipped` 并 abort。
+
+**2026-10-31 Codex 销账**：独立复跑 26/26、比对线上发送文件哈希一致，确认 TTS 已发分支记 `partial`、已发 1 段，未发分支仍 `skipped`。见 `docs/codex-acceptance-20261031.md`。
