@@ -69,21 +69,55 @@ print(n)
 # 改为：①扫全部日志（近 7 个文件）取最后一次登录事件；②今天日志近期有活动 = 正向确认。
 qq_online=false
 login_state=no-signal
-TODAY=$(date +%F)
-last_login=$(ls -1 "$SNOW_LOGDIR"/snowluma-*.log 2>/dev/null | sort | tail -7 \
-  | xargs -r grep -hE 'login detected|awaiting login' 2>/dev/null | tail -1)
-case "$last_login" in
-  *"login detected"*) qq_online=true;  login_state=online ;;
-  *"awaiting login"*) qq_online=false; login_state=awaiting ;;
-  *) qq_online=false; login_state=no-signal ;;
-esac
-# 正向确认：今天日志 15 分钟内有写入 = 会话真的在跑（事件在流动）。
-# 只用于把 no-signal 升级成 online，绝不覆盖 awaiting（凭据失效时日志仍在轮询，不能算在线）。
-if [ "$login_state" = no-signal ]; then
-  tf="$SNOW_LOGDIR/snowluma-$TODAY.log"
-  if [ -f "$tf" ] && [ $(( $(date +%s) - $(stat -c %Y "$tf" 2>/dev/null || echo 0) )) -le 900 ]; then
-    qq_online=true; login_state=online-by-activity
+
+# v4 修复（2026-10-31 实锤 bug）：日志法会被僵尸 relaunch 进程污染。
+# 13:03:01 同一秒内既打 login detected: PID=25627（主进程）又打
+# awaiting login: PID=13666（2 天前的 --relaunch 残留进程），tail -1 取到后者，
+# 于是 QQ 明明在线（get_status online:true）却全天报 awaiting，一天刷 460 条告警。
+# 改为优先向 SnowLuma 自己的 OneBot HTTP 接口要权威状态；日志法降级为兜底。
+SNOW_TOKEN_FILE=/var/lib/docker/volumes/qq-gateway-data/_data/config/onebot.json
+SNOW_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' snowluma 2>/dev/null)
+api_online=""
+if [ -n "$SNOW_IP" ]; then
+  api_token=$(python3 -c "import json;print(json.load(open('$SNOW_TOKEN_FILE'))['networks']['httpServers'][0]['accessToken'])" 2>/dev/null)
+  if [ -n "$api_token" ]; then
+    api_st=$(curl -s -m 6 -X POST "http://$SNOW_IP:3000/get_status" -H "Authorization: Bearer $api_token" -H "Content-Type: application/json" -d '{}' 2>/dev/null)
+    case "$api_st" in
+      *'"online":true'*) api_online=true ;;
+      *'"online":false'*) api_online=false ;;
+    esac
+    if [ "$api_online" = true ]; then
+      api_li=$(curl -s -m 6 -X POST "http://$SNOW_IP:3000/get_login_info" -H "Authorization: Bearer $api_token" -H "Content-Type: application/json" -d '{}' 2>/dev/null)
+      case "$api_li" in
+        *'"user_id"'*) : ;;
+        *) api_online="" ;;
+      esac
+    fi
   fi
+fi
+
+if [ "$api_online" = true ]; then
+  qq_online=true; login_state=online-api
+elif [ "$api_online" = false ]; then
+  qq_online=false; login_state=awaiting
+else
+  # 兜底：API 不可用时的日志法（保留 v3 的近 7 个文件 + 活动升级）
+  TODAY=$(date +%F)
+  last_login=$(ls -1 "$SNOW_LOGDIR"/snowluma-*.log 2>/dev/null | sort | tail -7 \
+    | xargs -r grep -hE 'login detected|awaiting login' 2>/dev/null | tail -1)
+  case "$last_login" in
+    *"login detected"*) qq_online=true;  login_state=online ;;
+    *"awaiting login"*) qq_online=false; login_state=awaiting ;;
+    *) qq_online=false; login_state=no-signal ;;
+  esac
+  # 正向确认：今天日志 15 分钟内有写入 = 会话真的在跑（事件在流动）。
+  # 只用于把 no-signal 升级成 online，绝不覆盖 awaiting（凭据失效时日志仍在轮询，不能算在线）。
+  if [ "$login_state" = no-signal ]; then
+    tf="$SNOW_LOGDIR/snowluma-$TODAY.log"
+    if [ -f "$tf" ] && [ $(( $(date +%s) - $(stat -c %Y "$tf" 2>/dev/null || echo 0) )) -le 900 ]; then
+      qq_online=true; login_state=online-by-activity
+    fi
+    fi
 fi
 
 jobs=$(curl -s --max-time 8 http://127.0.0.1:4100/api/jobs 2>/dev/null || echo '{}')

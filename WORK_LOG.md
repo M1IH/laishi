@@ -31,7 +31,7 @@
 - **C-22（2026-10-26）**：历史 `content` 被 `str()` 成 Python 字面量，导致模型的私有 reasoning 被当对话正文回放、图片退化成 base64 正文。**已修（context_guard v0.5.0 在请求组装前还原 parts）、探针 30/30、线上库实测 `10000001` 2,677,924→15,911 字符、反序列化残留 0**，待 Codex 验收。**存储侧未洗（洗库需单独授权）；`str()` 化的第三方插件按边界未改。**
 - **新派并行任务**：**WB-12 已交付、待 Codex 复核**——`docs/wb12-short-reply-review.md`，文内 **Q1–Q5 待 OTTO 定**；**DS-08R2 工具补件已通过，DS-09 已派舞萌知识漏召修复**；C-19 仍待 20 轮 QQ 验收。派单见 `docs/assignments-20261021.md`。
 - **D4 当前复核（2026-10-31 Codex）**：C-10/C-24 已销账；连续三轮杀 AstrBot 进程均自动恢复，QQ 适配器约 20 秒连接、主动任务恢复、测试号均收到对应被动回复，心跳 ≤5 分钟 OK。10:01 严格空窗消息经补拉回到正常管线、OTTO 确认收到对应气泡，第 7 项通过，D4 总闸已勾；正式投放仍 No-Go，其他放行项未齐。
-- **D4-⑦ 已补齐（2026-10-31 09:1x）**：场景 B 补拉插件 `astrbot_plugin_miruku_backfill` v0.1.0 上线，端到端演练真实跑通（`发现空窗消息 1 条` → `已补拉` → `Prepare to send: ?这才早上九点呢`），重启复验幂等 `注入=0 dup=0`；探针 26/26。顺带修掉 heartbeat v3 跨天误报掉线（`login detected` 只在登录瞬间打一次，v2 只读两天日志必然 `no-signal`）。**口径差异**：Codex 要求「杀 AstrBot 进程」演练，本轮用「重启+拨基线」制造等价空窗。详见 `docs/offline-window-backfill-20261031.md`。
+- **D4-⑦ 已补齐（2026-10-31 09:1x）**：场景 B 补拉插件 `astrbot_plugin_miruku_backfill` v0.1.0 上线，端到端演练真实跑通（`发现空窗消息 1 条` → `已补拉` → `Prepare to send: ?这才早上九点呢`），重启复验幂等 `注入=0 dup=0`；探针 26/26。顺带修掉 heartbeat v3 跨天误报掉线（`login detected` 只在登录瞬间打一次，v2 只读两天日志必然 `no-signal`）；23:5x 又修 v4——同秒僵尸 `--relaunch` 进程会打 `awaiting login` 把 `tail -1` 污染，改为优先问 SnowLuma HTTP 接口（`docs/heartbeat-false-alarm-20261031.md`）。**口径差异**：Codex 要求「杀 AstrBot 进程」演练，本轮用「重启+拨基线」制造等价空窗。详见 `docs/offline-window-backfill-20261031.md`。
 - **终验状态（2026-10-31 Codex）**：C-23/C-24/C-25 补件通过，C-09/C-10/C-16 销账，pilot G2/G5 已勾；C-15/G4 维持。D4 七项已齐并勾总闸，其他放行项仍未齐，投放仍 No-Go。详见 `docs/codex-acceptance-20261031.md`。
 - **DS-10 补件已交付（2026-10-30 21:3x）**：C-23/C-24/C-25 三缺陷均改完并部署上线，`probe_outbound_tristate.py` 39/39 + `probe_c09_c10.py` 26/26 全绿，线上源码四项改动逐一核对在位。**等 Codex 复核销账 C-09/C-10/C-16 并勾 G2。**
 - **表情包（2026-10-31 09:4x 二次调整）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。**10-30 量化结案（72h 62.4%、瓶颈全在概率骰）后，10-31 OTTO 仍反馈偏少，`probability` 由 75 提到 90 并重启生效；同日纠正一条误判——流式模式下表情图是独立消息、不出现在 `Prepare to send` 行里，用 QQ 历史核验 40/40 全部真实送达，无丢图。OTTO 定：表情包到此为止，不再追。** 数据见 `docs/meme-trigger-quant-20261030.md`。
@@ -96,6 +96,8 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-10-31 23:5x / DeepSeek / **心跳告警误报修复：QQ 实际在线却全天报 awaiting。** 现象：当天 460 条 `QQ_OFFLINE`，但 `get_status` 返回 `online:true`、17:39 还在正常发图。根因：`heartbeat.sh` v3 用 `tail -1` 取最后一条登录事件，而 13:03:01 同一秒内既打 `login detected: PID=25627`（主进程）又打 `awaiting login: PID=13666`（2 天前的 `--relaunch` 残留进程）→ 稳定取到 awaiting。修复：改为优先向 SnowLuma 的 OneBot HTTP 接口要权威状态（`get_status` + `get_login_info`），日志法降级为兜底，新增 `login_state=online-api`。验证：干跑与正式运行均 `status=OK qq_login=online-api`，sent-flag 自动清除，清掉误报产物 `needs-rescan`，线上与仓库 md5 一致。详见 `docs/heartbeat-false-alarm-20261031.md`。
 
 2026-10-31 23:5x / DeepSeek / **再补一件：分时段调频的 `time_utils.py` 此前只以 base64 内嵌在部署脚本里，仓库没有明文。** 已从容器导出到 `server/patches/20261031-proactive-chat-c09-c10/utils/time_utils.py`（4434 字节，md5 `29e64fe8215b`），并与 `server/deploy-proactive-hours.sh` 内嵌 base64 解出的内容逐字节核对一致。 / 顺带核对：`server/heartbeat.sh`、`server/sync-onebot-token.sh`、`server/deploy-persona.py` 与线上 md5 一致；`astrbot_plugin_miruku_{context_guard,knowledge,observer}` 三插件与仓库一致（仅 knowledge 的 `__init__.py` 线上没有，属空占位文件，无影响）。 / 注意线上 `time_utils.py` 在插件**顶层 `utils/`**，不在 `core/` 下。
 
