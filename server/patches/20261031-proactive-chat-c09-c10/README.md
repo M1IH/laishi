@@ -16,7 +16,12 @@ C-23（出站清洗空结果保留内部标记）、C-24（C-10 重排未持久�
 | `core/features/deliver/split_delivery.py` | C-09（partial 走 CONTINUE 而非 abort） |
 | `core/features/record/history_writer.py` | C-09（把 delivery 传给 finalize_and_reschedule） |
 | `core/pipeline/flow_orchestrator.py` | C-09（session_payload 落 delivery 字段） |
-| `core/services/scheduler_service.py` | C-10（停摆标记/重新上膛）、C-24（重排后持久化） |
+| `core/services/scheduler_service.py` | C-10（停摆标记/重新上膛）、C-24（重排后持久化）、多段 `quiet_hours` 排期补丁 |
+| `utils/time_utils.py` | 分时段主动消息：`quiet_hours` 多段 + `HH:MM` 解析（原生只支持单段整点） |
+
+`utils/time_utils.py` 此前只以 base64 形式内嵌在 `server/deploy-proactive-hours.sh` 里，
+本目录是**同一份文件的明文副本**（md5 `29e64fe8215be8a49b4b874f1d5fcdaf`，4434 字节，已核对与 base64 解出内容一致）。
+注意线上路径是 `astrbot_plugin_proactive_chat/utils/time_utils.py`（**不在 `core/` 下**）。
 
 另两个文件在 `astrbot_plugin_miruku_outbound/`（C-23 三态 guard3 + 双钩子阻断），该插件本就是自有仓库代码，无需另存补丁。
 
