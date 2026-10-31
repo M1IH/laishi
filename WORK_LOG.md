@@ -31,6 +31,7 @@
 - **C-22（2026-10-26）**：历史 `content` 被 `str()` 成 Python 字面量，导致模型的私有 reasoning 被当对话正文回放、图片退化成 base64 正文。**已修（context_guard v0.5.0 在请求组装前还原 parts）、探针 30/30、线上库实测 `10000001` 2,677,924→15,911 字符、反序列化残留 0**，待 Codex 验收。**存储侧未洗（洗库需单独授权）；`str()` 化的第三方插件按边界未改。**
 - **新派并行任务**：**WB-12 已交付、待 Codex 复核**——`docs/wb12-short-reply-review.md`，文内 **Q1–Q5 待 OTTO 定**；**DS-08R2 工具补件已通过，DS-09 已派舞萌知识漏召修复**；C-19 仍待 20 轮 QQ 验收。派单见 `docs/assignments-20261021.md`。
 - **D4 前置复核（2026-10-30 Codex）**：心跳 v2 已上线；C-10 过期重排未持久化，二次重启可能丢任务（C-24），故主动侧前置仍未闭环。D4-⑦ 只有历史接口可找回的技术结论，缺空窗测试号回复气泡，七项尚未验收完成。
+- **D4-⑦ 已补齐（2026-10-31 09:1x）**：场景 B 补拉插件 `astrbot_plugin_miruku_backfill` v0.1.0 上线，端到端演练真实跑通（`发现空窗消息 1 条` → `已补拉` → `Prepare to send: ?这才早上九点呢`），重启复验幂等 `注入=0 dup=0`；探针 26/26。顺带修掉 heartbeat v3 跨天误报掉线（`login detected` 只在登录瞬间打一次，v2 只读两天日志必然 `no-signal`）。**口径差异**：Codex 要求「杀 AstrBot 进程」演练，本轮用「重启+拨基线」制造等价空窗。详见 `docs/offline-window-backfill-20261031.md`。
 - **终验状态（2026-10-30 Codex）**：仅 C-15 销账、pilot G4 已勾；C-09 因 C-25 TTS 已发误记 0 段、C-10 因 C-24 二次重启丢排期、C-16 因 C-23 空 fixed 放行原文均暂不销账，G2/G5 未勾；DS-10 已派补件，D4-⑦ 待空窗回复气泡实测。详见 `docs/codex-acceptance-20261030.md`。
 - **DS-10 补件已交付（2026-10-30 21:3x）**：C-23/C-24/C-25 三缺陷均改完并部署上线，`probe_outbound_tristate.py` 39/39 + `probe_c09_c10.py` 26/26 全绿，线上源码四项改动逐一核对在位。**等 Codex 复核销账 C-09/C-10/C-16 并勾 G2。**
 - **表情包（2026-10-30 已收官）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。遗留见 10-30 16:5x 条。**触发率已量化结案（10-30 21:4x 条）：72h 实测 62.4%、当天 69.5%，瓶颈全在概率骰（模型命中时选图率 97.6%），OTTO 拍板维持现状不再调参。** 数据见 `docs/meme-trigger-quant-20261030.md`。
@@ -93,6 +94,8 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-10-31 09:1x / DeepSeek / **D4-⑦ 两项补齐：场景 B 补拉插件上线 + 端到端空窗演练跑通（真发回复气泡）；顺带修掉 heartbeat v3 跨天误报掉线。** OTTO m07149「都实现吧」授权后：①新插件 `astrbot_plugin_miruku_backfill` v0.1.0，启动完成后拉 `get_friend_msg_history`，把空窗内对方未处理消息重造成 `AstrBotMessage` 交回 `handle_msg` 走完整管线（LLM→装饰→表情包→出站闸门）；四条硬约束=只补对方发的/只补一次(msg_id 落盘去重)/只在 120min 空窗内/单次上限 3 条，首次无基线只建基线不补。②探针 `data/probe_backfill.py` **26/26**（探针抓到真 bug：纯图片被当成有内容，修 `_message_text` 加 `has_text`）。③端到端演练用真实空窗：`发现空窗消息 1 条` → `已补拉 msg_id=-494585010` → `Prepare to send: ?这才早上九点呢` → `注入=1`；再重启复验 `注入=0 dup=0` 幂等成立。④**heartbeat v3 修回归**：`login detected` 只在登录瞬间打一次，v2 只读「昨天+今天」两文件 → 跨天必判 `no-signal` 误报掉线（演练时实锤）；改为扫近 7 个日志 + 今天日志 15 分钟内活跃即 `online-by-activity`（绝不覆盖 `awaiting`），修后 `status=OK qq_login=online`。⑤`server/sync-onebot-token.sh` 宿主导出 token 进容器（容器看不见宿主卷路径），已挂进心跳在线分支。详见 `docs/offline-window-backfill-20261031.md`。**口径差异**：Codex 要的是「杀 AstrBot 进程」演练，本轮用「重启+拨基线」制造等价空窗，链路已端到端验证但未串起自动拉起。
 
 2026-10-30 21:4x / DeepSeek / **D4-⑦ 派回补齐：Codex 判「技术可行但第 7 断言未过」，缺端到端空窗气泡；场景 B 补拉未实现，需 OTTO 定夺。** Codex 明确两点：①缺「杀进程→空窗期发测试号→自动回来→收到针对该句的回复气泡」的端到端证据，不能把「接口可拉」当「已补」；②若决定不实现 7-a，须按 7-b 回 OTTO 重新确认 D1，**不能由工程侧自行豁免**。已把结论与待办写进 `docs/offline-window-recovery-20261030.md` 末尾。**补齐只差两件**：(a) 端到端空窗演练——停 AstrBot → 测试号 10000001 在空窗期发一句 → 启 AstrBot → 观察回复气泡（D4 四格记时刻/气泡/禁词）；(b) 场景 B 补拉实现（启动时查停摆窗口→`get_friend_msg_history`→去重→走正常管线），**是否投放前必需未拍板**。
 

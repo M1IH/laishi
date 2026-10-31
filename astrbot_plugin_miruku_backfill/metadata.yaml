@@ -1,0 +1,21 @@
+name: astrbot_plugin_miruku_backfill
+display_name: Miruku 空窗补拉
+short_desc: AstrBot 停摆/重启期间对方发来的消息，启动后补进管线正常回复
+desc: >-
+  场景 B 补拉。AstrBot 停摆或重启时 QQ 一直在线，对方发来的消息只进了 QQ
+  没进 AstrBot，重启后就永远丢了。本插件启动完成后向 SnowLuma 的
+  get_friend_msg_history 查询最近历史，把空窗期内对方发来且未处理的消息
+  重新构造成 AstrBotMessage 交回平台 handle_msg，走完整正常管线
+  （LLM → 装饰 → 表情包 → 出站闸门），效果等同对方刚刚发来。
+  只补对方发的、只补一次（message_id 落盘去重）、只补空窗内（默认 120 分钟）、
+  单人有上限（默认 3 条）。QQ 掉线场景（场景 A）不需要它：QQ 自己会推离线消息。
+  日志关键字 [miruku_backfill]，只记条数与时间，不打正文。
+help: 无命令。自动生效，日志关键字 [miruku_backfill]。
+version: 0.1.0
+author: DeepSeek
+repo: ""
+astrbot_version: ">=4.29.0"
+tags:
+  - 主动消息
+  - 补拉
+  - 可靠性

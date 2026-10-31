@@ -1,0 +1,62 @@
+{
+  "enabled": {
+    "type": "bool",
+    "description": "启用空窗补拉",
+    "hint": "AstrBot 停摆/重启期间，对方发来的消息会丢。开启后启动时把空窗内未处理的消息重新送进管线（等同对方刚发来）。QQ 掉线场景不需要它：QQ 自己会推离线消息。",
+    "default": true
+  },
+  "watch_users": {
+    "type": "list",
+    "description": "监视的 QQ 号",
+    "hint": "只补这些号码发来的消息。填测试号和自己常用号即可，不要填机器人自己的号。",
+    "default": []
+  },
+  "platform_id": {
+    "type": "string",
+    "description": "平台实例 ID",
+    "hint": "AstrBot 里 aiocqhttp 适配器的 ID，本项目是 miruku。",
+    "default": "miruku"
+  },
+  "max_age_minutes": {
+    "type": "int",
+    "description": "空窗消息最大补拉时长（分钟）",
+    "hint": "超过这个时间的消息不补——半天前的质问现在回更奇怪。默认 120。",
+    "default": 120
+  },
+  "max_inject_per_user": {
+    "type": "int",
+    "description": "单人单次最多补几条",
+    "hint": "每条注入都会触发一轮完整回复。5 条一起补 = 5 条回复刷屏，所以只补最新的几条。默认 3。",
+    "default": 3
+  },
+  "fetch_count": {
+    "type": "int",
+    "description": "从 QQ 拉多少条历史",
+    "hint": "拉得越多越不容易漏，但解析成本也高。默认 30。",
+    "default": 30
+  },
+  "startup_delay_sec": {
+    "type": "float",
+    "description": "启动后延迟几秒再补拉",
+    "hint": "等平台适配器连上再补，太早会找不到平台实例。默认 8 秒。",
+    "default": 8
+  },
+  "api_base": {
+    "type": "string",
+    "description": "SnowLuma OneBot HTTP 地址",
+    "hint": "docker 网络内的地址，不要映射到宿主。默认 http://snowluma:3000。",
+    "default": "http://snowluma:3000"
+  },
+  "token_file": {
+    "type": "string",
+    "description": "读取 accessToken 的配置文件",
+    "hint": "必须读**全局** onebot.json 里 networks.httpServers[0].accessToken；账号级 onebot_<uin>.json 的 token 是 WS 反连用的，拿去调 HTTP 会 401。这个文件在 SnowLuma 的卷里，astrbot 容器看不见它，所以实际用的是下面那个缓存。",
+    "default": "/var/lib/docker/volumes/qq-gateway-data/_data/config/onebot.json"
+  },
+  "token_cache_file": {
+    "type": "string",
+    "description": "容器内 token 缓存路径",
+    "hint": "优先读这个文件。由宿主侧心跳脚本每 5 分钟从 SnowLuma 的 onebot.json 同步一次（token 只在 SnowLuma 重生成配置时才变）。",
+    "default": "/AstrBot/data/plugin_data/miruku_backfill/onebot_token.txt"
+  }
+}

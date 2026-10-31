@@ -63,17 +63,28 @@ print(n)
 ' 2>/dev/null || echo -1)
 
 # QQ 业务层在线判定（SnowLuma 事件驱动）
+# v3 修复（2026-10-31 实锤 bug）：`login detected` 只在真正登录的那一刻打一次，
+# 之后一直在线就不会再打。v2 只读"昨天+今天"两个文件 → 跨天之后永远找不到事件，
+# 判成 no-signal/QQ_OFFLINE，误报掉线（实际机器人当时正常收发消息）。
+# 改为：①扫全部日志（近 7 个文件）取最后一次登录事件；②今天日志近期有活动 = 正向确认。
 qq_online=false
 login_state=no-signal
-YDAY=$(date -d yesterday +%F)
 TODAY=$(date +%F)
-last_login=$(grep -hE 'login detected|awaiting login' \
-  "$SNOW_LOGDIR/snowluma-$YDAY.log" "$SNOW_LOGDIR/snowluma-$TODAY.log" 2>/dev/null | tail -1)
+last_login=$(ls -1 "$SNOW_LOGDIR"/snowluma-*.log 2>/dev/null | sort | tail -7 \
+  | xargs -r grep -hE 'login detected|awaiting login' 2>/dev/null | tail -1)
 case "$last_login" in
   *"login detected"*) qq_online=true;  login_state=online ;;
   *"awaiting login"*) qq_online=false; login_state=awaiting ;;
   *) qq_online=false; login_state=no-signal ;;
 esac
+# 正向确认：今天日志 15 分钟内有写入 = 会话真的在跑（事件在流动）。
+# 只用于把 no-signal 升级成 online，绝不覆盖 awaiting（凭据失效时日志仍在轮询，不能算在线）。
+if [ "$login_state" = no-signal ]; then
+  tf="$SNOW_LOGDIR/snowluma-$TODAY.log"
+  if [ -f "$tf" ] && [ $(( $(date +%s) - $(stat -c %Y "$tf" 2>/dev/null || echo 0) )) -le 900 ]; then
+    qq_online=true; login_state=online-by-activity
+  fi
+fi
 
 jobs=$(curl -s --max-time 8 http://127.0.0.1:4100/api/jobs 2>/dev/null || echo '{}')
 
@@ -137,4 +148,15 @@ esac
 if [ "$status" = OK ] && [ -f "$SENTFLAG" ]; then
   rm -f "$SENTFLAG"
   append "wechat: back online, sent-flag cleared"
+fi
+
+# 在线时同步 OneBot HTTP token（miruku_backfill 空窗补拉要用）
+# token 只读宿主卷里的 onebot.json（容器内看不见宿主路径），变了就同步一次。
+# 不放在 QQ_OFFLINE 分支：SnowLuma 没登录时配置可能还在生成中，同步到半成品 token 更糟。
+if [ "$status" = OK ]; then
+  sync_out=$("$APP/server/sync-onebot-token.sh" 2>&1) || sync_out="TOKEN_SYNC=FAIL"
+  case "$sync_out" in
+    TOKEN_SYNC=OK*) : ;;            # 正常，不写日志（每 5 分钟一条噪音没意义）
+    *) append "WARN onebot token sync: $sync_out" ;;
+  esac
 fi

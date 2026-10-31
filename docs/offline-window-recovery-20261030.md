@@ -96,3 +96,34 @@ SnowLuma 的 `get_friend_msg_history` 基于**本地 NT 数据库**，QQ 重登�
    拉历史 → 去重识别未处理消息 → 走正常管线回应。防重复/去重/回复节奏都要设计，
    **未拍板是否投放前必需**。
 
+---
+
+## ✅ 两项已补齐（2026-10-31）
+
+OTTO m07149「都实现吧」授权后完成，详见 **`docs/offline-window-backfill-20261031.md`**。
+
+**场景 B 补拉已实现并上线**：新插件 `astrbot_plugin_miruku_backfill`（v0.1.0）在启动完成后
+向 SnowLuma `get_friend_msg_history` 拉历史，把空窗内对方发来且未处理的消息重新构造成
+`AstrBotMessage` 交回 `handle_msg`，走完整正常管线（LLM → 装饰 → 表情包 → 出站闸门）。
+
+**端到端演练证据**（真实制造空窗，非模拟）：
+
+```
+[miruku_backfill] 10000001 发现空窗消息 1 条，开始补拉
+[miruku_backfill] 已补拉 uid=10000001 msg_id=-494585010 age=43620s
+[respond.stage] Prepare to send - OTTO/10000001: ?这才早上九点呢
+[miruku_backfill] 本轮结束 注入=1 累计 injected=1 dup=0 old=0 cap=0 failed=0
+```
+
+补拉消息完整走完管线并**真实发送了回复气泡**；再次重启复验 `注入=0 dup=0`，幂等成立
+（时间线前移 + `message_id` 去重双保险）。探针 `data/probe_backfill.py` 26/26 全绿。
+
+⚠️ 与 Codex 要求的口径差异：Codex 要求的是「**杀 AstrBot 进程** → 空窗期发消息 →
+自动回来 → 收到回复」，本轮演练用的是「重启 + 人工把基线拨到候选消息之前」制造等价空窗。
+补拉链路已被真实端到端验证，但「进程被杀后由 systemd/docker 自动拉起」这一步属于心跳
+自愈范畴，未在同一脚本里串起来演。若要求严格同场景，需补一次杀进程演练。
+
+**顺带修掉 heartbeat v3 回归**：`login detected` 只在登录瞬间打一次，v2 只读「昨天+今天」
+两个日志 → 跨天必然判 `no-signal` 误报掉线。v3 改为扫近 7 个日志 + 今天日志 15 分钟内有写入
+即正向确认（`online-by-activity`，绝不覆盖 `awaiting`）。
+
