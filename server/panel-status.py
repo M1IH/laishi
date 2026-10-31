@@ -159,13 +159,18 @@ except Exception:
     tok = ""
 if tok:
     base = ""
-    try:
-        base = pathlib.Path("/opt/miruku/server/qrpage-base").read_text(encoding="utf-8").strip()
-    except Exception:
-        base = ""
+    for candidate in ("/opt/miruku/logs/qr-tunnel-url", "/opt/miruku/server/qrpage-base"):
+        try:
+            got = pathlib.Path(candidate).read_text(encoding="utf-8").strip()
+        except Exception:
+            continue
+        if got.startswith("http"):
+            base = got
+            break
     qr_port = "8663"
     cred["qrpage_token"] = tok
-    cred["qrpage_url"] = (base.rstrip("/") + "/?t=" + tok) if base else f"http://127.0.0.1:{qr_port}/?t={tok}"
+    cred["qrpage_public"] = (base.rstrip("/") + "/?t=" + tok) if base else ""
+    cred["qrpage_url"] = cred["qrpage_public"] or f"http://127.0.0.1:{qr_port}/?t={tok}"
     cred["qrpage_local"] = f"http://127.0.0.1:{qr_port}/?t={tok}"
 out["cred"] = cred
 

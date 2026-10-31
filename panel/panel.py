@@ -268,6 +268,7 @@ async function refresh(force){
      `${pill(v.status==='running',v.status)} 重启${v.restarts}次`])))+
    card('系统服务',kv(Object.entries(s.systemd).map(([k,v])=>[k,pill(v==='active',v)])))+
    card('扫码登录',(()=>{const c=d.cred||{};return kv([
+      ['🌐 公网扫码（电脑关机也能用）',c.qrpage_public?`<a style="color:var(--acc)" target="_blank" href="${c.qrpage_public}"><b>${c.qrpage_public}</b></a><br><span style="color:#8b949e">手机任意网络可用；隧道地址重启后会变，刷新本页即可</span>`:'（隧道未启动）'],
      ['📱 手机扫码页',`<a style="color:var(--acc)" target="_blank" href="/scan"><b>http://${lan_ip()}:${PORT}/scan</b></a>（手机与这台 PC 同一 WiFi）`],
      ['noVNC 密码',c.novnc_password?`<code>${c.novnc_password}</code>`:'（读不到）'],
      ['noVNC 地址',c.novnc_url||'-'],

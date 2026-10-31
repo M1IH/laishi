@@ -28,16 +28,30 @@ append(){ echo "$(NOW) $*" >> "$LOG"; }
 
 # Server酱推送：https://sct.ftqq.com/
 # 成功/失败都写日志（推送是唯一的"人不在场也能知道"的通道，静默失败等于没装）
+# 公网扫码链接（cloudflared 快速隧道，地址写由 miruku-qr-tunnel.service 维护）
+qr_public_url(){
+  local base tok
+  base=$(cat /opt/miruku/logs/qr-tunnel-url 2>/dev/null | tr -d '\r\n')
+  tok=$(cat /opt/miruku/logs/qrpage-token 2>/dev/null | tr -d '\r\n')
+  [ -n "$base" ] && [ -n "$tok" ] && printf '%s/?t=%s' "${base%/}" "$tok"
+}
+
 wechat_push(){
-  local key resp
+  local key resp url desc
   key=$(cat "$KEYFILE" 2>/dev/null) || { append "WARN wechat: no key file"; return 1; }
+  url=$(qr_public_url)
   local title="Miruku 掉线了"
-  local desc="QQ 登录态失效，需要重新扫码。"
-  desc="${desc}%0A打开桌面「Miruku 面板」快捷方式 → noVNC·扫码页，点确认后用手机 QQ 扫码。"
+  desc="QQ 登录态失效，需要重新扫码。"
+  if [ -n "$url" ]; then
+    desc="${desc}%0A%0A[点这里手机扫码](${url})"
+    desc="${desc}%0A（电脑关机也能用，手机任意网络）"
+  else
+    desc="${desc}%0A公网扫码链接暂不可用（隧道未起），请开电脑用面板。"
+  fi
   resp=$(curl -s -m 10 -X POST "https://sctapi.ftqq.com/${key}.send" \
     -d "title=${title}" -d "desp=${desc}" 2>&1) || { append "WARN wechat push curl failed"; return 1; }
   case "$resp" in
-    *'"code":0'*) append "wechat push OK"; return 0 ;;
+    *'"code":0'*) append "wechat push OK url=${url:-none}"; return 0 ;;
     *) append "WARN wechat push rejected: $(echo "$resp" | head -c 160)"; return 1 ;;
   esac
 }
@@ -194,3 +208,6 @@ if [ "$status" = OK ]; then
     *) append "WARN onebot token sync: $sync_out" ;;
   esac
 fi
+
+# 公网扫码隧道 URL 变了就推一次新链接（快速隧道重启会换域名，旧链接直接 404/530）
+"$APP/server/qr-url-notify.sh" 2>/dev/null || true
