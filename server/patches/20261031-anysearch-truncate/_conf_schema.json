@@ -1,0 +1,32 @@
+{
+  "api_key": {
+    "type": "string",
+    "description": "Anysearch API Key（可选）",
+    "hint": "API 为可选项。留空时仍可使用有限的匿名访问；如果你希望获得更稳定的额度，请在 https://anysearch.com/console/api-keys 免费注册获取 API 后在配置界面填入 Anysearch API Key。",
+    "default": ""
+  },
+  "command_result_chunk_size": {
+    "type": "int",
+    "description": "长结果分段长度",
+    "hint": "直接使用 /anysearch、/anysearch extract 或 /anysearch batch 时，单条结果超过这个长度才会按下面的开关分段发送。默认 1200；填 0 表示不分段。建议保持在 300 到 1400 之间。",
+    "default": 1200
+  },
+  "chunk_private_command_results": {
+    "type": "bool",
+    "description": "私聊长结果自动分段",
+    "hint": "仅对 OneBot v11/NapCat 私聊生效，默认开启。用于绕过私聊合并转发发送失败问题，典型报错包含 send_private_forward_msg、发送转发消息、retcode=1200。",
+    "default": true
+  },
+  "chunk_group_command_results": {
+    "type": "bool",
+    "description": "群聊长结果自动分段",
+    "hint": "仅对 OneBot v11/NapCat 群聊生效，默认关闭，避免长搜索结果拆成多条刷屏。只有在群聊合并转发也不可用时才建议开启。",
+    "default": false
+  },
+  "tool_result_max_chars": {
+    "type": "int",
+    "description": "给模型的搜索结果长度上限（字符）",
+    "hint": "只作用于 LLM 工具调用返回（anysearch_search / anysearch_extract），不影响 /anysearch 命令。搜索结果原样回灌会把几万字符塞进上下文，之后每轮都要重付一遍，回复明显变慢。默认 4000，够模型判断事实与出处；填 0 表示不截断。",
+    "default": 4000
+  }
+}

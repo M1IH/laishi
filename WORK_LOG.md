@@ -36,6 +36,7 @@
 - **DS-10 补件已交付（2026-10-30 21:3x）**：C-23/C-24/C-25 三缺陷均改完并部署上线，`probe_outbound_tristate.py` 39/39 + `probe_c09_c10.py` 26/26 全绿，线上源码四项改动逐一核对在位。**等 Codex 复核销账 C-09/C-10/C-16 并勾 G2。**
 - **表情包（2026-10-31 09:4x 二次调整）**：用户消息与主动消息双路径实证带图（10-29 19:30 `Prepare to send … [图片]`），根因两处已修：default 包 0 图 + emotion provider 401（10-27 条）+ origin 门控误拦（10-29 18:1x 条）。**10-30 量化结案（72h 62.4%、瓶颈全在概率骰）后，10-31 OTTO 仍反馈偏少，`probability` 由 75 提到 90 并重启生效；同日纠正一条误判——流式模式下表情图是独立消息、不出现在 `Prepare to send` 行里，用 QQ 历史核验 40/40 全部真实送达，无丢图。OTTO 定：表情包到此为止，不再追。** 数据见 `docs/meme-trigger-quant-20261030.md`。
 - **联网检索（2026-10-31 09:4x）**：新好友问「穿心怎么打」被编造回答。根因=persona 自认懂舞萌（L24 给了 14065 分/金框/能聊谱面）+ L8 搜索只是描述性 + L17 禁止「我这就去查」→ 24h 内 anysearch 零调用。**已改 DB 生效版 persona（3524→3684 字）：遇具体谱面名/术语/新梗/作品/赛事/机型/新闻，先搜再答，搜不到就说不清楚、不许编；并声明「搜东西不用报备、不算描述步骤」。已重启加载，待 OTTO 真实对话验收模型是否真调 anysearch。** 备份脚本 `server/patch-persona-search.py`。
+- **回复延迟（2026-10-31 10:2x 三项优化）**：朋友反馈「回消息太慢」，只读排查后定位两处真因——①anysearch 搜索结果 1~3 万字符原样进会话历史、每轮重付（核心截断阈值 27500 token 约合 10 万字符，等于不设防）；②表情包情感模型每轮多一次 LLM 调用（1.4~6.5s）。已上线 `tool_result_max_chars=4000` 截断、`probability` 90→75、批量搜索引导提示词（工具间无法并行，实测 batch 仅 1.78x，截断才是主收益）。含 2 次搜索的一轮 13.7~16.2s→10.5s，无工具轮 5.5~6.4s。补丁 `server/patches/20261031-anysearch-truncate/`，数据见 `docs/latency-tuning-20261031.md`。**待 OTTO/朋友长期验收体感。**
 - **主动消息（2026-10-27 19:27 复测通过）**：手动 `POST /api/jobs/{umo}/trigger` 一次即送达（7 字、未回复计数 1、下次 20:40:23）；今日 18:01/18:36 两次失败系 NapCat 掉线，**非链路缺陷**；遗留三处观测缺口（失败异常文本为空／掉线不告警／直发绕过 respond 管线）见 `docs/proactive-real-test-and-server-20261026.md` §七。
 - **已关闭**：**C-17 危机告警按 D1 不实现**——书面接受「无人接管时段无法保障」，代价见决议单 D1，**每次投放重新确认**，不是一次性豁免。
 - **本文件结构（2026-10-24 瘦身）**：缺陷原文 → `docs/defect-register.md`；2026-10-22 及以前的进展 → `docs/archive/WORK_LOG-archive-2026-10.md`。**查历史去归档，别只看这里。** 三方 git 约定（可 `status`/`diff`/`log`/`add`/`commit`，禁 `restore`/`checkout -- .`/`clean -fd`/`reset --hard`/`stash`）见 `docs/git-usage.md`。
@@ -95,6 +96,8 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-10-31 10:2x / DeepSeek / **回复太慢排查完成：三项优化上线，含 2 次搜索的一轮从 13.7~16.2s 降到 10.5s。** 根因不是网络（容器到 api.deepseek.com 握手 9~15ms）而是：①anysearch 返回 1~3 万字符原文全部留在会话历史，每轮重付，核心阈值 `TOOL_RESULT_MAX_ESTIMATED_TOKENS=27_500`（约 10 万字符）根本不管；②表情包情感模型独立跑一次 LLM，实测 1.4~6.5s。 / 改法：`tool_result_max_chars=4000` 截断（batch 按查询数放大、上限 20000）+ `probability` 90→75 + 批量搜索引导提示词；工具间无法并行（`tool_loop_agent_runner.py:1195` 是 for 循环逐个 await），实测 batch 只 1.78x，截断才是主收益。 / 实测：context_guard 前后只增 8930 字符（改前同场景 14435+），无工具轮 5.5~6.4s，表情图仍正常出。补丁入仓 `server/patches/20261031-anysearch-truncate/` + `server/deploy-anysearch-truncate.sh`，数据见 `docs/latency-tuning-20261031.md`。
 
 2026-10-31 / Codex / **投放前 1–4 项复核完成：0-a/G1/G3/G7(A2)/G8 有当日证据，已校准 pilot 清单；正式投放仍 No-Go。** 阿里云服务器与心跳在线；测试 QQ 当日入站和实收气泡一致；仅测试会话 `session_enabled` 关时无气泡、恢复后同句有气泡，原值已恢复；主动名单仅测试号、白名单 3 项非空 / 影响：约局与查证抽检过界未见，疲惫回复有轻度建议化留观察；G10 未授权，D1 需投放时重确认 / 下一步：OTTO 审视风险与切换窗口前，不动来世主动收件人。详见 `docs/prelaunch-final-gates-20261031.md`。
 
