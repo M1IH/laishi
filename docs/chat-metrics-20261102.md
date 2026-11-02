@@ -111,7 +111,11 @@ bash /opt/miruku/server/metrics-report.sh --json       # 机器可读
   `POST /api/jobs/{umo:path}/reschedule` 才会建出 chat job。
 - 最终：来世 `next=2026-11-02T09:29:40`、未回复 `0/3`；测试号 `next=09:35:24`、`1/3`。
 
-## 六、遗留
+## 六、每周怎么用
+
+见 docs/chat-metrics-weekly.md：跑一条命令、看五个阈值、什么情况才动 persona。
+
+## 七、遗留
 
 1. **指标只在收到私聊时采集**，所以「她连发 5 条没人理」这种情况要等对方下次说话才会被记录下来。
    对「冷场」的观测是事后视角，不是实时告警。要实时得另做（比如在主动消息发送钩子里也采一次）。
