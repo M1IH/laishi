@@ -229,6 +229,9 @@ def main() -> int:
              "命中 %d 行: %s" % (len(hits), hits[:2]))
     case("使用只读模式打开 DB", 'mode=ro' in src)
     case("异常不冒泡（采集失败只 warning）", "except Exception" in src)
+    # 读 6MB 会话会阻塞事件循环，必须丢线程；刚做完延迟优化不能自打脸
+    case("DB 读取跑在 to_thread 里（不阻塞事件循环）",
+         "asyncio.to_thread" in src, "未找到 asyncio.to_thread")
 
     # ---------- 汇总 ----------
     total = len(CASES)

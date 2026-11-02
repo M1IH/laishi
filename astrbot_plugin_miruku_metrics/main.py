@@ -10,6 +10,7 @@ persona 后固化，之后所有对话都带着偏差），所以采集与调参
 from __future__ import annotations
 
 import ast
+import asyncio
 import json
 import os
 import re
@@ -212,8 +213,10 @@ class MetricsPlugin(Star):
         if now - self._last_at.get(uid, 0) < 20:
             return
         self._last_at[uid] = now
+        # 读库+解析最坏 89ms（6MB 会话），放线程里跑，不卡事件循环。
+        # 刚做完回复延迟优化，不能自己又塞一个同步 IO 进来。
         try:
-            row = self._collect(uid)
+            row = await asyncio.to_thread(self._collect, uid)
         except Exception as e:                       # 采集失败绝不影响对话
             logger.warning("[miruku_metrics] 采集失败 uid=%s: %s", uid, e)
             return
