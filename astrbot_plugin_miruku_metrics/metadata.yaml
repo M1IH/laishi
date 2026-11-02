@@ -1,0 +1,14 @@
+name: astrbot_plugin_miruku_metrics
+display_name: Miruku 聊天质量指标
+short_desc: 只读统计对话质量（冷场、接话率、话轮比），不改任何行为
+desc: >
+  给「更会聊」提供可量化依据。每次私聊后读取本地会话内容，算出：
+  用户/机器人轮数、平均长度、最大连续自说自话次数（冷场信号）、
+  主动消息被回复率、话轮比。结果以 JSONL 追加到 plugin_data/miruku_metrics/。
+  只读实现：不修改 persona、不干预发送、不改变任何对话行为。
+version: 0.1.0
+author: DeepSeek
+astrbot_version: ">=4.29.0"
+tags:
+  - metrics
+  - readonly

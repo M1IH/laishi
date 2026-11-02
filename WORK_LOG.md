@@ -24,7 +24,8 @@
 
 ## 当前状态（一句话）
 
-- **投放状态：No-Go。** `docs/otto-decisions-20261024.md` D4 自愈七项已验收；2026-10-31 又完成最终服务器、当日 QQ 收件、测试号 A2 会话开关、主动调度和白名单复核。G10 尚未获本次投放授权，C-17/D1 风险须届时重确认；24h 只作观察期口径。
+- **投放状态：Go（2026-11-02 09:1x 已投放）。** 来世 10000002 已加入 \riend_settings.session_list\，首条主动消息 2026-11-02 09:29:40，未回复上限 3。G10 由 OTTO 拍板（m09174/m09403/m09447）。「更会聊」只读指标采集 \strbot_plugin_miruku_metrics\ 同步上线（探针 39/39），改 persona 仍须人工确认并走 \deploy-persona.py\。详见 \docs/chat-metrics-20261102.md\。
+- **历史投放口径**： `docs/otto-decisions-20261024.md` D4 自愈七项已验收；2026-10-31 又完成最终服务器、当日 QQ 收件、测试号 A2 会话开关、主动调度和白名单复核。G10 尚未获本次投放授权，C-17/D1 风险须届时重确认；24h 只作观察期口径。
 - **2026-10-25 验收**：WB-11 值守卡文档补件、DS-06 离线审计、DS-07 本次历史图片造成的 400 修复均通过；C-15 真实目标命中、心跳与 D4 自愈仍未闭环。
 - **CX-01（2026-10-25）**：C-18/C-19/C-20 五项规则与插件样本已部署、离线探针通过；仍待 OTTO 测试 QQ 的回复行为验收，不计作缺陷关闭。
 - **C-21（2026-10-26）**：EmotionAI 的 `<thought>` 格式样例被原样写进真实历史（每轮 3 条伪造轮次，永不自愈）。**历史已清（3 会话删 9 剥 2）、根因已修（context_guard v0.4.0 在落库前清污）、探针 12/12+7/7+25/25、生产管线实测生效**，待 Codex 验收。**C-20 的污染载体即由此而来，一并清掉。** 详见 `docs/emotionai-injection-cleanup.md`。
@@ -98,6 +99,10 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+2026-11-02 09:1x / DeepSeek / **G10 投放执行 + 「更会聊」指标采集上线（只读）。** 来世 10000002 已加入 \riend_settings.session_list\（备份 \strbot_plugin_proactive_chat_config.json.bak.pilot-20261102-085119\），首条主动消息排 **2026-11-02 09:29:40**、未回复 0/3；测试号 09:35:24、1/3。**踩坑**：改完 session_list 后 \/api/jobs\ 起初只有测试号——\setup_auto_triggers_for_enabled_sessions()\ 给新增会话建的是 auto_trigger 定时检查器（60 分钟后检查），不是真实排期，必须补一次 \POST /api/jobs/{umo}/reschedule\。新增 \strbot_plugin_miruku_metrics\ v0.1.0（只读：不改 persona/不拦发送/不改文本/不主动发消息，四条由源码静态断言把关），采七项指标落 \plugin_data/miruku_metrics/metrics.jsonl\，配 \server/metrics-report.sh\ 出人话报告。**三个数据陷阱**（实测踩出）：工具结果写回 user 轮（anysearch 29893 字符那条把「对方平均字数」从 28.9 拉到 2071.3，差 71 倍）、早期 Python 字面量字符串需 \st.literal_eval\ 兜底、base64 图片必须剥。探针 39/39 全绿。详见 \docs/chat-metrics-20261102.md\。
+
+
 
 2026-11-02 08:5x / DeepSeek / **投放前核对补一条：主动消息的未回复上限原本是 0（=她不理也无限续发），已改为 3。** 测试号阶段这条从没触发过——OTTO 会回、计数经常清零，近 7 天 `已达到上限` 出现 0 次，所以看不出问题；真投给来世，一旦她一段时间不回，Miruku 会在 8:30–12:00 / 13:30–18:00 两个窗口里按 25–55 分钟持续推、一天约 12 条且不停。改法：`friend_settings.schedule_settings.max_unanswered_times` 0→3（备份 `astrbot_plugin_proactive_chat_config.json.bak.20261102-084414`），重启回读 `max_unanswered_times=3`、jobs API 同步、`已成功从文件恢复任务 09:35:24`。GATE 拦截逻辑由探针 C10-12 覆盖（超上限必须 STOP + abort('max_unanswered')）。**G10 前置九项已全绿，等 OTTO 指定切换窗口。**
 

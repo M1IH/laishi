@@ -1,0 +1,20 @@
+{
+  "enabled": {
+    "type": "bool",
+    "description": "启用聊天质量指标采集",
+    "hint": "只读：不改任何对话行为，只统计。",
+    "default": true
+  },
+  "watch_users": {
+    "type": "list",
+    "description": "要统计的 QQ 号",
+    "hint": "留空 = 谁私聊都统计。建议只填关心的人。",
+    "default": []
+  },
+  "window_turns": {
+    "type": "int",
+    "description": "每次统计回看多少轮对话",
+    "hint": "越大越准但读 DB 越慢。200 够用。",
+    "default": 200
+  }
+}
