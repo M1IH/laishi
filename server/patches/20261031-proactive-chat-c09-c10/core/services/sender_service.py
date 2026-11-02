@@ -620,7 +620,12 @@ class SenderService:
                 else:
                     segment_index_failed.append(0)
 
-                segment_count_planned = len(send_chain) + (1 if tts_attempted else 0)
+                # C-26：planned 记的是「计划发送次数」，不是消息链组件数。
+                # 非分段路径整条链一次 send_chain 送出（文案 Plain + 表情图 Image
+                # 算一次），若按 len(chain) 记，带表情的主动消息必然 1<2 被判 partial，
+                # 把 G2 的分段送达判据污染成假红。
+                planned_segments = len(send_chain) if segmented else 1
+                segment_count_planned = planned_segments + (1 if tts_attempted else 0)
 
                 if plugin.telemetry and plugin.telemetry.enabled:
                     plugin._track_task(

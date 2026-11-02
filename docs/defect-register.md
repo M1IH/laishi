@@ -556,3 +556,42 @@ provider 有一段补救（`openai_source.py:806-828`），但门槛是 `len < 8
 **隔天复验（2026-10-30 21:3x，DeepSeek）**：线上 `sender_service.py:562` 确认 `if not should_send:` 内先判 `is_tts_sent` → `DeliveryOutcome(status="partial", segment_count_planned=2, segment_count_sent=1, segment_index_failed=[1], voice_sent=True)` + warning；否则 `skipped`（`segment_count_planned=1 if tts_attempted else 0`）。容器内探针 **26/26 全绿**，C09-07B 断言 `status=="partial"`、`voice_sent=True`、`segment_count_sent>=1` 通过；对照路径（TTS 未成功+装饰停止）仍 `skipped` 并 abort。
 
 **2026-10-31 Codex 销账**：独立复跑 26/26、比对线上发送文件哈希一致，确认 TTS 已发分支记 `partial`、已发 1 段，未发分支仍 `skipped`。见 `docs/codex-acceptance-20261031.md`。
+
+---
+
+### C-26 P0｜带表情的主动消息被误判「部分送达（1/2 段，失败段 []）」（2026-11-02 投放前核对时发现）
+
+**现象**：近 48h 日志里 `部分送达（1/2 段，失败段 []），已照常存档计数喵` 出现 **15 次**，全部紧跟着一条 `第 N 次主动消息已发送完成`。**失败段列表是空的，却判成部分送达**——自相矛盾。
+
+**根因**（`sender_service.py:623`，修复前）：
+
+```python
+segment_count_planned = len(send_chain) + (1 if tts_attempted else 0)
+```
+
+`send_chain` 是**消息链组件列表**。装饰阶段往链里塞了表情图后，链 = `[Plain("文案"), Image(表情)]` 两个组件；而**非分段路径**（`:617`）是 `elif await self.send_chain(session_id, event, send_chain) is True:`，**整条链一次送出**、`segment_count_sent += 1`。于是 `planned=2`、`sent=1`，`:678 if segment_count_sent >= max(segment_count_planned, 1)` 为假 → 落 `:688` 返回 `status="partial"`。
+
+**触发条件**：非分段 + 装饰后带图 = 必然中招。线上 `segmented_reply_settings.words_count_threshold=80`，近 24h `分段回复已启用` 出现 0 次（文本都短于阈值），所以 100% 走非分段整链分支。近 24h 12 条主动消息里 9 条中招（75%），与表情包命中率完全吻合。
+
+**后果（这是它挡住投放的原因）**：消息其实全都送达了（partial 也照常存档+计数，功能没断），但它把 **G2「C-09 分段送达」的判据污染成假红**——Codex 复核时从日志无法区分「真部分送达」与「带图误判」，G2 的 `partial` 用例在线上等于噪声。这是投放（G10）前必须清的判据污染。
+
+**修复（2026-11-02 08:38 部署）**：记「**计划发送次数**」而不是组件数。
+
+```python
+# C-26：planned 记的是「计划发送次数」，不是消息链组件数。
+# 非分段路径整条链一次 send_chain 送出（文案 Plain + 表情图 Image
+# 算一次），若按 len(chain) 记，带表情的主动消息必然 1<2 被判 partial，
+# 把 G2 的分段送达判据污染成假红。
+planned_segments = len(send_chain) if segmented else 1
+segment_count_planned = planned_segments + (1 if tts_attempted else 0)
+```
+
+- 分段路径语义不变（`len(send_chain)` 就是段数，逐段 `send_chain` 一次给一段）。
+- TTS 仍额外 +1，C25 的 `planned=2/sent=1/voice_sent=True` 契约不变。
+- 文件 `sender_service.py` md5：`0dfc397ad3f1a07d28678fd231f97bb2` → `1727448f9aa8405cd9061af6051209c2`；备份 `/opt/miruku/backups/pc-c26-20261102-083823.tar`。
+
+**探针**：`data/probe_c09_c10.py` 新增 **C09-12**——非分段 + 假消息链 `[Plain("今天风挺大"), Plain("[图片]")]`（两组件）→ 断言 `status=="all_segments_accepted"`、`sent==1`、`planned==1`、`failed==[]`。容器内隔离副本 **27/27 全绿**（新增用例一次通过）。
+
+**线上验证**：08:40:44 手动触发一次主动消息，`去重后的最终表情列表: ['tired']`（带图）+ `第 1 次主动消息已发送完成`，**没有出现 partial 行** ✓（修复前同类场景必出 partial）。
+
+**状态**：**已修待 Codex 复核**（2026-11-02 08:38 部署，27/27 探针全绿，线上带图主动消息实测不再误判）。

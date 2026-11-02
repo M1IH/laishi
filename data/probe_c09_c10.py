@@ -1337,11 +1337,70 @@ async def c10_12() -> Case:
     return c
 
 
+async def c09_12() -> Case:
+    """C-26：非分段路径的 planned 必须记「调用次数」而不是消息链组件数。
+
+    线上实测 2026-11-02：主动消息带表情时 planned 被算成 2（Plain 文案 + Image 表情），
+    实际一次 send_chain 送出、sent=1，于是 1 < 2 判 partial，日志刷
+    「部分送达（1/2 段，失败段 []）」——失败段为空却判部分送达。
+    近 24h 12 条主动消息里 9 条中招，比例与表情包命中率一致，
+    直接把 G2「分段送达」的判据污染成假红。
+    """
+    plugin = FakePlugin(
+        base_config(segmented_reply_settings={"enable": False})
+    )
+    sender = ScriptedSender(plugin, [True])
+    plugin.sender_service = sender
+    err = ""
+    outcome = None
+    # 模拟「装饰后消息链 = 文案 + 表情图」两组件（线上真实形态），非分段。
+    fake_chain = [Plain(text="今天风挺大"), Plain(text="[图片]")]
+    try:
+        outcome = await sender.send_proactive_message(
+            UMO, "今天风挺大", event=FakeEvent(), initial_chain=fake_chain
+        )
+    except Exception as e:
+        err = repr(e)
+
+    sent = count_of(outcome, "segment_count_sent")
+    planned = count_of(outcome, "segment_count_planned")
+    c = Case(
+        cid="C09-12",
+        layer="c09",
+        title="非分段带图（链 2 组件、1 次发送）→ 必须 all_segments_accepted（C-26）",
+        current=(
+            f"调用异常: {err}"
+            if outcome is None
+            else f"status={status_of(outcome)!r} sent={sent} planned={planned} "
+            f"failed={count_of(outcome, 'segment_index_failed')} "
+            f"send_chain 调用 {len(sender.calls)} 次"
+        ),
+        expected="status=='all_segments_accepted'、sent==1、planned==1、failed==[]",
+        evidence=(
+            "sender_service.py:623 原 `planned = len(send_chain)`；"
+            "非分段整链一次送出，组件数≠发送次数"
+        ),
+    )
+    c.ok = (
+        outcome is not None
+        and status_of(outcome) == "all_segments_accepted"
+        and sent == 1
+        and planned == 1
+        and list(count_of(outcome, "segment_index_failed") or []) == []
+    )
+    if not c.ok:
+        c.notes.append(
+            "planned 记组件数会让所有带表情的主动消息被误判 partial，"
+            "日志出现「部分送达（1/2 段，失败段 []）」这种自相矛盾的记录"
+        )
+    return c
+
+
 # ---------------------------------------------------------------------------
 # 运行器
 # ---------------------------------------------------------------------------
 CORO = [c09_01, c09_02, c09_03, c09_04, c09_05, c09_06, c09_07, c09_07b, c09_08, c09_09, c09_10,
-        c09_11, c10_04, c10_05, c10_06, c10_06b, c10_07, c10_10, c10_11, c10_12, c10_13]
+        c09_11, c09_12, c10_04, c10_05, c10_06, c10_06b, c10_07, c10_10, c10_11, c10_12, c10_13]
 SYNC = [c10_01, c10_02, c10_03, c10_08, c10_09]
 
 
