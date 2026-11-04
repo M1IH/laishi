@@ -128,3 +128,10 @@ __pycache__/
 data/knowledge_mine.md
 # 本地发布工作目录（脱敏规则、临时脚本）
 来世-github-publish/
+
+# ---------- 一次性脚手架（本地工具，不入库） ----------
+# 根目录 _*.py 与 server/_probe_*.py 是当天排查用的一次性脚本
+/_*.py
+/server/_probe_*.py
+# 开机自启守卫的现场备份（含本机绝对路径日志）
+/startup-backup/
