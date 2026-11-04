@@ -1,39 +1,119 @@
-# Miruku QQ AI 陪伴机器人
+# 来世 / Miruku — QQ AI 陪伴机器人的复原与改造记录
 
-本项目计划使用 AstrBot + NapCatQQ + DeepSeek，在 Windows 本地运行一个私聊 AI 陪伴机器人。人物形象采用《maimai》系列的 Miruku（みるく/咪璐库），聊天口吻遵循 OTTO 指定的短句、分段和低压力陪伴规则。
+> 这是一个**个人复原项目**的过程记录。它不是通用的 AstrBot 教程，也不是可即插即用的成品。
+> 记录的对象是一件事：把《maimai》角色 Miruku（みるく）的说话方式，尽可能忠实地还原成一个
+> 只在私聊里存在的陪伴者，并且在真实使用中一轮一轮把它调得像她。
 
-当前状态：阶段 0 已在 2026-10-19 完成真实 QQ 验收。Miruku 人格已设为 AstrBot 默认；口吻已用 2025-10 至 2026-10 的 QQ 私聊导出校准。最新提示词在 `prompts/system.txt`，实例重启后可运行 `deploy_miruku.py` 同步。
+项目代号「来世」取自最初的使用场景。代码与文档里出现的 `10000001` / `10000002` 等是脱敏后的
+占位账号，不是真实 QQ 号。
+
+---
+
+## 这个项目在做什么
+
+一个跑在 QQ 私聊里的 AI 陪伴机器人。人格来自街机音游《maimai》的角色 Miruku，语气规则来自
+对真实聊天记录的统计校准（句子长度、标点频率、常用回应），而不是凭印象写人设。
+
+它的目标不是「回答问题」，而是三件更窄的事：
+
+1. **像她**——短句、低压力、不写小作文、不追问、不说教。
+2. **不越界**——识别情绪袒露时先接住而不是分析；识别停止信号时闭嘴；危机信号走人工告警而不是机器人处理。
+3. **不烦人**——主动消息有频率上限、免打扰时段、未回复次数上限。
 
 ## 技术底座
 
-- AstrBot：LLM 和消息框架
-- NapCatQQ：QQ/OneBot v11 协议端
-- 主动消息：运行实例已安装 `astrbot_plugin_proactive_chat` v1.2.6；仅配置本次测试私聊，3–6 小时随机调度、1–8 点免打扰、最多一次未回复后停发
-- DeepSeek：OpenAI 兼容模型 API
-- SQLite：本地消息、摘要、画像和风险事件
+| 组件 | 用途 |
+|---|---|
+| [AstrBot](https://github.com/AstrBotDevs/AstrBot) | LLM 编排、插件宿主、WebUI |
+| [NapCatQQ](https://github.com/NapNeko/NapCatQQ) | QQ / OneBot v11 协议端 |
+| DeepSeek | 主对话模型（OpenAI 兼容） |
+| 小米 MiMo | 表情包情感判断等轻量旁路调用 |
+| SQLite | 会话、画像、知识库、指标 |
+
+部署形态有两套：Windows 本地（开发与调试）和 Linux 服务器 Docker（长期在线）。`server/` 下的
+脚本是后者的一键部署与巡检集合。
+
+## 相比上游改了什么
+
+这个项目大量使用 AstrBot 生态的第三方插件，但**核心的几件事是自己写的或改过的**：
+
+### 自研插件（`plugins/` 与仓库根目录的 `astrbot_plugin_miruku_*`）
+
+- **`astrbot_plugin_miruku_context_guard`** — 请求侧上下文守卫，这是全项目最关键的一块。
+  它做四件事：把历史消息里的 `data:image/...;base64` 图片就地替换为 `[图片]` 占位（请求后恢复，
+  不污染存储）；按字符预算丢弃最旧的轮次；把被字符串化的 `content` 还原成结构化消息；清掉第三方
+  插件注入的合成消息。实测把一个 65 万 token 的会话压到 9 万，且不改变机器人的记忆表现。
+- **`astrbot_plugin_miruku_knowledge`** — 知识注入。把 `knowledge/src/*.json` 编译成 SQLite，
+  按别名匹配后把对应条目注入 system prompt。带置信度与 `sensitive` 标记。
+- **`astrbot_plugin_miruku_observer`** — 只记录消息方向、时间、首次回复间隔，**不存正文**。
+- **`astrbot_plugin_miruku_metrics`** / **`_backfill`** / **`_outbound`** — 指标统计、离线补采、
+  出站守卫（防止机器人在不合适的时间段主动发消息）。
+
+### 对第三方插件的补丁（`server/patches`、`server/*.sh`）
+
+`astrbot_plugin_proactive_chat` 的上下文注入被改过：上游 `hybrid` 模式会把**全量对话历史**
+塞进主动消息的请求里，实测单次 9 万 token 只为生成一句「在干嘛」。改成只读平台消息流水后降到
+约 4000 字符。这类补丁都以可复跑的 shell 脚本形式沉淀在 `server/`，不是手工改服务器。
+
+## Token 成本的实测与优化
+
+这是项目后期花力气最多的一块。基准事实（DeepSeek 计费，13 天）：
+
+- 总消耗约 ¥8.57，其中输入占 98.8%，输出只占 1.2%。
+- 主动消息 28 次调用烧掉 259 万输入 token，**占总成本 31%**，而输出合计仅 1353 token。
+- 单次请求的固定前缀（system prompt + 工具 schema）与历史重发是主要开销。
+
+三项优化（均未削减任何功能）：
+
+1. **主动消息不再携带全量对话历史**，改读平台消息流水（上限 4000 字符）。
+2. **工具 schema 从 `full` 改为按需加载**，降低每轮固定前缀。
+3. **表情包情感判断改走小米 MiMo**，不再占用 DeepSeek 额度。
+
+结论写在 `docs/` 里，取舍的理由也一并保留——包括明确**不做**的几项（例如 `datetime_system_prompt`
+会破坏前缀缓存，但它挂在最后一条 user 消息上，不影响命中，所以保留）。
 
 ## 目录
 
-- `persona/`：Miruku 人设和口吻
-- `profiling/`：画像维度、采集脚本和画像数据
-- `prompts/`：系统提示词
-- `docs/`：架构、先例和部署记录
-- `images/`：当前只有阶段 0 的传输测试 PNG；聊天导出只有图片引用，没有原图
-- `data/`：运行时数据库和导出文件
+```
+persona/      Miruku 人设、口吻画像、情绪信号识别规则
+prompts/      系统提示词（部署时同步到实例）
+knowledge/    知识库源码 JSON、编译脚本、查询与注入
+plugins/      自研 AstrBot 插件（context_guard / knowledge / observer）
+astrbot_plugin_miruku_metrics/   指标统计插件
+astrbot_plugin_miruku_backfill/  离线补采插件
+astrbot_plugin_miruku_outbound/  出站守卫插件
+data/         可复跑的验收/回归探针（不含任何聊天正文）
+server/       服务器部署、巡检、补丁脚本（patches/ 下是第三方插件补丁）
+panel/        服务器运维面板
+docs/         设计决策、验收记录、缺陷登记、复核意见
+profiling/    用户画像维度与采集脚本
+.workbuddy/   协作助手的阶段性笔记（保留原始过程）
+```
 
-## 当前实例
+`docs/` 是这个项目里信息密度最高的部分。它记录的不是「做了什么」，而是**为什么这样做、当时排除了
+什么、哪些判断后来被推翻了**。例如 `docs/defect-register.md` 是一份带编号的缺陷登记，
+`docs/pilot-go-no-go.md` 是一次「能不能真的交付给真人使用」的放行评审。
 
-当前 AstrBot Launcher 实例路径保存在本机 `.env` 的 `ASTRBOT_CORE` 中；换机器或换实例时修改该值，模板见 `.env.example`。环境变量优先于 `.env`。Launcher 会改变 WebUI 本地端口，脚本自动从运行进程定位；也可用 `ASTRBOT_DASHBOARD` 显式指定。缺少有效实例路径时脚本会报错，不会猜测旧实例。
+## 关于复原的几个判断
 
-启动实例后，用该实例的 Python 环境运行 `deploy_miruku.py`，可同步 Miruku 人格并设置默认人格、60 轮上下文和关闭自动按标点分段。加 `--probe` 只在 WebUI 本地聊天创建临时会话做口吻检查，不会给 QQ 发消息。脚本从本地配置读取签名密钥并调用 AstrBot API，不打印密钥。
+- **人格一致性优先于回复质量。** 一条「很聪明但不像她」的回复，比一条「笨但像她」的回复更失败。
+- **口吻规则要能被证伪。** 每一条风格规则都尽量对应到语料统计（中位长度、标点比例、高频词），
+  而不是「感觉这样更好」。
+- **不动用模型能力去处理情绪危机。** 危机信号走独立告警通道给人类，机器人只负责不添乱。
 
-`setup_stage0.py` 安装项目内保存的主动消息插件压缩包，已安装时会跳过；`configure_proactive.py --qq <自己的测试QQ号>` 仅对指定且最近 30 分钟内活跃的私聊配置低打扰的主动消息；`verify_stage0.py --qq <自己的测试QQ号>` 向该私聊发送 `images/stage0-test.png`。主动消息的人格化开场方向记录在 `docs/active-message-ideas.md`；OTTO 选定的 Oshama 示例已作为低频参考写入插件提示词，不是固定发送内容。
+## 隐私说明
 
-最小可观测性插件源码在 `plugins/astrbot_plugin_miruku_observer/`，当前实例已安装。它仅记录指定私聊的消息方向、时间和首次回复间隔，不存正文；模式触发字段目前保持未知。状态与验证边界见 `docs/observability.md`。
+本仓库公开前经过处理：
 
-## Windows 登录后启动
+- 所有真实 QQ 号、昵称、服务器 IP、隧道凭据、推送密钥均已替换为占位符；
+- 全部 git 历史用 `git filter-repo` 重写，不只是当前快照；
+- 逐条聊天原文挖掘文件、历史误提交的桌面截图（约 83 MB）已从全部历史中移除；
+- 真人用户在脆弱时刻的原话已摘要化处理，只保留「识别与回应」的方法论，不留可检索的原话。
 
-当前用户登录时，计划任务 `Miruku-AstrBot-AtLogon` 会用 Launcher 实例的 Python 执行 `start_astrbot.py`；`Miruku-AstrBot-Watchdog` 每 5 分钟检查一次进程。`Miruku-NapCat-AtLogon` 用同一 Python 环境执行 `start_napcat.py`，优先复用 QQ 本地登录态。两个入口都避免重复启动自身进程。运行核心无需登录 AstrBot WebUI；WebUI 的账号密码只用于打开管理页面。核心已在运行时，不要再在 Launcher 中点“启动实例”，否则可能出现第二套进程。
+仓库创建者本人已授权公开。
 
-NapCat 自动入口将控制台输出写入被忽略的 `logs/`，避免中文混合编码窗口；QQ 若要求重新扫码，会尝试打开本机生成的二维码图片。QQ 的安全验证必须由 OTTO 在手机上完成；二维码失效时可用 `NapCat.Shell.Windows.OneKey/NapCat.52230.Shell/napcat.quick.bat` 交互处理。登录后启动依赖 Windows 用户会话，不保证停在系统登录界面时自动可用。
+## 许可与致谢
 
+原始角色与世界观版权属于 SEGA《maimai》。本仓库是个人非商业的技术记录，与 SEGA 无关。
+
+感谢 AstrBot、NapCatQQ 以及各第三方插件的作者——这个项目站在它们上面。

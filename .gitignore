@@ -4,8 +4,9 @@
 # 原则：只入库「源码 / 文档 / 配置模板 / 可复跑的验收资产」，
 #      不入库「运行时数据 / 隐私正文 / 第三方二进制 / 可重建产物」。
 #
-# 本仓库是本地私有仓库：不含账号、密钥、聊天正文。
-# 任何情况下不要把本仓库推到公开远端。
+# 本仓库已由作者 OTTO 本人决定公开，作为复原过程记录。
+# 公开版不含账号、密钥、QQ 号、服务器地址与私人聊天正文；
+# 发布前已用 git filter-repo 重写全部历史完成脱敏。
 # ============================================================
 
 # ---------- 机密 ----------
@@ -21,7 +22,6 @@ data/*
 !data/check_probe_asserts.py
 !data/build_regression_cases.py
 !data/regression_cases.json
-!data/knowledge_mine.md
 # DS-08 的 6 轮样本：Codex 要能复跑 `probe_reply_metrics.py --input`，
 # 不含 QQ 号、不含来世私聊，只有 OTTO 测试号的三条定向 smoke 与三条补测。
 !data/ds08_cx01_rounds.json
@@ -113,12 +113,18 @@ panel/*凭据*.txt
 # 微信推送密钥（Server酱 SendKey，永不入库）
 .wechat-sendkey
 
-# ���� .tmp- ǰ׺����ʱ����һ�ɲ����
+# 所有 .tmp- 前缀的临时产物一律不入库
 .tmp-*
 
-# ��ʱ����Ŀ¼���ű�/��ͼ/ץ��������⣩
+# 临时工作目录（脚本/截图/抓包，不入库）
 .tmp/
 
-# Python ����
+# Python 缓存
 __pycache__/
 *.pyc
+
+# ---------- GitHub 公开版补充（2026-11-04） ----------
+# 聊天挖掘产物：逐条聊天原文，永不入库（已从历史中删除）
+data/knowledge_mine.md
+# 本地发布工作目录（脱敏规则、临时脚本）
+来世-github-publish/
