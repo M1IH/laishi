@@ -100,6 +100,18 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 ## 最新进展（按时间倒序追加，旧记录不删）
 
+2026-11-06 18:5x / DeepSeek / **小米 MiMo key 已失效（401 invalid_key），表情包情感判断临时回退 DeepSeek。**
+
+**发现**：部署每日额度改造后重启，日志里出现 `[meme_manager] 情感模型调用失败: Error code: 401 - {'error': {'message': 'Invalid API Key' ...}}`。这是 11-03 为省 token 把 `generation.emotion.llm` 从 DeepSeek 换到 `xiaomi/mimo-v2.6-flash` 时埋下的坑——当时换完没做实测调用，key 一直是坏的。
+
+**定位**：容器 `cmd_config.json` 里两把 key 都在，问题不在 AstrBot 配置。直接 `curl https://api.xiaomimimo.com/v1/chat/completions` 带这把 key，服务端返回 `HTTP 401 {"error":{"message":"Invalid API Key","param":"Please provide valid API Key","code":"401","type":"invalid_key"}}`。容器内全量扫 `sk-` 也只有两把（DeepSeek + 这把小米），没有备用 key。
+
+**处置（用户选择「先临时换回 DeepSeek」）**：备份 `meme_manager_config.json.bak.xiaomi401-20261106` → 把 `generation.emotion.llm.provider_id` 从 `xiaomi/mimo-v2.6-flash` 改回 `deepseek/deepseek-flash`（只改这一处，保留 BOM，写回前 `json.loads` 校验）→ `docker restart astrbot` → 日志无 401。
+
+**成本影响可忽略**：这类情感判断是轻量调用，实测历史 20 次合计 `input_other` 仅 37,123 token、输出极短，折合约 ¥0.1 量级；相对主聊天每轮 8k~20k 的输入可以忽略。原先「换小米省 3.7 万 token」的收益本来就不大。
+
+**待办**：拿到新的小米 key 后，把 `provider_id` 改回 `xiaomi/mimo-v2.6-flash`，并先 `curl` 实测一次再重启，避免再次带着坏 key 上线。
+
 2026-11-06 18:2x / DeepSeek / **主动消息的「未回复上限」从终身额度改成每日额度，达上限后自动排到次日。**
 
 **问题**：`max_unanswered_times=3` 原本是永久累计——发满 3 次没人回复就 `GATE` 直接 `STOP`，
