@@ -24,7 +24,7 @@
 
 ## 当前状态（一句话）
 
-- **投放状态：Go（2026-11-02 09:1x 已投放）。** 来世 10000002 已加入 \riend_settings.session_list\，首条主动消息 2026-11-02 09:29:40，未回复上限 3。G10 由 OTTO 拍板（m09174/m09403/m09447）。「更会聊」只读指标采集 \strbot_plugin_miruku_metrics\ 同步上线（探针 39/39），改 persona 仍须人工确认并走 \deploy-persona.py\。详见 \docs/chat-metrics-20261102.md\。
+- **投放状态：Go（2026-11-02 09:1x 已投放）。** 来世 10000002 已加入 `friend_settings.session_list`，首条主动消息 2026-11-02 09:29:40，未回复上限 3。G10 由 OTTO 拍板（m09174/m09403/m09447）。「更会聊」只读指标采集 `astrbot_plugin_miruku_metrics` 同步上线（探针 39/39），改 persona 仍须人工确认并走 `deploy-persona.py`。详见 `docs/chat-metrics-20261102.md`。
 - **历史投放口径**： `docs/otto-decisions-20261024.md` D4 自愈七项已验收；2026-10-31 又完成最终服务器、当日 QQ 收件、测试号 A2 会话开关、主动调度和白名单复核。G10 尚未获本次投放授权，C-17/D1 风险须届时重确认；24h 只作观察期口径。
 - **2026-10-25 验收**：WB-11 值守卡文档补件、DS-06 离线审计、DS-07 本次历史图片造成的 400 修复均通过；C-15 真实目标命中、心跳与 D4 自愈仍未闭环。
 - **CX-01（2026-10-25）**：C-18/C-19/C-20 五项规则与插件样本已部署、离线探针通过；仍待 OTTO 测试 QQ 的回复行为验收，不计作缺陷关闭。
@@ -100,7 +100,26 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 ## 最新进展（按时间倒序追加，旧记录不删）
 
-2026-11-02 09:1x / DeepSeek / **G10 投放执行 + 「更会聊」指标采集上线（只读）。** 来世 10000002 已加入 \riend_settings.session_list\（备份 \strbot_plugin_proactive_chat_config.json.bak.pilot-20261102-085119\），首条主动消息排 **2026-11-02 09:29:40**、未回复 0/3；测试号 09:35:24、1/3。**踩坑**：改完 session_list 后 \/api/jobs\ 起初只有测试号——\setup_auto_triggers_for_enabled_sessions()\ 给新增会话建的是 auto_trigger 定时检查器（60 分钟后检查），不是真实排期，必须补一次 \POST /api/jobs/{umo}/reschedule\。新增 \strbot_plugin_miruku_metrics\ v0.1.0（只读：不改 persona/不拦发送/不改文本/不主动发消息，四条由源码静态断言把关），采七项指标落 \plugin_data/miruku_metrics/metrics.jsonl\，配 \server/metrics-report.sh\ 出人话报告。**三个数据陷阱**（实测踩出）：工具结果写回 user 轮（anysearch 29893 字符那条把「对方平均字数」从 28.9 拉到 2071.3，差 71 倍）、早期 Python 字面量字符串需 \st.literal_eval\ 兜底、base64 图片必须剥。探针 39/39 全绿。详见 \docs/chat-metrics-20261102.md\。
+2026-11-06 18:2x / DeepSeek / **主动消息的「未回复上限」从终身额度改成每日额度，达上限后自动排到次日。**
+
+**问题**：`max_unanswered_times=3` 原本是永久累计——发满 3 次没人回复就 `GATE` 直接 `STOP`，
+而 `FlowOrchestrator._on_gate_stop` 是空实现（`return None`，既不重调度也不排明天），
+**只有对方主动开口才解冻**。线上 `session_data.json` 两个会话都停在 `unanswered_count=3`，
+来世那条自 11-04 起再没排过任何任务——这就是「她不发了」的实际原因。
+
+**改法（6 个文件）**：① `utils/time_utils.py` 新增 `next_day_active_offset()`（次日第一个可发送分钟的偏移，复用已有多段 `quiet_hours` 解析）与 `local_day_key()`；② `gating_feature.py` 在比较上限前做跨天清零；③ `scheduler_service.py` 新增 `reset_daily_unanswered()` / `compute_next_day_trigger()` / `schedule_next_day_and_save()`，并在 `setup_auto_trigger_for_session_config()` 与 `init_jobs_from_data()` 两处启动路径同样清零（否则昨天的额度会一直挡住今天的排期）；④ `flow_orchestrator.py` 的 `_on_gate_stop` 在 `abort_reason == "max_unanswered"` 时排到次日，`finalize_and_reschedule()` 写 `unanswered_date`；⑤ `event_handlers.py` 用户回复清零时同步刷新 `unanswered_date`；⑥ `_conf_schema.json` 新增 `unanswered_reset_daily`（bool，默认 `true`）。
+
+**语义**：当天发满 N 次没人回 → 停到次日免打扰结束（`0-8:30` 段末端即 08:30）→ 额度重置继续。关掉开关则退回原版永久停发。
+
+**验证**：`py_compile` 5/5；本地仿真 `sim_daily_reset.py` 6 组场景全绿（含「昨天满 3 次今天放行」「今天满 3 次排到次日 08:30」「关开关仍永久停」「旧数据无日期当天不补发」）；容器内 `next_day_active_offset` 边界实测 02:00→1830、09:00→1410、20:00→750、`0-24`→None。
+
+**部署**：备份 `pc-20261106-182550.tar` → `docker cp` 6 文件 → 容器内 `py_compile` → 本地与线上 md5 6/6 一致 → `docker restart astrbot`。启动日志：两个会话均「持久化任务已过期，已按当前配置重新排期至 **2026-11-07 08:30**」，`任务恢复检查完成，共恢复 2 个定时任务`。
+
+**数据修正**：线上两个会话原本 `unanswered_count=3` 且无 `unanswered_date`；按新逻辑这类旧数据当天会被当作「今天已发过」（不补发超额消息）。为让它当天就恢复，手动把计数清零并写入 `unanswered_date=2026-11-06`，重启后回读 `count=0 date=2026-11-06 next=2026-11-07 08:30`。
+
+**范围**：只改 proactive_chat 插件与其 schema；未改 persona、未改 `quiet_hours`、未碰其他插件。补丁入仓 `server/patches/20261106-proactive-daily-reset/`（含 README、6 个文件、部署与数据修正步骤）。
+
+2026-11-02 09:1x / DeepSeek / **G10 投放执行 + 「更会聊」指标采集上线（只读）。** 来世 10000002 已加入 `friend_settings.session_list`（备份 `astrbot_plugin_proactive_chat_config.json.bak.pilot-20261102-085119`），首条主动消息排 **2026-11-02 09:29:40**、未回复 0/3；测试号 09:35:24、1/3。**踩坑**：改完 session_list 后 `/api/jobs` 起初只有测试号——`setup_auto_triggers_for_enabled_sessions()` 给新增会话建的是 auto_trigger 定时检查器（60 分钟后检查），不是真实排期，必须补一次 `POST /api/jobs/{umo}/reschedule`。新增 `astrbot_plugin_miruku_metrics` v0.1.0（只读：不改 persona/不拦发送/不改文本/不主动发消息，四条由源码静态断言把关），采七项指标落 `plugin_data/miruku_metrics/metrics.jsonl`，配 `server/metrics-report.sh` 出人话报告。**三个数据陷阱**（实测踩出）：工具结果写回 user 轮（anysearch 29893 字符那条把「对方平均字数」从 28.9 拉到 2071.3，差 71 倍）、早期 Python 字面量字符串需 `ast.literal_eval` 兜底、base64 图片必须剥。探针 39/39 全绿。详见 `docs/chat-metrics-20261102.md`。
 
 
 
