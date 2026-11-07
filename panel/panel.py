@@ -306,7 +306,7 @@ async function refresh(force){
    card('系统服务',kv(Object.entries(s.systemd).map(([k,v])=>[k,pill(v==='active',v)])))+
    card('扫码登录',(()=>{const c=d.cred||{};return kv([
       ['🌐 公网扫码（电脑关机也能用）',c.qrpage_public?`<a style="color:var(--acc)" target="_blank" href="${c.qrpage_public}"><b>${c.qrpage_public}</b></a><br><span style="color:#8b949e">手机任意网络可用；隧道地址重启后会变，刷新本页即可</span>`:'（隧道未启动）'],
-     ['📱 手机扫码页',`<a style="color:var(--acc)" target="_blank" href="/scan"><b>http://${lan_ip()}:${PORT}/scan</b></a>（手机与这台 PC 同一 WiFi）`],
+     ['📱 手机扫码页',`<a style="color:var(--acc)" target="_blank" href="/scan"><b>__LAN_URL__/scan</b></a>（手机与这台 PC 同一 WiFi）`],
      ['noVNC 密码',c.novnc_password?`<code>${c.novnc_password}</code>`:'（读不到）'],
      ['noVNC 地址',c.novnc_url||'-'],
      ['SnowLuma WebUI',(c.snowluma_webui||'-')+(c.snowluma_must_change_pw?' 首次需改密':'')],
@@ -347,6 +347,17 @@ refresh();
 """
 
 # 手机扫码页（PC 中转；手机与 PC 同一 WiFi 时访问 http://<PC 局域网IP>:8642/scan）
+def render_page() -> str:
+    """把服务端才知道的值填进主页面。
+
+    PAGE 是普通字符串不是 f-string：里面绝大多数 ${...} 是前端模板字面量，
+    必须原样留给浏览器。所以在服务端只替换显式占位符。之前这里写成
+    ${lan_ip()}，整个表达式被原样下发，浏览器没有这个函数，一渲染到那一行
+    就 ReferenceError，整页空白。
+    """
+    return PAGE.replace("__LAN_URL__", f"http://{lan_ip()}:{PORT}")
+
+
 SCAN_PAGE = """<!doctype html><html lang="zh"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Miruku 扫码</title><style>
@@ -477,7 +488,7 @@ class Handler(BaseHTTPRequestHandler):
                                   {"X-Crop-X": cx, "X-Crop-Y": cy})
             return self._send(200, SCAN_PAGE, "text/html; charset=utf-8")
         if u.path == "/":
-            self._send(200, PAGE, "text/html; charset=utf-8")
+            self._send(200, render_page(), "text/html; charset=utf-8")
         elif u.path == "/api/status":
             self._send(200, json.dumps(fetch_status(), ensure_ascii=False))
         elif u.path == "/api/logs":
