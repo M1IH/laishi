@@ -3,9 +3,35 @@
 # the system ANSI codepage (GBK here), so any non-ASCII literal corrupts the
 # script and breaks parsing ("string missing terminator"). Keep it English.
 $ErrorActionPreference = 'Continue'
-$target    = 'root@203.0.113.10'
 $panelPort = 8642
 $here      = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+# Server target: env var > project-root .env > documented placeholder.
+# The public repo only ships the RFC 5737 placeholder (203.0.113.10), so the
+# real host must come from MIRUKU_SSH or from the gitignored .env file.
+$target = $env:MIRUKU_SSH
+if (-not $target) {
+    $envFile = Join-Path $here '..\.env'
+    if (Test-Path -LiteralPath $envFile) {
+        foreach ($line in Get-Content -LiteralPath $envFile -Encoding UTF8) {
+            if ($line -match '^\s*MIRUKU_SSH\s*=\s*(.+?)\s*$') {
+                $target = $Matches[1].Trim('"', "'")
+                break
+            }
+        }
+    }
+}
+if ($target -match '203\.0\.113\.10') {
+    Write-Host ''
+    Write-Host '[ERROR] Server address not configured.' -ForegroundColor Red
+    Write-Host '        Add this line to the project-root .env file:'
+    Write-Host '            MIRUKU_SSH=root@<your-server-ip>'
+    Write-Host '        (203.0.113.10 is the documentation placeholder that ships'
+    Write-Host '         with the public repo and is not a real host.)'
+    Write-Host ''
+    Read-Host 'Press Enter to exit'
+    exit 3
+}
 $panelPy   = Join-Path $here 'panel.py'
 
 # 1) Python: prefer the AstrBot Launcher venv, fall back to system python
@@ -29,40 +55,34 @@ if ($panelProc) {
     exit 0
 }
 
-# 3) Make sure the key is loaded, then check SSH reachability.
-#    The key now lives in %USERPROFILE%\.ssh (moved out of the workspace, where it
-#    did not belong). After a reboot the agent is empty, so load it here -- the
-#    user then never has to run ssh-add by hand again.
-Write-Host '[1/3] Checking SSH agent and connectivity...'
-$agentSvc = Get-Service ssh-agent -ErrorAction SilentlyContinue
-if ($agentSvc -and $agentSvc.Status -ne 'Running') {
-    Write-Host '      Starting ssh-agent service...'
-    try { Set-Service ssh-agent -StartupType Automatic -ErrorAction Stop; Start-Service ssh-agent -ErrorAction Stop }
-    catch { Write-Host '[WARN] Could not start ssh-agent (needs admin once).' -ForegroundColor Yellow }
-}
-$loaded = (ssh-add -l 2>&1)
-if ($LASTEXITCODE -ne 0 -or $loaded -match 'no identities') {
-    # Prefer the tidy location (%USERPROFILE%\.ssh), fall back to the in-project
-    # copy so the launcher keeps working before the one-time move is done.
-    $candidates = @()
-    $candidates += (Join-Path $env:USERPROFILE '.ssh\miruku_deploy.pem')
+# 3) Locate the private key and probe the server.
+#    Explicit -i does NOT depend on ssh-agent, which is unreliable here (the
+#    agent named pipe is often invisible from some shells). Loading into the
+#    agent stays as a best-effort so hand-typed plain `ssh` keeps working.
+Write-Host '[1/3] Locating key and checking connectivity...'
+$keyPath = $env:MIRUKU_KEY
+if (-not $keyPath) { $keyPath = Join-Path $env:USERPROFILE '.ssh\miruku_deploy.pem' }
+if (-not (Test-Path -LiteralPath $keyPath)) {
     $projDir = 'C:\Users\OTTO\Desktop\' + [string][char]0x6765 + [string][char]0x4E16
-    $candidates += @(Get-ChildItem -LiteralPath $projDir -Filter '*.pem' -ErrorAction SilentlyContinue |
-                     ForEach-Object { $_.FullName })
-    foreach ($k in $candidates) {
-        if (Test-Path -LiteralPath $k) {
-            Write-Host "      Loading key: $k"
-            # ssh-add reports success on STDERR; never let that look like a failure
-            $ErrorActionPreference = 'SilentlyContinue'
-            ssh-add $k 2>&1 | Out-Null
-            $addRc = $LASTEXITCODE
-            $ErrorActionPreference = 'Continue'
-            if ($addRc -ne 0) { Write-Host "      [WARN] ssh-add returned $addRc" -ForegroundColor Yellow }
-            break
-        }
-    }
+    $found = Get-ChildItem -LiteralPath $projDir -Filter '*.pem' -ErrorAction SilentlyContinue |
+        Select-Object -First 1
+    if ($found) { $keyPath = $found.FullName }
 }
-$probe = ssh -o BatchMode=yes -o ConnectTimeout=10 $target 'echo ok' 2>&1
+$sshArgs = @('-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10')
+if ($keyPath -and (Test-Path -LiteralPath $keyPath)) {
+    Write-Host "      Using key: $keyPath"
+    $sshArgs += @('-i', $keyPath, '-o', 'IdentitiesOnly=yes')
+    $agentSvc = Get-Service ssh-agent -ErrorAction SilentlyContinue
+    if ($agentSvc -and $agentSvc.Status -ne 'Running') {
+        try { Start-Service ssh-agent -ErrorAction Stop } catch {}
+    }
+    $ErrorActionPreference = 'SilentlyContinue'
+    ssh-add $keyPath 2>&1 | Out-Null
+    $ErrorActionPreference = 'Continue'
+} else {
+    Write-Host '      [WARN] No .pem found; relying on ssh-agent.' -ForegroundColor Yellow
+}
+$probe = & ssh @sshArgs $target 'echo ok' 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host ''
     Write-Host '[ERROR] Cannot reach the server.' -ForegroundColor Red
@@ -85,10 +105,13 @@ $ssh = $null
 if ($existing) {
     Write-Host '      Existing tunnel found, reusing it.'
 } else {
-    $fwd = @('-N','-o','BatchMode=yes','-o','ServerAliveInterval=30','-o','ServerAliveCountMax=3',
-             '-o','ExitOnForwardFailure=yes',
-             '-L','6185:127.0.0.1:6185','-L','5099:127.0.0.1:5099',
-             '-L','6081:127.0.0.1:6081','-L','14100:127.0.0.1:4100',$target)
+    # Reuse the same key flags resolved in step 3; without -i the tunnel falls
+    # back to ssh-agent and dies with "Permission denied (publickey)".
+    $fwd = @('-N','-o','ServerAliveInterval=30','-o','ServerAliveCountMax=3',
+             '-o','ExitOnForwardFailure=yes')
+    $fwd += $sshArgs
+    $fwd += @('-L','6185:127.0.0.1:6185','-L','5099:127.0.0.1:5099',
+              '-L','6081:127.0.0.1:6081','-L','14100:127.0.0.1:4100',$target)
     $ssh = Start-Process ssh -ArgumentList $fwd -NoNewWindow -PassThru
 }
 

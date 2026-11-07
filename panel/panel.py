@@ -25,12 +25,49 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def _load_dotenv() -> None:
+    """Read MIRUKU_SSH etc. from the project-root .env (gitignored).
+
+    The public repo intentionally carries only a documentation placeholder
+    (203.0.113.10 is RFC 5737 TEST-NET-3), so the real host has to come from
+    the environment or from .env. Real env vars win over .env.
+    """
+    path = os.path.join(HERE, "..", ".env")
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key, val = key.strip(), val.strip().strip('"').strip("'")
+                if key and val and key not in os.environ:
+                    os.environ[key] = val
+    except OSError:
+        pass
+
+
+_load_dotenv()
 SSH_HOST = os.environ.get("MIRUKU_SSH", "root@203.0.113.10")
+if "203.0.113.10" in SSH_HOST:
+    print("[WARN] MIRUKU_SSH 未配置：请在项目根 .env 里写 "
+          "MIRUKU_SSH=root@<真实服务器地址>", file=sys.stderr)
+
+# 认证方式：优先用 MIRUKU_KEY 指定的私钥文件，其次默认的 ~/.ssh/miruku_deploy.pem，
+# 都没有才回落到 ssh-agent。这样在 ssh-agent 管道不可见的环境下也能跑。
+SSH_KEY = os.environ.get("MIRUKU_KEY") or os.path.join(
+    os.path.expanduser("~"), ".ssh", "miruku_deploy.pem")
 PORT = int(os.environ.get("MIRUKU_PANEL_PORT", "8642"))
 REMOTE_DIR = "/opt/miruku/server"
 
-# Windows 下 ssh 走系统 OpenSSH；密钥交给 ssh-agent，本脚本不接触私钥
-SSH_BASE = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", SSH_HOST]
+# 密钥存在就用 -i 显式指定（不依赖 ssh-agent，重启后也不会失效）；
+# 文件不存在则不加 -i，交回 ssh-agent 处理。
+SSH_BASE = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10"]
+if os.path.isfile(SSH_KEY):
+    SSH_BASE += ["-i", SSH_KEY, "-o", "IdentitiesOnly=yes"]
+SSH_BASE.append(SSH_HOST)
 
 _cache: dict[str, tuple[float, object]] = {}
 _lock = threading.Lock()

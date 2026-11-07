@@ -21,7 +21,20 @@ $ErrorActionPreference = 'Continue'
 $dest   = Join-Path $env:USERPROFILE '.ssh\miruku_deploy.pem'
 $sshDir = Join-Path $env:USERPROFILE '.ssh'
 $srcDir = 'C:\Users\OTTO\Desktop\' + [string][char]0x6765 + [string][char]0x4E16
-$server = 'root@203.0.113.10'
+# Server target: env var > project-root .env > documented placeholder.
+# The public repo only ships the RFC 5737 placeholder (203.0.113.10).
+$server = $env:MIRUKU_SSH
+if (-not $server) {
+    $envFile = Join-Path $srcDir '.env'
+    if (Test-Path -LiteralPath $envFile) {
+        foreach ($line in Get-Content -LiteralPath $envFile -Encoding UTF8) {
+            if ($line -match '^\s*MIRUKU_SSH\s*=\s*(.+?)\s*$') {
+                $server = $Matches[1].Trim('"', "'")
+                break
+            }
+        }
+    }
+}
 $fails  = @()
 
 function Note([string]$msg, [string]$color = 'Gray') {

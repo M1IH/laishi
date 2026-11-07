@@ -5,6 +5,9 @@ set -uo pipefail
 
 NET=miruku_miruku
 IMAGE=motricseven7/snowluma:latest
+# 仅用于最后打印「本机怎么连隧道」的提示；地址从 MIRUKU_SSH 或项目根 .env 读，
+# 公开仓库只带 RFC 5737 占位地址 203.0.113.10。
+Target=${MIRUKU_SSH:-root@203.0.113.10}
 
 echo "[1/5] 停 heartbeat timer（防 self-heal 拉起 napcat 互踢）"
 systemctl stop miruku-heartbeat.timer
@@ -53,6 +56,6 @@ echo
 echo "=== 内存 ==="
 free -h | head -2
 echo
-echo ">>> 下一步：本机开 SSH 隧道 ssh -L 16081:127.0.0.1:6081 root@203.0.113.10"
+echo ">>> 下一步：本机开 SSH 隧道 ssh -L 16081:127.0.0.1:6081 \$Target"
 echo ">>> 浏览器开 http://localhost:16081/ 用日志里的远程桌面密码登录 noVNC，桌面里 QQ 应已自动弹出二维码，手机扫码。"
 echo ">>> 回退：docker stop snowluma && docker start napcat && systemctl start miruku-heartbeat.timer"

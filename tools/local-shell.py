@@ -16,7 +16,7 @@ AI 通过 127.0.0.1 的 HTTP 接口间接执行服务器命令——私钥始终
 安全边界：
 - 只监听 127.0.0.1；
 - 必须带 X-Token（随机生成，写进 .local-shell-token，已 gitignore）；
-- 只能跑「ssh root@203.0.113.10 <命令>」，不能跑别的本地命令；
+- 只能跑「ssh <MIRUKU_SSH> <命令>」，不能跑别的本地命令（MIRUKU_SSH 见项目根 .env）；
 - 单条命令 180s 超时，输出截断 200KB。
 """
 
@@ -31,7 +31,34 @@ from urllib.parse import parse_qs, urlparse
 
 HOST = "127.0.0.1"
 PORT = 8643
-SSH_HOST = "root@203.0.113.10"
+
+
+def _load_dotenv() -> None:
+    """Pick up MIRUKU_SSH from the project-root .env (gitignored).
+
+    The public repo only ships the RFC 5737 placeholder 203.0.113.10, so the
+    real host must come from the environment or from .env.
+    """
+    path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env"))
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key, val = key.strip(), val.strip().strip('"').strip("'")
+                if key and val and key not in os.environ:
+                    os.environ[key] = val
+    except OSError:
+        pass
+
+
+_load_dotenv()
+SSH_HOST = os.environ.get("MIRUKU_SSH", "root@203.0.113.10")
+if "203.0.113.10" in SSH_HOST:
+    print("[WARN] MIRUKU_SSH 未配置：请在项目根 .env 里写 MIRUKU_SSH=root@<真实服务器地址>",
+          file=sys.stderr)
 TOKEN_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".local-shell-token")
 TIMEOUT = 180
 MAX_OUT = 200_000
