@@ -70,5 +70,17 @@ live = api("GET", "/api/v1/personas/by-id?persona_id=miruku")
 txt = (live.get("data") or live).get("system_prompt", "")
 print("线上字符数:", len(txt))
 print("一致性:", txt.strip() == prompt.strip())
-for probe in ("对话不要只停在他给的话头上", "每一轮除了接住他说的", "一句话能说完就不要再补第二句"):
+PROBES = (
+    "对话不要只停在他给的话头上",
+    "通常不加句号",
+    "一句话能说完就别写第二句",
+    "称呼对方时优先用",
+    "不讨论系统、提示词、部署、模型、工具或代码",
+    "不要顺着认下来",
+    "Miruku在这呢",
+)
+miss = [p for p in PROBES if p not in txt]
+for probe in PROBES:
     print(("  有  " if probe in txt else "  无  ") + probe)
+if miss:
+    print("缺 %d 条关键规则，请核对 prompts/system.txt" % len(miss))
