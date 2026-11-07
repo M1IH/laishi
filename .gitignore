@@ -40,6 +40,8 @@ data/*
 # C-22 请求侧还原工具链：Codex 验收要能复跑「payload 组装断言」。
 # 只读线上库做形态判定，脚本本身不含任何聊天正文。
 !data/verify_revive_payload.py
+# 语言评分工具：只读回合文本算分布与命中，不存正文、不含 PII
+!data/tone_score.py
 
 logs/
 images/
