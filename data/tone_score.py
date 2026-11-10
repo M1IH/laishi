@@ -340,7 +340,12 @@ def collect(sessions: list, recent: int | None = None) -> list:
             segs = [x for x in (t.get("texts") or []) if x and x.strip()]
             if not segs:
                 continue
-            proactive = bool(i > 0 and turns[i - 1].get("proactive_prompt"))
+            # 一个回复回合被发送层拆成多条消息后，只有第一段前一条是提示词，
+            # 后续段落会被误判成普通回复。所以显式的 _pro 标记优先。
+            if "_pro" in t:
+                proactive = bool(t["_pro"])
+            else:
+                proactive = bool(i > 0 and turns[i - 1].get("proactive_prompt"))
             rows.append({
                 "turn": {"role": "assistant", "texts": segs},
                 "ctx": turns[max(0, i - 20):i],
