@@ -99,6 +99,20 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+### 2026-11-10 16:35 — 主动消息未回复分级追问（方案 B）
+
+- 根因三层：`llm_service.generate_llm_response` 只把 `{{unanswered_count}}` 当数字塞进正文、无分支；
+  主提示词写「不催回复」；`platform_history_prompt` 第 3 条写「不提对方没回、不追问」。
+- 改：新增 `pick_proactive_prompt()`（纯函数，`ESCALATION_MAX_LEVEL=3`，开关默认 false），
+  `generate_llm_response` 按 `unanswered_count+1` 选 `prompt_2`/`prompt_3`，日志打「主动消息等级=N」。
+- schema 加 `friend_settings.escalation_settings`（enable/prompt_2/prompt_3）。
+- 第 3 条让位：`platform_history_prompt` 改为「语气按主提示词分级口径处理」。
+- 人格 L27 补例外句「由系统发起的主动消息不受本条限制」，`deploy-persona.py` 探针 9→10 条。
+- 文案按 OTTO 要求：不带半通牒、不用「来世」直呼，统一用「你」。
+- 实测：等级 2 → 「你是不打算理我了吗」（10 字）；等级 3 → 「今天还没动静，回一句在忙也行」（14 字）。
+- 产物：`docs/proactive-escalation-20261110.md`、`server/patches/20261110-proactive-escalation/`。
+
 2026-11-10 12:1x / DeepSeek / **按 OTTO 拍板完成三项：主动消息长度约束回补、persona 补两条缺规、旧基线重写。**
 
 **① 主动消息提示词（线上改完，432 字）。** 2026-10-28 15:23 那份 276 字版本丢了全部长度约束，是主动消息中位从 7 字涨到 17 字的直接原因。这次不整段回滚到 454 字旧版，只在现版基础上补回：长度段（「只发一条短消息，通常十个字上下，最多二十来字」）、主语与称呼段（省略主语、称呼用「来世」）、故事护栏（不当现实亲历、低落时不用故事转移）、防重复（不要照抄开头）。备份 `astrbot_plugin_proactive_chat_config.json.bak.promptlen-20261110-121151`；写入脚本对基线做逐字校验，不符即拒改。`group_settings` 未动。详见 `docs/chat-naturalness-item1-20261110.md` 三节。
