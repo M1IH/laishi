@@ -137,3 +137,5 @@ data/knowledge_mine.md
 /server/_probe_*.py
 # 开机自启守卫的现场备份（含本机绝对路径日志）
 /startup-backup/
+# 本地仓库整包备份（含脱敏前历史，绝不入库）
+/来世-repo-backup-*/

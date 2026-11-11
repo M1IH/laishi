@@ -99,6 +99,25 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+### 2026-11-11 23:0x — 主动消息改为四个固定时段 + 放开极短问候
+
+**起因**：OTTO 要「上午两条、下午两条，九点、十一点、两点、五点，前后随机半小时」，并希望能只发「在干嘛呢」这种四五个字的问候。
+
+**改了什么**（5 处，全部幂等）：
+- `utils/time_utils.py` 追加 `parse_slot_list` / `_window_bounds` / `next_slot_trigger` / `next_day_slot_trigger`。关键判断：**已经开始的窗口整体跳过**（`if int(win_start.timestamp()) <= int(now_ts): continue`），否则 09:02 发完算下一次会落回 09:00 窗口、同时段发两条。宁可漏时段不重复发。落在免打扰段仍走已有的 `next_active_offset`。
+- `core/services/scheduler_service.py` 新增 `_slot_common` / `_slot_target` / `_next_day_slot_target`，`compute_next_trigger` 与 `compute_next_day_trigger` 开头按开关提前返回。**返回仍是六元组**，四个调用点（scheduler L807/L710/L961、`flow_orchestrator` L277）一行没改。
+- `_conf_schema.json` 的 `schedule_settings` 新增 `slots_enable`(默认 false)、`slots`(默认 `"9,11,14,17"`)、`slot_jitter_minutes`(默认 30)。
+- 线上配置写 `slots_enable=true`。
+- `friend_settings.proactive_prompt` 长度段：「通常十个字上下，最多二十来字」→「最多二十来字；多数时候四到八个字就够，像「在干嘛呢」这样只问一句也可以，不必每次都展开」。432 → **461 字**。原来是下限式约束（模型会往十个字凑），改成区间加例子才出得来四个字。
+
+**验证**：补丁脚本自带 7 组单测，本地与线上均 7/7（四次触发分属四窗口 `09:23 / 10:44 / 13:48 / 17:20`、单调递增、已开始窗口跳过、当天耗尽顺延次日、次日复活、空配置返 None、抖动 0 正好整点）；`verify_slots.py` 线上回读 `slots_enable True / slots 9,11,14,17 / jitter 30 / prompt_len 461`，连算五次 `11-12 09:16 / 10:36 / 13:40 / 17:24 / 11-13 08:46`。
+
+**坑**：改 `session_data.json` 或插件代码后必须 `docker restart astrbot`，内存里的 job 不会自己重算；但**重启只恢复旧 `next_trigger_time`**，`3529676294` 那条 `count=3` 已到当天上限，要等 11-12 08:30 发出后 `finalize_and_reschedule` 走一遍才按新时段排。配置与 schema 都有 BOM，必须 `utf-8-sig`。
+
+**影响**：一天最多 4 条，时间锁在四个窗口内。回滚只需 `slots_enable=false`，代码不用动。
+
+**下一步**：11-12 上午看是否落在 8:30–9:30，并复查 `slots_enable` 是否被运行期回写。产物 `server/patches/20261111-proactive-slots/`（README + 两个脚本）。
+
 
 ### 2026-11-10 16:35 — 主动消息未回复分级追问（方案 B）
 
