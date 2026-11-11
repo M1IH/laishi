@@ -99,6 +99,35 @@ Windows 本地 QQ AI 陪伴机器人。人物 Miruku（《maimai》猫娘），�
 
 
 ## 最新进展（按时间倒序追加，旧记录不删）
+
+### 2026-11-11 23:2x / Codex / 待办重写 + 评分系统体检
+
+OTTO 让「看着改一下」WORK_LOG 待办，并评估 `data/tone_score.py` 有没有用。
+
+**待办重写**（`WORK_LOG.md` 的 `## 当前待办` 段）：原 7 条 → 4 条在办 + 5 条已销账 + 1 条长期观察。
+销账的四条都附了线上证据：C-15 知识注入（`[Miruku knowledge] armed` 日志命中 5 次）、
+C-16 出站闸门（`astrbot_plugin_miruku_outbound` 在跑，`guard3` 实测拦「约局/编成绩」）、
+WB-08（v4 文档实测前提已整体失效）、10% 随机忽略（`astrbot_humanlike` 插件根本不存在）。
+新立四条：P0 L3 中文数字（`我r值一万六` 原样放行）、P0 对抗探针验错文件（102/102 验的是
+`knowledge/outbound.py` 621 行旧原型，线上是 `outbound_core.py` 847 行）、P1 低落/危机标记
+为空、P2 口吻细化拆成 C3 与 pain 两条。
+
+**评分系统体检**（结论见 `docs/tone-score-review-20261111.md`）：有用，但只在一个窄条件下有用。
+- 信度：OLD 普通 427 条随机切半，两半分差**中位 10 分 / p90 17 / 最大 27** → 单次分数置信区间约 ±10 分。
+- 同尺寸抽样（各抽 50 条 × 300 次）：OLD 中位 61 / NEW 中位 81，差 20 分 → 方向性结论成立。
+- **但「取最近 N 条」有偏**：OLD 末尾 87 条 83 分 vs 随机 87 条约 63 分，差 20 分。
+  2026-11-10 报告里「86 vs 83」那 3 分是取法造成的，不是真实差距。
+- 真实趋势：中位长度 10-27~10-29 降到 7~8 字，11-03 起回升到 14~20 字，11-11 才回落 12 字
+  → 「v2 让回复变短」只在 v2 上线那两天成立。
+- 结构缺陷：①批次模式**从不调 `redlines()`**，R1–R5 是死代码；②D3 每百回合折算导致 1 次命中
+  在 87 条里扣 8 分、552 条里只扣 1.3 分；③C2 正则误伤 `你这是在教我念咒语吗`，而且该句被写进
+  `SELFTEST` 当正确答案（7/7 里有 1/7 在验证错误行为）；④`data/tone_golden.json` 至今不存在；
+  ⑤仓库里没有任何自动调用，纯手动。
+- 价值：它三次推翻过我们的判断（repr 污染 212 回合、回合 vs 条口径、主动消息比普通回复长 6 字）。
+  最有价值的一次是三分类对比定位到 `proactive_prompt` 从 454 字退化到 276 字。
+
+未改评分逻辑、未改线上配置。建议清单在文档第六节，P0 两条共约 45 行代码。
+
 ### 2026-11-11 23:0x — 主动消息改为四个固定时段 + 放开极短问候
 
 **起因**：OTTO 要「上午两条、下午两条，九点、十一点、两点、五点，前后随机半小时」，并希望能只发「在干嘛呢」这种四五个字的问候。
@@ -810,22 +839,25 @@ OTTO 决定：**L1 由 Codex 做，WorkBuddy 不实施**；并提醒 AstrBot 内
 
 ## 当前待办（按优先级，Codex 可调整并说明理由）
 
-- [ ] **P1 WB-08 待 Codex 验收**：`docs/first-week-experience-watch.md` **v3** 已交付（348 行，五条复核全数接受）（三阶段表 / 14 情景三档＋操作卡 / 5 分钟复盘模板 / §六-0 指标声明 / 3 项待 OTTO 讨论）。**验收重点五条**：① 每日人工上限（2/3/5 分钟）是否真能落地；② 证据层级是否守住"F5 不推 F4、F5 不推 F6、行数≠气泡数、空库≠没发生"；③ 是否越过 OTTO 的投放决定；④ 阶段二的两个前置（触发／元数据）该由谁解、怎么解；⑤ **A 档的新方案（会话启停＋主动开关）与两个验收例是否成立**——尤其例 A1「清空白名单→全员放行」要不要在维护窗口真跑，以及**恢复时主动不会自己重排**（`enable_auto_trigger=false`）要不要补手工触发。
-- [ ] **P0 C-15 运行期知识注入接通**（2026-10-22 21:00 新增）：**状态已大幅推进**——插件 `plugins/astrbot_plugin_miruku_knowledge/` 已落盘、实例副本与仓库 sha256 一致、**已通过 dashboard 热重载生效**（2026-10-24 10:2x，DeepSeek），DS-06 审计的 F1–F7 全部修完（三首 b50 曲子转正、`b50_block.txt` 已移除、六项计数与 `armed` 日志、db_path 同源、空 root 报错、`RuntimeError` 替代 `SystemExit`、连接 `finally` 关闭）。**只剩运行态一环：需要一条真实命中消息**，日志出现 `[Miruku knowledge] armed: platform=miruku, injections=1` 即证明整条链路通。**已完成的顺序**：注入接通 → `inject.py:SCORE_GUARD` 已验证生效 → `b50_block.txt` 已撤（现为 `prompts/b50_block.txt.bak`）。回滚：`mv prompts/b50_block.txt.bak prompts/b50_block.txt && <venv python> deploy_miruku.py`。
-- [ ] **P0 C-16 出站闸门（WB-09）**：`[Profile:]`／`<thought>`／`<system_reminder>`／约局承诺／成绩编造／**自称会打（L2.5）** 合并成一道出站闸门。提案见 `docs/outbound-guard.md`；**判定与落点见 `docs/outbound-guard-verdict.md`（DeepSeek，2026-10-22 22:45）**。原型 `knowledge/outbound.py` + `data/probe_outbound_guard.py` **53 + 9 例全过**（22:45 补 L2 口语约局、全角 DSML、`<system_reminder>`、分层改写后重测）。
-  - **口径已判（DeepSeek 22:45）**：**四层一律不重生成，改成分层改写**。L1 剥离；L2/L2.5 删违规分句、留其余；L3 删数字或降级「记不清了」；**只有「剥离后为空」才重生成 1 次，仍空就不发**。理由：L3 违规源是知识缺失，重采样只会换个编的数；L2/L2.5 有比整条降级更省的局部改写。**零额外请求、零额外延迟。**
-  - **落点必须改（这条最要紧）**：不是 `on_llm_response`，是 **`on_agent_done(priority=1)`**——`tool_loop_agent_runner.py:183-207` 先 append assistant 到 `run_context.messages` 再跑钩子，`internal.py:503-583` 存历史存的是 `run_context.messages`。**只改 `resp` 会污染历史**，模型下一轮会看见自己说过违规的话。必须同时改 `messages` 里最后一条 assistant 的 `TextPart`。
-  - **C-12 根因更正**：不是 `emotionai/main.py:889` 少一行——`:54-55` 默认 `show_thought=False`、`:886` 确有 `sub()`。提案引的"泄漏"是 `:833` **剥之前**的日志；`data_v4.db` 里来世 3 条 assistant 的 `text` 含 thought **0 条**。**L1 仍必要，但真实泄漏是 `<system_reminder>`（169 条里 5 条），不是 thought。**
-  - **主动消息单独过闸门**：主动文案走 `send_by_session()` 直发、不过 `on_agent_done`，必须显式调一次 `outbound.check()`。
-  - **`Report.ok=True` 不代表有正文**：纯 thought 剥完是空串，调用方必须额外判空。
-  - **`guard()` 的返回值也不足以判空**：`guard()` 返回 `(text, used_fallback)`，`guard('<thought>x</thought>')` 与 `guard('')` 都是 `('', False)`——**无法区分「本来就没内容」和「剥完是空」**。接入前必须定死这个语义（加第三个返回值或让调用方看 `check().leaks`），否则「剥完为空就不发」会退化成静默发空串。DS-04 审计 §四-1 有实测。
-  - **DS-04 对抗审计已交付待验收（DeepSeek 2026-10-23）**：`docs/outbound-adversarial-audit.md` + `data/probe_outbound_adversarial.py`（88 条自拟样例，50 条失败，14 个阻断项 B-1~B-14）。**接入前建议先按该文档第六节的 P0/P1/P2 修一轮**：P0 是 L1 标签形态（全角/裸独白行/无括号）与高频邀约；P1 是舞萌语境误伤（`我今天出勤`/`周末去机台吗`/`那天我们一起出勤`/`机台那边几点开`/`你几点去打舞萌` 现在全被换成「去不了，你看」）；P2 是 L3 门禁与全角数字（`Ｒ２８５` 整个 L3 层失效，`R1,4065` 加千分位就绕过白名单）。**修完要把对应 key 从探针 `KNOWN_BUGS` 删掉**，否则 `--allow-known` 报「已修复未销账」退非零。
-  - **本项不依赖 C-15**，两条可并行。
-- [x] **P0 冒烟验证**：AstrBot 实例跑起来后执行 `python deploy_miruku.py --probe`，确认重构未破坏行为。（OTTO 反馈已做过一次 smoke；如后续重构再复核）
-- [x] **P1 核心路径闭环**：主动消息到点送达测试 QQ；AstrBot 核心重启后任务恢复、NapCat 重连。Windows 整机重启后 NapCat 自动拉起+重连已实证（2026-10-20 OTTO 开机实测）；AstrBot 侧自启动待查 `logs/` 确认后正式收尾。
-- [ ] **P2 可观测性（部分落地）**：观察插件已启用并记录方向/时间/首次回复间隔，待真实私聊验收；会话条数待约定边界，危机·低落触发标记因缺结构化来源仍为未知。**已知缺口（审计确认）**：主动消息走直发、绕过 respond 管线，`after_message_sent` 不触发，故主动消息的 bot 方向事件与"对主动消息的首次回复间隔"目前测不到，需补钩子（见最新进展审计条目）。
-- [ ] **P3 口吻细化**：基于 `persona/emotional_cues.md` 与聊天记录继续打磨口吻。
-- [x] **P3 已知工程债**：`INSTANCE` 路径已迁入 `.env`；data_v4.db 查询已加只读、schema 与时间戳防护。AstrBot 升级后仍需复核。
+> **2026-11-11 23:1x 全面核查**：以下条目逐条对照线上实例验证过，过期项已移入文末「已销账」并写明证据。排序按「能造成实际伤害」而不是「工作量」。
+
+- [ ] **P0 L3 编造成绩对中文数字完全失效**：`outbound_core.py` 的 L3 只认阿拉伯数字。实测——`我r值16000` / `我r值16,000` / `我ｒ值１６０００` **全部拦住**（NFKC + 去千分位 + 去零宽都有效），但 `我r值一万六` / `我一万四` / `我十三级` **全部原样放行**。而「我跟你说我 r 值一万六」恰恰是 QQ 上最自然的说法，等于闸门在最常见形态上失效。**改法**：在 `_norm_detect()` 里补一道中文数字归一（万/千/百位 + 十位组合 + 两/俩），把「一万六」折成「16000」再进 L3。注意别碰正文里的「一起」「两天」这类量词。**验收**：`data/probe_outbound_adversarial.py` 补 6 条中文数字样例（3 拦 3 放），`guard3()` 逐条断言。
+- [ ] **P0 对抗探针验的不是线上那份代码**：`data/probe_outbound_adversarial.py` 本地跑 **102/102 全过**，但它 `sys.path.insert(0, ROOT/"knowledge")` 后 `import outbound`——测的是 `knowledge/outbound.py`（**621 行**）；线上跑的是 `astrbot_plugin_miruku_outbound/outbound_core.py`（**847 行**），两者 sha256 不同（`AE2F5E98…` vs `AE36797F…`）。**所以「B-1~B-14 全修复、89/89 通过」证明的是旧原型，不能代表线上闸门**。**改法二选一**：① 探针改成优先 import `astrbot_plugin_miruku_outbound`，import 不到再回退原型并显式打印 `[FALLBACK]`；② 若确认原型已废弃，删掉 `knowledge/outbound.py` 并在探针头部标明「只验原型」。**验收**：探针输出首行打印被测文件的绝对路径与 sha256，两侧一致才算数。
+- [ ] **P1 低落/危机标记至今仍为空**：`/AstrBot/data/plugin_data/astrbot_plugin_miruku_observer/events.sqlite3` 的 `message_events` 表 407 行，`low_mode_triggered` 与 `crisis_mode_triggered` **非空 0 条**。原因仍是「缺结构化来源」——检测在 persona/提示词层，observer 拿不到判定结果。**改法**：让 `emotionai` 或主动插件的判定结果回写一列（只写枚举，不写正文）；或先在 observer 里做一遍关键词粗判并标 `source='heuristic'`，与模型判定分开记。**验收**：连发 3 条含危机词的测试消息，两列出现非空且 `source` 正确。**注意**：这条是「测得准」，不是「要拦」——危机话术的正确处理在 persona L39，不在闸门。
+- [ ] **P2 口吻细化拆成两条具体的（原条目太笼统）**：① **C3 描述表情包画面仍会发生**——按条口径 OLD 段命中 9 次，NEW 段因只有 2 张图未触发、不等于修好；根因已查明是 `provider_settings.default_image_caption_provider_id = deepseek/deepseek-flash` + `provider_ltm_settings.image_caption = true`，图片先被转成文字描述再喂模型，模型自然复述。② **pain 场景零样本**——persona v2/v3/v4 至今没有一条真实「用户情绪袒露」的回合被评分过，「因求短而漏接情绪」始终无法验证。**验收**：各自拿到 ≥10 例真实样本后按 `data/tone_score.py` 同口径评分，而不是靠推测。
+
+### 已销账（2026-11-11 核查，附证据）
+
+- [x] ~~**P0 C-15 运行期知识注入接通**~~ —— 早已通。`docker logs astrbot | grep 'Miruku knowledge'` 命中 **5 次** `[Miruku knowledge] armed: platform=miruku, injections=1`（最近 `18:08:20` / `17:42:51` / `10:53:05`）。该插件 `main.py:119-127` 的 `_armed_logged` 一生只打一次，出现即证明注入分支真实走过。原待办写的「只剩运行态一环」已满足。
+- [x] ~~**P0 C-16 出站闸门（WB-09）**~~ —— 插件 `astrbot_plugin_miruku_outbound` 早已上线运行，同时挂 `on_agent_done`（正常回复 + 历史一致性）与 `on_decorating_result`（覆盖主动消息直发路径），banner 为 `armed: platform=miruku songs=1340 truth_keys=5`。实测 8 条样例改写全部生效：全角 `<thought>` → 剥净、`[Profile:]` → 剥净、`<system_reminder>` → 剥净、`明天机台见啊，我等你` → `去不了，你看`（兜底）、`我打了R9999` → `记不清了，没特意记`（兜底）、`街霸6我也玩，主玩杰米` → `看你打就行`、`三角洲我天天玩` → `看你打就行`。**`guard()` 无法区分空串的老问题已解决**：`guard3()` 返回 `GuardOutcome`，`state ∈ {empty_input, clean, blocked}`，`sendable = state=="clean" and bool(text.strip())`（`outbound_core.py:888/893`）。**舞萌语境误伤已修**：`我今天出勤了，打了一下午` 与 `你几点去打舞萌` 均正确放行（`PLAYER_EXEMPT_GAMES = ("舞萌","maimai","机台","出勤","洗衣机")`），只有将来时 `这周末出勤，一起` 才被拦。**注意：闸门上线以来改写/阻断计数为 0**，但容器重建过（`docker logs` 首行是 `jieba/__init__.py:44`），历史日志已丢，**不能据此判定闸门失效**。
+- [x] ~~**P1 WB-08 待 Codex 验收**~~ —— 文档已是 **v4 / 302 行**（待办写的 v3 / 348 行已过期），且 v4 赖以成立的实测前提**全部失效**：`enable_auto_trigger` 现在 `true`（原写 false）、`session_list` 两个会话都在（原写只有测试号）、`astrbot_humanlike` **插件根本不存在**（原写 `Sleep_Config` 没实现）、`quiet_hours` 现为 `"0-8:30,12-13:30,18-24"`（原写 `"1-8"`）。**验收前提整体失效，验收无意义**；文档保留作历史记录，若要恢复「首周观察」这件事需整体重写。
+- [x] ~~**「10% 随机忽略造成的沉默」**（`docs/chat-naturalness-next-steps-20261107.md` 第 2 项）~~ —— 前提是 `astrbot_humanlike` 插件的随机忽略开关，而该插件**不存在**：`/AstrBot/data/config/astrbot_humanlike_config.json` 与 `/AstrBot/data/plugins/astrbot_humanlike/_conf.json` 均不存在，插件列表 10 个里也没有它。整项前提失效。顺带销掉 `docs/chat-naturalness-audit-20261107.md:15` 的悬念（「当前仓库无运行配置或插件源码副本…未核实」）。
+- [x] ~~**P2 可观测性的「主动消息测不到」缺口**~~ —— 已被兜住。observer 的 `_poll_history()` 每 10 秒轮询 `platform_message_history`，主动消息虽绕过 `after_message_sent`，但仍会被 `_sync_history()` 按 `sender_id='bot'` 增量捞入（`history_cursor` 表记 `last_id`）。实测 `message_events` 407 行、`bot 252 / peer 155`、`reply_after_seconds` **非空 138 行**，时间范围 `2026-10-27T04:57:49` ~ `2026-11-11T01:46:53`。**遗留**：observer 的 `target_qq` 只指来世（`3529676294`），测试号 `3043128845` 的往来一条都不入库。
+
+### 长期观察（不占优先级）
+
+- 观察插件按天分布：`11-08 / 11-10 / 11-11` 三天 `peer` 事件为 **0**（对方没回），bot 每天稳定 6 条。主动消息发得出去但不换来回复，这个比例本身值得持续记录，比单看条数有意义。
+- `metrics.jsonl` 仍在写（157 行），最后一条（`2026-11-11T17:53:20`，uid `3043128845`）：`turns_total 819 / user_turns 46 / bot_turns 100 / proactive_turns 54 / user_avg_len 33.9 / bot_avg_len 17.4 / max_bot_streak 7 / proactive_replied 23 / proactive_reply_rate 0.426 / turn_ratio 2.17`。
 
 ---
 
