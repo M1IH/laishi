@@ -42,6 +42,8 @@ data/*
 !data/verify_revive_payload.py
 # 语言评分工具：只读回合文本算分布与命中，不存正文、不含 PII
 !data/tone_score.py
+# 评分基准用例：人工构造的样例句，不含任何真实聊天原文
+!data/tone_golden.json
 
 logs/
 images/
