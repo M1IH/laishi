@@ -35,7 +35,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 HERE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "1.2"
+VERSION = "1.3"
 
 # ── 权重（v1.0 定稿：20 / 15 / 35 / 20 / 10）──────────────────────────────
 W = {"D1": 20, "D2": 15, "D3": 35, "D4": 20, "D5": 10}
@@ -73,6 +73,10 @@ EMOTION_WORDS = [
     "难受", "想哭", "好累", "撑不住", "没力气", "委屈", "烦", "空", "堵",
     "不开心", "低落", "崩溃",
 ]
+
+# 主动消息提示词的开头。它以 user 角色进历史，但不是对方说的话，
+# 判场景档、算长度、找承接都必须先排除。
+PROMPT_MARK = "你正在以 Miruku 的身份"
 
 # ── D3 内容 ─────────────────────────────────────────────────────────────
 C1_PAT = re.compile(r"记住了|记下了|以后就|下次就|我改|明白了，以后|懂了，以后|这个记下")
@@ -144,16 +148,35 @@ def keywords(text: str, min_len: int = 2) -> set:
 
 # ── 场景档判定 ───────────────────────────────────────────────────────────
 def scene_of(turns: list, idx: int) -> str:
-    """按当前轮及其前 2/3 轮的对方消息判定场景档。"""
-    window_crisis = [j for j in range(max(0, idx - 3), idx + 1) if turns[j]["role"] == "user"]
-    window_emotion = [j for j in range(max(0, idx - 2), idx + 1) if turns[j]["role"] == "user"]
+    """按当前轮及其前 2/3 轮的对方消息判定场景档。
+
+    **主动消息提示词不算对方消息**。那条提示词是以 user 角色塞进历史的，
+    正文里有「对方低落、严肃或危机时不用故事转移话题」这类话，含
+    `低落` 这个 EMOTION_WORDS 词。不排除的话，每一条主动消息都会被判成
+    emotion 档并吃 D1 满分，把主动消息的长度问题掩盖掉（实测 10 条全误判）。
+    """
+    def peer_turn(j: int) -> str | None:
+        t = turns[j]
+        if t.get("proactive_prompt"):
+            return None
+        raw = " ".join(t.get("texts") or [])
+        if PROMPT_MARK in raw:
+            return None
+        return clean(raw)
+
+    window_crisis = range(max(0, idx - 3), idx + 1)
+    window_emotion = range(max(0, idx - 2), idx + 1)
     for j in window_crisis:
-        t = clean(" ".join(turns[j].get("texts") or []))
-        if any(w in t for w in CRISIS_WORDS):
+        if turns[j]["role"] != "user":
+            continue
+        t = peer_turn(j)
+        if t and any(w in t for w in CRISIS_WORDS):
             return "crisis"
     for j in window_emotion:
-        t = clean(" ".join(turns[j].get("texts") or []))
-        if any(w in t for w in EMOTION_WORDS):
+        if turns[j]["role"] != "user":
+            continue
+        t = peer_turn(j)
+        if t and any(w in t for w in EMOTION_WORDS):
             return "emotion"
     return "daily"
 
@@ -572,7 +595,23 @@ def selftest() -> int:
         bad += 1
     print("%s  批量红线 R1 命中 -> %s" % ("OK  " if r_ok else "FAIL",
                                       rb.get("redlines")))
-    total = len(SELFTEST) + 1
+    # 场景档：主动消息提示词以 user 角色进历史，正文里有「对方低落…」，
+    # 不能被当成对方说了「低落」而把整条主动消息判成 emotion 档。
+    # 这个 bug 曾让 NEW 窗口的 10 条主动消息全部误判成 emotion 并吃 D1 满分。
+    pro_rows = collect([{"conversation_id": "t", "user_id": "t", "turns": [
+        {"role": "user", "ts": "2026-11-12 09:00",
+         "texts": ["你正在以 Miruku 的身份，在 QQ 私聊中主动发起一条消息。"
+                   "不要把角色世界的故事说成现实亲历，对方低落、严肃或危机时不用故事转移话题。"],
+         "proactive_prompt": True},
+        {"role": "assistant", "ts": "2026-11-12 09:00",
+         "texts": ["早，在干嘛呢"], "_pro": True},
+    ]}])
+    sc_ok = pro_rows and pro_rows[0]["scene"] == "daily"
+    if not sc_ok:
+        bad += 1
+    print("%s  主动消息提示词不计入场景档 -> %s"
+          % ("OK  " if sc_ok else "FAIL", pro_rows[0]["scene"] if pro_rows else "-"))
+    total = len(SELFTEST) + 2
     print("\n%d/%d passed" % (total - bad, total))
     return 1 if bad else 0
 
